@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XTB Market Scanner & AI Signal Screener</title>
+    <meta name="description" content="Automatizovaný tržní skener a AI signály pro akcie, ETF a krypto z platformy XTB poháněné modelem Google Gemini.">
+    <style>
+        :root {
+            --bg-body: #080d1a;
+            --bg-card: #111827;
+            --bg-card-hover: #172238;
+            --bg-card-header: rgba(255, 255, 255, 0.02);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-highlight: rgba(255, 255, 255, 0.18);
+            --text-main: #f9fafb;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            
+            /* Barvy signálů */
+            --color-strong-buy: #10b981;
+            --color-strong-buy-bg: rgba(16, 185, 129, 0.15);
+            --color-buy: #34d399;
+            --color-buy-bg: rgba(52, 211, 153, 0.12);
+            --color-hold: #fbbf24;
+            --color-hold-bg: rgba(251, 191, 36, 0.12);
+            --color-sell: #f87171;
+            --color-sell-bg: rgba(248, 113, 113, 0.12);
+            --color-strong-sell: #ef4444;
+            --color-strong-sell-bg: rgba(239, 68, 68, 0.15);
+            
+            --color-up: #10b981;
+            --color-down: #ef4444;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        /* LOGIN OVERLAY */
+        #loginOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, #111827 0%, #030712 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 1.5rem;
+        }
+
+        .login-card {
+            background: rgba(17, 24, 39, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            padding: 2.5rem 2rem;
+            max-width: 430px;
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+            text-align: center;
+        }
+
+        .login-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            margin-bottom: 1.25rem;
+        }
+
+        .login-title {
+            font-size: 1.65rem;
+            font-weight: 800;
+            color: #f9fafb;
+            margin-bottom: 0.35rem;
+            letter-spacing: -0.01em;
+        }
+
+        .login-subtitle {
+            font-size: 0.88rem;
+            color: #9ca3af;
+            margin-bottom: 1.75rem;
+            line-height: 1.4;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+            text-align: left;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .input-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+
+        .login-input {
+            width: 100%;
+            background: #0b0f19;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #f8fafc;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .login-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .remember-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.82rem;
+            color: #9ca3af;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .login-submit-btn {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #ffffff;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+            margin-top: 0.4rem;
+        }
+
+        .login-submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.5);
+        }
+
+        .login-submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-error {
+            display: none;
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            color: #f87171;
+            padding: 0.65rem;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            text-align: center;
+        }
+
+        /* APP CONTENT CONTAINER */
+        #appContainer {
+            display: none;
+            padding: 1.5rem 1rem 3rem 1rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+        header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 0.75rem;
+        }
+
+        .badge-live {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.12);
+            color: #34d399;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10b981;
+        }
+
+        .user-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .user-pill strong {
+            color: #f8fafc;
+        }
+
+        .logout-btn {
+            background: none;
+            border: none;
+            color: #f87171;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.15);
+        }
+
+        .refresh-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.35);
+            padding: 5px 14px;
+            border-radius: 9999px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(59, 130, 246, 0.25);
+            border-color: rgba(59, 130, 246, 0.5);
+            transform: scale(1.02);
+            color: #93c5fd;
+        }
+
+        .refresh-btn.loading svg {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.4rem;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            max-width: 720px;
+            margin: 0 auto 1.25rem auto;
+        }
+
+        /* METABAR & STATS */
+        .meta-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 1.25rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            padding: 0.6rem 1.25rem;
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            max-width: 920px;
+            margin: 0 auto;
+        }
+
+        .meta-bar strong {
+            color: var(--text-main);
+        }
+
+        /* FILTER PANEL */
+        .filter-panel {
+            background: #0d1424;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            flex-grow: 1;
+            min-width: 260px;
+        }
+
+        .search-input-wrapper input {
+            width: 100%;
+            background: #162032;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.65rem 1rem 0.65rem 2.5rem;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input-wrapper input:focus {
+            border-color: #3b82f6;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.85rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .filter-groups {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .filter-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .pill-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 5px 11px;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .pill-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+        }
+
+        .pill-btn.active {
+            background: #3b82f6;
+            color: #ffffff;
+            border-color: #3b82f6;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.35);
+        }
+
+        /* VÝSLEDKOVÝ STATUS */
+        .results-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            padding: 0 0.5rem;
+        }
+
+        #resultsCount strong {
+            color: var(--text-main);
+        }
+
+        /* GRID KARET */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: var(--border-highlight);
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.6);
+        }
+
+        .card-header {
+            padding: 1rem 1.25rem;
+            background: var(--bg-card-header);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .ticker-group {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            overflow: hidden;
+        }
+
+        .ticker-title-row {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .ticker-symbol {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.01em;
+        }
+
+        .xtb-badge {
+            background: rgba(245, 158, 11, 0.12);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 4px;
+            letter-spacing: 0.02em;
+        }
+
+        .company-name {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+        }
+
+        .badges-top {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .signal-badge {
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.3rem 0.75rem;
+            border-radius: 6px;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .signal-strong-buy {
+            background: var(--color-strong-buy-bg);
+            color: var(--color-strong-buy);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+        }
+
+        .signal-buy {
+            background: var(--color-buy-bg);
+            color: var(--color-buy);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+        }
+
+        .signal-hold {
+            background: var(--color-hold-bg);
+            color: var(--color-hold);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .signal-sell {
+            background: var(--color-sell-bg);
+            color: var(--color-sell);
+            border: 1px solid rgba(248, 113, 113, 0.3);
+        }
+
+        .signal-strong-sell {
+            background: var(--color-strong-sell-bg);
+            color: var(--color-strong-sell);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+        }
+
+        .card-body {
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            flex-grow: 1;
+        }
+
+        /* PRICE & CHANGE */
+        .price-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .current-price {
+            font-size: 1.55rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .price-currency {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-left: 4px;
+        }
+
+        .change-pill {
+            font-size: 0.9rem;
+            font-weight: 700;
+            padding: 0.2rem 0.55rem;
+            border-radius: 6px;
+        }
+
+        .change-positive {
+            color: var(--color-up);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .change-negative {
+            color: var(--color-down);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* META TAGS ROW */
+        .tags-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .tag-pill {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 4px;
+            letter-spacing: 0.03em;
+        }
+
+        .tag-tier-top { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .tag-tier-mid { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .tag-tier-low { background: rgba(156, 163, 175, 0.15); color: #d1d5db; border: 1px solid rgba(156, 163, 175, 0.3); }
+
+        .tag-type-etf { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+        .tag-type-akcie { background: rgba(14, 165, 233, 0.15); color: #38bdf8; border: 1px solid rgba(14, 165, 233, 0.3); }
+        .tag-type-krypto { background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.3); }
+
+        .tag-catalyst {
+            background: rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+            border: 1px solid var(--border-color);
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* IMPACT & PROBABILITY */
+        .impact-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 0.55rem 0.75rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .impact-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .impact-value {
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .impact-up { color: var(--color-up); }
+        .impact-down { color: var(--color-down); }
+
+        /* PROBABILITY BAR */
+        .probability-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .prob-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .prob-val {
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.06);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 0.6s ease;
+        }
+
+        .fill-strong-buy { background: linear-gradient(90deg, #10b981, #059669); }
+        .fill-buy { background: linear-gradient(90deg, #34d399, #10b981); }
+        .fill-hold { background: linear-gradient(90deg, #fbbf24, #d97706); }
+        .fill-sell { background: linear-gradient(90deg, #f87171, #ef4444); }
+        .fill-strong-sell { background: linear-gradient(90deg, #ef4444, #b91c1c); }
+
+        /* REASONING */
+        .reasoning-box {
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid var(--border-highlight);
+            padding: 0.75rem 0.85rem;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            font-size: 0.83rem;
+            color: #cbd5e1;
+            line-height: 1.45;
+            margin-top: auto;
+        }
+
+        .reasoning-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 2.5rem 0 1rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+
+        .footer-disclaimer {
+            max-width: 760px;
+            margin: 0 auto 1rem auto;
+            line-height: 1.6;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 1rem;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            display: none;
+        }
+
+        #scanStatusToast {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #1e293b;
+            color: #f8fafc;
+            border: 1px solid #3b82f6;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .filter-groups { grid-template-columns: 1fr; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .meta-bar { flex-direction: column; gap: 0.5rem; }
+            .header-top { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div id="scanStatusToast">Probíhá analýza trhu a stahování dat...</div>
+
+    <!-- 🔒 LOGIN OVERLAY GATE -->
+    <div id="loginOverlay">
+        <div class="login-card">
+            <div class="login-badge">
+                <span>🔒 SuggestInvest • Security Gate</span>
+            </div>
+            <h2 class="login-title">Přihlášení</h2>
+            <p class="login-subtitle">Zadejte přihlašovací údaje pro přístup k tržnímu skeneru a AI signálům.</p>
+            
+            <form class="login-form" onsubmit="handleLoginSubmit(event)">
+                <div class="form-group">
+                    <label class="input-label" for="loginUser">Uživatelské jméno</label>
+                    <input type="text" id="loginUser" class="login-input" placeholder="Zadejte uživatelské jméno" required autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label class="input-label" for="loginPass">Heslo</label>
+                    <input type="password" id="loginPass" class="login-input" placeholder="Zadejte heslo" required autocomplete="current-password">
+                </div>
+
+                <label class="remember-row">
+                    <input type="checkbox" id="rememberMe" checked>
+                    <span>Zapamatovat přihlášení na tomto zařízení</span>
+                </label>
+
+                <div id="loginError" class="login-error">
+                    Neplatné uživatelské jméno nebo heslo. Zkuste to znovu.
+                </div>
+
+                <button type="submit" class="login-submit-btn">Vstoupit do aplikace</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 📊 HLAVNÍ APLIKACE (Odemkne se po přihlášení) -->
+    <div id="appContainer">
+        <div class="container">
+            <!-- HEADER -->
+            <header>
+                <div class="header-top">
+                    <div class="badge-live">
+                        <span class="pulse-dot"></span> XTB Multi-Tier AI Screener
+                    </div>
+                    
+                    <div class="user-pill">
+                        <span>👤 Přihlášen: <strong>SuggestInvest</strong></span>
+                        <button class="logout-btn" onclick="logout()" title="Odhlásit se z aplikace">Odhlásit</button>
+                    </div>
+
+                    <button id="refreshBtn" class="refresh-btn" onclick="triggerManualScan()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+                        </svg>
+                        <span>Aktualizovat data</span>
+                    </button>
+                </div>
+                
+                <h1>Market Scanner & AI Signal Screener</h1>
+                <p class="subtitle">Stupňovitý screening a AI analýza titulů z platformy XTB (Akcie, ETF, BCPP v CZK, Krypto) poháněná modelem Gemini.</p>
+                
+                <div class="meta-bar">
+                    <div>Poslední sken: <strong>{{ timestamp_cet }}</strong></div>
+                    <div>Aktiv celkem: <strong>{{ counts.total }}</strong></div>
+                    <div>🥇 TOP: <strong>{{ counts.top }}</strong> | 🥈 MID: <strong>{{ counts.mid }}</strong> | 🥉 LOW: <strong>{{ counts.low }}</strong></div>
+                    <div>AI Model: <strong>{{ ai_model }}</strong></div>
+                </div>
+            </header>
+
+            <!-- FILTRAČNÍ PANEL -->
+            <section class="filter-panel">
+                <!-- Vyhledávací pole -->
+                <div class="search-row">
+                    <div class="search-input-wrapper">
+                        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="searchInput" placeholder="Hledat podle tickeru, XTB kódu (např. CEZ1.CZ, NVDA) nebo názvu..." oninput="applyFilters()">
+                    </div>
+                </div>
+
+                <!-- Tlačítkové skupiny filtrů -->
+                <div class="filter-groups">
+                    <!-- 1. Filtr Koše (Tier) -->
+                    <div class="filter-group">
+                        <span class="filter-title">Koš (Priorita)</span>
+                        <div class="pill-row" id="tierFilter">
+                            <button class="pill-btn active" data-val="all" onclick="setFilter('tier', 'all')">Všechny koše</button>
+                            <button class="pill-btn" data-val="TOP" onclick="setFilter('tier', 'TOP')">🥇 TOP Leaders</button>
+                            <button class="pill-btn" data-val="MID" onclick="setFilter('tier', 'MID')">🥈 MID Growth</button>
+                            <button class="pill-btn" data-val="LOW" onclick="setFilter('tier', 'LOW')">🥉 LOW Discovery</button>
+                        </div>
+                    </div>
+
+                    <!-- 2. Filtr Typ aktiva -->
+                    <div class="filter-group">
+                        <span class="filter-title">Typ aktiva</span>
+                        <div class="pill-row" id="typeFilter">
+                            <button class="pill-btn active" data-val="all" onclick="setFilter('type', 'all')">Všechny typy</button>
+                            <button class="pill-btn" data-val="AKCIE" onclick="setFilter('type', 'AKCIE')">Akcie</button>
+                            <button class="pill-btn" data-val="ETF" onclick="setFilter('type', 'ETF')">ETF fondy</button>
+                            <button class="pill-btn" data-val="KRYPTO" onclick="setFilter('type', 'KRYPTO')">Krypto</button>
+                        </div>
+                    </div>
+
+                    <!-- 3. Filtr Měna -->
+                    <div class="filter-group">
+                        <span class="filter-title">Měna</span>
+                        <div class="pill-row" id="currencyFilter">
+                            <button class="pill-btn active" data-val="all" onclick="setFilter('curr', 'all')">Všechny měny</button>
+                            <button class="pill-btn" data-val="CZK" onclick="setFilter('curr', 'CZK')">🇨🇿 CZK</button>
+                            <button class="pill-btn" data-val="USD" onclick="setFilter('curr', 'USD')">🇺🇸 USD</button>
+                            <button class="pill-btn" data-val="EUR" onclick="setFilter('curr', 'EUR')">🇪🇺 EUR</button>
+                        </div>
+                    </div>
+
+                    <!-- 4. Filtr Signál -->
+                    <div class="filter-group">
+                        <span class="filter-title">AI Signál</span>
+                        <div class="pill-row" id="signalFilter">
+                            <button class="pill-btn active" data-val="all" onclick="setFilter('signal', 'all')">Všechny signály</button>
+                            <button class="pill-btn" data-val="buy" onclick="setFilter('signal', 'buy')">Buy / Strong Buy</button>
+                            <button class="pill-btn" data-val="hold" onclick="setFilter('signal', 'hold')">Hold</button>
+                            <button class="pill-btn" data-val="sell" onclick="setFilter('signal', 'sell')">Sell / Strong Sell</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STATISTIKY VÝSLEDKŮ -->
+            <div class="results-bar">
+                <span id="resultsCount">Zobrazeno <strong>{{ cards|length }}</strong> z <strong>{{ cards|length }}</strong> aktiv</span>
+                <span id="activeFiltersLabel"></span>
+            </div>
+
+            <!-- CARDS GRID -->
+            <main class="cards-grid" id="cardsGrid">
+                {% for item in cards %}
+                <article class="card" 
+                         data-tier="{{ item.tier }}" 
+                         data-type="{{ item.asset_type }}" 
+                         data-curr="{{ item.currency }}" 
+                         data-signal="{{ item.signal }}" 
+                         data-search="{{ item.yahoo_symbol }} {{ item.xtb_symbol }} {{ item.name }}">
+                    
+                    <div class="card-header">
+                        <div class="ticker-group">
+                            <div class="ticker-title-row">
+                                <span class="ticker-symbol">{{ item.yahoo_symbol }}</span>
+                                <span class="xtb-badge" title="Symbol pro vyhledání v aplikaci XTB / xStation">XTB: {{ item.xtb_symbol }}</span>
+                            </div>
+                            <span class="company-name" title="{{ item.name }}">{{ item.name }}</span>
+                        </div>
+
+                        <div class="badges-top">
+                            <span class="signal-badge {{ item.signal_class }}">
+                                {{ item.signal }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- Cena & Denní změna -->
+                        <div class="price-section">
+                            <div>
+                                <span class="current-price">{{ item.price }}</span>
+                                <span class="price-currency">{{ item.currency }}</span>
+                            </div>
+                            <span class="change-pill {% if item.change_direction == 'positive' %}change-positive{% else %}change-negative{% endif %}">
+                                {{ item.change_pct }}
+                            </span>
+                        </div>
+
+                        <!-- Štítky: Koš, Typ, Katalyzátor -->
+                        <div class="tags-row">
+                            <span class="tag-pill tag-tier-{{ item.tier|lower }}">{{ item.tier }}</span>
+                            <span class="tag-pill tag-type-{{ item.asset_type|lower }}">{{ item.asset_type }}</span>
+                            {% if item.catalyst_tag %}
+                            <span class="tag-catalyst">{{ item.catalyst_tag }}</span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Směr impulsu -->
+                        <div class="impact-container">
+                            <span class="impact-label">Očekávaný impuls</span>
+                            <span class="impact-value {% if item.impact_direction == 'up' %}impact-up{% else %}impact-down{% endif %}">
+                                {% if item.impact_direction == 'up' %}
+                                    ▲ Růst (UP)
+                                {% else %}
+                                    ▼ Pokles (DOWN)
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <!-- Progress bar pravděpodobnosti -->
+                        <div class="probability-section">
+                            <div class="prob-header">
+                                <span>Míra konfidence (AI)</span>
+                                <span class="prob-val">{{ item.probability }} %</span>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-fill {{ item.progress_class }}" style="width: {{ item.probability }}%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- AI Odůvodnění -->
+                        <div class="reasoning-box">
+                            <div class="reasoning-title">
+                                <span>💡 AI Analýza & Kontext</span>
+                            </div>
+                            <p>{{ item.reasoning }}</p>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+
+                <div class="no-results" id="noResultsMsg">
+                    Zadaným filtrům neodpovídá žádné aktivum. Zkuste filtry vyresetovat.
+                </div>
+            </main>
+
+            <!-- FOOTER -->
+            <footer>
+                <p class="footer-disclaimer">
+                    <strong>Upozornění:</strong> Tyto analýzy a signály jsou generovány experimentálním AI modelem a slouží výhradně k informačním a studijním účelům. V žádném případě se nejedná o investiční doporučení, investiční poradenství či nabídku ke koupi nebo prodeji cenných papírů ve smyslu zákona č. 256/2004 Sb., o podnikání na kapitálovém trhu.
+                </p>
+                <div>
+                    Vygenerováno: {{ timestamp_utc }} UTC | XTB Multithreaded Engine & Gemini Pro
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT: AUTHENTICATION + FILTER LOGIC -->
+    <script>
+        // SHA-256 Hashe pro bezpečné ověření bez uložení čistého hesla v kódu
+        // Login: SuggestInvest
+        const AUTH_USER_HASH = "5bff2c944e58c4b622bceab6c3794bdb49180603a080cb995acad9d136719d44";
+        // Heslo: WeWillMakeMoney!
+        const AUTH_PASS_HASH = "cb68425cfebe32bacd9b3cb624a1b99a033037eb12f9dd57c59765db0f4cf262";
+
+        async function computeSHA256(text) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(text);
+            const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+        }
+
+        function checkAuthStatus() {
+            const isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
+            const overlay = document.getElementById("loginOverlay");
+            const app = document.getElementById("appContainer");
+
+            if (isAuth) {
+                overlay.style.display = "none";
+                app.style.display = "block";
+            } else {
+                overlay.style.display = "flex";
+                app.style.display = "none";
+            }
+        }
+
+        async function handleLoginSubmit(e) {
+            e.preventDefault();
+            const userVal = document.getElementById("loginUser").value.trim();
+            const passVal = document.getElementById("loginPass").value;
+            const remember = document.getElementById("rememberMe").checked;
+            const errEl = document.getElementById("loginError");
+
+            const uHash = await computeSHA256(userVal);
+            const pHash = await computeSHA256(passVal);
+
+            if (uHash === AUTH_USER_HASH && pHash === AUTH_PASS_HASH) {
+                errEl.style.display = "none";
+                if (remember) {
+                    localStorage.setItem("si_authenticated", "true");
+                }
+                sessionStorage.setItem("si_authenticated", "true");
+                checkAuthStatus();
+            } else {
+                errEl.style.display = "block";
+                document.getElementById("loginPass").value = "";
+                document.getElementById("loginPass").focus();
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem("si_authenticated");
+            localStorage.removeItem("si_authenticated");
+            checkAuthStatus();
+        }
+
+        // Běžné spuštění kontroly při načtení stránky
+        window.addEventListener("DOMContentLoaded", () => {
+            checkAuthStatus();
+        });
+
+        // ==================== FILTRY ====================
+        const activeFilters = {
+            tier: 'all',
+            type: 'all',
+            curr: 'all',
+            signal: 'all',
+            search: ''
+        };
+
+        function setFilter(category, val) {
+            activeFilters[category] = val;
+            
+            const containerMap = {
+                tier: 'tierFilter',
+                type: 'typeFilter',
+                curr: 'currencyFilter',
+                signal: 'signalFilter'
+            };
+            
+            const groupEl = document.getElementById(containerMap[category]);
+            if (groupEl) {
+                groupEl.querySelectorAll('.pill-btn').forEach(btn => {
+                    if (btn.getAttribute('data-val') === val) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+            }
+
+            applyFilters();
+        }
+
+        function applyFilters() {
+            activeFilters.search = document.getElementById('searchInput').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const cTier = card.getAttribute('data-tier');
+                const cType = card.getAttribute('data-type');
+                const cCurr = card.getAttribute('data-curr');
+                const cSignal = card.getAttribute('data-signal').toLowerCase();
+                const cSearch = card.getAttribute('data-search').toLowerCase();
+
+                let matchTier = (activeFilters.tier === 'all' || cTier === activeFilters.tier);
+                let matchType = (activeFilters.type === 'all' || cType === activeFilters.type);
+                let matchCurr = (activeFilters.curr === 'all' || cCurr === activeFilters.curr);
+                
+                let matchSignal = true;
+                if (activeFilters.signal === 'buy') {
+                    matchSignal = cSignal.includes('buy');
+                } else if (activeFilters.signal === 'hold') {
+                    matchSignal = cSignal.includes('hold');
+                } else if (activeFilters.signal === 'sell') {
+                    matchSignal = cSignal.includes('sell');
+                }
+
+                let matchSearch = true;
+                if (activeFilters.search) {
+                    matchSearch = cSearch.includes(activeFilters.search);
+                }
+
+                if (matchTier && matchType && matchCurr && matchSignal && matchSearch) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            const countEl = document.getElementById('resultsCount');
+            countEl.innerHTML = `Zobrazeno <strong>${visibleCount}</strong> z <strong>${cards.length}</strong> aktiv`;
+
+            const noResults = document.getElementById('noResultsMsg');
+            if (visibleCount === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        }
+
+        async function triggerManualScan() {
+            const btn = document.getElementById('refreshBtn');
+            const toast = document.getElementById('scanStatusToast');
+            const btnSpan = btn.querySelector('span');
+
+            btn.classList.add('loading');
+            btn.disabled = true;
+            btnSpan.innerText = 'Skenuji XTB trhy...';
+            toast.innerText = '⏳ Stahuji data pro TOP/MID/LOW koše a spouštím Gemini AI...';
+            toast.style.display = 'block';
+
+            try {
+                const response = await fetch('/api/scan', { method: 'POST' });
+                if (response.ok) {
+                    toast.innerText = '✅ Analýza dokončena! Načítám nový report...';
+                    setTimeout(() => { window.location.reload(); }, 800);
+                } else {
+                    toast.innerText = '⚠️ Chyba serveru při skenování. Obnovuji...';
+                    setTimeout(() => { window.location.reload(); }, 1500);
+                }
+            } catch (err) {
+                window.location.reload();
+            }
+        }
+    </script>
+</body>
+</html>

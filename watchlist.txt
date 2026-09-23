@@ -1,0 +1,7 @@
+# Zde můžete uvést libovolné další XTB symboly (jeden na řádek).
+# Skript je automaticky dohledá v xtb_catalog.json a zařadí do prioritního koše TOP.
+# Příklady:
+# INTC.US
+# BMW.DE
+# VWCE.DE
+# CEZ1.CZ
