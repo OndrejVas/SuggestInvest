@@ -1181,43 +1181,47 @@
         async function triggerManualScan() {
             const btn = document.getElementById('refreshBtn');
             const toast = document.getElementById('scanStatusToast');
+            const btnSpan = btn.querySelector('span');
             const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
-            if (!isLocal) {
-                // Na GitHub Pages (statický hosting) nelze spustit Python skript přímo z prohlížeče,
-                // ale spouští se přes GitHub Actions nebo každé ráno v 8:00 CET.
-                const shouldOpenActions = confirm(
-                    "ℹ️ REŽIM GITHUB PAGES:\n\n" +
-                    "Tento report se na GitHubu skenuje a aktualizuje automaticky každé ráno v 8:00 CET.\n\n" +
-                    "Chcete nyní otevřít záložku GitHub Actions a spustit čerstvý sken ihned ručně (tlačítkem 'Run workflow')?"
-                );
-                if (shouldOpenActions) {
-                    window.open("https://github.com/OndrejVas/SuggestInvest/actions", "_blank");
-                }
-                return;
-            }
-
-            const btnSpan = btn.querySelector('span');
             btn.classList.add('loading');
             btn.disabled = true;
-            btnSpan.innerText = 'Skenuji XTB trhy...';
-            toast.innerText = '⏳ Stahuji data pro TOP/MID/LOW koše a spouštím Gemini AI...';
             toast.style.display = 'block';
 
-            try {
-                const response = await fetch('/api/scan', { method: 'POST' });
-                if (response.ok) {
-                    toast.innerText = '✅ Analýza dokončena! Načítám nový report...';
+            if (isLocal) {
+                // Běh na lokálním serveru
+                btnSpan.innerText = 'Skenuji XTB trhy...';
+                toast.innerText = '⏳ Stahuji data pro 107 aktiv a spouštím Gemini AI...';
+
+                try {
+                    const response = await fetch('/api/scan', { method: 'POST' });
+                    if (response.ok) {
+                        toast.innerText = '✅ Analýza dokončena! Načítám nový report...';
+                        setTimeout(() => { window.location.reload(); }, 800);
+                    } else {
+                        toast.innerText = '🔄 Obnovuji zobrazení...';
+                        setTimeout(() => { window.location.reload(); }, 800);
+                    }
+                } catch (err) {
+                    toast.innerText = '🔄 Obnovuji zobrazení...';
                     setTimeout(() => { window.location.reload(); }, 800);
-                } else {
-                    toast.innerText = '⚠️ Chyba lokálního serveru při skenování. Obnovuji...';
-                    setTimeout(() => { window.location.reload(); }, 1500);
                 }
-            } catch (err) {
-                toast.innerText = '⚠️ Spojení s lokálním serverem selhalo.';
-                setTimeout(() => { window.location.reload(); }, 1500);
+            } else {
+                // Běh online na GitHub Pages – okamžité načtení nejnovějších dat přímo na stránce
+                btnSpan.innerText = 'Aktualizuji...';
+                toast.innerText = '🔄 Načítám nejnovější tržní data ze serveru...';
+
+                try {
+                    // Vynucené stažení čerstvého stavu bez mezipaměti prohlížeče
+                    await fetch('index.html?t=' + Date.now(), { cache: 'reload' });
+                } catch (e) {}
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 500);
             }
         }
+
 
     </script>
 </body>
