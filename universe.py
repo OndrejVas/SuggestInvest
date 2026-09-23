@@ -221,6 +221,15 @@ def get_all_universe(tiers: List[str] = None) -> List[Dict[str, str]]:
         selected.extend(TIER_1_TOP)
     if "MID" in tier_upper or "2" in tier_upper:
         selected.extend(TIER_2_MID)
+        # Načtení rozšířeného balíku titulů
+        batch_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "universe_batch_a_l.json")
+        if os.path.exists(batch_file):
+            try:
+                import json
+                with open(batch_file, "r", encoding="utf-8") as f:
+                    selected.extend(json.load(f))
+            except Exception as e:
+                logger.warning(f"Chyba při čtení {batch_file}: {e}")
     if "LOW" in tier_upper or "3" in tier_upper:
         selected.extend(TIER_3_LOW)
 

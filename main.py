@@ -356,13 +356,13 @@ def run_scanner(tiers: List[str] = None, allow_mock_fallback: bool = True) -> st
     logger.info(f"Aktivních položek v univerzu: {len(universe_items)}")
 
     # 2. Paralelní stažení tržních dat
-    market_data = fetch_universe_market_data(universe_items, max_workers=15)
+    market_data = fetch_universe_market_data(universe_items, max_workers=20)
 
     # 3. Globální zprávy z RSS
     rss_news = fetch_rss_market_headlines(max_items=6)
 
     # 4. Dávková AI analýza s Gemini
-    signals_ai, is_demo = analyze_universe_with_gemini(market_data, rss_news, batch_size=16)
+    signals_ai, is_demo = analyze_universe_with_gemini(market_data, rss_news, batch_size=18)
 
     # 5. Spojení dat do jednotné struktury pro frontend
     ai_by_ticker = {item.get("ticker", "").upper(): item for item in signals_ai}

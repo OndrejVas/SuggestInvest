@@ -1,0 +1,3250 @@
+[
+  {
+    "xtb_symbol": "AAL.UK",
+    "yahoo_symbol": "AAL.L",
+    "name": "Anglo American PLC",
+    "asset_type": "AKCIE",
+    "currency": "GBP",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AAL.US",
+    "yahoo_symbol": "AAL",
+    "name": "American Airlines Group Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AAP.US",
+    "yahoo_symbol": "AAP",
+    "name": "Advance Auto Parts Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ABB.SE",
+    "yahoo_symbol": "ABB.ST",
+    "name": "ABB Ltd",
+    "asset_type": "AKCIE",
+    "currency": "SEK",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ABBV.US",
+    "yahoo_symbol": "ABBV",
+    "name": "AbbVie Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ABC.US",
+    "yahoo_symbol": "ABC",
+    "name": "Cencora Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ABEV.US",
+    "yahoo_symbol": "ABEV",
+    "name": "Ambev SA - ADR",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ABF.UK",
+    "yahoo_symbol": "ABF.L",
+    "name": "Associated British Foods PLC",
+    "asset_type": "AKCIE",
+    "currency": "GBP",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ABI.BE",
+    "yahoo_symbol": "ABI.BR",
+    "name": "Anheuser-Busch InBev SA/NV",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ABM.US",
+    "yahoo_symbol": "ABM",
+    "name": "ABM Industries Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ABN.NL",
+    "yahoo_symbol": "ABN.AS",
+    "name": "ABN AMRO Group NV",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ABNB.US",
+    "yahoo_symbol": "ABNB",
+    "name": "Airbnb Inc - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ABO.DE",
+    "yahoo_symbol": "ABO.DE",
+    "name": "Clearvise AG",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ABT.US",
+    "yahoo_symbol": "ABT",
+    "name": "Abbott Laboratories",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AC.FR",
+    "yahoo_symbol": "AC.PA",
+    "name": "Accor SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ACA.FR",
+    "yahoo_symbol": "ACA.PA",
+    "name": "Credit Agricole SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ACB.US",
+    "yahoo_symbol": "ACB",
+    "name": "Aurora Cannabis Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ACE.IT",
+    "yahoo_symbol": "ACE.MI",
+    "name": "Acea SpA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ACN.US",
+    "yahoo_symbol": "ACN",
+    "name": "Accenture PLC - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ACS.ES",
+    "yahoo_symbol": "ACS.MC",
+    "name": "ACS Actividades de Construccion y Servicios SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ACT.DE",
+    "yahoo_symbol": "ACT.DE",
+    "name": "Alzchem Group AG",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AD.NL",
+    "yahoo_symbol": "AD.AS",
+    "name": "Koninklijke Ahold Delhaize NV",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ADE.DE",
+    "yahoo_symbol": "ADE.DE",
+    "name": "Bitcoin Group SE",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ADEN.CH",
+    "yahoo_symbol": "ADEN.SW",
+    "name": "Adecco Group AG",
+    "asset_type": "AKCIE",
+    "currency": "CHF",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ADI.US",
+    "yahoo_symbol": "ADI",
+    "name": "Analog Devices Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ADM.UK",
+    "yahoo_symbol": "ADM.L",
+    "name": "Admiral Group PLC",
+    "asset_type": "AKCIE",
+    "currency": "GBP",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ADM.US",
+    "yahoo_symbol": "ADM",
+    "name": "Archer-Daniels-Midland Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ADP.FR",
+    "yahoo_symbol": "ADP.PA",
+    "name": "Aeroports de Paris",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ADP.US",
+    "yahoo_symbol": "ADP",
+    "name": "Automatic Data Processing Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ADS.DE",
+    "yahoo_symbol": "ADS.DE",
+    "name": "Adidas AG",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ADSK.US",
+    "yahoo_symbol": "ADSK",
+    "name": "Autodesk Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ADYEN.NL",
+    "yahoo_symbol": "ADYEN.AS",
+    "name": "Adyen NV",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AEG.US",
+    "yahoo_symbol": "AEG",
+    "name": "Aegon Ltd - ADR",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AEM.US",
+    "yahoo_symbol": "AEM",
+    "name": "Agnico Eagle Mines Ltd",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AENA.ES",
+    "yahoo_symbol": "AENA.MC",
+    "name": "Aena SME SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AEO.US",
+    "yahoo_symbol": "AEO",
+    "name": "American Eagle Outfitters Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AEP.US",
+    "yahoo_symbol": "AEP",
+    "name": "American Electric Power Co Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AER.US",
+    "yahoo_symbol": "AER",
+    "name": "AerCap Holdings NV",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AES.US",
+    "yahoo_symbol": "AES",
+    "name": "AES Corp/VA",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AF.FR",
+    "yahoo_symbol": "AF.PA",
+    "name": "Air France-KLM",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AFG.US",
+    "yahoo_symbol": "AFG",
+    "name": "American Financial Group Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AFL.US",
+    "yahoo_symbol": "AFL",
+    "name": "Aflac Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AFRM.US",
+    "yahoo_symbol": "AFRM",
+    "name": "Affirm Holdings Inc - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AGCO.US",
+    "yahoo_symbol": "AGCO",
+    "name": "AGCO Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AGI.US",
+    "yahoo_symbol": "AGI",
+    "name": "Alamos Gold Inc - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AGN.NL",
+    "yahoo_symbol": "AGN.AS",
+    "name": "Aegon NV",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AGNC.US",
+    "yahoo_symbol": "AGNC",
+    "name": "AGNC Investment Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AGO.US",
+    "yahoo_symbol": "AGO",
+    "name": "Assured Guaranty Ltd",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AGS.BE",
+    "yahoo_symbol": "AGS.BR",
+    "name": "Ageas",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AIG.US",
+    "yahoo_symbol": "AIG",
+    "name": "American International Group Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AIR.DE",
+    "yahoo_symbol": "AIR.DE",
+    "name": "Airbus SE",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AIR.US",
+    "yahoo_symbol": "AIR",
+    "name": "AAR Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AIZ.US",
+    "yahoo_symbol": "AIZ",
+    "name": "Assurant Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AJG.US",
+    "yahoo_symbol": "AJG",
+    "name": "Arthur J Gallagher & Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AKAM.US",
+    "yahoo_symbol": "AKAM",
+    "name": "Akamai Technologies Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AKE.FR",
+    "yahoo_symbol": "AKE.PA",
+    "name": "Arkema SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AKER.NO",
+    "yahoo_symbol": "AKER.OL",
+    "name": "Aker ASA",
+    "asset_type": "AKCIE",
+    "currency": "NOK",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AL.FR",
+    "yahoo_symbol": "AL.PA",
+    "name": "Air Liquide SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ALC.CH",
+    "yahoo_symbol": "ALC.SW",
+    "name": "Alcon Inc",
+    "asset_type": "AKCIE",
+    "currency": "CHF",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ALD.FR",
+    "yahoo_symbol": "ALD.PA",
+    "name": "ALD SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ALE.PL",
+    "yahoo_symbol": "ALE.WA",
+    "name": "Allegro.eu SA",
+    "asset_type": "AKCIE",
+    "currency": "PLN",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ALFA.SE",
+    "yahoo_symbol": "ALFA.ST",
+    "name": "Alfa Laval AB",
+    "asset_type": "AKCIE",
+    "currency": "SEK",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ALGN.US",
+    "yahoo_symbol": "ALGN",
+    "name": "Align Technology Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ALK.US",
+    "yahoo_symbol": "ALK",
+    "name": "Alaska Air Group Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ALL.US",
+    "yahoo_symbol": "ALL",
+    "name": "Allstate Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ALLE.US",
+    "yahoo_symbol": "ALLE",
+    "name": "Allegion PLC",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ALLY.US",
+    "yahoo_symbol": "ALLY",
+    "name": "Ally Financial Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ALM.ES",
+    "yahoo_symbol": "ALM.MC",
+    "name": "Almirall SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ALNY.US",
+    "yahoo_symbol": "ALNY",
+    "name": "Alnylam Pharmaceuticals Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ALO.FR",
+    "yahoo_symbol": "ALO.PA",
+    "name": "Alstom SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ALR.PL",
+    "yahoo_symbol": "ALR.WA",
+    "name": "Alior Bank SA",
+    "asset_type": "AKCIE",
+    "currency": "PLN",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ALRM.US",
+    "yahoo_symbol": "ALRM",
+    "name": "Alarm.com Holdings Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AMAT.US",
+    "yahoo_symbol": "AMAT",
+    "name": "Applied Materials Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AMBA.US",
+    "yahoo_symbol": "AMBA",
+    "name": "Ambarella Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AMC.US",
+    "yahoo_symbol": "AMC",
+    "name": "AMC Entertainment Holdings Inc - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AMCR.US",
+    "yahoo_symbol": "AMCR",
+    "name": "Amcor PLC",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AMD.DE",
+    "yahoo_symbol": "AMD.DE",
+    "name": "Advanced Micro Devices Inc",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AME.US",
+    "yahoo_symbol": "AME",
+    "name": "AMETEK Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AMG.NL",
+    "yahoo_symbol": "AMG.AS",
+    "name": "AMG Critical Materials NV",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AMG.US",
+    "yahoo_symbol": "AMG",
+    "name": "Affiliated Managers Group Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AMGN.US",
+    "yahoo_symbol": "AMGN",
+    "name": "Amgen Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AMP.IT",
+    "yahoo_symbol": "AMP.MI",
+    "name": "Amplifon SpA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AMP.US",
+    "yahoo_symbol": "AMP",
+    "name": "Ameriprise Financial Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AMS.ES",
+    "yahoo_symbol": "AMS.MC",
+    "name": "Amadeus IT Group SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AMT.US",
+    "yahoo_symbol": "AMT",
+    "name": "American Tower Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AMX.US",
+    "yahoo_symbol": "AMX",
+    "name": "America Movil S.A.B. de C.V. - ADR",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AMZN.DE",
+    "yahoo_symbol": "AMZN.DE",
+    "name": "Amazon.com Inc",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AN.US",
+    "yahoo_symbol": "AN",
+    "name": "AutoNation Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ANA.ES",
+    "yahoo_symbol": "ANA.MC",
+    "name": "Acciona SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ANE.ES",
+    "yahoo_symbol": "ANE.MC",
+    "name": "Acciona Energias Renova",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ANET.US",
+    "yahoo_symbol": "ANET",
+    "name": "Arista Networks Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ANF.US",
+    "yahoo_symbol": "ANF",
+    "name": "Abercrombie & Fitch Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ANGI.US",
+    "yahoo_symbol": "ANGI",
+    "name": "Angi Inc - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ANTO.UK",
+    "yahoo_symbol": "ANTO.L",
+    "name": "Antofagasta PLC",
+    "asset_type": "AKCIE",
+    "currency": "GBP",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AO.UK",
+    "yahoo_symbol": "AO.L",
+    "name": "AO World PLC",
+    "asset_type": "AKCIE",
+    "currency": "GBP",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AON.US",
+    "yahoo_symbol": "AON",
+    "name": "Aon PLC",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AOS.US",
+    "yahoo_symbol": "AOS",
+    "name": "AO Smith Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "APA.US",
+    "yahoo_symbol": "APA",
+    "name": "Apache Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "APD.US",
+    "yahoo_symbol": "APD",
+    "name": "Air Products & Chemicals Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "APH.US",
+    "yahoo_symbol": "APH",
+    "name": "Amphenol Corp - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "APO.US",
+    "yahoo_symbol": "APO",
+    "name": "Apollo Global Management Inc (Cboe BZX Real-Time Quote)",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "APP.US",
+    "yahoo_symbol": "APP",
+    "name": "Applovin Corp - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "APTV.US",
+    "yahoo_symbol": "APTV",
+    "name": "Aptiv PLC",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AR.US",
+    "yahoo_symbol": "AR",
+    "name": "Antero Resources Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ARES.US",
+    "yahoo_symbol": "ARES",
+    "name": "Ares Management Corp - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ARW.US",
+    "yahoo_symbol": "ARW",
+    "name": "Arrow Electronics Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ASAN.US",
+    "yahoo_symbol": "ASAN",
+    "name": "Asana Inc - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ASML.US",
+    "yahoo_symbol": "ASML",
+    "name": "ASML Holding NV - ADR",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ASO.US",
+    "yahoo_symbol": "ASO",
+    "name": "Academy Sports & Outdoors Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ASRNL.NL",
+    "yahoo_symbol": "ASRNL.AS",
+    "name": "ASR Nederland NV",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ATO.FR",
+    "yahoo_symbol": "ATO.PA",
+    "name": "Atos SE",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ATO.US",
+    "yahoo_symbol": "ATO",
+    "name": "Atmos Energy Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AV.UK",
+    "yahoo_symbol": "AV.L",
+    "name": "Aviva PLC",
+    "asset_type": "AKCIE",
+    "currency": "GBP",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AVB.US",
+    "yahoo_symbol": "AVB",
+    "name": "AvalonBay Communities Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AVO.US",
+    "yahoo_symbol": "AVO",
+    "name": "Mission Produce Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AVY.US",
+    "yahoo_symbol": "AVY",
+    "name": "Avery Dennison Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AWK.US",
+    "yahoo_symbol": "AWK",
+    "name": "American Water Works Co Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AX.US",
+    "yahoo_symbol": "AX",
+    "name": "Axos Financial Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AXL.US",
+    "yahoo_symbol": "AXL",
+    "name": "Dauch Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AXON.US",
+    "yahoo_symbol": "AXON",
+    "name": "Axon Enterprise Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AXP.US",
+    "yahoo_symbol": "AXP",
+    "name": "American Express Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AZN.SE",
+    "yahoo_symbol": "AZN.ST",
+    "name": "AstraZeneca PLC",
+    "asset_type": "AKCIE",
+    "currency": "SEK",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AZN.US",
+    "yahoo_symbol": "AZN",
+    "name": "AstraZeneca PLC - ADR",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "AZO.US",
+    "yahoo_symbol": "AZO",
+    "name": "AutoZone Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "B.US",
+    "yahoo_symbol": "B",
+    "name": "Barrick Mining Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BA.UK",
+    "yahoo_symbol": "BA.L",
+    "name": "BAE Systems PLC",
+    "asset_type": "AKCIE",
+    "currency": "GBP",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BAC.US",
+    "yahoo_symbol": "BAC",
+    "name": "Bank of America Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BALL.US",
+    "yahoo_symbol": "BALL",
+    "name": "Ball Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BAM.US",
+    "yahoo_symbol": "BAM",
+    "name": "Brookfield Corp - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BARC.UK",
+    "yahoo_symbol": "BARC.L",
+    "name": "Barclays PLC",
+    "asset_type": "AKCIE",
+    "currency": "GBP",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BATS.UK",
+    "yahoo_symbol": "BATS.L",
+    "name": "British American Tobacco PLC",
+    "asset_type": "AKCIE",
+    "currency": "GBP",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BAX.US",
+    "yahoo_symbol": "BAX",
+    "name": "Baxter International Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BAYN.DE",
+    "yahoo_symbol": "BAYN.DE",
+    "name": "Bayer AG",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BB.FR",
+    "yahoo_symbol": "BB.PA",
+    "name": "Societe BIC SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BBVA.ES",
+    "yahoo_symbol": "BBVA.MC",
+    "name": "Banco Bilbao Vizcaya Argentaria SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BBVA.US",
+    "yahoo_symbol": "BBVA",
+    "name": "BBVA ADR",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BBY.UK",
+    "yahoo_symbol": "BBY.L",
+    "name": "Balfour Beatty PLC",
+    "asset_type": "AKCIE",
+    "currency": "GBP",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BBY.US",
+    "yahoo_symbol": "BBY",
+    "name": "Best Buy Co Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BC.US",
+    "yahoo_symbol": "BC",
+    "name": "Brunswick Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BCE.US",
+    "yahoo_symbol": "BCE",
+    "name": "BCE Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BDC.US",
+    "yahoo_symbol": "BDC",
+    "name": "Belden Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BDEV.UK",
+    "yahoo_symbol": "BDEV.L",
+    "name": "Barratt Developments PLC",
+    "asset_type": "AKCIE",
+    "currency": "GBP",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BDX.US",
+    "yahoo_symbol": "BDX",
+    "name": "Becton Dickinson and Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BEI.DE",
+    "yahoo_symbol": "BEI.DE",
+    "name": "Beiersdorf AG",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BEN.US",
+    "yahoo_symbol": "BEN",
+    "name": "Franklin Resources Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BEPC.US",
+    "yahoo_symbol": "BEPC",
+    "name": "Brookfield Renewable Corp - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BFB.US",
+    "yahoo_symbol": "BF-B",
+    "name": "Brown-Forman Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BGC.US",
+    "yahoo_symbol": "BGC",
+    "name": "Bgc Group Inc - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BGNE.US",
+    "yahoo_symbol": "BGNE",
+    "name": "Beigene Ltd - ADR",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BHP.UK",
+    "yahoo_symbol": "BHP.L",
+    "name": "BHP Group Ltd",
+    "asset_type": "AKCIE",
+    "currency": "GBP",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BHP.US",
+    "yahoo_symbol": "BHP",
+    "name": "BHP Billiton Ltd - ADR",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BIIB.US",
+    "yahoo_symbol": "BIIB",
+    "name": "Biogen Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BILL.US",
+    "yahoo_symbol": "BILL",
+    "name": "Bill.com Holdings Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BIO.US",
+    "yahoo_symbol": "BIO",
+    "name": "Bio Rad Laboratories Inc - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BK.US",
+    "yahoo_symbol": "BK",
+    "name": "Bank of New York Mellon Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BKG.UK",
+    "yahoo_symbol": "BKG.L",
+    "name": "Berkeley Group Holdings PLC",
+    "asset_type": "AKCIE",
+    "currency": "GBP",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BKH.US",
+    "yahoo_symbol": "BKH",
+    "name": "Black Hills Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BKNG.US",
+    "yahoo_symbol": "BKNG",
+    "name": "Booking Holdings Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BKR.US",
+    "yahoo_symbol": "BKR",
+    "name": "Baker Hughes Co - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BLK.US",
+    "yahoo_symbol": "BLK",
+    "name": "BlackRock Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BLKB.US",
+    "yahoo_symbol": "BLKB",
+    "name": "Blackbaud Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BLND.UK",
+    "yahoo_symbol": "BLND.L",
+    "name": "British Land Co PLC",
+    "asset_type": "AKCIE",
+    "currency": "GBP",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BMO.US",
+    "yahoo_symbol": "BMO",
+    "name": "Bank of Montreal",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BMRN.US",
+    "yahoo_symbol": "BMRN",
+    "name": "BioMarin Pharmaceutical Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BMY.US",
+    "yahoo_symbol": "BMY",
+    "name": "Bristol-Myers Squibb Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BN.FR",
+    "yahoo_symbol": "BN.PA",
+    "name": "Danone SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BNP.FR",
+    "yahoo_symbol": "BNP.PA",
+    "name": "BNP Paribas SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BNTX.US",
+    "yahoo_symbol": "BNTX",
+    "name": "BioNTech SE - ADR",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BOOT.US",
+    "yahoo_symbol": "BOOT",
+    "name": "Boot Barn Holdings Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BOX.US",
+    "yahoo_symbol": "BOX",
+    "name": "Box Inc - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BP.US",
+    "yahoo_symbol": "BP",
+    "name": "BP PLC - ADR",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BPOP.US",
+    "yahoo_symbol": "BPOP",
+    "name": "Popular Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BR.US",
+    "yahoo_symbol": "BR",
+    "name": "Broadridge Financial Solutions Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BRBY.UK",
+    "yahoo_symbol": "BRBY.L",
+    "name": "Burberry Group PLC",
+    "asset_type": "AKCIE",
+    "currency": "GBP",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BRKB.US",
+    "yahoo_symbol": "BRK-B",
+    "name": "Berkshire Hathaway Inc - class B",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BRO.US",
+    "yahoo_symbol": "BRO",
+    "name": "Brown & Brown Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BROS.US",
+    "yahoo_symbol": "BROS",
+    "name": "Dutch Bros Inc (Cboe BZX Real-Time Quote)",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BSX.US",
+    "yahoo_symbol": "BSX",
+    "name": "Boston Scientific Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BTU.US",
+    "yahoo_symbol": "BTU",
+    "name": "Peabody Energy Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BUD.US",
+    "yahoo_symbol": "BUD",
+    "name": "Anheuser-Busch InBev SA/NV - ADR",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BURL.US",
+    "yahoo_symbol": "BURL",
+    "name": "Burlington Stores Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BWA.US",
+    "yahoo_symbol": "BWA",
+    "name": "BorgWarner Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BWXT.US",
+    "yahoo_symbol": "BWXT",
+    "name": "BWX Technologies Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BX.US",
+    "yahoo_symbol": "BX",
+    "name": "Blackstone Group LP",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BXP.US",
+    "yahoo_symbol": "BXP",
+    "name": "Boston Properties Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BYD.US",
+    "yahoo_symbol": "BYD",
+    "name": "Boyd Gaming Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BYND.US",
+    "yahoo_symbol": "BYND",
+    "name": "Beyond Meat Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "C.US",
+    "yahoo_symbol": "C",
+    "name": "Citigroup Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CA.FR",
+    "yahoo_symbol": "CA.PA",
+    "name": "Carrefour SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CABK.ES",
+    "yahoo_symbol": "CABK.MC",
+    "name": "CaixaBank SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CACC.US",
+    "yahoo_symbol": "CACC",
+    "name": "Credit Acceptance Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CACI.US",
+    "yahoo_symbol": "CACI",
+    "name": "CACI International Inc - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CAG.US",
+    "yahoo_symbol": "CAG",
+    "name": "Conagra Brands Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CAH.US",
+    "yahoo_symbol": "CAH",
+    "name": "Cardinal Health Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CAR.US",
+    "yahoo_symbol": "CAR",
+    "name": "Avis Budget Group Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CARR.US",
+    "yahoo_symbol": "CARR",
+    "name": "Carrier Global Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CB.US",
+    "yahoo_symbol": "CB",
+    "name": "Chubb Ltd",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CBK.DE",
+    "yahoo_symbol": "CBK.DE",
+    "name": "Commerzbank AG",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CBOE.US",
+    "yahoo_symbol": "CBOE",
+    "name": "Cboe Global Markets Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CBRE.US",
+    "yahoo_symbol": "CBRE",
+    "name": "CBRE Group Inc - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CC.US",
+    "yahoo_symbol": "CC",
+    "name": "Chemours Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CCEP.US",
+    "yahoo_symbol": "CCEP",
+    "name": "Coca-Cola Europacific Partners PLC",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CCI.US",
+    "yahoo_symbol": "CCI",
+    "name": "Crown Castle International Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CCK.US",
+    "yahoo_symbol": "CCK",
+    "name": "Crown Holdings Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CCL.US",
+    "yahoo_symbol": "CCL",
+    "name": "Carnival Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CDNS.US",
+    "yahoo_symbol": "CDNS",
+    "name": "Cadence Design Systems Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CDW.US",
+    "yahoo_symbol": "CDW",
+    "name": "CDW Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CE.US",
+    "yahoo_symbol": "CE",
+    "name": "Celanese Corp - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CEG.US",
+    "yahoo_symbol": "CEG",
+    "name": "Constellation Energy Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CF.US",
+    "yahoo_symbol": "CF",
+    "name": "CF Industries Holdings Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CFG.US",
+    "yahoo_symbol": "CFG",
+    "name": "Citizens Financial Group Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CFR.CH",
+    "yahoo_symbol": "CFR.SW",
+    "name": "Cie Financiere Richemont SA",
+    "asset_type": "AKCIE",
+    "currency": "CHF",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CG.US",
+    "yahoo_symbol": "CG",
+    "name": "Carlyle Group Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CHD.US",
+    "yahoo_symbol": "CHD",
+    "name": "Church & Dwight Co Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CHDN.US",
+    "yahoo_symbol": "CHDN",
+    "name": "Churchill Downs Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CHE.US",
+    "yahoo_symbol": "CHE",
+    "name": "Chemed Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CHKP.US",
+    "yahoo_symbol": "CHKP",
+    "name": "Check Point Software Technologies Ltd",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CHRW.US",
+    "yahoo_symbol": "CHRW",
+    "name": "CH Robinson Worldwide Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CHTR.US",
+    "yahoo_symbol": "CHTR",
+    "name": "Charter Communications Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CHWY.US",
+    "yahoo_symbol": "CHWY",
+    "name": "Chewy Inc - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CI.US",
+    "yahoo_symbol": "CI",
+    "name": "Cigna Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CINF.US",
+    "yahoo_symbol": "CINF",
+    "name": "Cincinnati Financial Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CL.US",
+    "yahoo_symbol": "CL",
+    "name": "Colgate-Palmolive Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CLF.US",
+    "yahoo_symbol": "CLF",
+    "name": "Cleveland-Cliffs Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CLX.US",
+    "yahoo_symbol": "CLX",
+    "name": "Clorox Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CMCSA.US",
+    "yahoo_symbol": "CMCSA",
+    "name": "Comcast Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CME.US",
+    "yahoo_symbol": "CME",
+    "name": "CME Group Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CMG.US",
+    "yahoo_symbol": "CMG",
+    "name": "Chipotle Mexican Grill Inc - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CMI.US",
+    "yahoo_symbol": "CMI",
+    "name": "Cummins Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CMS.US",
+    "yahoo_symbol": "CMS",
+    "name": "CMS Energy Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CNC.US",
+    "yahoo_symbol": "CNC",
+    "name": "Centene Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CNI.US",
+    "yahoo_symbol": "CNI",
+    "name": "Canadian National Railway Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CNP.US",
+    "yahoo_symbol": "CNP",
+    "name": "CenterPoint Energy Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CNQ.US",
+    "yahoo_symbol": "CNQ",
+    "name": "Canadian Natural Resources Ltd",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "COF.US",
+    "yahoo_symbol": "COF",
+    "name": "Capital One Financial Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "COO.US",
+    "yahoo_symbol": "COO",
+    "name": "Cooper Cos Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "COP.US",
+    "yahoo_symbol": "COP",
+    "name": "ConocoPhillips",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "COST.US",
+    "yahoo_symbol": "COST",
+    "name": "Costco Wholesale Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CPB.US",
+    "yahoo_symbol": "CPB",
+    "name": "Campbell Soup Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CPRT.US",
+    "yahoo_symbol": "CPRT",
+    "name": "Copart Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CPT.US",
+    "yahoo_symbol": "CPT",
+    "name": "Camden Property Trust",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CRH.US",
+    "yahoo_symbol": "CRH",
+    "name": "CRH PLC",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CRL.US",
+    "yahoo_symbol": "CRL",
+    "name": "Charles River Laboratories International Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CRWD.US",
+    "yahoo_symbol": "CRWD",
+    "name": "Crowdstrike Holdings Inc - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CS.FR",
+    "yahoo_symbol": "CS.PA",
+    "name": "AXA SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CSGP.US",
+    "yahoo_symbol": "CSGP",
+    "name": "CoStar Group Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CSX.US",
+    "yahoo_symbol": "CSX",
+    "name": "CSX Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CTAS.US",
+    "yahoo_symbol": "CTAS",
+    "name": "Cintas Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CTSH.US",
+    "yahoo_symbol": "CTSH",
+    "name": "Cognizant Technology Solutions - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CTVA.US",
+    "yahoo_symbol": "CTVA",
+    "name": "Corteva Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CVS.US",
+    "yahoo_symbol": "CVS",
+    "name": "CVS Health Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CVX.US",
+    "yahoo_symbol": "CVX",
+    "name": "Chevron Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "CZR.US",
+    "yahoo_symbol": "CZR",
+    "name": "Caesars Entertainment Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "D.US",
+    "yahoo_symbol": "D",
+    "name": "Dominion Energy Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DAL.US",
+    "yahoo_symbol": "DAL",
+    "name": "Delta Air Lines Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DB1.DE",
+    "yahoo_symbol": "DB1.DE",
+    "name": "Deutsche Boerse AG",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DBK.DE",
+    "yahoo_symbol": "DBK.DE",
+    "name": "Deutsche Bank AG",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DD.US",
+    "yahoo_symbol": "DD",
+    "name": "DuPont de Nemours Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DE.US",
+    "yahoo_symbol": "DE",
+    "name": "Deere & Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DELL.US",
+    "yahoo_symbol": "DELL",
+    "name": "Dell Technologies Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DG.FR",
+    "yahoo_symbol": "DG.PA",
+    "name": "Vinci SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DG.US",
+    "yahoo_symbol": "DG",
+    "name": "Dollar General Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DGX.US",
+    "yahoo_symbol": "DGX",
+    "name": "Quest Diagnostics Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DHI.US",
+    "yahoo_symbol": "DHI",
+    "name": "DR Horton Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DHR.US",
+    "yahoo_symbol": "DHR",
+    "name": "Danaher Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DLR.US",
+    "yahoo_symbol": "DLR",
+    "name": "Digital Realty Trust Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DLTR.US",
+    "yahoo_symbol": "DLTR",
+    "name": "Dollar Tree Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DOV.US",
+    "yahoo_symbol": "DOV",
+    "name": "Dover Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DOW.US",
+    "yahoo_symbol": "DOW",
+    "name": "Dow Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DPZ.US",
+    "yahoo_symbol": "DPZ",
+    "name": "Domino's Pizza Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DRI.US",
+    "yahoo_symbol": "DRI",
+    "name": "Darden Restaurants Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DTE.US",
+    "yahoo_symbol": "DTE",
+    "name": "DTE Energy Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DUK.US",
+    "yahoo_symbol": "DUK",
+    "name": "Duke Energy Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DVA.US",
+    "yahoo_symbol": "DVA",
+    "name": "DaVita Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DVN.US",
+    "yahoo_symbol": "DVN",
+    "name": "Devon Energy Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DXC.US",
+    "yahoo_symbol": "DXC",
+    "name": "DXC Technology Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "DXCM.US",
+    "yahoo_symbol": "DXCM",
+    "name": "DexCom Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "E.US",
+    "yahoo_symbol": "E",
+    "name": "Eni SpA - ADR",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "EA.US",
+    "yahoo_symbol": "EA",
+    "name": "Electronic Arts Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "EBAY.US",
+    "yahoo_symbol": "EBAY",
+    "name": "eBay Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ECL.US",
+    "yahoo_symbol": "ECL",
+    "name": "Ecolab Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ED.US",
+    "yahoo_symbol": "ED",
+    "name": "Consolidated Edison Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "EFX.US",
+    "yahoo_symbol": "EFX",
+    "name": "Equifax Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "EIX.US",
+    "yahoo_symbol": "EIX",
+    "name": "Edison International",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "EL.FR",
+    "yahoo_symbol": "EL.PA",
+    "name": "EssilorLuxottica",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "EL.US",
+    "yahoo_symbol": "EL",
+    "name": "Estee Lauder Cos Inc - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "EMN.US",
+    "yahoo_symbol": "EMN",
+    "name": "Eastman Chemical Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "EMR.US",
+    "yahoo_symbol": "EMR",
+    "name": "Emerson Electric Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ENI.IT",
+    "yahoo_symbol": "ENI.MI",
+    "name": "Eni SpA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "EOAN.DE",
+    "yahoo_symbol": "EOAN.DE",
+    "name": "E.ON SE",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "EOG.US",
+    "yahoo_symbol": "EOG",
+    "name": "EOG Resources Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "EPAM.US",
+    "yahoo_symbol": "EPAM",
+    "name": "EPAM Systems Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "EQIX.US",
+    "yahoo_symbol": "EQIX",
+    "name": "Equinix Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "EQR.US",
+    "yahoo_symbol": "EQR",
+    "name": "Equity Residential",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ES.US",
+    "yahoo_symbol": "ES",
+    "name": "Eversource Energy",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ESS.US",
+    "yahoo_symbol": "ESS",
+    "name": "Essex Property Trust Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ETN.US",
+    "yahoo_symbol": "ETN",
+    "name": "Eaton Corp PLC",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ETR.US",
+    "yahoo_symbol": "ETR",
+    "name": "Entergy Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ETSY.US",
+    "yahoo_symbol": "ETSY",
+    "name": "Etsy Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "EVRG.US",
+    "yahoo_symbol": "EVRG",
+    "name": "Evergy Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "EW.US",
+    "yahoo_symbol": "EW",
+    "name": "Edwards Lifesciences Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "EXC.US",
+    "yahoo_symbol": "EXC",
+    "name": "Exelon Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "EXPD.US",
+    "yahoo_symbol": "EXPD",
+    "name": "Expeditors International of Washington Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "EXPE.US",
+    "yahoo_symbol": "EXPE",
+    "name": "Expedia Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "EXR.US",
+    "yahoo_symbol": "EXR",
+    "name": "Extra Space Storage Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "F.US",
+    "yahoo_symbol": "F",
+    "name": "Ford Motor Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "FANG.US",
+    "yahoo_symbol": "FANG",
+    "name": "Diamondback Energy Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "FAST.US",
+    "yahoo_symbol": "FAST",
+    "name": "Fastenal Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "FCX.US",
+    "yahoo_symbol": "FCX",
+    "name": "Freeport-McMoRan Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "FDS.US",
+    "yahoo_symbol": "FDS",
+    "name": "FactSet Research Systems Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "FDX.US",
+    "yahoo_symbol": "FDX",
+    "name": "FedEx Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "FE.US",
+    "yahoo_symbol": "FE",
+    "name": "FirstEnergy Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "FFIV.US",
+    "yahoo_symbol": "FFIV",
+    "name": "F5 Networks Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "FIS.US",
+    "yahoo_symbol": "FIS",
+    "name": "Fidelity National Information Services Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "FITB.US",
+    "yahoo_symbol": "FITB",
+    "name": "Fifth Third Bancorp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "FMC.US",
+    "yahoo_symbol": "FMC",
+    "name": "FMC Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "FOX.US",
+    "yahoo_symbol": "FOX",
+    "name": "Fox Corp - class B",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "FOXA.US",
+    "yahoo_symbol": "FOXA",
+    "name": "Fox Corp - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "FRE.DE",
+    "yahoo_symbol": "FRE.DE",
+    "name": "Fresenius SE & Co KGaA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "FRT.US",
+    "yahoo_symbol": "FRT",
+    "name": "Federal Realty Investment Trust",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "FTNT.US",
+    "yahoo_symbol": "FTNT",
+    "name": "Fortinet Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "FTV.US",
+    "yahoo_symbol": "FTV",
+    "name": "Fortive Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "GD.US",
+    "yahoo_symbol": "GD",
+    "name": "General Dynamics Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "GILD.US",
+    "yahoo_symbol": "GILD",
+    "name": "Gilead Sciences Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "GIS.US",
+    "yahoo_symbol": "GIS",
+    "name": "General Mills Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "GL.US",
+    "yahoo_symbol": "GL",
+    "name": "Globe Life Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "GLW.US",
+    "yahoo_symbol": "GLW",
+    "name": "Corning Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "GM.US",
+    "yahoo_symbol": "GM",
+    "name": "General Motors Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "GNRC.US",
+    "yahoo_symbol": "GNRC",
+    "name": "Generac Holdings Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "GOOG.US",
+    "yahoo_symbol": "GOOG",
+    "name": "Alphabet Inc - class C",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "GPC.US",
+    "yahoo_symbol": "GPC",
+    "name": "Genuine Parts Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "GPN.US",
+    "yahoo_symbol": "GPN",
+    "name": "Global Payments Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "GRMN.US",
+    "yahoo_symbol": "GRMN",
+    "name": "Garmin Ltd",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "GS.US",
+    "yahoo_symbol": "GS",
+    "name": "Goldman Sachs Group Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "GSK.UK",
+    "yahoo_symbol": "GSK.L",
+    "name": "GlaxoSmithKline PLC",
+    "asset_type": "AKCIE",
+    "currency": "GBP",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "GWW.US",
+    "yahoo_symbol": "GWW",
+    "name": "WW Grainger Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "HAL.US",
+    "yahoo_symbol": "HAL",
+    "name": "Halliburton Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "HAS.US",
+    "yahoo_symbol": "HAS",
+    "name": "Hasbro Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "HBAN.US",
+    "yahoo_symbol": "HBAN",
+    "name": "Huntington Bancshares Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "HCA.US",
+    "yahoo_symbol": "HCA",
+    "name": "HCA Healthcare Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "HD.US",
+    "yahoo_symbol": "HD",
+    "name": "Home Depot Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "HEI.DE",
+    "yahoo_symbol": "HEI.DE",
+    "name": "HeidelbergCement AG",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "HIG.US",
+    "yahoo_symbol": "HIG",
+    "name": "Hartford Financial Services Group Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "HII.US",
+    "yahoo_symbol": "HII",
+    "name": "Huntington Ingalls Industries Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "HLT.US",
+    "yahoo_symbol": "HLT",
+    "name": "Hilton Worldwide Holdings Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "HON.US",
+    "yahoo_symbol": "HON",
+    "name": "Honeywell International Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "HPE.US",
+    "yahoo_symbol": "HPE",
+    "name": "Hewlett Packard Enterprise Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "HPQ.US",
+    "yahoo_symbol": "HPQ",
+    "name": "HP Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "HRL.US",
+    "yahoo_symbol": "HRL",
+    "name": "Hormel Foods Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "HSBC.UK",
+    "yahoo_symbol": "HSBC.L",
+    "name": "HSBC Holdings PLC",
+    "asset_type": "AKCIE",
+    "currency": "GBP",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "HSIC.US",
+    "yahoo_symbol": "HSIC",
+    "name": "Henry Schein Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "HST.US",
+    "yahoo_symbol": "HST",
+    "name": "Host Hotels & Resorts Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "HSY.US",
+    "yahoo_symbol": "HSY",
+    "name": "Hershey Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "HUM.US",
+    "yahoo_symbol": "HUM",
+    "name": "Humana Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "HWM.US",
+    "yahoo_symbol": "HWM",
+    "name": "Howmet Aerospace Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ICE.US",
+    "yahoo_symbol": "ICE",
+    "name": "Intercontinental Exchange Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "IDXX.US",
+    "yahoo_symbol": "IDXX",
+    "name": "IDEXX Laboratories Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "IEX.US",
+    "yahoo_symbol": "IEX",
+    "name": "IDEX Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "IFF.US",
+    "yahoo_symbol": "IFF",
+    "name": "International Flavors & Fragrances Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "IFX.DE",
+    "yahoo_symbol": "IFX.DE",
+    "name": "Infineon Technologies AG",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ILMN.US",
+    "yahoo_symbol": "ILMN",
+    "name": "Illumina Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "INCY.US",
+    "yahoo_symbol": "INCY",
+    "name": "Incyte Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "INTU.US",
+    "yahoo_symbol": "INTU",
+    "name": "Intuit Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "INVH.US",
+    "yahoo_symbol": "INVH",
+    "name": "Invitation Homes Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "IP.US",
+    "yahoo_symbol": "IP",
+    "name": "International Paper Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "IPG.US",
+    "yahoo_symbol": "IPG",
+    "name": "IPG Photonics Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "IQV.US",
+    "yahoo_symbol": "IQV",
+    "name": "IQVIA Holdings Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "IR.US",
+    "yahoo_symbol": "IR",
+    "name": "Ingersoll-Rand Inc.",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "IRM.US",
+    "yahoo_symbol": "IRM",
+    "name": "Iron Mountain Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ISRG.US",
+    "yahoo_symbol": "ISRG",
+    "name": "Intuitive Surgical Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "IT.US",
+    "yahoo_symbol": "IT",
+    "name": "Gartner Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ITW.US",
+    "yahoo_symbol": "ITW",
+    "name": "Illinois Tool Works Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "IVZ.US",
+    "yahoo_symbol": "IVZ",
+    "name": "Invesco Ltd",
+    "asset_type": "ETF",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "J.US",
+    "yahoo_symbol": "J",
+    "name": "Jacobs Engineering Group Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "JBHT.US",
+    "yahoo_symbol": "JBHT",
+    "name": "JB Hunt Transport Services Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "JCI.US",
+    "yahoo_symbol": "JCI",
+    "name": "Johnson Controls International plc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "JKHY.US",
+    "yahoo_symbol": "JKHY",
+    "name": "Jack Henry & Associates Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "JNJ.US",
+    "yahoo_symbol": "JNJ",
+    "name": "Johnson & Johnson",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "KDP.US",
+    "yahoo_symbol": "KDP",
+    "name": "Keurig Dr Pepper Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "KEY.US",
+    "yahoo_symbol": "KEY",
+    "name": "KeyCorp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "KEYS.US",
+    "yahoo_symbol": "KEYS",
+    "name": "Keysight Technologies Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "KHC.US",
+    "yahoo_symbol": "KHC",
+    "name": "Kraft Heinz Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "KIM.US",
+    "yahoo_symbol": "KIM",
+    "name": "Kimco Realty Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "KLAC.US",
+    "yahoo_symbol": "KLAC",
+    "name": "KLA-Tencor Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "KMB.US",
+    "yahoo_symbol": "KMB",
+    "name": "Kimberly-Clark Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "KMI.US",
+    "yahoo_symbol": "KMI",
+    "name": "Kinder Morgan Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "KMX.US",
+    "yahoo_symbol": "KMX",
+    "name": "CarMax Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "KO.US",
+    "yahoo_symbol": "KO",
+    "name": "Coca-Cola Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "KR.US",
+    "yahoo_symbol": "KR",
+    "name": "Kroger Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "L.US",
+    "yahoo_symbol": "L",
+    "name": "Loews Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "LDOS.US",
+    "yahoo_symbol": "LDOS",
+    "name": "Leidos Holdings Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "LEN.US",
+    "yahoo_symbol": "LEN",
+    "name": "Lennar Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "LH.US",
+    "yahoo_symbol": "LH",
+    "name": "Laboratory Corp of America Holdings",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "LHX.US",
+    "yahoo_symbol": "LHX",
+    "name": "L3Harris Technologies Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "LIN.US",
+    "yahoo_symbol": "LIN",
+    "name": "Linde PLC",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "LKQ.US",
+    "yahoo_symbol": "LKQ",
+    "name": "LKQ Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "LNC.US",
+    "yahoo_symbol": "LNC",
+    "name": "Lincoln National Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "LNT.US",
+    "yahoo_symbol": "LNT",
+    "name": "Alliant Energy Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "LOW.US",
+    "yahoo_symbol": "LOW",
+    "name": "Lowe's Cos Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "LRCX.US",
+    "yahoo_symbol": "LRCX",
+    "name": "Lam Research Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "LSEG.UK",
+    "yahoo_symbol": "LSEG.L",
+    "name": "London Stock Exchange Group PLC",
+    "asset_type": "AKCIE",
+    "currency": "GBP",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "LUV.US",
+    "yahoo_symbol": "LUV",
+    "name": "Southwest Airlines Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "LVS.US",
+    "yahoo_symbol": "LVS",
+    "name": "Las Vegas Sands Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "LW.US",
+    "yahoo_symbol": "LW",
+    "name": "Lamb Weston Holdings Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "LYB.US",
+    "yahoo_symbol": "LYB",
+    "name": "LyondellBasell Industries NV",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "LYV.US",
+    "yahoo_symbol": "LYV",
+    "name": "Live Nation Entertainment Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  }
+]

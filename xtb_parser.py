@@ -47,9 +47,14 @@ def map_xtb_to_yahoo(xtb_symbol: str) -> str:
     if s in EXCHANGE_MAPPING:
         return EXCHANGE_MAPPING[s]
     
-    # Americké akcie a ETF (AAPL.US -> AAPL)
+    # Americké akcie a ETF (AAPL.US -> AAPL, BRKB.US -> BRK-B)
     if s.endswith(".US"):
-        return s[:-3]
+        base = s[:-3]
+        if base == "BRKB":
+            return "BRK-B"
+        if base == "BFB":
+            return "BF-B"
+        return base
     # Německá Xetra (SAP.DE -> SAP.DE)
     if s.endswith(".DE"):
         return s
@@ -71,8 +76,27 @@ def map_xtb_to_yahoo(xtb_symbol: str) -> str:
     # Varšavská burza GPW (.PL -> .WA)
     if s.endswith(".PL"):
         return s[:-3] + ".WA"
+    # Švýcarská burza SIX (.CH -> .SW)
+    if s.endswith(".CH"):
+        return s[:-3] + ".SW"
+    # Švédská burza Stockholm (.SE -> .ST)
+    if s.endswith(".SE"):
+        return s[:-3] + ".ST"
+    # Belgická burza Brusel (.BE -> .BR)
+    if s.endswith(".BE"):
+        return s[:-3] + ".BR"
+    # Norská burza Oslo (.NO -> .OL)
+    if s.endswith(".NO"):
+        return s[:-3] + ".OL"
+    # Finská burza Helsinky (.FI -> .HE)
+    if s.endswith(".FI"):
+        return s[:-3] + ".HE"
+    # Portugalská burza Lisabon (.PT -> .LS)
+    if s.endswith(".PT"):
+        return s[:-3] + ".LS"
     
     return s
+
 
 
 def parse_xtb_pdf(pdf_path: str = DEFAULT_PDF_PATH) -> List[Dict[str, Any]]:
