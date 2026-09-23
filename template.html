@@ -1181,8 +1181,23 @@
         async function triggerManualScan() {
             const btn = document.getElementById('refreshBtn');
             const toast = document.getElementById('scanStatusToast');
-            const btnSpan = btn.querySelector('span');
+            const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
+            if (!isLocal) {
+                // Na GitHub Pages (statický hosting) nelze spustit Python skript přímo z prohlížeče,
+                // ale spouští se přes GitHub Actions nebo každé ráno v 8:00 CET.
+                const shouldOpenActions = confirm(
+                    "ℹ️ REŽIM GITHUB PAGES:\n\n" +
+                    "Tento report se na GitHubu skenuje a aktualizuje automaticky každé ráno v 8:00 CET.\n\n" +
+                    "Chcete nyní otevřít záložku GitHub Actions a spustit čerstvý sken ihned ručně (tlačítkem 'Run workflow')?"
+                );
+                if (shouldOpenActions) {
+                    window.open("https://github.com/OndrejVas/SuggestInvest/actions", "_blank");
+                }
+                return;
+            }
+
+            const btnSpan = btn.querySelector('span');
             btn.classList.add('loading');
             btn.disabled = true;
             btnSpan.innerText = 'Skenuji XTB trhy...';
@@ -1195,13 +1210,15 @@
                     toast.innerText = '✅ Analýza dokončena! Načítám nový report...';
                     setTimeout(() => { window.location.reload(); }, 800);
                 } else {
-                    toast.innerText = '⚠️ Chyba serveru při skenování. Obnovuji...';
+                    toast.innerText = '⚠️ Chyba lokálního serveru při skenování. Obnovuji...';
                     setTimeout(() => { window.location.reload(); }, 1500);
                 }
             } catch (err) {
-                window.location.reload();
+                toast.innerText = '⚠️ Spojení s lokálním serverem selhalo.';
+                setTimeout(() => { window.location.reload(); }, 1500);
             }
         }
+
     </script>
 </body>
 </html>

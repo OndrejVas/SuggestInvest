@@ -57,14 +57,21 @@ class MarketScannerRequestHandler(SimpleHTTPRequestHandler):
         """Obslouží GET requesty včetně možnosti spustit sken přes GET /api/scan."""
         if self.path == "/api/scan":
             self.do_POST()
+        elif self.path == "/favicon.ico":
+            self.send_response(204)
+            self.end_headers()
         else:
             super().do_GET()
 
     def log_message(self, format, *args):
         # Potlačení běžných přístupových logů pro přehlednější konzoli
-        if "200 -" in args[0] and (".ico" in args[0] or ".css" in args[0]):
-            return
-        logger.info("%s - %s", self.address_string(), format % args)
+        try:
+            msg = format % args
+            if " 200 " in msg and (".ico" in msg or ".css" in msg):
+                return
+            logger.info("%s - %s", self.address_string(), msg)
+        except Exception:
+            pass
 
 
 def open_browser():
