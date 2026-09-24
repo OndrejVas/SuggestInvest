@@ -2,10 +2,12 @@ name: Market Scanner & AI Signal Screener Daily
 
 on:
   schedule:
-    # Běh každý den v 8:00 ráno (pokrývá 06:00 UTC v letním čase SELČ i 07:00 UTC v zimním SEČ)
-    - cron: '0 6 * * *'
-    - cron: '0 7 * * *'
+    # Ranní sken v 7:50 před otevřením trhů (vyhýbá se frontám v celou hodinu :00 na GitHubu)
+    # 05:50 UTC v letním čase (SELČ = 07:50) a 06:50 UTC v zimním čase (SEČ = 07:50)
+    - cron: '50 5 * * *'
+    - cron: '50 6 * * *'
   workflow_dispatch: # Umožňuje okamžitý manuální refresh kdykoliv přímo z GitHubu
+
   push:
     branches:
       - main
