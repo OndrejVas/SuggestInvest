@@ -1,13 +1,5 @@
 [
   {
-    "xtb_symbol": "AAL.UK",
-    "yahoo_symbol": "AAL.L",
-    "name": "Anglo American PLC",
-    "asset_type": "AKCIE",
-    "currency": "GBP",
-    "tier": "MID"
-  },
-  {
     "xtb_symbol": "AAL.US",
     "yahoo_symbol": "AAL",
     "name": "American Airlines Group Inc",
@@ -53,14 +45,6 @@
     "name": "Ambev SA - ADR",
     "asset_type": "AKCIE",
     "currency": "USD",
-    "tier": "MID"
-  },
-  {
-    "xtb_symbol": "ABF.UK",
-    "yahoo_symbol": "ABF.L",
-    "name": "Associated British Foods PLC",
-    "asset_type": "AKCIE",
-    "currency": "GBP",
     "tier": "MID"
   },
   {
@@ -197,14 +181,6 @@
     "name": "Analog Devices Inc",
     "asset_type": "AKCIE",
     "currency": "USD",
-    "tier": "MID"
-  },
-  {
-    "xtb_symbol": "ADM.UK",
-    "yahoo_symbol": "ADM.L",
-    "name": "Admiral Group PLC",
-    "asset_type": "AKCIE",
-    "currency": "GBP",
     "tier": "MID"
   },
   {
@@ -744,22 +720,6 @@
     "tier": "MID"
   },
   {
-    "xtb_symbol": "ANTO.UK",
-    "yahoo_symbol": "ANTO.L",
-    "name": "Antofagasta PLC",
-    "asset_type": "AKCIE",
-    "currency": "GBP",
-    "tier": "MID"
-  },
-  {
-    "xtb_symbol": "AO.UK",
-    "yahoo_symbol": "AO.L",
-    "name": "AO World PLC",
-    "asset_type": "AKCIE",
-    "currency": "GBP",
-    "tier": "MID"
-  },
-  {
     "xtb_symbol": "AON.US",
     "yahoo_symbol": "AON",
     "name": "Aon PLC",
@@ -896,14 +856,6 @@
     "tier": "MID"
   },
   {
-    "xtb_symbol": "AV.UK",
-    "yahoo_symbol": "AV.L",
-    "name": "Aviva PLC",
-    "asset_type": "AKCIE",
-    "currency": "GBP",
-    "tier": "MID"
-  },
-  {
     "xtb_symbol": "AVB.US",
     "yahoo_symbol": "AVB",
     "name": "AvalonBay Communities Inc",
@@ -1000,14 +952,6 @@
     "tier": "MID"
   },
   {
-    "xtb_symbol": "BA.UK",
-    "yahoo_symbol": "BA.L",
-    "name": "BAE Systems PLC",
-    "asset_type": "AKCIE",
-    "currency": "GBP",
-    "tier": "MID"
-  },
-  {
     "xtb_symbol": "BAC.US",
     "yahoo_symbol": "BAC",
     "name": "Bank of America Corp",
@@ -1029,22 +973,6 @@
     "name": "Brookfield Corp - class A",
     "asset_type": "AKCIE",
     "currency": "USD",
-    "tier": "MID"
-  },
-  {
-    "xtb_symbol": "BARC.UK",
-    "yahoo_symbol": "BARC.L",
-    "name": "Barclays PLC",
-    "asset_type": "AKCIE",
-    "currency": "GBP",
-    "tier": "MID"
-  },
-  {
-    "xtb_symbol": "BATS.UK",
-    "yahoo_symbol": "BATS.L",
-    "name": "British American Tobacco PLC",
-    "asset_type": "AKCIE",
-    "currency": "GBP",
     "tier": "MID"
   },
   {
@@ -1088,14 +1016,6 @@
     "tier": "MID"
   },
   {
-    "xtb_symbol": "BBY.UK",
-    "yahoo_symbol": "BBY.L",
-    "name": "Balfour Beatty PLC",
-    "asset_type": "AKCIE",
-    "currency": "GBP",
-    "tier": "MID"
-  },
-  {
     "xtb_symbol": "BBY.US",
     "yahoo_symbol": "BBY",
     "name": "Best Buy Co Inc",
@@ -1125,14 +1045,6 @@
     "name": "Belden Inc",
     "asset_type": "AKCIE",
     "currency": "USD",
-    "tier": "MID"
-  },
-  {
-    "xtb_symbol": "BDEV.UK",
-    "yahoo_symbol": "BDEV.L",
-    "name": "Barratt Developments PLC",
-    "asset_type": "AKCIE",
-    "currency": "GBP",
     "tier": "MID"
   },
   {
@@ -1192,14 +1104,6 @@
     "tier": "MID"
   },
   {
-    "xtb_symbol": "BHP.UK",
-    "yahoo_symbol": "BHP.L",
-    "name": "BHP Group Ltd",
-    "asset_type": "AKCIE",
-    "currency": "GBP",
-    "tier": "MID"
-  },
-  {
     "xtb_symbol": "BHP.US",
     "yahoo_symbol": "BHP",
     "name": "BHP Billiton Ltd - ADR",
@@ -1240,14 +1144,6 @@
     "tier": "MID"
   },
   {
-    "xtb_symbol": "BKG.UK",
-    "yahoo_symbol": "BKG.L",
-    "name": "Berkeley Group Holdings PLC",
-    "asset_type": "AKCIE",
-    "currency": "GBP",
-    "tier": "MID"
-  },
-  {
     "xtb_symbol": "BKH.US",
     "yahoo_symbol": "BKH",
     "name": "Black Hills Corp",
@@ -1285,14 +1181,6 @@
     "name": "Blackbaud Inc",
     "asset_type": "AKCIE",
     "currency": "USD",
-    "tier": "MID"
-  },
-  {
-    "xtb_symbol": "BLND.UK",
-    "yahoo_symbol": "BLND.L",
-    "name": "British Land Co PLC",
-    "asset_type": "AKCIE",
-    "currency": "GBP",
     "tier": "MID"
   },
   {
@@ -1381,14 +1269,6 @@
     "name": "Broadridge Financial Solutions Inc",
     "asset_type": "AKCIE",
     "currency": "USD",
-    "tier": "MID"
-  },
-  {
-    "xtb_symbol": "BRBY.UK",
-    "yahoo_symbol": "BRBY.L",
-    "name": "Burberry Group PLC",
-    "asset_type": "AKCIE",
-    "currency": "GBP",
     "tier": "MID"
   },
   {
@@ -2672,14 +2552,6 @@
     "tier": "MID"
   },
   {
-    "xtb_symbol": "GSK.UK",
-    "yahoo_symbol": "GSK.L",
-    "name": "GlaxoSmithKline PLC",
-    "asset_type": "AKCIE",
-    "currency": "GBP",
-    "tier": "MID"
-  },
-  {
     "xtb_symbol": "GWW.US",
     "yahoo_symbol": "GWW",
     "name": "WW Grainger Inc",
@@ -2789,14 +2661,6 @@
     "name": "Hormel Foods Corp",
     "asset_type": "AKCIE",
     "currency": "USD",
-    "tier": "MID"
-  },
-  {
-    "xtb_symbol": "HSBC.UK",
-    "yahoo_symbol": "HSBC.L",
-    "name": "HSBC Holdings PLC",
-    "asset_type": "AKCIE",
-    "currency": "GBP",
     "tier": "MID"
   },
   {
@@ -3197,14 +3061,6 @@
     "name": "Lam Research Corp",
     "asset_type": "AKCIE",
     "currency": "USD",
-    "tier": "MID"
-  },
-  {
-    "xtb_symbol": "LSEG.UK",
-    "yahoo_symbol": "LSEG.L",
-    "name": "London Stock Exchange Group PLC",
-    "asset_type": "AKCIE",
-    "currency": "GBP",
     "tier": "MID"
   },
   {

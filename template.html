@@ -300,6 +300,30 @@
             100% { transform: rotate(360deg); }
         }
 
+        .doc-download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(16, 185, 129, 0.12);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            padding: 5px 14px;
+            border-radius: 9999px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .doc-download-btn:hover {
+            background: rgba(16, 185, 129, 0.22);
+            border-color: rgba(16, 185, 129, 0.6);
+            color: #6ee7b7;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+        }
+
         h1 {
             font-size: clamp(1.8rem, 3.5vw, 2.6rem);
             font-weight: 800;
@@ -454,66 +478,153 @@
             color: var(--text-main);
         }
 
-        /* GRID KARET */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.25rem;
-            margin-bottom: 3rem;
-        }
-
-        .card {
+        /* ==================== TABULKA A ŘÁDKY TITULŮ ==================== */
+        .asset-table-wrap {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
-            overflow: hidden;
+            overflow-x: auto;
             box-shadow: var(--shadow-card);
-            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        /* Scrollbar pro plynulý posun na mobilech a menších monitorech */
+        .asset-table-wrap::-webkit-scrollbar {
+            height: 8px;
+        }
+        .asset-table-wrap::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        .asset-table-wrap::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+        }
+        .asset-table-wrap::-webkit-scrollbar-thumb:hover {
+            background: rgba(59, 130, 246, 0.5);
+        }
+
+        .asset-table-header {
+            display: grid;
+            grid-template-columns: 46px minmax(210px, 2fr) 115px 110px 115px 135px 150px 105px 85px;
+            gap: 12px;
+            align-items: center;
+            padding: 0.85rem 1.25rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 2px solid var(--border-color);
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            min-width: 1040px;
+            user-select: none;
+        }
+
+        .th-cell {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .th-sortable {
+            cursor: pointer;
+            transition: color 0.15s ease;
+        }
+
+        .th-sortable:hover {
+            color: #60a5fa;
+        }
+
+        .sort-icon {
+            font-size: 0.75rem;
+            opacity: 0.6;
+        }
+
+        .asset-rows-body {
             display: flex;
             flex-direction: column;
+            min-width: 1040px;
         }
 
-        .card:hover {
-            transform: translateY(-3px);
-            border-color: var(--border-highlight);
-            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.6);
-        }
-
-        .card-header {
-            padding: 1rem 1.25rem;
-            background: var(--bg-card-header);
+        .asset-row {
+            display: grid;
+            grid-template-columns: 46px minmax(210px, 2fr) 115px 110px 115px 135px 150px 105px 85px;
+            gap: 12px;
+            align-items: center;
+            padding: 0.75rem 1.25rem;
             border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 8px;
+            background: transparent;
+            transition: background-color 0.15s ease;
+            position: relative;
         }
 
-        .ticker-group {
+        .asset-row:hover {
+            background-color: var(--bg-card-hover);
+            z-index: 50;
+        }
+
+        .asset-row:last-child {
+            border-bottom: none;
+        }
+
+        .row-cell {
             display: flex;
+            align-items: center;
+            min-width: 0;
+        }
+
+        .text-right {
+            justify-content: flex-end;
+            text-align: right;
+        }
+
+        .text-center {
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* 1. RANK */
+        .cell-rank {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            justify-content: center;
+        }
+
+        /* 2. AKTIVUM */
+        .cell-asset {
             flex-direction: column;
+            align-items: flex-start;
             gap: 2px;
             overflow: hidden;
         }
 
-        .ticker-title-row {
+        .asset-symbol-row {
             display: flex;
             align-items: baseline;
-            gap: 8px;
+            gap: 7px;
         }
 
-        .ticker-symbol {
-            font-size: 1.25rem;
+        .ticker-link {
+            font-size: 1.05rem;
             font-weight: 800;
             color: var(--text-main);
             letter-spacing: -0.01em;
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .ticker-link:hover {
+            color: #60a5fa;
+            text-decoration: underline;
         }
 
         .xtb-badge {
             background: rgba(245, 158, 11, 0.12);
             color: #fbbf24;
             border: 1px solid rgba(245, 158, 11, 0.25);
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             font-weight: 700;
             padding: 1px 6px;
             border-radius: 4px;
@@ -521,25 +632,97 @@
         }
 
         .company-name {
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 200px;
+            max-width: 100%;
         }
 
-        .badges-top {
-            display: flex;
+        /* 3. KATEGORIE */
+        .cell-category {
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .tag-pill {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            letter-spacing: 0.03em;
+        }
+
+        .tag-tier-top { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .tag-tier-mid { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .tag-tier-low { background: rgba(156, 163, 175, 0.15); color: #d1d5db; border: 1px solid rgba(156, 163, 175, 0.3); }
+
+        .tag-type-etf { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+        .tag-type-akcie { background: rgba(14, 165, 233, 0.15); color: #38bdf8; border: 1px solid rgba(14, 165, 233, 0.3); }
+        .tag-type-krypto { background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.3); }
+
+        /* 4. CENA */
+        .cell-price {
             flex-direction: column;
             align-items: flex-end;
-            gap: 4px;
+            gap: 1px;
         }
 
-        .signal-badge {
-            font-size: 0.8rem;
+        .row-price {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .row-curr {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* 5. ZMĚNA */
+        .cell-change {
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 3px;
+        }
+
+        .change-pill {
+            font-size: 0.84rem;
             font-weight: 700;
-            padding: 0.3rem 0.75rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 5px;
+        }
+
+        .change-positive {
+            color: var(--color-up);
+            background: rgba(16, 185, 129, 0.12);
+        }
+
+        .change-negative {
+            color: var(--color-down);
+            background: rgba(239, 68, 68, 0.12);
+        }
+
+        .tag-catalyst-compact {
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: #cbd5e1;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1px 5px;
+            border-radius: 4px;
+            white-space: nowrap;
+            max-width: 115px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* 6. AI SIGNÁL */
+        .signal-badge {
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 0.25rem 0.65rem;
             border-radius: 6px;
             letter-spacing: 0.02em;
             text-transform: uppercase;
@@ -576,138 +759,36 @@
             border: 1px solid rgba(239, 68, 68, 0.4);
         }
 
-        .card-body {
-            padding: 1.25rem;
-            display: flex;
+        /* 7. KONFIDENCE & IMPULS */
+        .cell-prob {
             flex-direction: column;
-            gap: 1rem;
-            flex-grow: 1;
+            align-items: stretch;
+            gap: 4px;
         }
 
-        /* PRICE & CHANGE */
-        .price-section {
+        .row-prob-info {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
+            align-items: center;
+            font-size: 0.74rem;
         }
 
-        .current-price {
-            font-size: 1.55rem;
-            font-weight: 800;
+        .row-prob-pct {
+            font-weight: 700;
             color: var(--text-main);
         }
 
-        .price-currency {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            font-weight: 600;
-            margin-left: 4px;
-        }
-
-        .change-pill {
-            font-size: 0.9rem;
-            font-weight: 700;
-            padding: 0.2rem 0.55rem;
-            border-radius: 6px;
-        }
-
-        .change-positive {
-            color: var(--color-up);
-            background: rgba(16, 185, 129, 0.1);
-        }
-
-        .change-negative {
-            color: var(--color-down);
-            background: rgba(239, 68, 68, 0.1);
-        }
-
-        /* META TAGS ROW */
-        .tags-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            align-items: center;
-        }
-
-        .tag-pill {
+        .row-impact-tag {
             font-size: 0.72rem;
             font-weight: 700;
-            padding: 2px 7px;
-            border-radius: 4px;
-            letter-spacing: 0.03em;
-        }
-
-        .tag-tier-top { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
-        .tag-tier-mid { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
-        .tag-tier-low { background: rgba(156, 163, 175, 0.15); color: #d1d5db; border: 1px solid rgba(156, 163, 175, 0.3); }
-
-        .tag-type-etf { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
-        .tag-type-akcie { background: rgba(14, 165, 233, 0.15); color: #38bdf8; border: 1px solid rgba(14, 165, 233, 0.3); }
-        .tag-type-krypto { background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.3); }
-
-        .tag-catalyst {
-            background: rgba(255, 255, 255, 0.05);
-            color: #e2e8f0;
-            border: 1px solid var(--border-color);
-            font-size: 0.72rem;
-            font-weight: 600;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        /* IMPACT & PROBABILITY */
-        .impact-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(255, 255, 255, 0.02);
-            padding: 0.55rem 0.75rem;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-color);
-        }
-
-        .impact-label {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-
-        .impact-value {
-            font-size: 0.85rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 4px;
         }
 
         .impact-up { color: var(--color-up); }
         .impact-down { color: var(--color-down); }
 
-        /* PROBABILITY BAR */
-        .probability-section {
-            display: flex;
-            flex-direction: column;
-            gap: 0.35rem;
-        }
-
-        .prob-header {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-
-        .prob-val {
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
         .progress-track {
             width: 100%;
-            height: 8px;
+            height: 6px;
             background-color: rgba(255, 255, 255, 0.06);
             border-radius: 9999px;
             overflow: hidden;
@@ -725,27 +806,166 @@
         .fill-sell { background: linear-gradient(90deg, #f87171, #ef4444); }
         .fill-strong-sell { background: linear-gradient(90deg, #ef4444, #b91c1c); }
 
-        /* REASONING */
-        .reasoning-box {
-            background: rgba(255, 255, 255, 0.02);
-            border-left: 3px solid var(--border-highlight);
-            padding: 0.75rem 0.85rem;
-            border-radius: 0 var(--radius-md) var(--radius-md) 0;
-            font-size: 0.83rem;
-            color: #cbd5e1;
-            line-height: 1.45;
-            margin-top: auto;
+        /* 8. AI ANALÝZA & TOOLTIP */
+        .ai-tooltip-wrapper {
+            position: relative;
+            display: inline-block;
         }
 
-        .reasoning-title {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-            margin-bottom: 0.25rem;
-            display: flex;
+        .ai-tooltip-trigger {
+            display: inline-flex;
             align-items: center;
+            gap: 5px;
+            background: rgba(99, 102, 241, 0.12);
+            color: #a5b4fc;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .ai-tooltip-trigger:hover,
+        .ai-tooltip-wrapper:hover .ai-tooltip-trigger {
+            background: rgba(99, 102, 241, 0.25);
+            border-color: rgba(99, 102, 241, 0.6);
+            color: #ffffff;
+            box-shadow: 0 0 12px rgba(99, 102, 241, 0.35);
+        }
+
+        .ai-tooltip-popup {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%) translateY(6px);
+            width: 320px;
+            background: #0f172a;
+            border: 1px solid rgba(99, 102, 241, 0.45);
+            border-radius: 10px;
+            padding: 0.9rem;
+            box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(99, 102, 241, 0.2);
+            backdrop-filter: blur(14px);
+            z-index: 9999;
+            pointer-events: none;
+            transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s;
+            text-align: left;
+        }
+
+        .ai-tooltip-popup::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -6px;
+            border-width: 6px;
+            border-style: solid;
+            border-color: #0f172a transparent transparent transparent;
+        }
+
+        /* Pro prvních 5 řádků otevřeme tooltip směrem dolů */
+        .asset-row:nth-child(-n+5) .ai-tooltip-popup {
+            bottom: auto;
+            top: calc(100% + 10px);
+            transform: translateX(-50%) translateY(-6px);
+        }
+        .asset-row:nth-child(-n+5) .ai-tooltip-popup::after {
+            top: auto;
+            bottom: 100%;
+            border-color: transparent transparent #0f172a transparent;
+        }
+
+        .ai-tooltip-wrapper:hover .ai-tooltip-popup {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .tooltip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 6px;
+            margin-bottom: 8px;
+        }
+
+        .tooltip-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #94a3b8;
+            letter-spacing: 0.04em;
+        }
+
+        .tooltip-ticker {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.12);
+            padding: 1px 6px;
+            border-radius: 4px;
+        }
+
+        .tooltip-catalyst {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.06);
+            color: #fbbf24;
+            padding: 2px 7px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        .tooltip-reasoning {
+            font-size: 0.82rem;
+            color: #e2e8f0;
+            line-height: 1.45;
+            margin-bottom: 10px;
+        }
+
+        .tooltip-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.72rem;
+            color: #94a3b8;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 6px;
+        }
+
+        .tooltip-footer strong {
+            color: #f1f5f9;
+        }
+
+        /* 9. GRAF TLAČÍTKO */
+        .chart-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             gap: 4px;
+            background: rgba(59, 130, 246, 0.12);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.76rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .chart-btn:hover {
+            background: rgba(59, 130, 246, 0.25);
+            border-color: rgba(59, 130, 246, 0.6);
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.35);
+            transform: translateY(-1px);
         }
 
         /* FOOTER */
@@ -789,9 +1009,9 @@
 
         @media (max-width: 768px) {
             .filter-groups { grid-template-columns: 1fr; }
-            .cards-grid { grid-template-columns: 1fr; }
             .meta-bar { flex-direction: column; gap: 0.5rem; }
-            .header-top { flex-direction: column; }
+            .header-top { flex-direction: column; gap: 0.75rem; }
+            .doc-download-btn, .refresh-btn { width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -847,6 +1067,15 @@
                         <button class="logout-btn" onclick="logout()" title="Odhlásit se z aplikace">Odhlásit</button>
                     </div>
 
+                    <a href="Analyza_Dat_a_Metodika_SuggestInvest.docx" download class="doc-download-btn" title="Stáhnout kompletní metodiku a analýzu dat ve formátu Word (.docx)">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        <span>📄 Metodika analýzy (.docx)</span>
+                    </a>
+
                     <button id="refreshBtn" class="refresh-btn" onclick="triggerManualScan()">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
@@ -860,9 +1089,11 @@
                 
                 <div class="meta-bar">
                     <div>Poslední sken: <strong>{{ timestamp_cet }}</strong></div>
+                    <div>⏱️ Doba analýzy: <strong>{{ scan_duration }}</strong></div>
                     <div>Aktiv celkem: <strong>{{ counts.total }}</strong></div>
                     <div>🥇 TOP: <strong>{{ counts.top }}</strong> | 🥈 MID: <strong>{{ counts.mid }}</strong> | 🥉 LOW: <strong>{{ counts.low }}</strong></div>
                     <div>AI Model: <strong>{{ ai_model }}</strong></div>
+                    <div>🌐 Zdroje dat: <strong>{{ data_sources }}</strong></div>
                 </div>
             </header>
 
@@ -911,7 +1142,6 @@
                             <button class="pill-btn" data-val="CZK" onclick="setFilter('curr', 'CZK')">🇨🇿 CZK</button>
                             <button class="pill-btn" data-val="USD" onclick="setFilter('curr', 'USD')">🇺🇸 USD</button>
                             <button class="pill-btn" data-val="EUR" onclick="setFilter('curr', 'EUR')">🇪🇺 EUR</button>
-                            <button class="pill-btn" data-val="GBP" onclick="setFilter('curr', 'GBP')">🇬🇧 GBP</button>
                         </div>
                     </div>
 
@@ -934,91 +1164,131 @@
                 <span id="activeFiltersLabel"></span>
             </div>
 
-            <!-- CARDS GRID -->
-            <main class="cards-grid" id="cardsGrid">
-                {% for item in cards %}
-                <article class="card" 
-                         data-tier="{{ item.tier }}" 
-                         data-type="{{ item.asset_type }}" 
-                         data-curr="{{ item.currency }}" 
-                         data-signal="{{ item.signal }}" 
-                         data-search="{{ item.yahoo_symbol }} {{ item.xtb_symbol }} {{ item.name }}">
-                    
-                    <div class="card-header">
-                        <div class="ticker-group">
-                            <div class="ticker-title-row">
-                                <span class="ticker-symbol">{{ item.yahoo_symbol }}</span>
+            <!-- TABULKA AKTIV (ŘÁDKOVÉ ZOBRAZENÍ) -->
+            <div class="asset-table-wrap">
+                <div class="asset-table-header">
+                    <div class="th-cell th-sortable" onclick="sortTable('rank')" title="Řadit podle výchozího pořadí (nejlepší -> nejhorší)"># <span id="sort-rank" class="sort-icon">↕</span></div>
+                    <div class="th-cell th-sortable" onclick="sortTable('ticker')" title="Řadit podle abecedy tickeru">Aktivum / Ticker <span id="sort-ticker" class="sort-icon">↕</span></div>
+                    <div class="th-cell">Kategorie</div>
+                    <div class="th-cell th-sortable text-right" onclick="sortTable('price')" title="Řadit podle ceny">Cena <span id="sort-price" class="sort-icon">↕</span></div>
+                    <div class="th-cell th-sortable text-right" onclick="sortTable('change')" title="Řadit podle denní změny">Denní změna <span id="sort-change" class="sort-icon">↕</span></div>
+                    <div class="th-cell th-sortable text-center" onclick="sortTable('signal')" title="Řadit podle síly AI signálu">AI Signál <span id="sort-signal" class="sort-icon">↕</span></div>
+                    <div class="th-cell th-sortable" onclick="sortTable('prob')" title="Řadit podle míry konfidence">Konfidence & Impuls <span id="sort-prob" class="sort-icon">↕</span></div>
+                    <div class="th-cell text-center" title="AI analýza a fundamentální kontext při najetí myši">AI Kontext</div>
+                    <div class="th-cell text-center">Graf</div>
+                </div>
+
+                <div class="asset-rows-body" id="assetRowsBody">
+                    {% for item in cards %}
+                    <article class="asset-row" 
+                             data-tier="{{ item.tier }}" 
+                             data-type="{{ item.asset_type }}" 
+                             data-curr="{{ item.currency }}" 
+                             data-signal="{{ item.signal }}" 
+                             data-search="{{ item.yahoo_symbol }} {{ item.xtb_symbol }} {{ item.name }}"
+                             data-rank="{{ loop.index }}"
+                             data-ticker="{{ item.yahoo_symbol }}"
+                             data-price="{{ item.price_raw }}"
+                             data-change="{{ item.change_pct_raw }}"
+                             data-signal-rank="{{ item.signal_rank }}"
+                             data-prob="{{ item.probability }}">
+                        
+                        <!-- 1. Pořadí -->
+                        <div class="row-cell cell-rank">
+                            <span>{{ loop.index }}</span>
+                        </div>
+
+                        <!-- 2. Aktivum (Ticker, XTB, Název) -->
+                        <div class="row-cell cell-asset">
+                            <div class="asset-symbol-row">
+                                <a href="{{ item.chart_url }}" target="_blank" rel="noopener noreferrer" class="ticker-link" title="Otevřít interaktivní graf {{ item.yahoo_symbol }} na Yahoo Finance">
+                                    {{ item.yahoo_symbol }}
+                                </a>
                                 <span class="xtb-badge" title="Symbol pro vyhledání v aplikaci XTB / xStation">XTB: {{ item.xtb_symbol }}</span>
                             </div>
                             <span class="company-name" title="{{ item.name }}">{{ item.name }}</span>
                         </div>
 
-                        <div class="badges-top">
+                        <!-- 3. Kategorie -->
+                        <div class="row-cell cell-category">
+                            <span class="tag-pill tag-tier-{{ item.tier|lower }}">{{ item.tier }}</span>
+                            <span class="tag-pill tag-type-{{ item.asset_type|lower }}">{{ item.asset_type }}</span>
+                        </div>
+
+                        <!-- 4. Cena -->
+                        <div class="row-cell cell-price text-right">
+                            <span class="row-price">{{ item.price }}</span>
+                            <span class="row-curr">{{ item.currency }}</span>
+                        </div>
+
+                        <!-- 5. Denní změna -->
+                        <div class="row-cell cell-change text-right">
+                            <span class="change-pill {% if item.change_direction == 'positive' %}change-positive{% else %}change-negative{% endif %}">
+                                {{ item.change_pct }}
+                            </span>
+                            {% if item.catalyst_tag %}
+                            <span class="tag-catalyst-compact" title="{{ item.catalyst_tag }}">{{ item.catalyst_tag }}</span>
+                            {% endif %}
+                        </div>
+
+                        <!-- 6. AI Signál -->
+                        <div class="row-cell cell-signal text-center">
                             <span class="signal-badge {{ item.signal_class }}">
                                 {{ item.signal }}
                             </span>
                         </div>
-                    </div>
 
-                    <div class="card-body">
-                        <!-- Cena & Denní změna -->
-                        <div class="price-section">
-                            <div>
-                                <span class="current-price">{{ item.price }}</span>
-                                <span class="price-currency">{{ item.currency }}</span>
-                            </div>
-                            <span class="change-pill {% if item.change_direction == 'positive' %}change-positive{% else %}change-negative{% endif %}">
-                                {{ item.change_pct }}
-                            </span>
-                        </div>
-
-                        <!-- Štítky: Koš, Typ, Katalyzátor -->
-                        <div class="tags-row">
-                            <span class="tag-pill tag-tier-{{ item.tier|lower }}">{{ item.tier }}</span>
-                            <span class="tag-pill tag-type-{{ item.asset_type|lower }}">{{ item.asset_type }}</span>
-                            {% if item.catalyst_tag %}
-                            <span class="tag-catalyst">{{ item.catalyst_tag }}</span>
-                            {% endif %}
-                        </div>
-
-                        <!-- Směr impulsu -->
-                        <div class="impact-container">
-                            <span class="impact-label">Očekávaný impuls</span>
-                            <span class="impact-value {% if item.impact_direction == 'up' %}impact-up{% else %}impact-down{% endif %}">
-                                {% if item.impact_direction == 'up' %}
-                                    ▲ Růst (UP)
-                                {% else %}
-                                    ▼ Pokles (DOWN)
-                                {% endif %}
-                            </span>
-                        </div>
-
-                        <!-- Progress bar pravděpodobnosti -->
-                        <div class="probability-section">
-                            <div class="prob-header">
-                                <span>Míra konfidence (AI)</span>
-                                <span class="prob-val">{{ item.probability }} %</span>
+                        <!-- 7. Konfidence & Impuls -->
+                        <div class="row-cell cell-prob">
+                            <div class="row-prob-info">
+                                <span class="row-prob-pct">{{ item.probability }} %</span>
+                                <span class="row-impact-tag {% if item.impact_direction == 'up' %}impact-up{% else %}impact-down{% endif %}">
+                                    {% if item.impact_direction == 'up' %}▲ UP{% else %}▼ DOWN{% endif %}
+                                </span>
                             </div>
                             <div class="progress-track">
                                 <div class="progress-fill {{ item.progress_class }}" style="width: {{ item.probability }}%;"></div>
                             </div>
                         </div>
 
-                        <!-- AI Odůvodnění -->
-                        <div class="reasoning-box">
-                            <div class="reasoning-title">
-                                <span>💡 AI Analýza & Kontext</span>
+                        <!-- 8. AI Analýza & Kontext (Tooltip při najetí myši) -->
+                        <div class="row-cell text-center">
+                            <div class="ai-tooltip-wrapper">
+                                <button type="button" class="ai-tooltip-trigger" aria-label="Zobrazit AI analýzu">
+                                    <span>💡</span>
+                                    <span>Kontext</span>
+                                </button>
+                                <div class="ai-tooltip-popup" role="tooltip">
+                                    <div class="tooltip-header">
+                                        <span class="tooltip-title">💡 AI Analýza & Kontext</span>
+                                        <span class="tooltip-ticker">{{ item.yahoo_symbol }}</span>
+                                    </div>
+                                    {% if item.catalyst_tag %}
+                                    <div class="tooltip-catalyst">{{ item.catalyst_tag }}</div>
+                                    {% endif %}
+                                    <p class="tooltip-reasoning">{{ item.reasoning }}</p>
+                                    <div class="tooltip-footer">
+                                        <span>Signál: <strong>{{ item.signal }}</strong> ({{ item.probability }} %)</span>
+                                        <span>Impuls: <strong>{% if item.impact_direction == 'up' %}Růst (UP){% else %}Pokles (DOWN){% endif %}</strong></span>
+                                    </div>
+                                </div>
                             </div>
-                            <p>{{ item.reasoning }}</p>
                         </div>
-                    </div>
-                </article>
-                {% endfor %}
 
-                <div class="no-results" id="noResultsMsg">
-                    Zadaným filtrům neodpovídá žádné aktivum. Zkuste filtry vyresetovat.
+                        <!-- 9. Hyperlink na graf titulu -->
+                        <div class="row-cell text-center">
+                            <a href="{{ item.chart_url }}" target="_blank" rel="noopener noreferrer" class="chart-btn" title="Otevřít živý interaktivní graf na Yahoo Finance">
+                                📈 Graf
+                            </a>
+                        </div>
+                    </article>
+                    {% endfor %}
+
+                    <div class="no-results" id="noResultsMsg">
+                        Zadaným filtrům neodpovídá žádné aktivum. Zkuste filtry vyresetovat.
+                    </div>
                 </div>
-            </main>
+            </div>
 
             <!-- FOOTER -->
             <footer>
@@ -1130,17 +1400,78 @@
             applyFilters();
         }
 
+        let currentSort = { col: 'rank', asc: true };
+
+        function sortTable(col) {
+            const body = document.getElementById('assetRowsBody');
+            if (!body) return;
+            const rows = Array.from(body.querySelectorAll('.asset-row'));
+
+            if (currentSort.col === col) {
+                currentSort.asc = !currentSort.asc;
+            } else {
+                currentSort.col = col;
+                // Pro signál a konfidenci je výchozí řazení od nejvyššího k nejnižšímu (descending)
+                currentSort.asc = (col === 'ticker' || col === 'rank');
+            }
+
+            // Indikátory šipek v záhlaví
+            document.querySelectorAll('.sort-icon').forEach(icon => { icon.textContent = '↕'; });
+            const activeIcon = document.getElementById(`sort-${col}`);
+            if (activeIcon) {
+                activeIcon.textContent = currentSort.asc ? '↑' : '↓';
+            }
+
+            rows.sort((a, b) => {
+                if (col === 'rank') {
+                    const valA = parseInt(a.getAttribute('data-rank'), 10) || 0;
+                    const valB = parseInt(b.getAttribute('data-rank'), 10) || 0;
+                    return currentSort.asc ? (valA - valB) : (valB - valA);
+                } else if (col === 'ticker') {
+                    const valA = (a.getAttribute('data-ticker') || '').toLowerCase();
+                    const valB = (b.getAttribute('data-ticker') || '').toLowerCase();
+                    return currentSort.asc ? valA.localeCompare(valB) : valB.localeCompare(valA);
+                } else if (col === 'price') {
+                    const valA = parseFloat(a.getAttribute('data-price')) || 0;
+                    const valB = parseFloat(b.getAttribute('data-price')) || 0;
+                    return currentSort.asc ? (valA - valB) : (valB - valA);
+                } else if (col === 'change') {
+                    const valA = parseFloat(a.getAttribute('data-change')) || 0;
+                    const valB = parseFloat(b.getAttribute('data-change')) || 0;
+                    return currentSort.asc ? (valA - valB) : (valB - valA);
+                } else if (col === 'signal') {
+                    const sigA = parseInt(a.getAttribute('data-signal-rank'), 10) || 0;
+                    const sigB = parseInt(b.getAttribute('data-signal-rank'), 10) || 0;
+                    const probA = parseInt(a.getAttribute('data-prob'), 10) || 0;
+                    const probB = parseInt(b.getAttribute('data-prob'), 10) || 0;
+                    if (sigA !== sigB) {
+                        return currentSort.asc ? (sigA - sigB) : (sigB - sigA);
+                    }
+                    return currentSort.asc ? (probA - probB) : (probB - probA);
+                } else if (col === 'prob') {
+                    const valA = parseInt(a.getAttribute('data-prob'), 10) || 0;
+                    const valB = parseInt(b.getAttribute('data-prob'), 10) || 0;
+                    return currentSort.asc ? (valA - valB) : (valB - valA);
+                }
+                return 0;
+            });
+
+            const noResults = document.getElementById('noResultsMsg');
+            rows.forEach(row => body.insertBefore(row, noResults));
+            applyFilters();
+        }
+
         function applyFilters() {
             activeFilters.search = document.getElementById('searchInput').value.toLowerCase().trim();
-            const cards = document.querySelectorAll('.card');
+            const rows = document.querySelectorAll('.asset-row');
             let visibleCount = 0;
 
-            cards.forEach(card => {
-                const cTier = card.getAttribute('data-tier');
-                const cType = card.getAttribute('data-type');
-                const cCurr = card.getAttribute('data-curr');
-                const cSignal = card.getAttribute('data-signal').toLowerCase();
-                const cSearch = card.getAttribute('data-search').toLowerCase();
+            rows.forEach(row => {
+                const cTier = row.getAttribute('data-tier');
+                const cType = row.getAttribute('data-type');
+                const cCurr = row.getAttribute('data-curr');
+                const cSignal = row.getAttribute('data-signal').toLowerCase();
+                const cSearch = row.getAttribute('data-search').toLowerCase();
 
                 let matchTier = (activeFilters.tier === 'all' || cTier === activeFilters.tier);
                 let matchType = (activeFilters.type === 'all' || cType === activeFilters.type);
@@ -1161,21 +1492,25 @@
                 }
 
                 if (matchTier && matchType && matchCurr && matchSignal && matchSearch) {
-                    card.style.display = 'flex';
+                    row.style.display = 'grid';
                     visibleCount++;
                 } else {
-                    card.style.display = 'none';
+                    row.style.display = 'none';
                 }
             });
 
             const countEl = document.getElementById('resultsCount');
-            countEl.innerHTML = `Zobrazeno <strong>${visibleCount}</strong> z <strong>${cards.length}</strong> aktiv`;
+            if (countEl) {
+                countEl.innerHTML = `Zobrazeno <strong>${visibleCount}</strong> z <strong>${rows.length}</strong> aktiv`;
+            }
 
             const noResults = document.getElementById('noResultsMsg');
-            if (visibleCount === 0) {
-                noResults.style.display = 'block';
-            } else {
-                noResults.style.display = 'none';
+            if (noResults) {
+                if (visibleCount === 0) {
+                    noResults.style.display = 'block';
+                } else {
+                    noResults.style.display = 'none';
+                }
             }
         }
 

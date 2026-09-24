@@ -201,7 +201,7 @@ def _call_gemini_batch(client, model_name: str, batch_items: List[Dict[str, Any]
     return []
 
 
-def analyze_universe_with_gemini(market_items: List[Dict[str, Any]], global_news: List[str], batch_size: int = 15) -> Tuple[List[Dict[str, Any]], bool]:
+def analyze_universe_with_gemini(market_items: List[Dict[str, Any]], global_news: List[str], batch_size: int = 25) -> Tuple[List[Dict[str, Any]], bool]:
     """Rozdělí aktiva do dávek a vyhodnotí je přes Gemini API (s automatickým fallbackem)."""
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
@@ -313,13 +313,16 @@ def format_currency_value(value: float, currency: str) -> str:
         return f"{value:.2f}"
 
 
-def build_html_report(processed_cards: List[Dict[str, Any]], is_demo: bool = False) -> str:
+def build_html_report(processed_cards: List[Dict[str, Any]], is_demo: bool = False, scan_duration: str = "45 s", data_sources: str = "") -> str:
     """Zkompiluje finální index.html přes Jinja2 šablonu."""
     now_utc = datetime.now(timezone.utc)
     cet_offset = timedelta(hours=2) # Letní čas SELČ
     now_cet = now_utc + cet_offset
     timestamp_cet_str = now_cet.strftime("%d. %m. %Y v %H:%M SELČ")
     timestamp_utc_str = now_utc.strftime("%Y-%m-%d %H:%M:%S")
+
+    if not data_sources:
+        data_sources = "XTB Market Catalog • Yahoo Finance Realtime • Yahoo Financial News RSS • Google Gemini 3.5 AI"
 
     # Statistiky pro záhlaví
     counts = {
@@ -341,7 +344,9 @@ def build_html_report(processed_cards: List[Dict[str, Any]], is_demo: bool = Fal
         counts=counts,
         timestamp_cet=timestamp_cet_str,
         timestamp_utc=timestamp_utc_str,
-        ai_model=f"{GEMINI_MODEL} (Lokální Demo)" if is_demo else GEMINI_MODEL,
+        scan_duration=scan_duration,
+        data_sources=data_sources,
+        ai_model=GEMINI_MODEL if not is_demo else f"{GEMINI_MODEL} (Záložní režim)",
         is_demo=is_demo,
     )
     return html_content
@@ -349,6 +354,8 @@ def build_html_report(processed_cards: List[Dict[str, Any]], is_demo: bool = Fal
 
 def run_scanner(tiers: List[str] = None, allow_mock_fallback: bool = True) -> str:
     """Kompletní cyklus: sestavení univerza, paralelní stažení dat, dávková AI analýza a HTML export."""
+    import time
+    scan_start = time.time()
     logger.info("=== Spouštím Stupňovitý Market Scanner & AI Screener ===")
     
     # 1. Načtení aktiv pro požadované koše (výchozí: TOP + MID + LOW)
@@ -362,7 +369,7 @@ def run_scanner(tiers: List[str] = None, allow_mock_fallback: bool = True) -> st
     rss_news = fetch_rss_market_headlines(max_items=6)
 
     # 4. Dávková AI analýza s Gemini
-    signals_ai, is_demo = analyze_universe_with_gemini(market_data, rss_news, batch_size=18)
+    signals_ai, is_demo = analyze_universe_with_gemini(market_data, rss_news, batch_size=25)
 
     # 5. Spojení dat do jednotné struktury pro frontend
     ai_by_ticker = {item.get("ticker", "").upper(): item for item in signals_ai}
@@ -383,6 +390,22 @@ def run_scanner(tiers: List[str] = None, allow_mock_fallback: bool = True) -> st
         reasoning = ai_item.get("reasoning", "Tržní data bez jednoznačného fundamentálního impulsu.")
         change_pct_str = f"{mdata['change_pct']:+.2f} %"
         change_direction = "positive" if mdata["change_pct"] >= 0 else "negative"
+        chart_url = f"https://finance.yahoo.com/quote/{mdata['yahoo_symbol']}"
+
+        # Výpočet číselné síly signálu pro přesné řazení (Strong Buy -> Buy -> Hold -> Sell -> Strong Sell)
+        s_lower = signal.strip().lower()
+        if "strong buy" in s_lower:
+            sig_rank = 5
+        elif "buy" in s_lower:
+            sig_rank = 4
+        elif "hold" in s_lower:
+            sig_rank = 3
+        elif "strong sell" in s_lower:
+            sig_rank = 1
+        elif "sell" in s_lower:
+            sig_rank = 2
+        else:
+            sig_rank = 3
 
         final_cards.append({
             "xtb_symbol": mdata["xtb_symbol"],
@@ -392,19 +415,34 @@ def run_scanner(tiers: List[str] = None, allow_mock_fallback: bool = True) -> st
             "asset_type": mdata["asset_type"],
             "currency": mdata["currency"],
             "price": format_currency_value(mdata["price"], mdata["currency"]),
+            "price_raw": mdata["price"],
             "change_pct": change_pct_str,
+            "change_pct_raw": mdata["change_pct"],
             "change_direction": change_direction,
             "catalyst_tag": mdata.get("catalyst_tag"),
             "signal": signal,
+            "signal_rank": sig_rank,
             "signal_class": normalize_signal_class(signal),
             "progress_class": normalize_progress_class(signal),
             "probability": probability,
             "impact_direction": impact_direction,
             "reasoning": reasoning,
+            "chart_url": chart_url,
         })
 
+    # Automatické řazení od nejlepších výsledků po nejhorší (Strong Buy -> Buy -> Hold -> Sell -> Strong Sell)
+    final_cards.sort(key=lambda c: (c["signal_rank"], c["probability"], c["change_pct_raw"]), reverse=True)
+
     # 6. Vygenerování a uložení index.html
-    html_output = build_html_report(final_cards, is_demo=is_demo)
+    elapsed = time.time() - scan_start
+    if elapsed >= 60:
+        scan_duration_str = f"{int(elapsed // 60)} min {int(elapsed % 60)} s"
+    else:
+        scan_duration_str = f"{elapsed:.1f} s"
+
+    data_sources_str = "XTB Market Catalog • Yahoo Finance Realtime • Yahoo Financial News RSS • Google Gemini 3.5 AI"
+    html_output = build_html_report(final_cards, is_demo=is_demo, scan_duration=scan_duration_str, data_sources=data_sources_str)
+
     output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "index.html")
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(html_output)

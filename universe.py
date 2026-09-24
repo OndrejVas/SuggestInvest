@@ -113,13 +113,8 @@ TIER_2_MID: List[Dict[str, str]] = [
     {"xtb_symbol": "SAN.FR", "yahoo_symbol": "SAN.PA", "name": "Sanofi SA", "asset_type": "AKCIE", "currency": "EUR", "tier": "MID"},
     {"xtb_symbol": "RMS.FR", "yahoo_symbol": "RMS.PA", "name": "Hermes International", "asset_type": "AKCIE", "currency": "EUR", "tier": "MID"},
 
-    # UK tituly v Londýně (GBP)
-    {"xtb_symbol": "AZN.UK", "yahoo_symbol": "AZN.L", "name": "AstraZeneca PLC", "asset_type": "AKCIE", "currency": "GBP", "tier": "MID"},
-    {"xtb_symbol": "SHEL.UK", "yahoo_symbol": "SHEL.L", "name": "Shell PLC", "asset_type": "AKCIE", "currency": "GBP", "tier": "MID"},
-    {"xtb_symbol": "BP.UK", "yahoo_symbol": "BP.L", "name": "BP PLC", "asset_type": "AKCIE", "currency": "GBP", "tier": "MID"},
-    {"xtb_symbol": "ULVR.UK", "yahoo_symbol": "ULVR.L", "name": "Unilever PLC", "asset_type": "AKCIE", "currency": "GBP", "tier": "MID"},
-
     # Sektorová & Komoditní ETF na XTB (EUR)
+
     {"xtb_symbol": "4GLD.DE", "yahoo_symbol": "4GLD.DE", "name": "Xetra-Gold ETC", "asset_type": "ETF", "currency": "EUR", "tier": "MID"},
     {"xtb_symbol": "CBRS.DE", "yahoo_symbol": "CBRS.DE", "name": "First Trust Nasdaq Cybersecurity ETF", "asset_type": "ETF", "currency": "EUR", "tier": "MID"},
     {"xtb_symbol": "EQQQ.DE", "yahoo_symbol": "EQQQ.DE", "name": "Invesco EQQQ Nasdaq-100 ETF", "asset_type": "ETF", "currency": "EUR", "tier": "MID"},
@@ -238,10 +233,12 @@ def get_all_universe(tiers: List[str] = None) -> List[Dict[str, str]]:
     if custom:
         selected = custom + selected
 
-    # Deduplikace podle yahoo_symbol
+    # Deduplikace podle yahoo_symbol a vyřazení GBP
     seen_symbols: Set[str] = set()
     unique_items: List[Dict[str, str]] = []
     for item in selected:
+        if item.get("currency") == "GBP":
+            continue
         sym = item["yahoo_symbol"].upper()
         if sym not in seen_symbols:
             seen_symbols.add(sym)
