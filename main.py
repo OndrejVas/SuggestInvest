@@ -17,7 +17,12 @@ from pydantic import BaseModel, Field
 from universe import get_all_universe, TIER_1_TOP, TIER_2_MID, TIER_3_LOW
 from fundamentals_fetcher import get_universe_fundamentals, fetch_momentum_deltas
 from trigger_engine import evaluate_asset_triggers
-from history_manager import save_scan_history, get_ticker_signal_history, get_ticker_historical_context
+from history_manager import (
+    save_scan_history, 
+    get_ticker_signal_history, 
+    get_ticker_historical_context,
+    compute_daily_changes
+)
 
 # Automatické načtení proměnných z .env
 load_dotenv()
@@ -181,7 +186,8 @@ def _call_gemini_batch(client, model_name: str, batch_items: List[Dict[str, Any]
             "calendar": {
                 "days_to_earnings": item.get("days_to_earnings"),
                 "earnings_time": item.get("earnings_time") or ("BMO" if item.get("days_to_earnings") is not None else None),
-                "days_to_ex_dividend": item.get("days_to_ex_dividend")
+                "days_to_ex_dividend": item.get("days_to_ex_dividend"),
+                "dividend_strategy": item.get("dividend_analysis")
             },
             "history": {
                 "prev_signal": hist_ctx.get("prev_signal", "HOLD"),
@@ -209,7 +215,7 @@ def _call_gemini_batch(client, model_name: str, batch_items: List[Dict[str, Any]
         "B. Událostní filtry kalendáře:\n"
         "- Kritické okno před výsledky (days_to_earnings <= 7): Implikovaná volatilita roste. Binární riziko. Confidence nesmí překročit 65 %, pokud nejde o defenzivní dividendový monopol s vysokou jistotou. Do štítků přidej '⏳ Výsledky do 7 dní'.\n"
         "- Předvýsledkový run-up (days_to_earnings mezi 8 a 21 dny): Pokud je change_1m_pct > 0 a delta_target_30d_pct > 0, aktivum je v akumulační fázi před kvartální zprávou. Přidej '📅 Výsledky do 21 dní'.\n"
-        "- Dividendový trigger (days_to_ex_dividend <= 14): Vhodné pro akumulaci pozice před nárokem na výplatu. Uveď štítek '💰 Ex-Div za N dní'.\n\n"
+        "- Dividendový trigger a Ex-Date Recovery (days_to_ex_dividend <= 14): Pokud má aktivum v calendar.dividend_strategy doporučení '🟢 Držet přes Ex-Div (Rychlé zotavení)', kurz historicky rychle maže dividendový gap (do 15 dní). To podporuje BUY a strategii Dividend Capture. Pokud má naopak '🟡 Prodat před Ex-Div', titul před Ex-Date posiluje, ale po Ex-Date padá a zotavení trvá dlouho, což favorizuje realizaci zisku předem.\n\n"
         "C. Filtry trendu a spolehlivosti:\n"
         "- Obrat vs. Padající nůž: Test 52w minima (dist_to_52w_high_pct < 70) s klesající cílovou cenou (delta_target_30d_pct < -5) značí strukturální problém -> SELL nebo STRONG SELL. Test 52w minima se stabilní cílovou cenou a rostoucím 1M momentem značí obratový potenciál -> BUY.\n"
         "- Kontrola šumu: Denní skok o více než +/- 3 % ignoruj, pokud není v souladu s 1M momentem nebo novou fundamentální zprávou.\n\n"
@@ -483,7 +489,7 @@ def format_currency_value(value: Optional[float], currency: str) -> str:
         return f"{value:.2f}"
 
 
-def build_html_report(processed_cards: List[Dict[str, Any]], is_demo: bool = False, scan_duration: str = "45 s", data_sources: str = "") -> str:
+def build_html_report(processed_cards: List[Dict[str, Any]], is_demo: bool = False, scan_duration: str = "45 s", data_sources: str = "", change_stats: Optional[Dict[str, Any]] = None) -> str:
     """Zkompiluje finální index.html přes Jinja2 šablonu."""
     now_utc = datetime.now(timezone.utc)
     cet_offset = timedelta(hours=2) # Letní čas SELČ
@@ -507,6 +513,22 @@ def build_html_report(processed_cards: List[Dict[str, Any]], is_demo: bool = Fal
         "sell": len([c for c in processed_cards if c["signal"] == "SELL"]),
         "strong_sell": len([c for c in processed_cards if c["signal"] == "STRONG SELL"]),
     }
+
+    # Obohacení o statistiky denních posunů
+    if change_stats:
+        counts["total_changed"] = change_stats.get("total_changed", 0)
+        counts["upgrades"] = change_stats.get("upgrades", 0)
+        counts["downgrades"] = change_stats.get("downgrades", 0)
+        counts["conf_jumps"] = change_stats.get("conf_jumps", 0)
+        counts["prev_scan_date"] = change_stats.get("prev_scan_date", "—")
+        counts["prev_scan_time"] = change_stats.get("prev_scan_time", "—")
+    else:
+        counts["total_changed"] = len([c for c in processed_cards if c.get("daily_change", {}).get("is_changed")])
+        counts["upgrades"] = len([c for c in processed_cards if c.get("daily_change", {}).get("change_type") == "UPGRADE"])
+        counts["downgrades"] = len([c for c in processed_cards if c.get("daily_change", {}).get("change_type") == "DOWNGRADE"])
+        counts["conf_jumps"] = len([c for c in processed_cards if c.get("daily_change", {}).get("change_type") in ("CONFIDENCE_JUMP", "CONFIDENCE_DROP")])
+        counts["prev_scan_date"] = "—"
+        counts["prev_scan_time"] = "—"
 
     template_dir = os.path.dirname(os.path.abspath(__file__))
     env = Environment(loader=FileSystemLoader(template_dir))
@@ -660,6 +682,7 @@ def run_scanner(tiers: List[str] = None, allow_mock_fallback: bool = True) -> st
             "earnings_time": mdata.get("earnings_time"),
             "ex_dividend_date": mdata.get("ex_dividend_date"),
             "days_to_ex_dividend": mdata.get("days_to_ex_dividend"),
+            "dividend_analysis": mdata.get("dividend_analysis"),
             "delta_1m": mdata.get("delta_1m"),
             "delta_3m": mdata.get("delta_3m"),
             "delta_1m_str": f"{mdata['delta_1m']:+.1f} %" if mdata.get("delta_1m") is not None else "—",
@@ -685,6 +708,11 @@ def run_scanner(tiers: List[str] = None, allow_mock_fallback: bool = True) -> st
     # Automatické řazení od nejlepších výsledků po nejhorší (Strong Buy -> Buy -> Hold -> Sell -> Strong Sell)
     final_cards.sort(key=lambda c: (c["signal_rank"], c["confidence"], c["change_pct_raw"]), reverse=True)
 
+    # 8.5. Výpočet denních posunů oproti předchozímu skenu
+    current_date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    final_cards, change_stats = compute_daily_changes(final_cards, current_scan_date=current_date_str)
+    logger.info(f"Denní posuny vyhodnoceny: {change_stats.get('total_changed', 0)} změn (⬆️ {change_stats.get('upgrades', 0)} upgradů, ⬇️ {change_stats.get('downgrades', 0)} downgradů).")
+
     # 9. Vygenerování a uložení index.html
     elapsed = time.time() - scan_start
     if elapsed >= 60:
@@ -693,7 +721,7 @@ def run_scanner(tiers: List[str] = None, allow_mock_fallback: bool = True) -> st
         scan_duration_str = f"{elapsed:.1f} s"
 
     data_sources_str = "XTB Market Catalog • Yahoo Finance Realtime • Yahoo Analyst Consensus & Calendars • Yahoo Financial News RSS • Google Gemini 3.5 AI"
-    html_output = build_html_report(final_cards, is_demo=is_demo, scan_duration=scan_duration_str, data_sources=data_sources_str)
+    html_output = build_html_report(final_cards, is_demo=is_demo, scan_duration=scan_duration_str, data_sources=data_sources_str, change_stats=change_stats)
 
     output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "index.html")
     with open(output_path, "w", encoding="utf-8") as f:
@@ -717,6 +745,9 @@ def run_scanner(tiers: List[str] = None, allow_mock_fallback: bool = True) -> st
                 "hold": len([c for c in final_cards if c["signal"] == "HOLD"]),
                 "sell": len([c for c in final_cards if c["signal"] == "SELL"]),
                 "strong_sell": len([c for c in final_cards if c["signal"] == "STRONG SELL"]),
+                "total_changed": change_stats.get("total_changed", 0),
+                "upgrades": change_stats.get("upgrades", 0),
+                "downgrades": change_stats.get("downgrades", 0),
             }
         }
         save_scan_history(final_cards, scan_meta)

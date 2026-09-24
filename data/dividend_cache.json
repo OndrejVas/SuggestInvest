@@ -1,0 +1,1520 @@
+{
+  "ABBV": {
+    "cached_at": 1790280322.946979,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 0.81,
+      "avg_pre_ex_runup_pct": -1.9,
+      "avg_drop_off_ratio": 1.52,
+      "recovery_rate_15d_pct": 100.0,
+      "recovery_rate_30d_pct": 100.0,
+      "median_recovery_days": 4,
+      "recommendation_code": "CAPTURE",
+      "recommendation_badge": "🟢 Držet přes Ex-Div (Rychlé zotavení)",
+      "recommendation_color": "success",
+      "recommendation_summary": "V 100 % případů titul smazal dividendový gap do 15 dní (medián zotavení: 4 dní). Kurz vykazuje silný nákupní polštář a historicky se vyplatí pozici držet přes Ex-Date a inkasovat dividendu.",
+      "recent_events": [
+        {
+          "ex_date": "2026-07-15",
+          "dividend": 1.73,
+          "cum_close": 244.78,
+          "ex_close": 244.11,
+          "div_yield_pct": 0.71,
+          "drop_off_ratio": 0.39,
+          "runup_20d_pct": 7.49,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 1
+        },
+        {
+          "ex_date": "2026-04-15",
+          "dividend": 1.73,
+          "cum_close": 210.26,
+          "ex_close": 208.42,
+          "div_yield_pct": 0.82,
+          "drop_off_ratio": 1.06,
+          "runup_20d_pct": -5.05,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 11
+        },
+        {
+          "ex_date": "2026-01-16",
+          "dividend": 1.73,
+          "cum_close": 216.75,
+          "ex_close": 214.35,
+          "div_yield_pct": 0.8,
+          "drop_off_ratio": 1.39,
+          "runup_20d_pct": -3.09,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 3
+        },
+        {
+          "ex_date": "2025-10-15",
+          "dividend": 1.64,
+          "cum_close": 229.13,
+          "ex_close": 226.22,
+          "div_yield_pct": 0.72,
+          "drop_off_ratio": 1.77,
+          "runup_20d_pct": 5.95,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 2
+        }
+      ]
+    }
+  },
+  "KOMB.PR": {
+    "cached_at": 1790280330.234397,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 7.92,
+      "avg_pre_ex_runup_pct": 1.8,
+      "avg_drop_off_ratio": 0.9,
+      "recovery_rate_15d_pct": 16.7,
+      "recovery_rate_30d_pct": 16.7,
+      "median_recovery_days": 4,
+      "recommendation_code": "NEUTRAL",
+      "recommendation_badge": "⚪ Běžný průběh (Neutrální)",
+      "recommendation_color": "neutral",
+      "recommendation_summary": "Zotavení do 15 dní nastalo v 17 % případů (medián: 4 dní). Průměrný run-up před Ex-Date činil +1.8 %. Chování nevykazuje jednoznačnou statistickou anomálii.",
+      "recent_events": [
+        {
+          "ex_date": "2026-05-04",
+          "dividend": 95.6,
+          "cum_close": 1106.0,
+          "ex_close": 1010.0,
+          "div_yield_pct": 8.64,
+          "drop_off_ratio": 1.0,
+          "runup_20d_pct": 2.5,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        },
+        {
+          "ex_date": "2025-05-05",
+          "dividend": 91.3,
+          "cum_close": 1060.0,
+          "ex_close": 993.0,
+          "div_yield_pct": 8.61,
+          "drop_off_ratio": 0.73,
+          "runup_20d_pct": -5.61,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 4
+        },
+        {
+          "ex_date": "2024-05-03",
+          "dividend": 82.66,
+          "cum_close": 874.5,
+          "ex_close": 786.0,
+          "div_yield_pct": 9.45,
+          "drop_off_ratio": 1.07,
+          "runup_20d_pct": 2.94,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        },
+        {
+          "ex_date": "2023-04-28",
+          "dividend": 60.42,
+          "cum_close": 748.5,
+          "ex_close": 688.5,
+          "div_yield_pct": 8.07,
+          "drop_off_ratio": 0.99,
+          "runup_20d_pct": 8.71,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        }
+      ]
+    }
+  },
+  "CEZ.PR": {
+    "cached_at": 1790280353.548283,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 6.61,
+      "avg_pre_ex_runup_pct": 0.4,
+      "avg_drop_off_ratio": 0.9,
+      "recovery_rate_15d_pct": 33.3,
+      "recovery_rate_30d_pct": 66.7,
+      "median_recovery_days": 17,
+      "recommendation_code": "NEUTRAL",
+      "recommendation_badge": "⚪ Běžný průběh (Neutrální)",
+      "recommendation_color": "neutral",
+      "recommendation_summary": "Zotavení do 15 dní nastalo v 33 % případů (medián: 17 dní). Průměrný run-up před Ex-Date činil +0.4 %. Chování nevykazuje jednoznačnou statistickou anomálii.",
+      "recent_events": [
+        {
+          "ex_date": "2026-06-04",
+          "dividend": 42.0,
+          "cum_close": 1290.0,
+          "ex_close": 1287.0,
+          "div_yield_pct": 3.26,
+          "drop_off_ratio": 0.07,
+          "runup_20d_pct": 7.5,
+          "recovered_in_30d": true,
+          "recovered_in_15d": false,
+          "recovery_days": 25
+        },
+        {
+          "ex_date": "2025-06-26",
+          "dividend": 47.0,
+          "cum_close": 1228.0,
+          "ex_close": 1196.0,
+          "div_yield_pct": 3.83,
+          "drop_off_ratio": 0.68,
+          "runup_20d_pct": 1.49,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 2
+        },
+        {
+          "ex_date": "2024-06-27",
+          "dividend": 52.0,
+          "cum_close": 926.5,
+          "ex_close": 877.0,
+          "div_yield_pct": 5.61,
+          "drop_off_ratio": 0.95,
+          "runup_20d_pct": -0.86,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        },
+        {
+          "ex_date": "2023-06-29",
+          "dividend": 145.0,
+          "cum_close": 1015.0,
+          "ex_close": 884.0,
+          "div_yield_pct": 14.29,
+          "drop_off_ratio": 0.9,
+          "runup_20d_pct": 1.65,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        }
+      ]
+    }
+  },
+  "JPM": {
+    "cached_at": 1790280354.441889,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 0.5,
+      "avg_pre_ex_runup_pct": 4.2,
+      "avg_drop_off_ratio": 1.29,
+      "recovery_rate_15d_pct": 83.3,
+      "recovery_rate_30d_pct": 100.0,
+      "median_recovery_days": 0,
+      "recommendation_code": "CAPTURE",
+      "recommendation_badge": "🟢 Držet přes Ex-Div (Rychlé zotavení)",
+      "recommendation_color": "success",
+      "recommendation_summary": "V 83 % případů titul smazal dividendový gap do 15 dní (medián zotavení: — dní). Kurz vykazuje silný nákupní polštář a historicky se vyplatí pozici držet přes Ex-Date a inkasovat dividendu.",
+      "recent_events": [
+        {
+          "ex_date": "2026-07-06",
+          "dividend": 1.5,
+          "cum_close": 334.47,
+          "ex_close": 337.72,
+          "div_yield_pct": 0.45,
+          "drop_off_ratio": -2.17,
+          "runup_20d_pct": 11.18,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        },
+        {
+          "ex_date": "2026-04-06",
+          "dividend": 1.5,
+          "cum_close": 294.6,
+          "ex_close": 295.45,
+          "div_yield_pct": 0.51,
+          "drop_off_ratio": -0.57,
+          "runup_20d_pct": 0.36,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        },
+        {
+          "ex_date": "2026-01-06",
+          "dividend": 1.5,
+          "cum_close": 334.04,
+          "ex_close": 334.61,
+          "div_yield_pct": 0.45,
+          "drop_off_ratio": -0.38,
+          "runup_20d_pct": 5.68,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        },
+        {
+          "ex_date": "2025-10-06",
+          "dividend": 1.5,
+          "cum_close": 310.03,
+          "ex_close": 309.18,
+          "div_yield_pct": 0.48,
+          "drop_off_ratio": 0.57,
+          "runup_20d_pct": 5.32,
+          "recovered_in_30d": true,
+          "recovered_in_15d": false,
+          "recovery_days": 19
+        }
+      ]
+    }
+  },
+  "MONET.PR": {
+    "cached_at": 1790280355.14227,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 5.85,
+      "avg_pre_ex_runup_pct": 4.9,
+      "avg_drop_off_ratio": 0.84,
+      "recovery_rate_15d_pct": 16.7,
+      "recovery_rate_30d_pct": 50.0,
+      "median_recovery_days": 21,
+      "recommendation_code": "HARVEST",
+      "recommendation_badge": "🟡 Prodat před Ex-Div (Vybrat zisk)",
+      "recommendation_color": "warning",
+      "recommendation_summary": "Před Ex-Date titul průměrně posiluje o +4.9 % (předexový run-up), ale po Ex-Date je zotavení pomalé (pouze v 17 % případů smazáno do 15 dní). Historická data favorizují realizaci kapitálového zisku před Ex-Date bez srážkové daně.",
+      "recent_events": [
+        {
+          "ex_date": "2026-04-24",
+          "dividend": 11.5,
+          "cum_close": 198.0,
+          "ex_close": 186.0,
+          "div_yield_pct": 5.81,
+          "drop_off_ratio": 1.04,
+          "runup_20d_pct": 6.22,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        },
+        {
+          "ex_date": "2025-11-20",
+          "dividend": 4.0,
+          "cum_close": 191.2,
+          "ex_close": 185.6,
+          "div_yield_pct": 2.09,
+          "drop_off_ratio": 1.4,
+          "runup_20d_pct": 7.78,
+          "recovered_in_30d": true,
+          "recovered_in_15d": false,
+          "recovery_days": 21
+        },
+        {
+          "ex_date": "2025-04-29",
+          "dividend": 10.0,
+          "cum_close": 145.6,
+          "ex_close": 137.0,
+          "div_yield_pct": 6.87,
+          "drop_off_ratio": 0.86,
+          "runup_20d_pct": -2.28,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 9
+        },
+        {
+          "ex_date": "2024-11-22",
+          "dividend": 3.0,
+          "cum_close": 127.0,
+          "ex_close": 126.8,
+          "div_yield_pct": 2.36,
+          "drop_off_ratio": 0.07,
+          "runup_20d_pct": 9.67,
+          "recovered_in_30d": true,
+          "recovered_in_15d": false,
+          "recovery_days": 30
+        }
+      ]
+    }
+  },
+  "COLT.PR": {
+    "cached_at": 1790280355.542715,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 3.39,
+      "avg_pre_ex_runup_pct": -0.2,
+      "avg_drop_off_ratio": 0.46,
+      "recovery_rate_15d_pct": 66.7,
+      "recovery_rate_30d_pct": 66.7,
+      "median_recovery_days": 3,
+      "recommendation_code": "CAPTURE",
+      "recommendation_badge": "🟢 Držet přes Ex-Div (Rychlé zotavení)",
+      "recommendation_color": "success",
+      "recommendation_summary": "V 67 % případů titul smazal dividendový gap do 15 dní (medián zotavení: 3 dní). Kurz vykazuje silný nákupní polštář a historicky se vyplatí pozici držet přes Ex-Date a inkasovat dividendu.",
+      "recent_events": [
+        {
+          "ex_date": "2026-07-01",
+          "dividend": 30.0,
+          "cum_close": 1050.0,
+          "ex_close": 1050.0,
+          "div_yield_pct": 2.86,
+          "drop_off_ratio": 0.0,
+          "runup_20d_pct": 0.0,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        },
+        {
+          "ex_date": "2025-07-03",
+          "dividend": 15.0,
+          "cum_close": 722.0,
+          "ex_close": 715.0,
+          "div_yield_pct": 2.08,
+          "drop_off_ratio": 0.47,
+          "runup_20d_pct": -4.24,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 3
+        },
+        {
+          "ex_date": "2024-07-03",
+          "dividend": 30.0,
+          "cum_close": 680.0,
+          "ex_close": 666.0,
+          "div_yield_pct": 4.41,
+          "drop_off_ratio": 0.47,
+          "runup_20d_pct": 0.29,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 13
+        },
+        {
+          "ex_date": "2023-06-16",
+          "dividend": 30.0,
+          "cum_close": 573.0,
+          "ex_close": 554.0,
+          "div_yield_pct": 5.24,
+          "drop_off_ratio": 0.63,
+          "runup_20d_pct": -3.7,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        }
+      ]
+    }
+  },
+  "TXN": {
+    "cached_at": 1790280355.860778,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 0.69,
+      "avg_pre_ex_runup_pct": 4.4,
+      "avg_drop_off_ratio": 1.76,
+      "recovery_rate_15d_pct": 100.0,
+      "recovery_rate_30d_pct": 100.0,
+      "median_recovery_days": 1,
+      "recommendation_code": "CAPTURE",
+      "recommendation_badge": "🟢 Držet přes Ex-Div (Rychlé zotavení)",
+      "recommendation_color": "success",
+      "recommendation_summary": "V 100 % případů titul smazal dividendový gap do 15 dní (medián zotavení: 1 dní). Kurz vykazuje silný nákupní polštář a historicky se vyplatí pozici držet přes Ex-Date a inkasovat dividendu.",
+      "recent_events": [
+        {
+          "ex_date": "2026-07-31",
+          "dividend": 1.42,
+          "cum_close": 278.76,
+          "ex_close": 275.74,
+          "div_yield_pct": 0.51,
+          "drop_off_ratio": 2.13,
+          "runup_20d_pct": -6.58,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 2
+        },
+        {
+          "ex_date": "2026-05-05",
+          "dividend": 1.42,
+          "cum_close": 280.89,
+          "ex_close": 281.0,
+          "div_yield_pct": 0.51,
+          "drop_off_ratio": -0.08,
+          "runup_20d_pct": 40.85,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        },
+        {
+          "ex_date": "2026-01-30",
+          "dividend": 1.42,
+          "cum_close": 218.97,
+          "ex_close": 215.55,
+          "div_yield_pct": 0.65,
+          "drop_off_ratio": 2.41,
+          "runup_20d_pct": 24.83,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 1
+        },
+        {
+          "ex_date": "2025-10-31",
+          "dividend": 1.42,
+          "cum_close": 160.51,
+          "ex_close": 161.46,
+          "div_yield_pct": 0.88,
+          "drop_off_ratio": -0.67,
+          "runup_20d_pct": -11.96,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        }
+      ]
+    }
+  },
+  "ORCL": {
+    "cached_at": 1790280356.641372,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 0.28,
+      "avg_pre_ex_runup_pct": -5.8,
+      "avg_drop_off_ratio": -0.22,
+      "recovery_rate_15d_pct": 83.3,
+      "recovery_rate_30d_pct": 100.0,
+      "median_recovery_days": 3,
+      "recommendation_code": "CAPTURE",
+      "recommendation_badge": "🟢 Držet přes Ex-Div (Rychlé zotavení)",
+      "recommendation_color": "success",
+      "recommendation_summary": "V 83 % případů titul smazal dividendový gap do 15 dní (medián zotavení: 3 dní). Kurz vykazuje silný nákupní polštář a historicky se vyplatí pozici držet přes Ex-Date a inkasovat dividendu.",
+      "recent_events": [
+        {
+          "ex_date": "2026-07-10",
+          "dividend": 0.5,
+          "cum_close": 144.22,
+          "ex_close": 140.64,
+          "div_yield_pct": 0.35,
+          "drop_off_ratio": 7.16,
+          "runup_20d_pct": -29.93,
+          "recovered_in_30d": true,
+          "recovered_in_15d": false,
+          "recovery_days": 17
+        },
+        {
+          "ex_date": "2026-04-09",
+          "dividend": 0.5,
+          "cum_close": 143.66,
+          "ex_close": 137.86,
+          "div_yield_pct": 0.35,
+          "drop_off_ratio": 11.6,
+          "runup_20d_pct": -3.84,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 2
+        },
+        {
+          "ex_date": "2026-01-09",
+          "dividend": 0.5,
+          "cum_close": 189.65,
+          "ex_close": 198.52,
+          "div_yield_pct": 0.26,
+          "drop_off_ratio": -17.74,
+          "runup_20d_pct": -14.39,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        },
+        {
+          "ex_date": "2025-10-09",
+          "dividend": 0.5,
+          "cum_close": 288.63,
+          "ex_close": 296.96,
+          "div_yield_pct": 0.17,
+          "drop_off_ratio": -16.66,
+          "runup_20d_pct": -12.09,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        }
+      ]
+    }
+  },
+  "CSCO": {
+    "cached_at": 1790280357.20621,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 0.55,
+      "avg_pre_ex_runup_pct": -1.8,
+      "avg_drop_off_ratio": 1.13,
+      "recovery_rate_15d_pct": 66.7,
+      "recovery_rate_30d_pct": 100.0,
+      "median_recovery_days": 0,
+      "recommendation_code": "CAPTURE",
+      "recommendation_badge": "🟢 Držet přes Ex-Div (Rychlé zotavení)",
+      "recommendation_color": "success",
+      "recommendation_summary": "V 67 % případů titul smazal dividendový gap do 15 dní (medián zotavení: — dní). Kurz vykazuje silný nákupní polštář a historicky se vyplatí pozici držet přes Ex-Date a inkasovat dividendu.",
+      "recent_events": [
+        {
+          "ex_date": "2026-07-06",
+          "dividend": 0.42,
+          "cum_close": 112.69,
+          "ex_close": 113.98,
+          "div_yield_pct": 0.37,
+          "drop_off_ratio": -3.07,
+          "runup_20d_pct": -10.92,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        },
+        {
+          "ex_date": "2026-04-02",
+          "dividend": 0.42,
+          "cum_close": 77.93,
+          "ex_close": 79.02,
+          "div_yield_pct": 0.54,
+          "drop_off_ratio": -2.6,
+          "runup_20d_pct": -3.64,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        },
+        {
+          "ex_date": "2026-01-02",
+          "dividend": 0.41,
+          "cum_close": 77.03,
+          "ex_close": 76.04,
+          "div_yield_pct": 0.53,
+          "drop_off_ratio": 2.41,
+          "runup_20d_pct": 0.21,
+          "recovered_in_30d": true,
+          "recovered_in_15d": false,
+          "recovery_days": 16
+        },
+        {
+          "ex_date": "2025-10-03",
+          "dividend": 0.41,
+          "cum_close": 68.31,
+          "ex_close": 67.92,
+          "div_yield_pct": 0.6,
+          "drop_off_ratio": 0.95,
+          "runup_20d_pct": 0.47,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 1
+        }
+      ]
+    }
+  },
+  "TTE.PA": {
+    "cached_at": 1790280357.707875,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 1.39,
+      "avg_pre_ex_runup_pct": 1.8,
+      "avg_drop_off_ratio": 0.11,
+      "recovery_rate_15d_pct": 83.3,
+      "recovery_rate_30d_pct": 83.3,
+      "median_recovery_days": 6,
+      "recommendation_code": "CAPTURE",
+      "recommendation_badge": "🟢 Držet přes Ex-Div (Rychlé zotavení)",
+      "recommendation_color": "success",
+      "recommendation_summary": "V 83 % případů titul smazal dividendový gap do 15 dní (medián zotavení: 6 dní). Kurz vykazuje silný nákupní polštář a historicky se vyplatí pozici držet přes Ex-Date a inkasovat dividendu.",
+      "recent_events": [
+        {
+          "ex_date": "2026-06-30",
+          "dividend": 0.85,
+          "cum_close": 68.98,
+          "ex_close": 68.03,
+          "div_yield_pct": 1.23,
+          "drop_off_ratio": 1.12,
+          "runup_20d_pct": -9.69,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 6
+        },
+        {
+          "ex_date": "2026-03-31",
+          "dividend": 0.85,
+          "cum_close": 81.02,
+          "ex_close": 80.91,
+          "div_yield_pct": 1.05,
+          "drop_off_ratio": 0.13,
+          "runup_20d_pct": 16.81,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        },
+        {
+          "ex_date": "2025-12-31",
+          "dividend": 0.85,
+          "cum_close": 56.4,
+          "ex_close": 55.59,
+          "div_yield_pct": 1.51,
+          "drop_off_ratio": 0.95,
+          "runup_20d_pct": -0.7,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 8
+        },
+        {
+          "ex_date": "2025-10-01",
+          "dividend": 0.85,
+          "cum_close": 51.73,
+          "ex_close": 51.59,
+          "div_yield_pct": 1.64,
+          "drop_off_ratio": 0.16,
+          "runup_20d_pct": -3.36,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 10
+        }
+      ]
+    }
+  },
+  "AAP": {
+    "cached_at": 1790280358.31011,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 0.53,
+      "avg_pre_ex_runup_pct": -5.6,
+      "avg_drop_off_ratio": -3.12,
+      "recovery_rate_15d_pct": 100.0,
+      "recovery_rate_30d_pct": 100.0,
+      "median_recovery_days": 0,
+      "recommendation_code": "CAPTURE",
+      "recommendation_badge": "🟢 Držet přes Ex-Div (Rychlé zotavení)",
+      "recommendation_color": "success",
+      "recommendation_summary": "V 100 % případů titul smazal dividendový gap do 15 dní (medián zotavení: — dní). Kurz vykazuje silný nákupní polštář a historicky se vyplatí pozici držet přes Ex-Date a inkasovat dividendu.",
+      "recent_events": [
+        {
+          "ex_date": "2026-07-10",
+          "dividend": 0.25,
+          "cum_close": 55.0,
+          "ex_close": 57.95,
+          "div_yield_pct": 0.45,
+          "drop_off_ratio": -11.8,
+          "runup_20d_pct": -8.39,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        },
+        {
+          "ex_date": "2026-04-10",
+          "dividend": 0.25,
+          "cum_close": 56.53,
+          "ex_close": 54.59,
+          "div_yield_pct": 0.44,
+          "drop_off_ratio": 7.76,
+          "runup_20d_pct": 6.0,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 3
+        },
+        {
+          "ex_date": "2026-01-09",
+          "dividend": 0.25,
+          "cum_close": 42.38,
+          "ex_close": 43.84,
+          "div_yield_pct": 0.59,
+          "drop_off_ratio": -5.84,
+          "runup_20d_pct": -8.49,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        },
+        {
+          "ex_date": "2025-10-10",
+          "dividend": 0.25,
+          "cum_close": 50.32,
+          "ex_close": 49.48,
+          "div_yield_pct": 0.5,
+          "drop_off_ratio": 3.36,
+          "runup_20d_pct": -19.1,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 1
+        }
+      ]
+    }
+  },
+  "ABM": {
+    "cached_at": 1790280358.825073,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 0.62,
+      "avg_pre_ex_runup_pct": -3.7,
+      "avg_drop_off_ratio": 2.43,
+      "recovery_rate_15d_pct": 66.7,
+      "recovery_rate_30d_pct": 83.3,
+      "median_recovery_days": 2,
+      "recommendation_code": "CAPTURE",
+      "recommendation_badge": "🟢 Držet přes Ex-Div (Rychlé zotavení)",
+      "recommendation_color": "success",
+      "recommendation_summary": "V 67 % případů titul smazal dividendový gap do 15 dní (medián zotavení: 2 dní). Kurz vykazuje silný nákupní polštář a historicky se vyplatí pozici držet přes Ex-Date a inkasovat dividendu.",
+      "recent_events": [
+        {
+          "ex_date": "2026-07-02",
+          "dividend": 0.29,
+          "cum_close": 44.54,
+          "ex_close": 44.27,
+          "div_yield_pct": 0.65,
+          "drop_off_ratio": 0.93,
+          "runup_20d_pct": 13.19,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 2
+        },
+        {
+          "ex_date": "2026-04-02",
+          "dividend": 0.29,
+          "cum_close": 38.7,
+          "ex_close": 38.72,
+          "div_yield_pct": 0.75,
+          "drop_off_ratio": -0.07,
+          "runup_20d_pct": -12.15,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        },
+        {
+          "ex_date": "2026-01-14",
+          "dividend": 0.29,
+          "cum_close": 44.27,
+          "ex_close": 43.98,
+          "div_yield_pct": 0.66,
+          "drop_off_ratio": 1.0,
+          "runup_20d_pct": -5.08,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 1
+        },
+        {
+          "ex_date": "2025-10-02",
+          "dividend": 0.265,
+          "cum_close": 46.79,
+          "ex_close": 46.44,
+          "div_yield_pct": 0.57,
+          "drop_off_ratio": 1.32,
+          "runup_20d_pct": -3.96,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        }
+      ]
+    }
+  },
+  "ABT": {
+    "cached_at": 1790280359.441609,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 0.53,
+      "avg_pre_ex_runup_pct": -2.1,
+      "avg_drop_off_ratio": 1.9,
+      "recovery_rate_15d_pct": 50.0,
+      "recovery_rate_30d_pct": 66.7,
+      "median_recovery_days": 0,
+      "recommendation_code": "NEUTRAL",
+      "recommendation_badge": "⚪ Běžný průběh (Neutrální)",
+      "recommendation_color": "neutral",
+      "recommendation_summary": "Zotavení do 15 dní nastalo v 50 % případů (medián: — dní). Průměrný run-up před Ex-Date činil -2.1 %. Chování nevykazuje jednoznačnou statistickou anomálii.",
+      "recent_events": [
+        {
+          "ex_date": "2026-07-15",
+          "dividend": 0.63,
+          "cum_close": 88.96,
+          "ex_close": 89.27,
+          "div_yield_pct": 0.71,
+          "drop_off_ratio": -0.49,
+          "runup_20d_pct": 0.88,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        },
+        {
+          "ex_date": "2026-04-15",
+          "dividend": 0.63,
+          "cum_close": 101.05,
+          "ex_close": 101.56,
+          "div_yield_pct": 0.62,
+          "drop_off_ratio": -0.81,
+          "runup_20d_pct": -8.09,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        },
+        {
+          "ex_date": "2026-01-15",
+          "dividend": 0.63,
+          "cum_close": 125.0,
+          "ex_close": 123.53,
+          "div_yield_pct": 0.5,
+          "drop_off_ratio": 2.33,
+          "runup_20d_pct": -2.7,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        },
+        {
+          "ex_date": "2025-10-15",
+          "dividend": 0.59,
+          "cum_close": 133.27,
+          "ex_close": 129.45,
+          "div_yield_pct": 0.44,
+          "drop_off_ratio": 6.47,
+          "runup_20d_pct": 0.38,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        }
+      ]
+    }
+  },
+  "ACA.PA": {
+    "cached_at": 1790280360.19497,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 7.27,
+      "avg_pre_ex_runup_pct": 6.1,
+      "avg_drop_off_ratio": 1.0,
+      "recovery_rate_15d_pct": 0.0,
+      "recovery_rate_30d_pct": 16.7,
+      "median_recovery_days": 16,
+      "recommendation_code": "HARVEST",
+      "recommendation_badge": "🟡 Prodat před Ex-Div (Vybrat zisk)",
+      "recommendation_color": "warning",
+      "recommendation_summary": "Před Ex-Date titul průměrně posiluje o +6.1 % (předexový run-up), ale po Ex-Date je zotavení pomalé (pouze v 0 % případů smazáno do 15 dní). Historická data favorizují realizaci kapitálového zisku před Ex-Date bez srážkové daně.",
+      "recent_events": [
+        {
+          "ex_date": "2026-05-26",
+          "dividend": 1.13,
+          "cum_close": 17.45,
+          "ex_close": 16.4,
+          "div_yield_pct": 6.48,
+          "drop_off_ratio": 0.93,
+          "runup_20d_pct": 2.08,
+          "recovered_in_30d": true,
+          "recovered_in_15d": false,
+          "recovery_days": 16
+        },
+        {
+          "ex_date": "2025-05-26",
+          "dividend": 1.1,
+          "cum_close": 17.23,
+          "ex_close": 16.32,
+          "div_yield_pct": 6.38,
+          "drop_off_ratio": 0.83,
+          "runup_20d_pct": 3.24,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        },
+        {
+          "ex_date": "2024-05-29",
+          "dividend": 1.05,
+          "cum_close": 15.92,
+          "ex_close": 14.74,
+          "div_yield_pct": 6.6,
+          "drop_off_ratio": 1.12,
+          "runup_20d_pct": 9.42,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        },
+        {
+          "ex_date": "2023-05-30",
+          "dividend": 1.05,
+          "cum_close": 11.93,
+          "ex_close": 10.73,
+          "div_yield_pct": 8.8,
+          "drop_off_ratio": 1.14,
+          "runup_20d_pct": 7.65,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        }
+      ]
+    }
+  },
+  "AEO": {
+    "cached_at": 1790280361.023592,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 0.85,
+      "avg_pre_ex_runup_pct": -2.5,
+      "avg_drop_off_ratio": 2.83,
+      "recovery_rate_15d_pct": 83.3,
+      "recovery_rate_30d_pct": 83.3,
+      "median_recovery_days": 1,
+      "recommendation_code": "CAPTURE",
+      "recommendation_badge": "🟢 Držet přes Ex-Div (Rychlé zotavení)",
+      "recommendation_color": "success",
+      "recommendation_summary": "V 83 % případů titul smazal dividendový gap do 15 dní (medián zotavení: 1 dní). Kurz vykazuje silný nákupní polštář a historicky se vyplatí pozici držet přes Ex-Date a inkasovat dividendu.",
+      "recent_events": [
+        {
+          "ex_date": "2026-07-10",
+          "dividend": 0.125,
+          "cum_close": 16.68,
+          "ex_close": 16.81,
+          "div_yield_pct": 0.75,
+          "drop_off_ratio": -1.04,
+          "runup_20d_pct": -5.07,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        },
+        {
+          "ex_date": "2026-04-10",
+          "dividend": 0.125,
+          "cum_close": 18.54,
+          "ex_close": 18.32,
+          "div_yield_pct": 0.67,
+          "drop_off_ratio": 1.76,
+          "runup_20d_pct": 2.04,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 3
+        },
+        {
+          "ex_date": "2026-01-09",
+          "dividend": 0.125,
+          "cum_close": 27.75,
+          "ex_close": 26.82,
+          "div_yield_pct": 0.45,
+          "drop_off_ratio": 7.44,
+          "runup_20d_pct": 16.06,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        },
+        {
+          "ex_date": "2025-10-10",
+          "dividend": 0.125,
+          "cum_close": 15.15,
+          "ex_close": 14.31,
+          "div_yield_pct": 0.83,
+          "drop_off_ratio": 6.72,
+          "runup_20d_pct": -22.74,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 1
+        }
+      ]
+    }
+  },
+  "AGNC": {
+    "cached_at": 1790280361.530547,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 1.12,
+      "avg_pre_ex_runup_pct": 0.5,
+      "avg_drop_off_ratio": 0.6,
+      "recovery_rate_15d_pct": 83.3,
+      "recovery_rate_30d_pct": 83.3,
+      "median_recovery_days": 2,
+      "recommendation_code": "CAPTURE",
+      "recommendation_badge": "🟢 Držet přes Ex-Div (Rychlé zotavení)",
+      "recommendation_color": "success",
+      "recommendation_summary": "V 83 % případů titul smazal dividendový gap do 15 dní (medián zotavení: 2 dní). Kurz vykazuje silný nákupní polštář a historicky se vyplatí pozici držet přes Ex-Date a inkasovat dividendu.",
+      "recent_events": [
+        {
+          "ex_date": "2026-08-31",
+          "dividend": 0.12,
+          "cum_close": 10.9,
+          "ex_close": 10.73,
+          "div_yield_pct": 1.1,
+          "drop_off_ratio": 1.42,
+          "runup_20d_pct": 2.25,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        },
+        {
+          "ex_date": "2026-07-31",
+          "dividend": 0.12,
+          "cum_close": 10.92,
+          "ex_close": 10.66,
+          "div_yield_pct": 1.1,
+          "drop_off_ratio": 2.17,
+          "runup_20d_pct": 1.2,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 9
+        },
+        {
+          "ex_date": "2026-06-30",
+          "dividend": 0.12,
+          "cum_close": 11.0,
+          "ex_close": 10.9,
+          "div_yield_pct": 1.09,
+          "drop_off_ratio": 0.83,
+          "runup_20d_pct": 5.67,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 2
+        },
+        {
+          "ex_date": "2026-05-29",
+          "dividend": 0.12,
+          "cum_close": 10.55,
+          "ex_close": 10.41,
+          "div_yield_pct": 1.14,
+          "drop_off_ratio": 1.17,
+          "runup_20d_pct": -3.83,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 12
+        }
+      ]
+    }
+  },
+  "AMT": {
+    "cached_at": 1790280361.937889,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 0.9,
+      "avg_pre_ex_runup_pct": 1.1,
+      "avg_drop_off_ratio": 0.7,
+      "recovery_rate_15d_pct": 66.7,
+      "recovery_rate_30d_pct": 66.7,
+      "median_recovery_days": 2,
+      "recommendation_code": "CAPTURE",
+      "recommendation_badge": "🟢 Držet přes Ex-Div (Rychlé zotavení)",
+      "recommendation_color": "success",
+      "recommendation_summary": "V 67 % případů titul smazal dividendový gap do 15 dní (medián zotavení: 2 dní). Kurz vykazuje silný nákupní polštář a historicky se vyplatí pozici držet přes Ex-Date a inkasovat dividendu.",
+      "recent_events": [
+        {
+          "ex_date": "2026-06-12",
+          "dividend": 1.79,
+          "cum_close": 189.31,
+          "ex_close": 187.18,
+          "div_yield_pct": 0.95,
+          "drop_off_ratio": 1.19,
+          "runup_20d_pct": 8.88,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        },
+        {
+          "ex_date": "2026-04-14",
+          "dividend": 1.79,
+          "cum_close": 180.94,
+          "ex_close": 176.41,
+          "div_yield_pct": 0.99,
+          "drop_off_ratio": 2.53,
+          "runup_20d_pct": -1.88,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 3
+        },
+        {
+          "ex_date": "2025-12-29",
+          "dividend": 1.7,
+          "cum_close": 176.41,
+          "ex_close": 175.83,
+          "div_yield_pct": 0.96,
+          "drop_off_ratio": 0.34,
+          "runup_20d_pct": -2.66,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 1
+        },
+        {
+          "ex_date": "2025-09-30",
+          "dividend": 1.7,
+          "cum_close": 194.55,
+          "ex_close": 192.32,
+          "div_yield_pct": 0.87,
+          "drop_off_ratio": 1.31,
+          "runup_20d_pct": -4.56,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        }
+      ]
+    }
+  },
+  "APA": {
+    "cached_at": 1790280362.407738,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 1.06,
+      "avg_pre_ex_runup_pct": -4.4,
+      "avg_drop_off_ratio": -0.46,
+      "recovery_rate_15d_pct": 100.0,
+      "recovery_rate_30d_pct": 100.0,
+      "median_recovery_days": 0,
+      "recommendation_code": "CAPTURE",
+      "recommendation_badge": "🟢 Držet přes Ex-Div (Rychlé zotavení)",
+      "recommendation_color": "success",
+      "recommendation_summary": "V 100 % případů titul smazal dividendový gap do 15 dní (medián zotavení: — dní). Kurz vykazuje silný nákupní polštář a historicky se vyplatí pozici držet přes Ex-Date a inkasovat dividendu.",
+      "recent_events": [
+        {
+          "ex_date": "2026-07-22",
+          "dividend": 0.25,
+          "cum_close": 35.77,
+          "ex_close": 36.18,
+          "div_yield_pct": 0.7,
+          "drop_off_ratio": -1.64,
+          "runup_20d_pct": 4.59,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        },
+        {
+          "ex_date": "2026-04-22",
+          "dividend": 0.25,
+          "cum_close": 37.6,
+          "ex_close": 38.06,
+          "div_yield_pct": 0.66,
+          "drop_off_ratio": -1.84,
+          "runup_20d_pct": -3.66,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        },
+        {
+          "ex_date": "2026-01-22",
+          "dividend": 0.25,
+          "cum_close": 26.54,
+          "ex_close": 25.55,
+          "div_yield_pct": 0.94,
+          "drop_off_ratio": 3.96,
+          "runup_20d_pct": 10.03,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 9
+        },
+        {
+          "ex_date": "2025-10-22",
+          "dividend": 0.25,
+          "cum_close": 22.58,
+          "ex_close": 22.89,
+          "div_yield_pct": 1.11,
+          "drop_off_ratio": -1.24,
+          "runup_20d_pct": -5.88,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        }
+      ]
+    }
+  },
+  "APD": {
+    "cached_at": 1790280363.091294,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 0.64,
+      "avg_pre_ex_runup_pct": -0.5,
+      "avg_drop_off_ratio": -1.25,
+      "recovery_rate_15d_pct": 83.3,
+      "recovery_rate_30d_pct": 83.3,
+      "median_recovery_days": 0,
+      "recommendation_code": "CAPTURE",
+      "recommendation_badge": "🟢 Držet přes Ex-Div (Rychlé zotavení)",
+      "recommendation_color": "success",
+      "recommendation_summary": "V 83 % případů titul smazal dividendový gap do 15 dní (medián zotavení: — dní). Kurz vykazuje silný nákupní polštář a historicky se vyplatí pozici držet přes Ex-Date a inkasovat dividendu.",
+      "recent_events": [
+        {
+          "ex_date": "2026-07-01",
+          "dividend": 1.81,
+          "cum_close": 293.18,
+          "ex_close": 306.4,
+          "div_yield_pct": 0.62,
+          "drop_off_ratio": -7.3,
+          "runup_20d_pct": 5.12,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        },
+        {
+          "ex_date": "2026-04-01",
+          "dividend": 1.81,
+          "cum_close": 290.49,
+          "ex_close": 289.43,
+          "div_yield_pct": 0.62,
+          "drop_off_ratio": 0.59,
+          "runup_20d_pct": 6.39,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 1
+        },
+        {
+          "ex_date": "2026-01-02",
+          "dividend": 1.79,
+          "cum_close": 247.02,
+          "ex_close": 250.47,
+          "div_yield_pct": 0.72,
+          "drop_off_ratio": -1.93,
+          "runup_20d_pct": -3.8,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 0
+        },
+        {
+          "ex_date": "2025-10-01",
+          "dividend": 1.79,
+          "cum_close": 272.72,
+          "ex_close": 268.7,
+          "div_yield_pct": 0.66,
+          "drop_off_ratio": 2.25,
+          "runup_20d_pct": -6.66,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        }
+      ]
+    }
+  },
+  "ERBAG.PR": {
+    "cached_at": 1790280626.606362,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 4.14,
+      "avg_pre_ex_runup_pct": 4.2,
+      "avg_drop_off_ratio": 0.99,
+      "recovery_rate_15d_pct": 66.7,
+      "recovery_rate_30d_pct": 83.3,
+      "median_recovery_days": 2,
+      "recommendation_code": "CAPTURE",
+      "recommendation_badge": "🟢 Držet přes Ex-Div (Rychlé zotavení)",
+      "recommendation_color": "success",
+      "recommendation_summary": "V 67 % případů titul smazal dividendový gap do 15 dní (medián zotavení: 2 dní). Kurz vykazuje silný nákupní polštář a historicky se vyplatí pozici držet přes Ex-Date a inkasovat dividendu.",
+      "recent_events": [
+        {
+          "ex_date": "2026-04-22",
+          "dividend": 18.301125,
+          "cum_close": 2536.0,
+          "ex_close": 2468.0,
+          "div_yield_pct": 0.72,
+          "drop_off_ratio": 3.72,
+          "runup_20d_pct": 15.17,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        },
+        {
+          "ex_date": "2025-05-26",
+          "dividend": 73.2045,
+          "cum_close": 1744.0,
+          "ex_close": 1733.5,
+          "div_yield_pct": 4.2,
+          "drop_off_ratio": 0.14,
+          "runup_20d_pct": 9.93,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 1
+        },
+        {
+          "ex_date": "2024-05-27",
+          "dividend": 65.884056,
+          "cum_close": 1152.0,
+          "ex_close": 1102.0,
+          "div_yield_pct": 5.72,
+          "drop_off_ratio": 0.76,
+          "runup_20d_pct": 2.95,
+          "recovered_in_30d": true,
+          "recovered_in_15d": false,
+          "recovery_days": 27
+        },
+        {
+          "ex_date": "2023-05-16",
+          "dividend": 46.36285,
+          "cum_close": 725.3,
+          "ex_close": 713.0,
+          "div_yield_pct": 6.39,
+          "drop_off_ratio": 0.27,
+          "runup_20d_pct": -0.51,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 2
+        }
+      ]
+    }
+  },
+  "TABAK.PR": {
+    "cached_at": 1790280627.23347,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 7.1,
+      "avg_pre_ex_runup_pct": 3.0,
+      "avg_drop_off_ratio": 0.85,
+      "recovery_rate_15d_pct": 0.0,
+      "recovery_rate_30d_pct": 0.0,
+      "median_recovery_days": null,
+      "recommendation_code": "NEUTRAL",
+      "recommendation_badge": "⚪ Běžný průběh (Neutrální)",
+      "recommendation_color": "neutral",
+      "recommendation_summary": "Zotavení do 15 dní nastalo v 0 % případů (medián: — dní). Průměrný run-up před Ex-Date činil +3.0 %. Chování nevykazuje jednoznačnou statistickou anomálii.",
+      "recent_events": [
+        {
+          "ex_date": "2026-06-05",
+          "dividend": 1100.0,
+          "cum_close": 19740.0,
+          "ex_close": 18620.0,
+          "div_yield_pct": 5.57,
+          "drop_off_ratio": 1.02,
+          "runup_20d_pct": 7.87,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        },
+        {
+          "ex_date": "2025-06-06",
+          "dividend": 1220.0,
+          "cum_close": 18480.0,
+          "ex_close": 17480.0,
+          "div_yield_pct": 6.6,
+          "drop_off_ratio": 0.82,
+          "runup_20d_pct": 2.9,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        },
+        {
+          "ex_date": "2024-05-09",
+          "dividend": 1220.0,
+          "cum_close": 15780.0,
+          "ex_close": 14720.0,
+          "div_yield_pct": 7.73,
+          "drop_off_ratio": 0.87,
+          "runup_20d_pct": 0.51,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        },
+        {
+          "ex_date": "2023-05-09",
+          "dividend": 1310.0,
+          "cum_close": 17800.0,
+          "ex_close": 16620.0,
+          "div_yield_pct": 7.36,
+          "drop_off_ratio": 0.9,
+          "runup_20d_pct": 2.06,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        }
+      ]
+    }
+  },
+  "KOFOL.PR": {
+    "cached_at": 1790280627.704688,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 4.04,
+      "avg_pre_ex_runup_pct": 2.0,
+      "avg_drop_off_ratio": 0.68,
+      "recovery_rate_15d_pct": 33.3,
+      "recovery_rate_30d_pct": 33.3,
+      "median_recovery_days": 6,
+      "recommendation_code": "NEUTRAL",
+      "recommendation_badge": "⚪ Běžný průběh (Neutrální)",
+      "recommendation_color": "neutral",
+      "recommendation_summary": "Zotavení do 15 dní nastalo v 33 % případů (medián: 6 dní). Průměrný run-up před Ex-Date činil +2.0 %. Chování nevykazuje jednoznačnou statistickou anomálii.",
+      "recent_events": [
+        {
+          "ex_date": "2026-06-25",
+          "dividend": 21.0,
+          "cum_close": 520.0,
+          "ex_close": 508.0,
+          "div_yield_pct": 4.04,
+          "drop_off_ratio": 0.57,
+          "runup_20d_pct": 0.0,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        },
+        {
+          "ex_date": "2025-07-03",
+          "dividend": 13.5,
+          "cum_close": 536.0,
+          "ex_close": 534.0,
+          "div_yield_pct": 2.52,
+          "drop_off_ratio": 0.15,
+          "runup_20d_pct": 9.39,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 1
+        },
+        {
+          "ex_date": "2024-07-09",
+          "dividend": 13.5,
+          "cum_close": 303.0,
+          "ex_close": 296.0,
+          "div_yield_pct": 4.46,
+          "drop_off_ratio": 0.52,
+          "runup_20d_pct": 2.36,
+          "recovered_in_30d": true,
+          "recovered_in_15d": true,
+          "recovery_days": 12
+        },
+        {
+          "ex_date": "2023-09-27",
+          "dividend": 13.5,
+          "cum_close": 276.0,
+          "ex_close": 269.0,
+          "div_yield_pct": 4.89,
+          "drop_off_ratio": 0.52,
+          "runup_20d_pct": 3.76,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        }
+      ]
+    }
+  },
+  "VIG.PR": {
+    "cached_at": 1790280628.225071,
+    "data": {
+      "events_count": 6,
+      "avg_div_yield_pct": 3.99,
+      "avg_pre_ex_runup_pct": 3.3,
+      "avg_drop_off_ratio": 0.66,
+      "recovery_rate_15d_pct": 0.0,
+      "recovery_rate_30d_pct": 50.0,
+      "median_recovery_days": 19,
+      "recommendation_code": "HARVEST",
+      "recommendation_badge": "🟡 Prodat před Ex-Div (Vybrat zisk)",
+      "recommendation_color": "warning",
+      "recommendation_summary": "Před Ex-Date titul průměrně posiluje o +3.3 % (předexový run-up), ale po Ex-Date je zotavení pomalé (pouze v 0 % případů smazáno do 15 dní). Historická data favorizují realizaci kapitálového zisku před Ex-Date bez srážkové daně.",
+      "recent_events": [
+        {
+          "ex_date": "2026-05-26",
+          "dividend": 42.214596,
+          "cum_close": 1587.0,
+          "ex_close": 1553.0,
+          "div_yield_pct": 2.66,
+          "drop_off_ratio": 0.81,
+          "runup_20d_pct": 3.39,
+          "recovered_in_30d": true,
+          "recovered_in_15d": false,
+          "recovery_days": 19
+        },
+        {
+          "ex_date": "2025-05-26",
+          "dividend": 37.822327,
+          "cum_close": 1144.0,
+          "ex_close": 1110.0,
+          "div_yield_pct": 3.31,
+          "drop_off_ratio": 0.9,
+          "runup_20d_pct": 12.6,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        },
+        {
+          "ex_date": "2024-05-27",
+          "dividend": 34.1621,
+          "cum_close": 765.0,
+          "ex_close": 756.0,
+          "div_yield_pct": 4.47,
+          "drop_off_ratio": 0.26,
+          "runup_20d_pct": 2.0,
+          "recovered_in_30d": true,
+          "recovered_in_15d": false,
+          "recovery_days": 25
+        },
+        {
+          "ex_date": "2023-05-30",
+          "dividend": 31.72195,
+          "cum_close": 610.5,
+          "ex_close": 585.0,
+          "div_yield_pct": 5.2,
+          "drop_off_ratio": 0.8,
+          "runup_20d_pct": -1.05,
+          "recovered_in_30d": false,
+          "recovered_in_15d": false,
+          "recovery_days": null
+        }
+      ]
+    }
+  }
+}

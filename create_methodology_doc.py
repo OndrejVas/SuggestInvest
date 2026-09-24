@@ -448,6 +448,44 @@ def create_methodology_document(output_path: str):
     add_bullet(" Ztráta fundamentu, prolomení podpory a masivní snižování cílových cen analytiky.", "🔴 STRONG SELL:")
     add_bullet(" Exaktní číselná hladina (stop-loss úroveň), při jejímž prolomení celá investiční teze zaniká.", "🛑 Invalidation Price (Stop-Loss):")
 
+    add_section_header("6.8 Kvantitativní Analýza Dividendových Anomálií (Ex-Date Recovery Velocity)", level=2)
+    add_body_p(
+        "Trh v den Ex-Dividend automaticky koriguje otevírací kurz o výši přiznané dividendy. "
+        "V reálném obchodování však vzniká statistická asymetrie daná chováním investorů, daňovým zatížením a rychlostí uzavření cenového gapu. "
+        "SuggestInvest provádí rigorózní kvantitativní analýzu posledních 4 až 8 historických Ex-Dates a vyhodnocuje dvě protichůdné strategie:"
+    )
+
+    add_body_p("A. Měřené statistické metriky:")
+    add_bullet(" Poměr reálného poklesu kurzu k výši dividendy. Hodnota < 1.0 indikuje nákupní polštář a silnou poptávku.", "Dividend Drop-Off Ratio (DDR):")
+    add_bullet(" Průměrný kapitálový zisk akcie v období 20 obchodních dní před Ex-Date (institucionální i retailová akumulace před rozhodným dnem).", "Pre-Ex Run-up Momentum (20d):")
+    add_bullet(" Procento historických výplat, kdy se kurz vrátil na cum-dividend cenu do 15 a 30 obchodních dní, včetně mediánu počtu dní potřebných ke smazání gapu.", "Recovery Velocity (T_rec):")
+
+    add_body_p("B. Rozhodovací logika dividendového doporučení:")
+    add_bullet(" Pokud se kurz v ≥ 65 % případů zotaví do 15 obchodních dní s mediánem ≤ 15 dní. Titul má silnou absorpci a vyplatí se pozici držet přes Ex-Date, inkasovat dividendu a vyčkat na smazání gapu.", "🟢 Držet přes Ex-Div (Dividend Capture):")
+    add_bullet(" Pokud průměrný předexový růst (20d) dosahuje alespoň 1.5 % a převyšuje dividendový výnos, ale historické zotavení po Ex-Date je pomalé (≤ 40 % do 15 dní). Výhodnější je prodat 1–2 dny před Ex-Date, realizovat kapitálový zisk bez srážkové daně a vyhnout se post-dividendovému propadu.", "🟡 Prodat před Ex-Div (Run-up Harvest):")
+    add_bullet(" Běžná tržní fluktuace bez průkazné statistické anomálie.", "⚪ Běžný průběh (Neutrální):")
+
+    add_section_header("6.9 Denní sledování změn a detekce tržních obratů (Daily Delta & Change Tracker)", level=2)
+    add_body_p(
+        "V dynamickém tržním prostředí není nejdůležitější statický stav aktiva, ale jeho okamžitá derivace – tedy rychlost "
+        "a směr změny sentimentu. Pokud se doporučení pro titul změní ze dne na den, jde o primární signál pro pozornost portfoliomanažera. "
+        "Systém SuggestInvest proto při každém ranním skenu automaticky porovnává nově vygenerovaný stav s referenčním skenem "
+        "z předchozího obchodního dne (uloženým v SQLite databázi history.db)."
+    )
+
+    add_body_p("A. Klasifikace denních posunů (Change Types):")
+    add_bullet(" Posun v pětistupňové hierarchii směrem nahoru (např. HOLD ➜ BUY, BUY ➜ STRONG BUY). Indikuje nově potvrzený fundamentální impuls, průlom rezistence nebo skokový nárůst odhadů analytiků. Zelený odznak: ⬆️ UPGRADE.", "Zvýšení doporučení (Rating Upgrade):")
+    add_bullet(" Posun v pětistupňové hierarchii směrem dolů (např. BUY ➜ HOLD, HOLD ➜ SELL). Varuje před vyčerpaným růstovým potenciálem, překročením cílové ceny nebo blížícím se binárním rizikem výsledků. Červený odznak: ⬇️ DOWNGRADE.", "Snížení doporučení (Rating Downgrade):")
+    add_bullet(" Změna míry jistoty modelu o více než ±10 procentních bodů při stejném signálu. Odráží zrychlení přílivu kapitálu nebo naopak rostoucí makroekonomickou nejistotu. Tyrkysový odznak: ⚡ +N% CONF, resp. žlutý: ⚠️ -N% CONF.", "Významný skok konfidence (Confidence Velocity):")
+    add_bullet(" Skoková změna konsenzuální cílové ceny analytiků z Wall Street o více než ±8 % (např. po vlně nových analytických doporučení). Fialový odznak: 🎯 ±N% CÍL.", "Revize cílové ceny (Target Shift):")
+    add_bullet(" Detekce nově aktivovaného spouštěče v reálném čase (např. vstup do okna 7 dnů před výsledky, blížící se rozhodný den pro dividendu, test 52týdenního maxima). Růžový odznak: 🔥 KATALYZÁTOR.", "Aktivace nového katalyzátoru (New Catalyst):")
+    add_bullet(" Titul, který nebyl v předchozím skenu zahrnut (nové IPO, přidání do univerza). Modrý odznak: ✨ NOVÉ.", "Nové aktivum v univerzu (New Asset):")
+
+    add_body_p("B. Využití v uživatelském rozhraní a ranní rutině:")
+    add_bullet(" V záhlaví aplikace i ve filtračním panelu je k dispozici dedikovaná sekce '⚡ Posuny od včerejška'. Investor jedním kliknutím odfiltruje pouze upgrady, downgrady či skoky konfidence a nemusí procházet všech 541 aktiv.", "Jednoklikový filtr změn:")
+    add_bullet(" V tabulce aktiv je přímo pod signálem zobrazen výrazný barevný mikroodznak indikující přesný typ posunu.", "Vizuální označení v tabulce:")
+    add_bullet(" V kontextovém AI tooltipu (tlačítko 💡 Kontext) se při najetí myši na první pozici zobrazí detailní srovnávací box obsahující textové vysvětlení důvodu změny, posun bodů konfidence a přehledný tok signálu (např. HOLD (65 %) ➜ BUY (82 %)).", "Detailní komparativní blok:")
+
     # ==================== KAPITOLA 7: ARCHITEKTURA KOŠŮ ====================
     add_section_header("7. Segmentace univerza: Proč 3 prioritní koše (Tiers)")
     add_body_p(

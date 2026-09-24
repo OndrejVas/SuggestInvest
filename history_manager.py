@@ -3,7 +3,7 @@ import json
 import sqlite3
 import logging
 from datetime import datetime, timezone, timedelta
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Tuple
 
 logger = logging.getLogger("HistoryManager")
 
@@ -315,3 +315,280 @@ def get_available_scan_dates() -> List[str]:
     except Exception as e:
         logger.debug(f"Chyba při zjišťování dostupných dat skenů: {e}")
         return []
+
+
+SIGNAL_RANK_MAP = {
+    "STRONG BUY": 5,
+    "BUY": 4,
+    "HOLD": 3,
+    "SELL": 2,
+    "STRONG SELL": 1
+}
+
+
+def compute_daily_changes(
+    cards: List[Dict[str, Any]], 
+    current_scan_id: Optional[str] = None,
+    current_scan_date: Optional[str] = None
+) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+    """
+    Porovná aktuální sadu karet s referenčním předchozím skenem (z předchozího dne, 
+    popř. nejnovějším starším skenem v SQLite history.db).
+    
+    Pro každé aktivum spočítá strukturu 'daily_change':
+    - is_changed: bool
+    - change_type: 'UPGRADE' | 'DOWNGRADE' | 'CONFIDENCE_JUMP' | 'CONFIDENCE_DROP' | 'TARGET_SHIFT' | 'NEW_CATALYST' | 'NEW_ASSET' | 'UNCHANGED'
+    - change_badge: string (např. '⬆️ UPGRADE', '⬇️ DOWNGRADE', '⚡ +12% CONF')
+    - badge_class: CSS třída (např. 'badge-upgrade', 'badge-downgrade')
+    - change_color: hex kód pro zvýraznění
+    - prev_signal: původní signál
+    - curr_signal: aktuální signál
+    - rank_diff: posun v hodnocení (+1, -1, ...)
+    - conf_diff: posun v konfidenci (+12, -8, ...)
+    - change_desc: česky psaný srozumitelný popis do tooltipu
+    - prev_date_str: datum/čas referenčního skenu
+    
+    Vrací: (obohacené karty, statistiky změn)
+    """
+    default_stats = {
+        "total_changed": 0,
+        "upgrades": 0,
+        "downgrades": 0,
+        "conf_jumps": 0,
+        "prev_scan_date": "—",
+        "prev_scan_time": "—"
+    }
+
+    if not os.path.exists(DB_FILE):
+        for c in cards:
+            c["daily_change"] = {
+                "is_changed": False,
+                "change_type": "UNCHANGED",
+                "change_badge": "",
+                "badge_class": "",
+                "change_color": "#94a3b8",
+                "prev_signal": c.get("signal", "HOLD"),
+                "curr_signal": c.get("signal", "HOLD"),
+                "rank_diff": 0,
+                "conf_diff": 0,
+                "prev_conf": c.get("confidence", 50),
+                "curr_conf": c.get("confidence", 50),
+                "change_desc": "První sken v historii.",
+                "prev_date_str": "—"
+            }
+        return cards, default_stats
+
+    try:
+        with sqlite3.connect(DB_FILE) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT scan_id, scan_date, timestamp_utc, timestamp_cet FROM scans ORDER BY timestamp_utc DESC")
+            all_scans = cursor.fetchall()
+            if not all_scans:
+                return cards, default_stats
+
+            # Vybereme referenční sken:
+            # 1. Filtrujeme aktuální sken, pokud je zadán
+            candidate_scans = [s for s in all_scans if s[0] != current_scan_id]
+            
+            # 2. Přednostně hledáme sken z dřívějšího data (včerejšek či starší)
+            ref_scan = None
+            if current_scan_date:
+                prev_date_scans = [s for s in candidate_scans if s[1] < current_scan_date]
+                if prev_date_scans:
+                    ref_scan = prev_date_scans[0]
+
+            # 3. Pokud není starší datum (např. testování v rámci jednoho dne), vezmeme nejnovější předcházející sken
+            if ref_scan is None and candidate_scans:
+                ref_scan = candidate_scans[0]
+
+            if ref_scan is None:
+                # Žádný starší sken k porovnání
+                for c in cards:
+                    c["daily_change"] = {
+                        "is_changed": False,
+                        "change_type": "UNCHANGED",
+                        "change_badge": "",
+                        "badge_class": "",
+                        "change_color": "#94a3b8",
+                        "prev_signal": c.get("signal", "HOLD"),
+                        "curr_signal": c.get("signal", "HOLD"),
+                        "rank_diff": 0,
+                        "conf_diff": 0,
+                        "prev_conf": c.get("confidence", 50),
+                        "curr_conf": c.get("confidence", 50),
+                        "change_desc": "Výchozí sken.",
+                        "prev_date_str": "—"
+                    }
+                return cards, default_stats
+
+            ref_scan_id, ref_scan_date, ref_scan_utc, ref_scan_cet = ref_scan
+            ref_date_display = ref_scan_cet if ref_scan_cet else (ref_scan_date or ref_scan_utc)
+
+            cursor.execute("""
+            SELECT yahoo_symbol, signal, signal_rank, COALESCE(confidence, probability, 50),
+                   target_mean, target_upside_pct, catalysts
+            FROM signal_history
+            WHERE scan_id = ?
+            """, (ref_scan_id,))
+            rows = cursor.fetchall()
+
+            prev_data_by_sym = {}
+            for r in rows:
+                sym = (r[0] or "").upper().strip()
+                cats = []
+                if r[6]:
+                    try:
+                        cats = json.loads(r[6]) if r[6].startswith("[") else [r[6]]
+                    except Exception:
+                        cats = [r[6]]
+                
+                sig_raw = (r[1] or "HOLD").upper().strip()
+                prev_data_by_sym[sym] = {
+                    "signal": sig_raw,
+                    "signal_rank": r[2] if r[2] is not None else SIGNAL_RANK_MAP.get(sig_raw, 3),
+                    "confidence": int(r[3]) if r[3] is not None else 50,
+                    "target_mean": r[4],
+                    "target_upside_pct": r[5],
+                    "catalysts": cats
+                }
+
+            total_changed = 0
+            upgrades = 0
+            downgrades = 0
+            conf_jumps = 0
+
+            for card in cards:
+                sym = (card.get("yahoo_symbol") or "").upper().strip()
+                curr_sig = (card.get("signal") or "HOLD").upper().strip()
+                curr_rank = card.get("signal_rank") or SIGNAL_RANK_MAP.get(curr_sig, 3)
+                curr_conf = card.get("confidence")
+                if curr_conf is None:
+                    curr_conf = card.get("probability", 50)
+                curr_upside = card.get("target_upside_raw")
+                curr_cats = set(card.get("catalysts") or [])
+
+                if sym not in prev_data_by_sym:
+                    # Titul nebyl v předchozím skenu
+                    daily_change = {
+                        "is_changed": True,
+                        "change_type": "NEW_ASSET",
+                        "change_badge": "✨ NOVÉ",
+                        "badge_class": "badge-new-asset",
+                        "change_color": "#60a5fa",
+                        "prev_signal": None,
+                        "curr_signal": curr_sig,
+                        "rank_diff": 0,
+                        "conf_diff": 0,
+                        "prev_conf": None,
+                        "curr_conf": curr_conf,
+                        "change_desc": f"Titul nově zařazen do monitoringu se signálem {curr_sig} (konfidence {curr_conf} %).",
+                        "prev_date_str": ref_date_display
+                    }
+                    total_changed += 1
+                else:
+                    prev = prev_data_by_sym[sym]
+                    prev_sig = prev["signal"]
+                    prev_rank = prev["signal_rank"]
+                    prev_conf = prev["confidence"]
+                    prev_upside = prev["target_upside_pct"]
+                    prev_cats = set(prev["catalysts"] or [])
+                    new_cats = curr_cats - prev_cats
+
+                    rank_diff = curr_rank - prev_rank
+                    conf_diff = curr_conf - prev_conf
+
+                    is_changed = False
+                    change_type = "UNCHANGED"
+                    change_badge = ""
+                    badge_class = ""
+                    change_color = "#94a3b8"
+                    desc = f"Signál {curr_sig} beze změny oproti předchozímu skenu ({ref_date_display})."
+
+                    if rank_diff > 0:
+                        is_changed = True
+                        change_type = "UPGRADE"
+                        change_badge = "⬆️ UPGRADE"
+                        badge_class = "badge-upgrade"
+                        change_color = "#34d399"
+                        desc = f"Zvýšení doporučení z {prev_sig} na {curr_sig}."
+                        if conf_diff != 0:
+                            desc += f" Konfidence vzrostla na {curr_conf} % ({conf_diff:+d} b.p.)."
+                        if new_cats:
+                            desc += f" Nový katalyzátor: {', '.join(list(new_cats)[:2])}."
+                        upgrades += 1
+                    elif rank_diff < 0:
+                        is_changed = True
+                        change_type = "DOWNGRADE"
+                        change_badge = "⬇️ DOWNGRADE"
+                        badge_class = "badge-downgrade"
+                        change_color = "#f87171"
+                        desc = f"Snížení doporučení z {prev_sig} na {curr_sig}."
+                        if conf_diff != 0:
+                            desc += f" Konfidence se změnila na {curr_conf} % ({conf_diff:+d} b.p.)."
+                        downgrades += 1
+                    elif conf_diff >= 10:
+                        is_changed = True
+                        change_type = "CONFIDENCE_JUMP"
+                        change_badge = f"⚡ +{conf_diff}% CONF"
+                        badge_class = "badge-conf-up"
+                        change_color = "#22d3ee"
+                        desc = f"Výrazné posílení konfidence signálu {curr_sig} z {prev_conf} % na {curr_conf} % (+{conf_diff} b.p.)."
+                        conf_jumps += 1
+                    elif conf_diff <= -10:
+                        is_changed = True
+                        change_type = "CONFIDENCE_DROP"
+                        change_badge = f"⚠️ {conf_diff}% CONF"
+                        badge_class = "badge-conf-down"
+                        change_color = "#fbbf24"
+                        desc = f"Pokles konfidence signálu {curr_sig} z {prev_conf} % na {curr_conf} % ({conf_diff} b.p.)."
+                        conf_jumps += 1
+                    elif (prev_upside is not None and curr_upside not in (-9999.0, None) and abs(curr_upside - prev_upside) >= 8.0):
+                        diff_upside = curr_upside - prev_upside
+                        is_changed = True
+                        change_type = "TARGET_SHIFT"
+                        change_badge = f"🎯 {diff_upside:+.0f}% CÍL"
+                        badge_class = "badge-target-shift"
+                        change_color = "#c084fc"
+                        desc = f"Posun konsenzuálního růstového potenciálu k cílové ceně analytiků z {prev_upside:+.1f} % na {curr_upside:+.1f} % ({diff_upside:+.1f} b.p.)."
+                    elif new_cats:
+                        is_changed = True
+                        change_type = "NEW_CATALYST"
+                        change_badge = "🔥 KATALYZÁTOR"
+                        badge_class = "badge-new-catalyst"
+                        change_color = "#f472b6"
+                        desc = f"Aktivován nový předstihový katalyzátor: {', '.join(list(new_cats)[:2])}."
+                    
+                    if is_changed:
+                        total_changed += 1
+
+                    daily_change = {
+                        "is_changed": is_changed,
+                        "change_type": change_type,
+                        "change_badge": change_badge,
+                        "badge_class": badge_class,
+                        "change_color": change_color,
+                        "prev_signal": prev_sig,
+                        "curr_signal": curr_sig,
+                        "rank_diff": rank_diff,
+                        "conf_diff": conf_diff,
+                        "prev_conf": prev_conf,
+                        "curr_conf": curr_conf,
+                        "change_desc": desc,
+                        "prev_date_str": ref_date_display
+                    }
+
+                card["daily_change"] = daily_change
+
+            stats = {
+                "total_changed": total_changed,
+                "upgrades": upgrades,
+                "downgrades": downgrades,
+                "conf_jumps": conf_jumps,
+                "prev_scan_date": ref_scan_date,
+                "prev_scan_time": ref_date_display
+            }
+            return cards, stats
+
+    except Exception as e:
+        logger.warning(f"Chyba při výpočtu denních změn v history_manager: {e}")
+        return cards, default_stats

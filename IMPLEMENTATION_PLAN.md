@@ -399,3 +399,60 @@ Každé vyhodnocené aktivum generuje strukturovaný výstup:
   - Zaznamenat definici invalidačních cen (invalidation price / stop-loss hladin).
   - Zdokumentovat uzavřenou množinu 9 schválených štítků katalyzátorů.
 - Znovu vygenerovat `Analyza_Dat_a_Metodika_SuggestInvest.docx`.
+
+---
+
+## Fáze 7: Kvantitativní Analýza Dividendových Anomálií (Ex-Date Recovery Velocity & Drop-Off Ratio)
+
+### Koncepční cíl
+Vyhodnotit pro všechny dividendové tituly s blížícím se Ex-Date ($\le 45$ dní) a české dividendové stálice BCPP historický profil posledních 4 až 8 výplat dividend a poskytnout investorovi exaktní doporučení podložené daty:
+1. **`🟢 DRŽET PŘES EX-DIV (CAPTURE)`**: Kurz historicky v $\ge 65\ \%$ případů rychle smaže dividendový gap (do 15 dní, medián $\le 15$ dní). Doporučeno držet přes Ex-Date a inkasovat dividendu.
+2. **`🟡 PRODAT PŘED EX-DIV (HARVEST)`**: Předexový růst (20d run-up) dosahuje alespoň $1.5\ \%$ a převyšuje dividendový výnos, ale zotavení po Ex-Date je pomalé ($\le 40\ \%$ do 15 dní). Doporučeno realizovat zisk před Ex-Date bez srážkové daně.
+3. **`⚪ BĚŽNÝ PRŮBĚH (NEUTRÁLNÍ)`**: Žádná statistická anomálie.
+
+### Implementované komponenty
+- **Modul `dividend_analyzer.py`**:
+  - `analyze_ticker_dividend_history(symbol, max_events=6)`
+  - Výpočet $DDR$ (Dividend Drop-Off Ratio), $T_{rec}$ (Recovery Velocity do 15 a 30 dní, medián), 20denního pre-ex run-upu.
+  - Lokální 7denní mezipaměť v `data/dividend_cache.json`.
+- **Integrace do `trigger_engine.py`**:
+  - Spouštění analýzy pro tituly s Ex-Div $\le 45$ dní a BCPP akcie v CZK.
+  - Nové triggery: `CAT_DIV_CAPTURE` a `CAT_DIV_HARVEST`.
+  - Začlenění do forward-looking AI kontextu.
+- **Rozšíření promptu a modelu v `main.py`**:
+  - Předávání `calendar.dividend_strategy` modelu Gemini.
+  - Mapování `dividend_analysis` do datových karet pro frontend.
+- **Frontend & Tooltip v `template.html`**:
+  - Dedikovaný box v tooltipu `💡 Kontext`: *💰 Ex-Div Taktika & Historické Zotavení* s mírou zotavení, mediánem dní, run-upem a zdůvodněním.
+- **Metodika v `create_methodology_doc.py`**:
+  - Nová kapitola *6.8 Kvantitativní Analýza Dividendových Anomálií (Ex-Date Recovery Velocity)* ve vygenerovaném `Analyza_Dat_a_Metodika_SuggestInvest.docx`.
+
+---
+
+## Fáze 8: Denní sledování změn a detekce tržních obratů (Daily Delta & Change Tracker)
+
+### Koncepční cíl
+Automaticky sledovat mezidenní posuny v hodnocení 541 sledovaných aktiv. Identifikovat a vizuálně zvýraznit tituly, u kterých došlo ke změně doporučení (rating upgrade/downgrade), skokovému posunu míry jistoty ($\Delta \text{Confidence} \ge \pm 10\%$), zásadní revizi cílové ceny analytiků ($\ge \pm 8\%$) nebo aktivaci nových předstihových katalyzátorů.
+
+### Implementované komponenty
+- **Modul `history_manager.py`**:
+  - Implementována funkce `compute_daily_changes(cards, current_scan_id, current_scan_date)`:
+    - Vyhledává předchozí referenční sken v SQLite databázi `history.db` (primárně z předchozího data, záložně nejnovější předcházející sken).
+    - Porovnává 5stupňové pořadí signálů (`STRONG BUY` = 5, `BUY` = 4, `HOLD` = 3, `SELL` = 2, `STRONG SELL` = 1).
+    - Klasifikuje typ změny: `UPGRADE`, `DOWNGRADE`, `CONFIDENCE_JUMP`, `CONFIDENCE_DROP`, `TARGET_SHIFT`, `NEW_CATALYST`, `NEW_ASSET`, `UNCHANGED`.
+    - Generuje srozumitelný český popis do tooltipu a barevný odznak pro tabulku.
+    - Vrací globální statistiky: celkový počet změn, počet upgradů, downgradů a skoků konfidence.
+- **Integrace v `main.py`**:
+  - Volání `compute_daily_changes` po setřídění karet a před vygenerováním `index.html`.
+  - Předávání statistik změn do `build_html_report(..., change_stats=change_stats)`.
+  - Ukládání statistik změn do `scan_meta["counts"]` při zápisu do databáze.
+- **Frontend & Uživatelské rozhraní v `template.html`**:
+  - **Meta-bar**: Nový ukazatel `⚡ Změny od včerejška: N (⬆️ U | ⬇️ D)`.
+  - **Filtrační panel**: 6. skupina filtrů `⚡ Posuny od včerejška` s tlačítky `Všechny tituly`, `⚡ Všechny změny (N)`, `⬆️ Upgrady (U)`, `⬇️ Downgrady (D)`, `🔥 Změna konfidence (C)`.
+  - **Tabulka aktiv (Řádek)**: Datové atributy `data-changed` a `data-change-type`.
+  - **Sloupec AI Signál**: Výrazný mikroodznak (např. `⬆️ UPGRADE`, `⬇️ DOWNGRADE`, `⚡ +12% CONF`, `🔥 KATALYZÁTOR`).
+  - **AI Tooltip (💡 Kontext)**: Prominentní srovnávací blok na prvním místě tooltipu s popisem důvodu posunu, předchozím a novým hodnocením i vizuálním tokem `HOLD (65 %) ➜ BUY (82 %)`.
+  - **JavaScript**: Dynamické filtrování v `applyFilters()` reagující na výběr filtru změn.
+- **Metodika v `create_methodology_doc.py`**:
+  - Přidána kapitola *6.9 Denní sledování změn a detekce tržních obratů (Daily Delta & Change Tracker)*.
+  - Znovu zkompilován a aktualizován soubor `Analyza_Dat_a_Metodika_SuggestInvest.docx`.

@@ -957,7 +957,7 @@
             right: 0;
             left: auto;
             transform: translateY(6px);
-            width: 360px;
+            width: 380px;
             background: #0f172a;
             border: 1px solid rgba(99, 102, 241, 0.45);
             border-radius: 10px;
@@ -1075,6 +1075,92 @@
             margin-bottom: 8px;
         }
 
+        /* Sekce pro analýzu Ex-Dividendy */
+        .tooltip-div-box {
+            background: rgba(16, 185, 129, 0.06);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 7px;
+            padding: 8px 9px;
+            margin-bottom: 8px;
+        }
+
+        .div-box-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            gap: 8px;
+        }
+
+        .div-box-title {
+            font-size: 0.70rem;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .div-badge-success {
+            font-size: 0.67rem;
+            font-weight: 700;
+            color: #34d399;
+            background: rgba(16, 185, 129, 0.22);
+            padding: 2px 7px;
+            border-radius: 4px;
+            border: 1px solid rgba(52, 211, 153, 0.45);
+            white-space: nowrap;
+        }
+
+        .div-badge-warning {
+            font-size: 0.67rem;
+            font-weight: 700;
+            color: #fbbf24;
+            background: rgba(245, 158, 11, 0.22);
+            padding: 2px 7px;
+            border-radius: 4px;
+            border: 1px solid rgba(245, 158, 11, 0.45);
+            white-space: nowrap;
+        }
+
+        .div-badge-neutral {
+            font-size: 0.67rem;
+            font-weight: 700;
+            color: #cbd5e1;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 7px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            white-space: nowrap;
+        }
+
+        .div-box-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-bottom: 6px;
+        }
+
+        .div-box-stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.72rem;
+            color: #cbd5e1;
+        }
+
+        .div-box-desc {
+            font-size: 0.72rem;
+            color: #cbd5e1;
+            line-height: 1.35;
+            margin: 0;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 5px 7px;
+            border-radius: 4px;
+            border-left: 2px solid #3b82f6;
+        }
+
         .tooltip-reasoning {
             font-size: 0.82rem;
             color: #e2e8f0;
@@ -1093,6 +1179,142 @@
 
         .tooltip-footer strong {
             color: #f1f5f9;
+        }
+
+        /* ZMĚNY SIGNÁLŮ OPROTI PŘEDCHOZÍMU DNI */
+        .badge-change {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            font-size: 0.62rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            margin-top: 4px;
+            line-height: 1.1;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .badge-change.badge-upgrade {
+            background: rgba(16, 185, 129, 0.22);
+            color: #34d399;
+            border-color: rgba(52, 211, 153, 0.45);
+        }
+
+        .badge-change.badge-downgrade {
+            background: rgba(239, 68, 68, 0.22);
+            color: #f87171;
+            border-color: rgba(248, 113, 113, 0.45);
+        }
+
+        .badge-change.badge-conf-up {
+            background: rgba(6, 182, 212, 0.22);
+            color: #22d3ee;
+            border-color: rgba(34, 211, 238, 0.45);
+        }
+
+        .badge-change.badge-conf-down {
+            background: rgba(245, 158, 11, 0.22);
+            color: #fbbf24;
+            border-color: rgba(251, 191, 36, 0.45);
+        }
+
+        .badge-change.badge-target-shift {
+            background: rgba(139, 92, 246, 0.22);
+            color: #c084fc;
+            border-color: rgba(192, 132, 252, 0.45);
+        }
+
+        .badge-change.badge-new-catalyst {
+            background: rgba(236, 72, 153, 0.22);
+            color: #f472b6;
+            border-color: rgba(244, 114, 182, 0.45);
+        }
+
+        .badge-change.badge-new-asset {
+            background: rgba(59, 130, 246, 0.22);
+            color: #60a5fa;
+            border-color: rgba(96, 165, 250, 0.45);
+        }
+
+        /* Tooltip Delta Box */
+        .tooltip-delta-box {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 7px;
+            padding: 8px 9px;
+            margin-bottom: 8px;
+        }
+
+        .tooltip-delta-box.badge-upgrade {
+            background: rgba(16, 185, 129, 0.08);
+            border-color: rgba(16, 185, 129, 0.35);
+        }
+
+        .tooltip-delta-box.badge-downgrade {
+            background: rgba(239, 68, 68, 0.08);
+            border-color: rgba(239, 68, 68, 0.35);
+        }
+
+        .tooltip-delta-box.badge-conf-up,
+        .tooltip-delta-box.badge-conf-down {
+            background: rgba(6, 182, 212, 0.08);
+            border-color: rgba(6, 182, 212, 0.35);
+        }
+
+        .delta-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+            gap: 8px;
+        }
+
+        .delta-badge {
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .delta-date {
+            font-size: 0.68rem;
+            color: #94a3b8;
+        }
+
+        .delta-body {
+            font-size: 0.73rem;
+            color: #e2e8f0;
+            line-height: 1.35;
+            margin-bottom: 5px;
+        }
+
+        .delta-shift-flow {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.70rem;
+            font-weight: 700;
+            background: rgba(0, 0, 0, 0.28);
+            padding: 3px 6px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .delta-from {
+            color: #94a3b8;
+        }
+
+        .delta-arrow {
+            color: #38bdf8;
+        }
+
+        .delta-to {
+            color: #f8fafc;
         }
 
         /* 9. GRAF TLAČÍTKO */
@@ -1246,6 +1468,7 @@
                     <div>Aktiv celkem: <strong>{{ counts.total }}</strong></div>
                     <div>🥇 TOP: <strong>{{ counts.top }}</strong> | 🥈 MID: <strong>{{ counts.mid }}</strong> | 🥉 LOW: <strong>{{ counts.low }}</strong></div>
                     <div>🟢 Strong Buy: <strong>{{ counts.strong_buy }}</strong> | Buy: <strong>{{ counts.buy }}</strong> | Hold: <strong>{{ counts.hold }}</strong> | Sell: <strong>{{ counts.sell }}</strong> | Strong Sell: <strong>{{ counts.strong_sell }}</strong></div>
+                    <div>⚡ Změny od včerejška: <strong>{{ counts.total_changed or 0 }}</strong> (⬆️ {{ counts.upgrades or 0 }} | ⬇️ {{ counts.downgrades or 0 }})</div>
                     <div>AI Model: <strong>{{ ai_model }}</strong></div>
                     <div>🌐 Zdroje dat: <strong>{{ data_sources }}</strong></div>
                 </div>
@@ -1325,6 +1548,20 @@
                             <button class="pill-btn" data-val="CAT_ATH_TEST" onclick="setFilter('trigger', 'CAT_ATH_TEST')">🔥 Test 52w Max</button>
                         </div>
                     </div>
+
+                    <!-- 6. Filtr Posuny od včerejška -->
+                    <div class="filter-group">
+                        <span class="filter-title">⚡ Posuny od včerejška</span>
+                        <div class="pill-row" id="changeFilter">
+                            <button class="pill-btn active" data-val="all" onclick="setFilter('change', 'all')">Všechny tituly</button>
+                            <button class="pill-btn" data-val="changed" onclick="setFilter('change', 'changed')" title="Zobrazit pouze tituly se změnou doporučení, konfidence či katalyzátoru">⚡ Všechny změny ({{ counts.total_changed or 0 }})</button>
+                            <button class="pill-btn" data-val="upgrades" onclick="setFilter('change', 'upgrades')" title="Tituly se zvýšeným doporučením (např. HOLD -> BUY)">⬆️ Upgrady ({{ counts.upgrades or 0 }})</button>
+                            <button class="pill-btn" data-val="downgrades" onclick="setFilter('change', 'downgrades')" title="Tituly se sníženým doporučením (např. BUY -> HOLD)">⬇️ Downgrady ({{ counts.downgrades or 0 }})</button>
+                            {% if counts.conf_jumps %}
+                            <button class="pill-btn" data-val="conf_jumps" onclick="setFilter('change', 'conf_jumps')" title="Tituly s výrazným posunem konfidence o 10%+">🔥 Změna konfidence ({{ counts.conf_jumps }})</button>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -1365,7 +1602,9 @@
                              data-triggers="{{ item.trigger_ids|join(',') }}"
                              data-catalysts="{{ item.catalysts|join(',') }}"
                              data-signal-rank="{{ item.signal_rank }}"
-                             data-prob="{{ item.confidence }}">
+                             data-prob="{{ item.confidence }}"
+                             data-changed="{{ 1 if item.daily_change and item.daily_change.is_changed else 0 }}"
+                             data-change-type="{{ item.daily_change.change_type if item.daily_change else 'UNCHANGED' }}">
                         
                         <!-- 1. Pořadí -->
                         <div class="row-cell cell-rank">
@@ -1423,10 +1662,15 @@
                         </div>
 
                         <!-- 7. AI Signál -->
-                        <div class="row-cell cell-signal text-center">
+                        <div class="row-cell cell-signal text-center" style="flex-direction: column;">
                             <span class="signal-badge {{ item.signal_class }}">
                                 {{ item.signal }}
                             </span>
+                            {% if item.daily_change and item.daily_change.is_changed %}
+                            <span class="badge-change {{ item.daily_change.badge_class }}" title="{{ item.daily_change.change_desc }}">
+                                {{ item.daily_change.change_badge }}
+                            </span>
+                            {% endif %}
                         </div>
 
                         <!-- 8. Konfidence & Impuls -->
@@ -1454,6 +1698,23 @@
                                         <span class="tooltip-title">💡 Senior Quant & Risk Analýza</span>
                                         <span class="tooltip-ticker">{{ item.yahoo_symbol }}</span>
                                     </div>
+
+                                    {% if item.daily_change and item.daily_change.is_changed %}
+                                    <div class="tooltip-delta-box {{ item.daily_change.badge_class }}">
+                                        <div class="delta-header">
+                                            <span class="delta-badge" style="color: {{ item.daily_change.change_color }};">{{ item.daily_change.change_badge }}</span>
+                                            <span class="delta-date">vs. {{ item.daily_change.prev_date_str }}</span>
+                                        </div>
+                                        <div class="delta-body">{{ item.daily_change.change_desc }}</div>
+                                        {% if item.daily_change.prev_signal and item.daily_change.prev_signal != item.signal %}
+                                        <div class="delta-shift-flow">
+                                            <span class="delta-from">{{ item.daily_change.prev_signal }} ({{ item.daily_change.prev_conf }} %)</span>
+                                            <span class="delta-arrow">➜</span>
+                                            <span class="delta-to">{{ item.signal }} ({{ item.confidence }} %)</span>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    {% endif %}
 
                                     <div class="tooltip-grid">
                                         {% if item.target_mean != '—' %}
@@ -1533,6 +1794,36 @@
                                         </div>
                                         {% endif %}
                                     </div>
+
+                                    {% if item.dividend_analysis %}
+                                    <div class="tooltip-div-box">
+                                        <div class="div-box-header">
+                                            <span class="div-box-title">💰 Ex-Div Taktika (Posledních {{ item.dividend_analysis.events_count }} výplat)</span>
+                                            <span class="div-badge-{{ item.dividend_analysis.recommendation_color }}">
+                                                {{ item.dividend_analysis.recommendation_badge }}
+                                            </span>
+                                        </div>
+                                        <div class="div-box-grid">
+                                            <div class="div-box-stat">
+                                                <span class="stat-lbl">Zotavení gapu (do 15 dní):</span>
+                                                <span class="stat-val font-accent">{{ item.dividend_analysis.recovery_rate_15d_pct }} % (medián: {{ item.dividend_analysis.median_recovery_days or '—' }} d)</span>
+                                            </div>
+                                            <div class="div-box-stat">
+                                                <span class="stat-lbl">Zotavení gapu do 30 dní:</span>
+                                                <span class="stat-val font-success">{{ item.dividend_analysis.recovery_rate_30d_pct }} %</span>
+                                            </div>
+                                            <div class="div-box-stat">
+                                                <span class="stat-lbl">Průměrný run-up před Ex-Date (20d):</span>
+                                                <span class="stat-val font-warning">{{ item.dividend_analysis.avg_pre_ex_runup_pct }} %</span>
+                                            </div>
+                                            <div class="div-box-stat">
+                                                <span class="stat-lbl">Průměrný drop v den Ex-Date (DDR):</span>
+                                                <span class="stat-val">{{ item.dividend_analysis.avg_drop_off_ratio }}x dividendy</span>
+                                            </div>
+                                        </div>
+                                        <p class="div-box-desc">{{ item.dividend_analysis.recommendation_summary }}</p>
+                                    </div>
+                                    {% endif %}
 
                                     <div class="tooltip-divider"></div>
                                     <p class="tooltip-reasoning">{{ item.reasoning }}</p>
@@ -1644,6 +1935,7 @@
             curr: 'all',
             signal: 'all',
             trigger: 'all',
+            change: 'all',
             search: ''
         };
 
@@ -1655,7 +1947,8 @@
                 type: 'typeFilter',
                 curr: 'currencyFilter',
                 signal: 'signalFilter',
-                trigger: 'triggerFilter'
+                trigger: 'triggerFilter',
+                change: 'changeFilter'
             };
             
             const groupEl = document.getElementById(containerMap[category]);
@@ -1789,12 +2082,27 @@
                     }
                 }
 
+                let matchChange = true;
+                if (activeFilters.change !== 'all') {
+                    const isChanged = row.getAttribute('data-changed') === '1';
+                    const changeType = row.getAttribute('data-change-type') || 'UNCHANGED';
+                    if (activeFilters.change === 'changed') {
+                        matchChange = isChanged;
+                    } else if (activeFilters.change === 'upgrades') {
+                        matchChange = (changeType === 'UPGRADE');
+                    } else if (activeFilters.change === 'downgrades') {
+                        matchChange = (changeType === 'DOWNGRADE');
+                    } else if (activeFilters.change === 'conf_jumps') {
+                        matchChange = (changeType === 'CONFIDENCE_JUMP' || changeType === 'CONFIDENCE_DROP');
+                    }
+                }
+
                 let matchSearch = true;
                 if (activeFilters.search) {
                     matchSearch = cSearch.includes(activeFilters.search);
                 }
 
-                if (matchTier && matchType && matchCurr && matchSignal && matchTrigger && matchSearch) {
+                if (matchTier && matchType && matchCurr && matchSignal && matchTrigger && matchChange && matchSearch) {
                     row.style.display = 'grid';
                     visibleCount++;
                 } else {

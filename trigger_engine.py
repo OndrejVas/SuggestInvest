@@ -1,4 +1,5 @@
 from typing import Dict, Any, List, Optional
+from dividend_analyzer import analyze_ticker_dividend_history
 
 
 def evaluate_asset_triggers(
@@ -117,6 +118,28 @@ def evaluate_asset_triggers(
             "priority": 45
         })
 
+    # E) Kvantitativní analýza Ex-Date historie (Dividend Capture & Recovery)
+    dividend_analysis = None
+    symbol = mdata.get("yahoo_symbol", "")
+    if symbol and ((days_to_ex_dividend is not None and days_to_ex_dividend <= 45) or (currency == "CZK" and asset_type == "AKCIE")):
+        dividend_analysis = analyze_ticker_dividend_history(symbol)
+        if dividend_analysis:
+            rec_code = dividend_analysis.get("recommendation_code")
+            if rec_code == "CAPTURE":
+                triggers.append({
+                    "id": "CAT_DIV_CAPTURE",
+                    "label": "🟢 Ex-Div: Držet (Zotavení)",
+                    "css_class": "trig-dividend",
+                    "priority": 12
+                })
+            elif rec_code == "HARVEST":
+                triggers.append({
+                    "id": "CAT_DIV_HARVEST",
+                    "label": "🟡 Ex-Div: Prodat předem",
+                    "css_class": "trig-dip",
+                    "priority": 14
+                })
+
     # Seřazení triggerů dle priority
     triggers.sort(key=lambda x: x["priority"])
 
@@ -134,6 +157,12 @@ def evaluate_asset_triggers(
 
     if days_to_ex_dividend is not None:
         ai_context_parts.append(f"Ex-dividenda: {ex_dividend_date} (za {days_to_ex_dividend} dní)")
+
+    if dividend_analysis:
+        ai_context_parts.append(
+            f"Ex-Div taktika: {dividend_analysis['recommendation_badge']} "
+            f"(zotavení do 15d: {dividend_analysis['recovery_rate_15d_pct']:.0f} %, medián: {dividend_analysis['median_recovery_days'] or '—'} d, 20d runup: {dividend_analysis['avg_pre_ex_runup_pct']:+.1f} %)"
+        )
 
     if delta_1m is not None:
         ai_context_parts.append(f"1měsíční momentum: {delta_1m:+.2f} %")
@@ -168,4 +197,5 @@ def evaluate_asset_triggers(
         "trigger_ids": [t["id"] for t in triggers],
         "primary_catalyst_tag": primary_catalyst_tag,
         "ai_forward_context": ai_forward_context,
+        "dividend_analysis": dividend_analysis,
     }
