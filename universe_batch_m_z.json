@@ -1,0 +1,506 @@
+[
+  {
+    "xtb_symbol": "MA.US",
+    "yahoo_symbol": "MA",
+    "name": "Mastercard Inc - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "MCD.US",
+    "yahoo_symbol": "MCD",
+    "name": "McDonald's Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "MDT.US",
+    "yahoo_symbol": "MDT",
+    "name": "Medtronic PLC",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "MELI.US",
+    "yahoo_symbol": "MELI",
+    "name": "MercadoLibre Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "MRK.US",
+    "yahoo_symbol": "MRK",
+    "name": "Merck & Co Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "MS.US",
+    "yahoo_symbol": "MS",
+    "name": "Morgan Stanley",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "MU.US",
+    "yahoo_symbol": "MU",
+    "name": "Micron Technology Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "NEE.US",
+    "yahoo_symbol": "NEE",
+    "name": "NextEra Energy Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "NKE.US",
+    "yahoo_symbol": "NKE",
+    "name": "NIKE Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "NOW.US",
+    "yahoo_symbol": "NOW",
+    "name": "ServiceNow Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ORCL.US",
+    "yahoo_symbol": "ORCL",
+    "name": "Oracle Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ORLY.US",
+    "yahoo_symbol": "ORLY",
+    "name": "O'Reilly Automotive Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "PANW.US",
+    "yahoo_symbol": "PANW",
+    "name": "Palo Alto Networks Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "PEP.US",
+    "yahoo_symbol": "PEP",
+    "name": "PepsiCo Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "PFE.US",
+    "yahoo_symbol": "PFE",
+    "name": "Pfizer Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "PG.US",
+    "yahoo_symbol": "PG",
+    "name": "Procter & Gamble Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "PM.US",
+    "yahoo_symbol": "PM",
+    "name": "Philip Morris International Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "PYPL.US",
+    "yahoo_symbol": "PYPL",
+    "name": "PayPal Holdings Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "QCOM.US",
+    "yahoo_symbol": "QCOM",
+    "name": "QUALCOMM Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "REGN.US",
+    "yahoo_symbol": "REGN",
+    "name": "Regeneron Pharmaceuticals Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "RTX.US",
+    "yahoo_symbol": "RTX",
+    "name": "Raytheon Technologies Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "SBUX.US",
+    "yahoo_symbol": "SBUX",
+    "name": "Starbucks Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "SHOP.US",
+    "yahoo_symbol": "SHOP",
+    "name": "Shopify Inc. - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "SNOW.US",
+    "yahoo_symbol": "SNOW",
+    "name": "Snowflake Inc - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "SPGI.US",
+    "yahoo_symbol": "SPGI",
+    "name": "S&P Global Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "SYK.US",
+    "yahoo_symbol": "SYK",
+    "name": "Stryker Corp",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "T.US",
+    "yahoo_symbol": "T",
+    "name": "AT&T Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "TMO.US",
+    "yahoo_symbol": "TMO",
+    "name": "Thermo Fisher Scientific Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "TSM.US",
+    "yahoo_symbol": "TSM",
+    "name": "Taiwan Semiconductor Manufacuring Company Ltd - ADR",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "TXN.US",
+    "yahoo_symbol": "TXN",
+    "name": "Texas Instruments Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "UNH.US",
+    "yahoo_symbol": "UNH",
+    "name": "UnitedHealth Group Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "UPS.US",
+    "yahoo_symbol": "UPS",
+    "name": "United Percel Service Inc - class B",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "VRTX.US",
+    "yahoo_symbol": "VRTX",
+    "name": "Vertex Pharmaceuticals Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "VZ.US",
+    "yahoo_symbol": "VZ",
+    "name": "Verizon Communications Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "WBD.US",
+    "yahoo_symbol": "WBD",
+    "name": "Warner Bros Discovery Inc",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "WFC.US",
+    "yahoo_symbol": "WFC",
+    "name": "Wells Fargo & Co",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ZTS.US",
+    "yahoo_symbol": "ZTS",
+    "name": "Zoetis Inc - class A",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "NVO.US",
+    "yahoo_symbol": "NVO",
+    "name": "Novo Nordisk A/S - ADR",
+    "asset_type": "AKCIE",
+    "currency": "USD",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "NESN.CH",
+    "yahoo_symbol": "NESN.SW",
+    "name": "Nestle SA",
+    "asset_type": "AKCIE",
+    "currency": "CHF",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "NOVN.CH",
+    "yahoo_symbol": "NOVN.SW",
+    "name": "Novartis AG",
+    "asset_type": "AKCIE",
+    "currency": "CHF",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ROG.CH",
+    "yahoo_symbol": "RO.SW",
+    "name": "Roche Holding AG",
+    "asset_type": "AKCIE",
+    "currency": "CHF",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ITX.ES",
+    "yahoo_symbol": "ITX.MC",
+    "name": "Inditex SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "RACE.IT",
+    "yahoo_symbol": "RACE.MI",
+    "name": "Ferrari NV",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "SAF.FR",
+    "yahoo_symbol": "SAF.PA",
+    "name": "Safran SA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "SU.FR",
+    "yahoo_symbol": "SU.PA",
+    "name": "Schneider Electric SE",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "TTE.FR",
+    "yahoo_symbol": "TTE.PA",
+    "name": "TotalEnergies SE",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ALV.DE",
+    "yahoo_symbol": "ALV.DE",
+    "name": "Allianz SE",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "MBG.DE",
+    "yahoo_symbol": "MBG.DE",
+    "name": "Mercedes-Benz Group AG",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "BMW.DE",
+    "yahoo_symbol": "BMW.DE",
+    "name": "Bayerische Motoren Werke AG",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "ENEL.IT",
+    "yahoo_symbol": "ENEL.MI",
+    "name": "Enel SpA",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "SAN.FR",
+    "yahoo_symbol": "SAN.PA",
+    "name": "Sanofi",
+    "asset_type": "AKCIE",
+    "currency": "EUR",
+    "tier": "MID"
+  },
+  {
+    "xtb_symbol": "6AQQ.DE",
+    "yahoo_symbol": "6AQQ.DE",
+    "name": "Amundi NASDAQ-100 UCITS (Acc, EUR)",
+    "asset_type": "ETF",
+    "currency": "EUR",
+    "tier": "TOP"
+  },
+  {
+    "xtb_symbol": "IUSQ.DE",
+    "yahoo_symbol": "IUSQ.DE",
+    "name": "iShares MSCI ACWI UCITS ETF (Acc EUR)",
+    "asset_type": "ETF",
+    "currency": "EUR",
+    "tier": "TOP"
+  },
+  {
+    "xtb_symbol": "IS3N.DE",
+    "yahoo_symbol": "IS3N.DE",
+    "name": "iShares Core MSCI EM IMI UCITS ETF (Acc EUR)",
+    "asset_type": "ETF",
+    "currency": "EUR",
+    "tier": "TOP"
+  },
+  {
+    "xtb_symbol": "LSMC.DE",
+    "yahoo_symbol": "LSMC.DE",
+    "name": "Lyxor MSCI Semiconductors ESG Filtered UCITS (Acc EUR)",
+    "asset_type": "ETF",
+    "currency": "EUR",
+    "tier": "TOP"
+  },
+  {
+    "xtb_symbol": "DFEN.DE",
+    "yahoo_symbol": "DFEN.DE",
+    "name": "VanEck Defense UCITS ETF USD A",
+    "asset_type": "ETF",
+    "currency": "EUR",
+    "tier": "TOP"
+  },
+  {
+    "xtb_symbol": "IVCS.DE",
+    "yahoo_symbol": "IVCS.DE",
+    "name": "Invesco Cybersecurity UCITS (Acc, EUR)",
+    "asset_type": "ETF",
+    "currency": "EUR",
+    "tier": "TOP"
+  },
+  {
+    "xtb_symbol": "4GLD.DE",
+    "yahoo_symbol": "4GLD.DE",
+    "name": "Deutsche Boerse Commodities GmbH Xetra-GoldÂ® Bearer Notes ETC (EUR)",
+    "asset_type": "ETF",
+    "currency": "EUR",
+    "tier": "TOP"
+  },
+  {
+    "xtb_symbol": "IQQH.DE",
+    "yahoo_symbol": "IQQH.DE",
+    "name": "iShares Global Clean Energy UCITS ETF (Dist EUR)",
+    "asset_type": "ETF",
+    "currency": "EUR",
+    "tier": "TOP"
+  },
+  {
+    "xtb_symbol": "SPYD.DE",
+    "yahoo_symbol": "SPYD.DE",
+    "name": "SPDR S&P US Dividend Aristocrats UCITS ETF (Dist EUR)",
+    "asset_type": "ETF",
+    "currency": "EUR",
+    "tier": "TOP"
+  },
+  {
+    "xtb_symbol": "18M2.DE",
+    "yahoo_symbol": "18M2.DE",
+    "name": "Amundi MSCI EMU High Dividend UCITS (Acc, EUR)",
+    "asset_type": "ETF",
+    "currency": "EUR",
+    "tier": "TOP"
+  },
+  {
+    "xtb_symbol": "BBLL.DE",
+    "yahoo_symbol": "BBLL.DE",
+    "name": "JPM, ACC, EUR",
+    "asset_type": "ETF",
+    "currency": "EUR",
+    "tier": "TOP"
+  },
+  {
+    "xtb_symbol": "EUN3.DE",
+    "yahoo_symbol": "EUN3.DE",
+    "name": "iShares Global Govt Bond UCITS (Dist, EUR)",
+    "asset_type": "ETF",
+    "currency": "EUR",
+    "tier": "TOP"
+  }
+]

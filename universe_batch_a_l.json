@@ -2843,7 +2843,7 @@
     "xtb_symbol": "IVZ.US",
     "yahoo_symbol": "IVZ",
     "name": "Invesco Ltd",
-    "asset_type": "ETF",
+    "asset_type": "AKCIE",
     "currency": "USD",
     "tier": "MID"
   },
