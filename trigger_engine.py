@@ -33,113 +33,88 @@ def evaluate_asset_triggers(
     if target_mean is not None and price > 0:
         target_upside_pct = round(((target_mean - price) / price) * 100, 2)
 
-    # 2. Seznam aktivních triggerů
+    # Vzdálenost od 52w maxima v % (100 = na maximu)
+    dist_to_52w_high_pct = 100.0
+    if year_high and year_high > 0 and price > 0:
+        dist_to_52w_high_pct = round((price / year_high) * 100, 1)
+
+    # 2. Seznam aktivních triggerů z přesné taxonomie 9 schválených štítků
     triggers: List[Dict[str, str]] = []
 
-    # A) Triggery cílových cen analytiků
+    # A) Triggery konsenzu a valuace
     if target_upside_pct is not None:
-        if target_upside_pct >= 25.0:
+        if target_upside_pct >= 20.0 and (analysts_count is None or analysts_count >= 5):
             triggers.append({
-                "id": "ANALYST_STRONG_UPSIDE",
-                "label": f"🎯 Cíl +{target_upside_pct:.1f} %",
+                "id": "CAT_HIGH_DISCOUNT",
+                "label": "🎯 Vysoký diskont",
                 "css_class": "trig-upside-high",
                 "priority": 10
             })
-        elif target_upside_pct >= 15.0:
+        elif target_upside_pct <= 0.0:
             triggers.append({
-                "id": "ANALYST_MODERATE_UPSIDE",
-                "label": f"🎯 Cíl +{target_upside_pct:.1f} %",
-                "css_class": "trig-upside-med",
-                "priority": 20
-            })
-        elif target_upside_pct <= -5.0:
-            triggers.append({
-                "id": "ANALYST_EXHAUSTED",
-                "label": f"⚠️ Nad cílem ({target_upside_pct:.1f} %)",
+                "id": "CAT_OVER_TARGET",
+                "label": "⚠️ Nad cílem analytiků",
                 "css_class": "trig-exhausted",
                 "priority": 30
             })
 
-    # B) Kalendářní triggery (Hospodářské výsledky & Dividendy)
+    # B) Kalendářní triggery událostí (Hospodářské výsledky & Dividendy)
     if days_to_earnings is not None:
         if 0 <= days_to_earnings <= 7:
-            day_text = "Dnes" if days_to_earnings == 0 else ("Zítra" if days_to_earnings == 1 else f"za {days_to_earnings} d")
             triggers.append({
-                "id": "EARNINGS_IMMINENT",
-                "label": f"⏳ Výsledky {day_text}",
+                "id": "CAT_EARNINGS_7D",
+                "label": "⏳ Výsledky do 7 dní",
                 "css_class": "trig-earnings-hot",
                 "priority": 5
             })
         elif 8 <= days_to_earnings <= 21:
             triggers.append({
-                "id": "EARNINGS_SOON",
-                "label": f"📅 Výsledky za {days_to_earnings} d",
+                "id": "CAT_EARNINGS_21D",
+                "label": "📅 Výsledky do 21 dní",
                 "css_class": "trig-earnings-warm",
                 "priority": 25
             })
 
     if days_to_ex_dividend is not None and 0 <= days_to_ex_dividend <= 14:
-        ex_text = "Dnes" if days_to_ex_dividend == 0 else f"za {days_to_ex_dividend} d"
+        ex_label = f"💰 Ex-Div za {days_to_ex_dividend} dní" if days_to_ex_dividend > 0 else "💰 Ex-Div dnes"
         triggers.append({
-            "id": "DIVIDEND_SOON",
-            "label": f"💰 Ex-Div {ex_text}",
+            "id": "CAT_DIVIDEND_SOON",
+            "label": ex_label,
             "css_class": "trig-dividend",
             "priority": 35
         })
 
     # C) Technické & Momentum triggery
-    if change_pct >= 3.0:
+    if change_pct >= 3.0 or (delta_1m is not None and delta_1m >= 10.0):
         triggers.append({
-            "id": "DAILY_SPIKE",
+            "id": "CAT_STRONG_MOMENTUM",
             "label": "🚀 Silné momentum",
             "css_class": "trig-spike",
             "priority": 15
         })
-    elif change_pct <= -3.0:
+    elif change_pct <= -3.0 and delta_3m is not None and delta_3m > 0:
         triggers.append({
-            "id": "DAILY_DIP",
-            "label": "📉 Korekce / Dip",
+            "id": "CAT_OVERSOLD_DIP",
+            "label": "📉 Přeprodáno / Korekce",
             "css_class": "trig-dip",
             "priority": 18
         })
 
-    if year_high and price and price >= year_high * 0.98:
+    if dist_to_52w_high_pct >= 97.0:
         triggers.append({
-            "id": "ATH_52W",
+            "id": "CAT_ATH_TEST",
             "label": "🔥 Test 52w Maxima",
             "css_class": "trig-ath",
             "priority": 22
         })
 
-    if delta_1m is not None and delta_1m >= 10.0:
+    # D) České dividendové tituly BCPP
+    if currency == "CZK" and asset_type == "AKCIE":
         triggers.append({
-            "id": "MOMENTUM_1M_STRONG",
-            "label": f"📈 1M trend +{delta_1m:.1f} %",
-            "css_class": "trig-trend-up",
-            "priority": 28
-        })
-
-    # D) Specifické třídy aktiv
-    if currency == "CZK":
-        triggers.append({
-            "id": "BCPP_PRAGUE",
-            "label": "🇨🇿 Pražská burza",
+            "id": "CAT_BCPP_DIV",
+            "label": "🇨🇿 BCPP Dividendy",
             "css_class": "trig-bcpp",
-            "priority": 50
-        })
-    elif asset_type == "ETF":
-        triggers.append({
-            "id": "ETF_THEMATIC",
-            "label": "📊 Pasivní ETF",
-            "css_class": "trig-etf",
-            "priority": 60
-        })
-    elif asset_type == "KRYPTO":
-        triggers.append({
-            "id": "CRYPTO_BENCH",
-            "label": "⚡ Krypto Volatilita",
-            "css_class": "trig-crypto",
-            "priority": 40
+            "priority": 45
         })
 
     # Seřazení triggerů dle priority
@@ -165,6 +140,16 @@ def evaluate_asset_triggers(
 
     ai_forward_context = " • ".join(ai_context_parts) if ai_context_parts else "Standardní tržní vývoj bez bezprostředních kalendářních událostí."
 
+    # Výpočet výchozí technické invalidace (stop-loss hladiny)
+    default_invalidation_price = None
+    if price > 0:
+        if target_upside_pct is not None and target_upside_pct > 0:
+            default_invalidation_price = round(price * 0.91, 2)
+        elif target_upside_pct is not None and target_upside_pct <= 0:
+            default_invalidation_price = round(price * 1.08, 2)
+        else:
+            default_invalidation_price = round(price * 0.92, 2)
+
     return {
         "target_mean": target_mean,
         "target_high": target_high,
@@ -177,6 +162,8 @@ def evaluate_asset_triggers(
         "days_to_ex_dividend": days_to_ex_dividend,
         "delta_1m": delta_1m,
         "delta_3m": delta_3m,
+        "dist_to_52w_high_pct": dist_to_52w_high_pct,
+        "invalidation_price": default_invalidation_price,
         "triggers": triggers,
         "trigger_ids": [t["id"] for t in triggers],
         "primary_catalyst_tag": primary_catalyst_tag,

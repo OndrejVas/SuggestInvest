@@ -100,12 +100,13 @@ def fetch_single_ticker_fundamentals(yahoo_sym: str, asset_type: str = "AKCIE") 
         # 2. Kalendář událostí (Earnings & Ex-Dividend)
         next_earnings_str = None
         days_to_earnings = None
+        earnings_time = None
         ex_div_str = None
         days_to_ex_div = None
 
         cal = getattr(t, "calendar", None)
         if isinstance(cal, dict) and cal:
-            # Earnings Date
+            # Earnings Date & Time
             ed_raw = cal.get("Earnings Date")
             ed = _parse_date(ed_raw)
             if ed:
@@ -114,6 +115,7 @@ def fetch_single_ticker_fundamentals(yahoo_sym: str, asset_type: str = "AKCIE") 
                 if delta >= 0:
                     next_earnings_str = ed.strftime("%d. %m. %Y")
                     days_to_earnings = delta
+                    earnings_time = cal.get("Earnings Call Time") or cal.get("Earnings Time") or "BMO"
 
             # Ex-Dividend Date
             exd_raw = cal.get("Ex-Dividend Date")
@@ -143,6 +145,7 @@ def fetch_single_ticker_fundamentals(yahoo_sym: str, asset_type: str = "AKCIE") 
             "recommendation_key": rec_key,
             "next_earnings_date": next_earnings_str,
             "days_to_earnings": days_to_earnings,
+            "earnings_time": earnings_time,
             "ex_dividend_date": ex_div_str,
             "days_to_ex_dividend": days_to_ex_div,
             "timestamp": time.time(),

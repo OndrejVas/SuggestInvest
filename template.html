@@ -777,8 +777,6 @@
             border-radius: 4px;
             white-space: nowrap;
             letter-spacing: 0.02em;
-        }
-
         .trig-upside-high { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
         .trig-upside-med { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.35); }
         .trig-exhausted { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
@@ -792,6 +790,20 @@
         .trig-bcpp { background: rgba(14, 165, 233, 0.15); color: #7dd3fc; border: 1px solid rgba(14, 165, 233, 0.3); }
         .trig-etf { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
         .trig-crypto { background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.3); }
+        .trig-generic { background: rgba(59, 130, 246, 0.15); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.3); }
+
+        .invalidation-pill {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: #fca5a5;
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 1px 5px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 2px;
+            white-space: nowrap;
+        }
 
         @keyframes pulseWarm {
             0%, 100% { opacity: 1; }
@@ -810,9 +822,11 @@
         }
 
         .signal-strong-buy {
-            background: var(--color-strong-buy-bg);
-            color: var(--color-strong-buy);
-            border: 1px solid rgba(16, 185, 129, 0.4);
+            background: linear-gradient(135deg, rgba(5, 150, 105, 0.4), rgba(16, 185, 129, 0.45));
+            color: #6ee7b7;
+            border: 1px solid rgba(52, 211, 153, 0.6);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
+            font-weight: 800;
         }
 
         .signal-buy {
@@ -834,9 +848,11 @@
         }
 
         .signal-strong-sell {
-            background: var(--color-strong-sell-bg);
-            color: var(--color-strong-sell);
-            border: 1px solid rgba(239, 68, 68, 0.4);
+            background: linear-gradient(135deg, rgba(153, 27, 27, 0.4), rgba(220, 38, 38, 0.45));
+            color: #fca5a5;
+            border: 1px solid rgba(248, 113, 113, 0.6);
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.25);
+            font-weight: 800;
         }
 
         /* 7. KONFIDENCE & IMPULS */
@@ -1211,6 +1227,7 @@
                     <div>⏱️ Doba analýzy: <strong>{{ scan_duration }}</strong></div>
                     <div>Aktiv celkem: <strong>{{ counts.total }}</strong></div>
                     <div>🥇 TOP: <strong>{{ counts.top }}</strong> | 🥈 MID: <strong>{{ counts.mid }}</strong> | 🥉 LOW: <strong>{{ counts.low }}</strong></div>
+                    <div>🟢 Strong Buy: <strong>{{ counts.strong_buy }}</strong> | Buy: <strong>{{ counts.buy }}</strong> | Hold: <strong>{{ counts.hold }}</strong> | Sell: <strong>{{ counts.sell }}</strong> | Strong Sell: <strong>{{ counts.strong_sell }}</strong></div>
                     <div>AI Model: <strong>{{ ai_model }}</strong></div>
                     <div>🌐 Zdroje dat: <strong>{{ data_sources }}</strong></div>
                 </div>
@@ -1269,22 +1286,25 @@
                         <span class="filter-title">AI Signál</span>
                         <div class="pill-row" id="signalFilter">
                             <button class="pill-btn active" data-val="all" onclick="setFilter('signal', 'all')">Všechny signály</button>
-                            <button class="pill-btn" data-val="buy" onclick="setFilter('signal', 'buy')">Buy / Strong Buy</button>
-                            <button class="pill-btn" data-val="hold" onclick="setFilter('signal', 'hold')">Hold</button>
-                            <button class="pill-btn" data-val="sell" onclick="setFilter('signal', 'sell')">Sell / Strong Sell</button>
+                            <button class="pill-btn" data-val="strong_buy" onclick="setFilter('signal', 'strong_buy')">🟢 Strong Buy ({{ counts.strong_buy }})</button>
+                            <button class="pill-btn" data-val="buy" onclick="setFilter('signal', 'buy')">Buy ({{ counts.buy }})</button>
+                            <button class="pill-btn" data-val="hold" onclick="setFilter('signal', 'hold')">Hold ({{ counts.hold }})</button>
+                            <button class="pill-btn" data-val="sell" onclick="setFilter('signal', 'sell')">🔴 Sell / Strong Sell ({{ counts.sell + counts.strong_sell }})</button>
                         </div>
                     </div>
 
-                    <!-- 5. Filtr Předstihové Triggery -->
+                    <!-- 5. Filtr Předstihové Katalyzátory -->
                     <div class="filter-group">
-                        <span class="filter-title">Předstihové triggery</span>
+                        <span class="filter-title">Předstihové katalyzátory</span>
                         <div class="pill-row" id="triggerFilter">
                             <button class="pill-btn active" data-val="all" onclick="setFilter('trigger', 'all')">Všechny</button>
-                            <button class="pill-btn" data-val="ANALYST_STRONG_UPSIDE" onclick="setFilter('trigger', 'ANALYST_STRONG_UPSIDE')">🎯 Cíl > +25 %</button>
-                            <button class="pill-btn" data-val="EARNINGS_IMMINENT" onclick="setFilter('trigger', 'EARNINGS_IMMINENT')">⏳ Výsledky do 7 d</button>
-                            <button class="pill-btn" data-val="EARNINGS_SOON" onclick="setFilter('trigger', 'EARNINGS_SOON')">📅 Výsledky do 21 d</button>
-                            <button class="pill-btn" data-val="DIVIDEND_SOON" onclick="setFilter('trigger', 'DIVIDEND_SOON')">💰 Ex-Div do 14 d</button>
-                            <button class="pill-btn" data-val="MOMENTUM_1M_STRONG" onclick="setFilter('trigger', 'MOMENTUM_1M_STRONG')">📈 1M trend > +10 %</button>
+                            <button class="pill-btn" data-val="CAT_HIGH_DISCOUNT" onclick="setFilter('trigger', 'CAT_HIGH_DISCOUNT')">🎯 Vysoký diskont</button>
+                            <button class="pill-btn" data-val="CAT_OVER_TARGET" onclick="setFilter('trigger', 'CAT_OVER_TARGET')">⚠️ Nad cílem</button>
+                            <button class="pill-btn" data-val="CAT_EARNINGS_7D" onclick="setFilter('trigger', 'CAT_EARNINGS_7D')">⏳ Výsledky do 7 dní</button>
+                            <button class="pill-btn" data-val="CAT_EARNINGS_21D" onclick="setFilter('trigger', 'CAT_EARNINGS_21D')">📅 Výsledky do 21 dní</button>
+                            <button class="pill-btn" data-val="CAT_DIVIDEND_SOON" onclick="setFilter('trigger', 'CAT_DIVIDEND_SOON')">💰 Ex-Div</button>
+                            <button class="pill-btn" data-val="CAT_STRONG_MOMENTUM" onclick="setFilter('trigger', 'CAT_STRONG_MOMENTUM')">🚀 Silné momentum</button>
+                            <button class="pill-btn" data-val="CAT_ATH_TEST" onclick="setFilter('trigger', 'CAT_ATH_TEST')">🔥 Test 52w Max</button>
                         </div>
                     </div>
                 </div>
@@ -1304,7 +1324,7 @@
                     <div class="th-cell">Kategorie</div>
                     <div class="th-cell th-sortable text-right" onclick="sortTable('price')" title="Řadit podle ceny">Cena <span id="sort-price" class="sort-icon">↕</span></div>
                     <div class="th-cell th-sortable text-right" onclick="sortTable('change')" title="Řadit podle denní změny">Denní změna <span id="sort-change" class="sort-icon">↕</span></div>
-                    <div class="th-cell th-sortable text-right" onclick="sortTable('upside')" title="Řadit podle růstového potenciálu k cílové ceně analytiků">Cílová cena (Upside) <span id="sort-upside" class="sort-icon">↕</span></div>
+                    <div class="th-cell th-sortable text-right" onclick="sortTable('upside')" title="Řadit podle růstového potenciálu k cílové ceně analytiků">Cílová cena (Upside & Stop) <span id="sort-upside" class="sort-icon">↕</span></div>
                     <div class="th-cell th-sortable text-center" onclick="sortTable('signal')" title="Řadit podle síly AI signálu">AI Signál <span id="sort-signal" class="sort-icon">↕</span></div>
                     <div class="th-cell th-sortable" onclick="sortTable('prob')" title="Řadit podle míry konfidence">Konfidence & Impuls <span id="sort-prob" class="sort-icon">↕</span></div>
                     <div class="th-cell text-center" title="AI analýza a fundamentální kontext při najetí myši">AI Kontext</div>
@@ -1325,15 +1345,16 @@
                              data-change="{{ item.change_pct_raw }}"
                              data-upside="{{ item.target_upside_raw }}"
                              data-triggers="{{ item.trigger_ids|join(',') }}"
+                             data-catalysts="{{ item.catalysts|join(',') }}"
                              data-signal-rank="{{ item.signal_rank }}"
-                             data-prob="{{ item.probability }}">
+                             data-prob="{{ item.confidence }}">
                         
                         <!-- 1. Pořadí -->
                         <div class="row-cell cell-rank">
                             <span>{{ loop.index }}</span>
                         </div>
 
-                        <!-- 2. Aktivum (Ticker, XTB, Název & Triggery) -->
+                        <!-- 2. Aktivum (Ticker, XTB, Název & Katalyzátory) -->
                         <div class="row-cell cell-asset">
                             <div class="asset-symbol-row">
                                 <a href="{{ item.chart_url }}" target="_blank" rel="noopener noreferrer" class="ticker-link" title="Otevřít interaktivní graf {{ item.yahoo_symbol }} na Yahoo Finance">
@@ -1342,10 +1363,10 @@
                                 <span class="xtb-badge" title="Symbol pro vyhledání v aplikaci XTB / xStation">XTB: {{ item.xtb_symbol }}</span>
                             </div>
                             <span class="company-name" title="{{ item.name }}">{{ item.name }}</span>
-                            {% if item.triggers %}
+                            {% if item.catalysts %}
                             <div class="asset-triggers-row">
-                                {% for tr in item.triggers[:2] %}
-                                <span class="trigger-chip {{ tr.css_class }}" title="{{ tr.label }}">{{ tr.label }}</span>
+                                {% for cat in item.catalysts[:3] %}
+                                <span class="trigger-chip trig-generic" title="{{ cat }}">{{ cat }}</span>
                                 {% endfor %}
                             </div>
                             {% endif %}
@@ -1368,12 +1389,9 @@
                             <span class="change-pill {% if item.change_direction == 'positive' %}change-positive{% else %}change-negative{% endif %}">
                                 {{ item.change_pct }}
                             </span>
-                            {% if item.catalyst_tag %}
-                            <span class="tag-catalyst-compact" title="{{ item.catalyst_tag }}">{{ item.catalyst_tag }}</span>
-                            {% endif %}
                         </div>
 
-                        <!-- 6. Cílová cena (Upside) -->
+                        <!-- 6. Cílová cena (Upside) & Invalidation Price -->
                         <div class="row-cell cell-target text-right">
                             <span class="row-target-val">{{ item.target_mean }}</span>
                             {% if item.target_upside != '—' %}
@@ -1385,6 +1403,11 @@
                             {% endif %}
                             {% else %}
                             <span class="target-analysts-cnt">Bez konsenzu</span>
+                            {% endif %}
+                            {% if item.invalidation_price_str and item.invalidation_price_str != '—' %}
+                            <span class="invalidation-pill" title="Hladina zneplatnění investiční teze (Stop-Loss úroveň)">
+                                🛑 Stop: {{ item.invalidation_price_str }}
+                            </span>
                             {% endif %}
                         </div>
 
@@ -1398,13 +1421,13 @@
                         <!-- 8. Konfidence & Impuls -->
                         <div class="row-cell cell-prob">
                             <div class="row-prob-info">
-                                <span class="row-prob-pct">{{ item.probability }} %</span>
-                                <span class="row-impact-tag {% if item.impact_direction == 'up' %}impact-up{% else %}impact-down{% endif %}">
-                                    {% if item.impact_direction == 'up' %}▲ UP{% else %}▼ DOWN{% endif %}
+                                <span class="row-prob-pct">{{ item.confidence }} %</span>
+                                <span class="row-impact-tag {% if '▲' in item.impact_direction or item.impact_direction == 'up' %}impact-up{% else %}impact-down{% endif %}">
+                                    {{ item.impact_direction }}
                                 </span>
                             </div>
                             <div class="progress-track">
-                                <div class="progress-fill {{ item.progress_class }}" style="width: {{ item.probability }}%;"></div>
+                                <div class="progress-fill {{ item.progress_class }}" style="width: {{ item.confidence }}%;"></div>
                             </div>
                         </div>
 
@@ -1417,34 +1440,53 @@
                                 </button>
                                 <div class="ai-tooltip-popup" role="tooltip">
                                     <div class="tooltip-header">
-                                        <span class="tooltip-title">💡 AI Analýza & Předstihové indikátory</span>
+                                        <span class="tooltip-title">💡 Senior Quant & Risk Analýza</span>
                                         <span class="tooltip-ticker">{{ item.yahoo_symbol }}</span>
                                     </div>
 
                                     <div class="tooltip-grid">
                                         {% if item.target_mean != '—' %}
                                         <div class="tooltip-stat">
-                                            <span class="stat-lbl">Cílová cena:</span>
+                                            <span class="stat-lbl">Cílová cena analytiků:</span>
                                             <span class="stat-val font-accent">{{ item.target_mean }} (<strong class="{{ item.target_upside_class }}">{{ item.target_upside }}</strong>)</span>
                                         </div>
                                         {% if item.target_low and item.target_high %}
                                         <div class="tooltip-stat">
-                                            <span class="stat-lbl">Rozpětí analytiků:</span>
+                                            <span class="stat-lbl">Rozpětí konsenzu:</span>
                                             <span class="stat-val">{{ item.target_low }} – {{ item.target_high }}</span>
                                         </div>
                                         {% endif %}
                                         {% if item.analysts_count %}
                                         <div class="tooltip-stat">
-                                            <span class="stat-lbl">Krytí konsenzu:</span>
-                                            <span class="stat-val">{{ item.analysts_count }} analytiků</span>
+                                            <span class="stat-lbl">Počet analytiků:</span>
+                                            <span class="stat-val">{{ item.analysts_count }}</span>
                                         </div>
                                         {% endif %}
+                                        {% endif %}
+
+                                        {% if item.invalidation_price_str and item.invalidation_price_str != '—' %}
+                                        <div class="tooltip-stat">
+                                            <span class="stat-lbl">🛑 Stop-Loss (Invalidation):</span>
+                                            <span class="stat-val" style="color: #f87171; font-weight: 700;">{{ item.invalidation_price_str }} {% if item.invalidation_dist_pct is not none %}({{ item.invalidation_dist_pct }} %){% endif %}</span>
+                                        </div>
+                                        {% endif %}
+
+                                        <div class="tooltip-stat">
+                                            <span class="stat-lbl">Pozice v 52w pásmu:</span>
+                                            <span class="stat-val">{{ item.dist_to_52w_high_pct }} % z maxima</span>
+                                        </div>
+
+                                        {% if item.delta_target_30d_pct %}
+                                        <div class="tooltip-stat">
+                                            <span class="stat-lbl">Revize konsenzu (30d):</span>
+                                            <span class="stat-val font-accent">{{ item.delta_target_30d_pct }} %</span>
+                                        </div>
                                         {% endif %}
 
                                         {% if item.next_earnings_date %}
                                         <div class="tooltip-stat">
                                             <span class="stat-lbl">Kvartální výsledky:</span>
-                                            <span class="stat-val font-warning">{{ item.next_earnings_date }} {% if item.days_to_earnings is not none %}(za {{ item.days_to_earnings }} d){% endif %}</span>
+                                            <span class="stat-val font-warning">{{ item.next_earnings_date }} {% if item.days_to_earnings is not none %}(za {{ item.days_to_earnings }} d, {{ item.earnings_time or 'BMO' }}){% endif %}</span>
                                         </div>
                                         {% endif %}
 
@@ -1462,10 +1504,12 @@
                                         </div>
                                         {% endif %}
 
+                                        {% if item.catalysts %}
                                         <div class="tooltip-stat">
-                                            <span class="stat-lbl">Horizont / Katalyzátor:</span>
-                                            <span class="stat-val font-highlight">{{ item.time_horizon }} • {{ item.catalyst_event }}</span>
+                                            <span class="stat-lbl">Aktivní katalyzátory:</span>
+                                            <span class="stat-val font-highlight">{{ item.catalysts|join(', ') }}</span>
                                         </div>
+                                        {% endif %}
 
                                         {% if item.history_minitrend and item.history_minitrend|length > 1 %}
                                         <div class="tooltip-stat">
@@ -1483,8 +1527,8 @@
                                     <p class="tooltip-reasoning">{{ item.reasoning }}</p>
 
                                     <div class="tooltip-footer">
-                                        <span>Signál: <strong>{{ item.signal }}</strong> ({{ item.probability }} %)</span>
-                                        <span>Impuls: <strong>{% if item.impact_direction == 'up' %}Růst (UP){% else %}Pokles (DOWN){% endif %}</strong></span>
+                                        <span>Signál: <strong>{{ item.signal }}</strong> ({{ item.confidence }} %)</span>
+                                        <span>Impuls: <strong>{{ item.impact_direction }}</strong></span>
                                     </div>
                                 </div>
                             </div>
@@ -1699,8 +1743,10 @@
                 let matchCurr = (activeFilters.curr === 'all' || cCurr === activeFilters.curr);
                 
                 let matchSignal = true;
-                if (activeFilters.signal === 'buy') {
-                    matchSignal = cSignal.includes('buy');
+                if (activeFilters.signal === 'strong_buy') {
+                    matchSignal = cSignal.includes('strong buy');
+                } else if (activeFilters.signal === 'buy') {
+                    matchSignal = (cSignal === 'buy');
                 } else if (activeFilters.signal === 'hold') {
                     matchSignal = cSignal.includes('hold');
                 } else if (activeFilters.signal === 'sell') {
@@ -1710,7 +1756,26 @@
                 let matchTrigger = true;
                 if (activeFilters.trigger !== 'all') {
                     const rowTrigs = (row.getAttribute('data-triggers') || '').split(',');
-                    matchTrigger = rowTrigs.includes(activeFilters.trigger);
+                    const rowCats = (row.getAttribute('data-catalysts') || '').toLowerCase();
+                    const tVal = activeFilters.trigger;
+
+                    if (tVal === 'CAT_HIGH_DISCOUNT') {
+                        matchTrigger = rowTrigs.includes('CAT_HIGH_DISCOUNT') || rowCats.includes('vysoký diskont');
+                    } else if (tVal === 'CAT_OVER_TARGET') {
+                        matchTrigger = rowTrigs.includes('CAT_OVER_TARGET') || rowCats.includes('nad cílem');
+                    } else if (tVal === 'CAT_EARNINGS_7D') {
+                        matchTrigger = rowTrigs.includes('CAT_EARNINGS_7D') || rowCats.includes('výsledky do 7');
+                    } else if (tVal === 'CAT_EARNINGS_21D') {
+                        matchTrigger = rowTrigs.includes('CAT_EARNINGS_21D') || rowCats.includes('výsledky do 21');
+                    } else if (tVal === 'CAT_DIVIDEND_SOON') {
+                        matchTrigger = rowTrigs.includes('CAT_DIVIDEND_SOON') || rowCats.includes('ex-div');
+                    } else if (tVal === 'CAT_STRONG_MOMENTUM') {
+                        matchTrigger = rowTrigs.includes('CAT_STRONG_MOMENTUM') || rowCats.includes('silné momentum');
+                    } else if (tVal === 'CAT_ATH_TEST') {
+                        matchTrigger = rowTrigs.includes('CAT_ATH_TEST') || rowCats.includes('52w maxima');
+                    } else {
+                        matchTrigger = rowTrigs.includes(tVal) || rowCats.includes(tVal.toLowerCase());
+                    }
                 }
 
                 let matchSearch = true;

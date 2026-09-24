@@ -420,6 +420,34 @@ def create_methodology_document(output_path: str):
     add_bullet(" Možnost ex-post porovnat vydaná doporučení (Strong Buy / Buy) se skutečným zhodnocením podkladového aktiva po 7, 30 a 90 dnech.", "3. Automatizovaný Backtesting:")
     add_bullet(" V AI tooltipu se přímo zobrazuje trajektorie sentimentu za poslední měsíc (např. Hold 55 % ➡️ Buy 72 % ➡️ Strong Buy 88 %).", "4. Vývoj sentimentu v čase:")
 
+    add_section_header("6.7 Institucionální Kvantitativní Model a Head of Risk Rozhodovací Matice", level=2)
+    add_body_p(
+        "Vrcholnou vrstvou systému SuggestInvest je role Senior Quantitative Equity Analyst & Head of Portfolio Risk. "
+        "Jeho posláním není popisovat minulý vývoj kurzu, ale identifikovat asymetrické tržní příležitosti a rizika "
+        "v horizontu 1 až 3 měsíců na základě nesouladu mezi tržní cenou, posunem konsenzu a časem do klíčových událostí."
+    )
+
+    add_body_p("A. Pravidla konsenzu, valuace a revizí:")
+    add_bullet(" Pokud je počet analytiků ≥ 5 a 30denní posun cílové ceny ≥ 0 %, jde o silný růstový signál (BUY / STRONG BUY). Pokud cena klesá (1M < 0), ale cíl roste (Δ target 30d > 0), vzniká pozitivní divergence a institucionální akumulace.", "Fundamentální diskont (> +20 %):")
+    add_bullet(" Pokud je Target Upside ≤ 0 %, růstový potenciál je vyčerpán. Vstupuje v platnost absolutní zákaz doporučení STRONG BUY či BUY $\rightarrow$ striktně HOLD nebo SELL.", "Přepálená valuace (Tržní cena nad cílem):")
+
+    add_body_p("B. Událostní filtry kalendáře a limity konfidence:")
+    add_bullet(" Implikovaná volatilita roste a událost přináší binární riziko. Konfidence nesmí překročit 65 % (s výjimkou defenzivních monopolů). Automatický štítek: ⏳ Výsledky do 7 dní.", "Kritické okno před výsledky (≤ 7 dní):")
+    add_bullet(" Pokud je 1M momentum kladné a cílová cena roste, aktivum se nachází v akumulační fázi před kvartální zprávou. Štítek: 📅 Výsledky do 21 dní.", "Předvýsledkový run-up (8 až 21 dní):")
+    add_bullet(" Pozice je vhodná pro akumulaci před rozhodným dnem pro výplatu. Štítek: 💰 Ex-Div za N dní.", "Dividendový trigger (≤ 14 dní):")
+
+    add_body_p("C. Filtry trendu, obratu a řízení rizik:")
+    add_bullet(" Test 52w minima (vzdálenost < 70 % od maxima) s propadem cílové ceny (Δ target 30d < -5 %) indikuje strukturální destrukci hodnoty $\rightarrow$ SELL či STRONG SELL. Test minima se stabilním cílem a rostoucím momentem značí obrat $\rightarrow$ BUY.", "Obrat vs. Padající nůž:")
+    add_bullet(" Denní skoky o více než ±3 % systém ignoruje, pokud nejsou v souladu s 1M momentem nebo novou fundamentální zprávou.", "Kontrola tržního šumu:")
+
+    add_body_p("D. Pětistupňová hierarchie signálů a Invalidation Price:")
+    add_bullet(" Shoda silného 1M/3M trendu, diskont k cílové ceně > 20 % a pozitivní revize odhadů.", "🟢 STRONG BUY:")
+    add_bullet(" Pozitivní asymetrie výnosu a rizika, zdravý diskont k cíli, žádné binární riziko do 7 dnů.", "🟢 BUY:")
+    add_bullet(" Vyčerpaný potenciál k cílové ceně, konsolidace nebo výsledky v horizontu do 7 dnů.", "🟡 HOLD:")
+    add_bullet(" Tržní kurz nad cílem analytiků, zhoršující se momentum nebo negativní revize odhadů.", "🔴 SELL:")
+    add_bullet(" Ztráta fundamentu, prolomení podpory a masivní snižování cílových cen analytiky.", "🔴 STRONG SELL:")
+    add_bullet(" Exaktní číselná hladina (stop-loss úroveň), při jejímž prolomení celá investiční teze zaniká.", "🛑 Invalidation Price (Stop-Loss):")
+
     # ==================== KAPITOLA 7: ARCHITEKTURA KOŠŮ ====================
     add_section_header("7. Segmentace univerza: Proč 3 prioritní koše (Tiers)")
     add_body_p(
