@@ -7,3 +7,5 @@ venv/
 .DS_Store
 Thumbs.db
 ~$*
+cache_fundamentals.json
+*.cache

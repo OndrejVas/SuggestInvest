@@ -62,7 +62,7 @@ def create_methodology_document(output_path: str):
     sub_p = doc.add_paragraph()
     sub_p.paragraph_format.space_before = Pt(0)
     sub_p.paragraph_format.space_after = Pt(20)
-    run_sub = sub_p.add_run("Kompletní přehled datových zdrojů, analytických proměnných a principu vyhodnocování 513 akciových titulů a ETF")
+    run_sub = sub_p.add_run("Kompletní přehled datových zdrojů, analytických proměnných a principu vyhodnocování 541 akciových titulů a ETF")
     run_sub.font.name = "Calibri"
     run_sub.font.size = Pt(13)
     run_sub.font.italic = True
@@ -74,7 +74,7 @@ def create_methodology_document(output_path: str):
     meta_table.autofit = False
 
     meta_data = [
-        ("Rozsah univerza:", "513 aktiv (US akcie, Evropa, BCPP v CZK, ETF, Krypto)", "Analytický engine:", "Google Gemini AI + Yahoo Finance Feed"),
+        ("Rozsah univerza:", "541 aktiv (US akcie, Evropa, BCPP v CZK, ETF, Krypto)", "Analytický engine:", "Google Gemini AI + Yahoo Finance Feed"),
         ("Broker napojení:", "XTB katalog (14 692 instrumentů, ISIN validace)", "Frekvence skenu:", "Denně v 8:00 CET + manuální vyžádání")
     ]
 
@@ -366,10 +366,64 @@ def create_methodology_document(output_path: str):
         "nebo zda je pokles způsoben regulatorním zásahem či ochlazením poptávky."
     )
 
-    # ==================== KAPITOLA 6: ARCHITEKTURA KOŠŮ ====================
-    add_section_header("6. Segmentace univerza: Proč 3 prioritní koše (Tiers)")
+    # ==================== KAPITOLA 6: PŘEDSTIHOVÉ INDIKÁTORY ====================
+    add_section_header("6. Předstihové indikátory, cílové ceny a firemní kalendáře")
     add_body_p(
-        "Všech 513 aktiv je kategorizováno do 3 logických košů, které umožňují okamžité filtrování podle investičního stylu:"
+        "Klíčovým inovačním skokem systému SuggestInvest je integrace předstihových (forward-looking) indikátorů. "
+        "Zatímco běžné skenery pouze reaktivně sledují včerejší ceny a denní změny, SuggestInvest se dívá dopředu "
+        "pomocí konsenzuálních cílových cen analytiků, odpočtu dnů do kvartálních výsledků a časových momentových delt."
+    )
+
+    add_section_header("6.1 Cílové ceny analytiků a růstový potenciál (Target Upside %)", level=2)
+    add_body_p(
+        "Pro každý akciový titul systém stahuje konsenzuální odhad analytiků z Wall Street (Target Mean Price, Target High a Target Low) "
+        "včetně počtu analytiků pokrývajících danou akcii. Následně počítá přesný diskont či prémii vůči trhu:"
+    )
+    add_bullet(" (Target Mean Price - Aktuální cena) / Aktuální cena × 100.", "Vzorec Target Upside %:")
+    add_bullet(" Pokud je očekávaný růst k cíli > +25 % při alespoň 5 analytických doporučeních.", "🎯 Vysoký diskont (> +25 %):")
+    add_bullet(" Pokud aktuální tržní cena překročila průměrný cíl analytiků (varování před vyčerpaným potenciálem).", "⚠️ Nad cílem analytiků:")
+
+    add_section_header("6.2 Firemní kalendáře: Kvartální výsledky a odpočet dní (Earnings Countdown)", level=2)
+    add_body_p(
+        "Zveřejnění kvartálních hospodářských výsledků (Earnings) je pro akcie nejvýznamnější událostí způsobující skokové pohyby kurzu. "
+        "Systém v reálném čase sleduje oficiální firemní kalendáře a počítá odpočet dní do nejbližšího reportu:"
+    )
+    add_bullet(" Výsledky budou oznámeny do 7 dnů. Zvýšená implikovaná volatilita a varování před neuváženým vstupem před čísly.", "⏳ Výsledky do 7 dní (Kritické):")
+    add_bullet(" Výsledky za 8 až 21 dní. Fáze obvyklého předvýsledkového runupu či konsolidace.", "📅 Výsledky do 21 dní (Blížící se):")
+
+    add_section_header("6.3 Rozhodné dny pro dividendu (Ex-Dividend Countdown)", level=2)
+    add_body_p(
+        "Pro dividendové investory systém monitoruje datum Ex-Dividend (první den, kdy se akcie obchoduje bez nároku na dividendu). "
+        "Pokud se Ex-Dividend blíží v horizontu 1 až 14 dnů, systém aktivuje zelený štítek '💰 Ex-Div za N dní' pro včasné zachycení výplaty."
+    )
+
+    add_section_header("6.4 Časové delty hybnosti: 1měsíční a 3měsíční momentum", level=2)
+    add_body_p(
+        "Kromě jednodenní změny systém hromadně vyhodnocuje střednědobé časové delty: 1M momentum (~21 obchodních dnů) "
+        "a 3M momentum (~63 obchodních dnů). To umožňuje odlišit krátkodobý náhodný šum od skutečně udržitelného trendu podpořeného institucionálními toky."
+    )
+
+    add_section_header("6.5 Automatický pravidlový Trigger Engine a disková mezipaměť", level=2)
+    add_body_p(
+        "Aby systém dokázal bleskově zpracovat 541 aktiv bez rizika rate-limitu od poskytovatelů dat, využívá inteligentní "
+        "souborovou mezipaměť (cache_fundamentals.json) s 24hodinovou expirací. Kalendáře a analytické cíle se tak dotazují jednou denně, "
+        "zatímco kurzy běží v reálném čase. Všechny předstihové ukazatele jsou navíc přímo předávány do modelu Gemini, "
+        "který je promítá do generovaného AI kontextu."
+    )
+
+    add_section_header("6.6 Dlouhodobá historická persistence a SQLite časová řada (Backtesting a audit)", level=2)
+    add_body_p(
+        "Pro zajištění plné auditovatelnosti a měření reálné úspěšnosti AI modelů v čase systém ukládá každý proběhlý sken do dvouúrovňové persistence:"
+    )
+    add_bullet(" Každý sken vygeneruje kompletní neměnný JSON soubor se všemi 541 kartami, tržními vstupy i AI zdůvodněními.", "1. Neměnný denní JSON Data Lake (data/history/):")
+    add_bullet(" Každý vydaný signál, konfidence, cena i datum kvartálních výsledků se indexují do lokální relační databáze SQLite pro bleskové analytické dotazy.", "2. Relační časová řada SQLite (history.db):")
+    add_bullet(" Možnost ex-post porovnat vydaná doporučení (Strong Buy / Buy) se skutečným zhodnocením podkladového aktiva po 7, 30 a 90 dnech.", "3. Automatizovaný Backtesting:")
+    add_bullet(" V AI tooltipu se přímo zobrazuje trajektorie sentimentu za poslední měsíc (např. Hold 55 % ➡️ Buy 72 % ➡️ Strong Buy 88 %).", "4. Vývoj sentimentu v čase:")
+
+    # ==================== KAPITOLA 7: ARCHITEKTURA KOŠŮ ====================
+    add_section_header("7. Segmentace univerza: Proč 3 prioritní koše (Tiers)")
+    add_body_p(
+        "Všech 541 aktiv je kategorizováno do 3 logických košů, které umožňují okamžité filtrování podle investičního stylu:"
     )
 
     table_tiers = doc.add_table(rows=4, cols=4)
@@ -389,8 +443,8 @@ def create_methodology_document(output_path: str):
         r.font.color.rgb = RGBColor(255, 255, 255)
 
     tier_rows = [
-        ("🥇 TIER 1\nTOP Leaders", "38 aktiv", "US Big Tech (Apple, Nvidia, Microsoft), celá BCPP v CZK (ČEZ, banky), klíčová ETF (S&P 500, All-World) a Bitcoin.", "Základní stavební kameny, nejvyšší likvidita, minimální riziko manipulace kurzu."),
-        ("🥈 TIER 2\nMID Growth", "454 aktiv", "Rozšířené portfolio světových korporací (A–L), polovodiče, jaderná energetika, kosmonautika, krypto-proxies a evropští lídři.", "Růstový potenciál, sektorové megatrendy a diverzifikace napříč kontinenty."),
+        ("🥇 TIER 1\nTOP Leaders", "48 aktiv", "US Mega-Caps (Apple, Nvidia, Microsoft, Amazon), kompletní BCPP v CZK (ČEZ, banky, Colt), evropské stálice (ASML, SAP) a klíčová indexová ETF (S&P 500, All-World, Nasdaq).", "Základní stavební kameny, nejvyšší likvidita, globální tržní kapitalizace a minimální spread."),
+        ("🥈 TIER 2\nMID Growth", "472 aktiv", "Rozsáhlé spektrum světových blue-chips (A–Z), polovodičoví lídři, jaderná energetika, obranný sektor, kosmonautika, krypto-proxies a sektorová UCITS ETF na XTB.", "Růstový potenciál, sektorové megatrendy a diverzifikace napříč kontinenty i měnami."),
         ("🥉 TIER 3\nLOW Discovery", "21 aktiv", "Vysoce volatilní tituly, obratové (turnaround) akcie, čínské tech akcie v US a průkopnická biotechnologie.", "Asymetrický poměr rizika a výnosu pro dynamickou část kapitálu.")
     ]
 
@@ -409,12 +463,13 @@ def create_methodology_document(output_path: str):
 
     doc.add_paragraph().paragraph_format.space_after = Pt(12)
 
-    # ==================== KAPITOLA 7: ZÁVĚR ====================
-    add_section_header("7. Závěrečné shrnutí: Přidaná hodnota pro investora")
+    # ==================== KAPITOLA 8: ZÁVĚR ====================
+    add_section_header("8. Závěrečné shrnutí: Přidaná hodnota pro investora")
     add_body_p(
         "Systém SuggestInvest odstraňuje z investičního rozhodování dvě největší slabiny lidského investora: "
-        "emoční zkreslení a informační zahlcení. Namísto sledování stovek protichůdných zpráv dostává investor každé ráno "
-        "konzistentní, datově podložený screening trhu, který mu během několika vteřin ukáže, kde se dnes otevírají nejzajímavější příležitosti."
+        "emoční zkreslení a informační zahlcení. Díky spojení reálných tržních dat z XTB, konsenzu analytiků, "
+        "firemních kalendářů a syntézy modelu Google Gemini dostává investor každé ráno ucelený "
+        "a forward-looking screening trhu, který mu během několika vteřin ukáže, kde se dnes otevírají nejzajímavější příležitosti."
     )
 
     # Uložení dokumentu
