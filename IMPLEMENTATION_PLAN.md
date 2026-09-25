@@ -456,3 +456,26 @@ Automaticky sledovat mezidenní posuny v hodnocení 541 sledovaných aktiv. Iden
 - **Metodika v `create_methodology_doc.py`**:
   - Přidána kapitola *6.9 Denní sledování změn a detekce tržních obratů (Daily Delta & Change Tracker)*.
   - Znovu zkompilován a aktualizován soubor `Analyza_Dat_a_Metodika_SuggestInvest.docx`.
+
+---
+
+## Fáze 9: Spouštění skenu na vyžádání v cloudu (On-Demand Cloud Scan Trigger)
+
+### Koncepční cíl
+Umožnit uživateli kdykoliv z webového rozhraní (i mimo automatické ranní hodiny cronu) spustit čerstvý přepočet trhů a Gemini AI analýzu pro všech 541 sledovaných aktiv.
+
+### Implementované komponenty
+- **Frontend & Tlačítko v `template.html` / `index.html`**:
+  - Tlačítko `⚡ Spustit sken v cloudu` (`#triggerScanBtn`) s pulzujícím/jantarovým vizuálem a stavem načítání.
+  - Tlačítko nastavení tokenu `⚙️` (`#tokenConfigBtn`) pro snadnou správu/vymazání uloženého klíče.
+  - Tlačítko `Obnovit data` (`#refreshBtn`) zachováno pro rychlé vyčištění mezipaměti prohlížeče a stažení již publikovaného reportu.
+- **Bezpečnostní dialog (`#tokenModal`)**:
+  - Glassmorphic modal pro bezpečné zadání GitHub Personal Access Tokenu (PAT) s právem `Actions: Read and write`.
+  - Token se ukládá výhradně do lokální paměti prohlížeče klienta (`localStorage`), nikdy neopouští prohlížeč a posílá se pouze na oficiální `api.github.com`.
+  - Přímý odkaz na generování tokenu v GitHub nastavení.
+- **Komunikace s GitHub API & Živý monitoring běhu**:
+  - Vyvolání eventu `POST /repos/OndrejVas/SuggestInvest/actions/workflows/market_cron.yml/dispatches`.
+  - Automatické dotazování (polling) stavu workflow každých 10 s (`queued` ➔ `in_progress` ➔ `completed`).
+  - Živý časovač běhu a přímý proklik na běžící log na GitHubu (`Sledovat živý log na GitHubu ↗`).
+  - Po úspěšném dokončení automatický reload stránky s cache-busting parametrem.
+
