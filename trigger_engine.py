@@ -28,6 +28,13 @@ def evaluate_asset_triggers(
 
     delta_1m = ddata.get("delta_1m")
     delta_3m = ddata.get("delta_3m")
+    rv_21 = ddata.get("rv_21")
+    atr_14 = ddata.get("atr_14")
+    atr_pct = ddata.get("atr_pct")
+    volume_shock_z = ddata.get("volume_shock_z")
+    daily_turnover = ddata.get("daily_turnover")
+    quant_invalidation_price = ddata.get("quant_invalidation_price")
+    limit_buy_price = ddata.get("limit_buy_price")
 
     # 1. Výpočet Upside / Downside Gapu k cílové ceně
     target_upside_pct = None
@@ -39,10 +46,19 @@ def evaluate_asset_triggers(
     if year_high and year_high > 0 and price > 0:
         dist_to_52w_high_pct = round((price / year_high) * 100, 1)
 
-    # 2. Seznam aktivních triggerů z přesné taxonomie 9 schválených štítků
+    # 2. Seznam aktivních triggerů z rozšířené výzkumné taxonomie
     triggers: List[Dict[str, str]] = []
 
-    # A) Triggery konsenzu a valuace
+    # A) Výzkumný katalyzátor 1: Objemový šok institucionální akumulace (LiMT Model - SRC-2)
+    if volume_shock_z is not None and volume_shock_z >= 1.8 and price > 0:
+        triggers.append({
+            "id": "CAT_VOLUME_SHOCK",
+            "label": "⚡ Objemový průraz (LiMT)",
+            "css_class": "trig-volume-shock",
+            "priority": 7
+        })
+
+    # B) Triggery konsenzu a valuace
     if target_upside_pct is not None:
         if target_upside_pct >= 20.0 and (analysts_count is None or analysts_count >= 5):
             triggers.append({
@@ -59,7 +75,27 @@ def evaluate_asset_triggers(
                 "priority": 30
             })
 
-    # B) Kalendářní triggery událostí (Hospodářské výsledky & Dividendy)
+    # C) Výzkumný katalyzátor 2: Pozitivní Sentiment Divergence (NLP Trading - SRC-5)
+    # Cena konsoliduje nebo mírně vyklesává, ale fundamentální cíl a zájem prudce akceleruje
+    if target_upside_pct is not None and target_upside_pct >= 15.0 and delta_1m is not None and -6.0 <= delta_1m <= 2.0:
+        triggers.append({
+            "id": "CAT_SENTIMENT_DIVERGENCE",
+            "label": "🧠 Sentiment Divergence",
+            "css_class": "trig-sentiment-divergence",
+            "priority": 11
+        })
+
+    # D) Výzkumný katalyzátor 3: Sektorový diskont a relativní valuace (Pairs Trading - SRC-6)
+    # Titul zaostává za svým 52w maximem více než sektor, ačkoliv má vysoký diskont
+    if target_upside_pct is not None and target_upside_pct >= 22.0 and dist_to_52w_high_pct <= 82.0:
+        triggers.append({
+            "id": "CAT_PAIRS_DISCOUNT",
+            "label": "⚖️ Sektorový diskont (Pairs)",
+            "css_class": "trig-pairs-discount",
+            "priority": 13
+        })
+
+    # E) Kalendářní triggery událostí (Hospodářské výsledky & Dividendy)
     if days_to_earnings is not None:
         if 0 <= days_to_earnings <= 7:
             triggers.append({
@@ -85,7 +121,7 @@ def evaluate_asset_triggers(
             "priority": 35
         })
 
-    # C) Technické & Momentum triggery
+    # F) Technické & Momentum triggery
     if change_pct >= 3.0 or (delta_1m is not None and delta_1m >= 10.0):
         triggers.append({
             "id": "CAT_STRONG_MOMENTUM",
@@ -109,7 +145,7 @@ def evaluate_asset_triggers(
             "priority": 22
         })
 
-    # D) České dividendové tituly BCPP
+    # G) České dividendové tituly BCPP
     if currency == "CZK" and asset_type == "AKCIE":
         triggers.append({
             "id": "CAT_BCPP_DIV",
@@ -118,7 +154,7 @@ def evaluate_asset_triggers(
             "priority": 45
         })
 
-    # E) Kvantitativní analýza Ex-Date historie (Dividend Capture & Recovery)
+    # H) Kvantitativní analýza Ex-Date historie (Dividend Capture & Recovery)
     dividend_analysis = None
     symbol = mdata.get("yahoo_symbol", "")
     if symbol and ((days_to_ex_dividend is not None and days_to_ex_dividend <= 45) or (currency == "CZK" and asset_type == "AKCIE")):
@@ -152,6 +188,12 @@ def evaluate_asset_triggers(
         ac_str = f" ({analysts_count} analytiků)" if analysts_count else ""
         ai_context_parts.append(f"Cílová cena analytiků: {target_mean:.2f} {currency} (potenciál {upside_str}){ac_str}")
 
+    if volume_shock_z is not None and volume_shock_z >= 1.5:
+        ai_context_parts.append(f"Institucionální objemový šok: Z={volume_shock_z:+.2f} (akumulační průraz)")
+
+    if rv_21 is not None:
+        ai_context_parts.append(f"Realizovaná volatilita 21d: {rv_21:.1f} % (ATR: {atr_pct or 0:.1f} %)")
+
     if days_to_earnings is not None:
         ai_context_parts.append(f"Kvartální výsledky: {next_earnings_date} (za {days_to_earnings} dní)")
 
@@ -169,15 +211,21 @@ def evaluate_asset_triggers(
 
     ai_forward_context = " • ".join(ai_context_parts) if ai_context_parts else "Standardní tržní vývoj bez bezprostředních kalendářních událostí."
 
-    # Výpočet výchozí technické invalidace (stop-loss hladiny)
-    default_invalidation_price = None
-    if price > 0:
-        if target_upside_pct is not None and target_upside_pct > 0:
-            default_invalidation_price = round(price * 0.91, 2)
-        elif target_upside_pct is not None and target_upside_pct <= 0:
-            default_invalidation_price = round(price * 1.08, 2)
-        else:
-            default_invalidation_price = round(price * 0.92, 2)
+    # 3. Výpočet vědecké dynamické invalidace (Stop-Loss dle Diffusion IVS / VaR99% - SRC-4)
+    if quant_invalidation_price and quant_invalidation_price > 0:
+        default_invalidation_price = quant_invalidation_price
+    elif price > 0:
+        default_invalidation_price = round(price * 0.92, 2)
+    else:
+        default_invalidation_price = None
+
+    # 4. Kvantilové exekuční pásmo vstupu (OrderFusion+ - SRC-3)
+    if limit_buy_price is None and price > 0:
+        limit_buy_price = round(price * 0.99, 2)
+    limit_buy_range = f"{limit_buy_price:.2f} – {price:.2f} {currency}" if (limit_buy_price and price > 0) else None
+
+    # 5. Maximální bezpečná kapacita alokace dle 2% obratu (LiMT-APO - SRC-2)
+    max_position_turnover_cap = round(0.02 * daily_turnover, 0) if daily_turnover else None
 
     return {
         "target_mean": target_mean,
@@ -191,11 +239,20 @@ def evaluate_asset_triggers(
         "days_to_ex_dividend": days_to_ex_dividend,
         "delta_1m": delta_1m,
         "delta_3m": delta_3m,
+        "rv_21": rv_21,
+        "atr_14": atr_14,
+        "atr_pct": atr_pct,
+        "volume_shock_z": volume_shock_z,
+        "daily_turnover": daily_turnover,
         "dist_to_52w_high_pct": dist_to_52w_high_pct,
         "invalidation_price": default_invalidation_price,
+        "limit_buy_price": limit_buy_price,
+        "limit_buy_range": limit_buy_range,
+        "max_position_turnover_cap": max_position_turnover_cap,
         "triggers": triggers,
         "trigger_ids": [t["id"] for t in triggers],
         "primary_catalyst_tag": primary_catalyst_tag,
         "ai_forward_context": ai_forward_context,
         "dividend_analysis": dividend_analysis,
     }
+

@@ -183,6 +183,14 @@ def _call_gemini_batch(client, model_name: str, batch_items: List[Dict[str, Any]
                 "target_upside_pct": round(float(item.get("target_upside_pct")), 2) if item.get("target_upside_pct") is not None else None,
                 "delta_target_30d_pct": hist_ctx.get("delta_target_30d_pct", 0.0)
             },
+            "quant_metrics": {
+                "rv_21_pct": item.get("rv_21"),
+                "atr_14": item.get("atr_14"),
+                "atr_pct": item.get("atr_pct"),
+                "volume_shock_z": item.get("volume_shock_z"),
+                "limit_buy_price": item.get("limit_buy_price"),
+                "quant_invalidation_price": item.get("quant_invalidation_price")
+            },
             "calendar": {
                 "days_to_earnings": item.get("days_to_earnings"),
                 "earnings_time": item.get("earnings_time") or ("BMO" if item.get("days_to_earnings") is not None else None),
@@ -212,11 +220,15 @@ def _call_gemini_batch(client, model_name: str, batch_items: List[Dict[str, Any]
         "A. Triggery konsenzu a valuace:\n"
         "- Fundamentální diskont (Target Upside > +20 %): Pokud je počet analytiků >= 5 a delta_target_30d_pct >= 0, jde o silný růstový signál (BUY / STRONG BUY). Pokud cena klesá (change_1m_pct < 0), ale cílová cena roste (delta_target_30d_pct > 0), vzniká pozitivní divergence (institucionální akumulace).\n"
         "- Přepálená valuace (Tržní cena nad průměrným cílem): Pokud je target_upside_pct <= 0, růstový potenciál je vyčerpán. Signál nesmí být STRONG BUY ani BUY. Zvol HOLD nebo SELL.\n\n"
-        "B. Událostní filtry kalendáře:\n"
+        "B. Kvantitativní výzkumné filtry a objemové šoky:\n"
+        "- Objemový průraz (LiMT): Pokud je volume_shock_z >= 1.8, dochází k institucionální akumulaci a růstu likvidity. Přidej '⚡ Objemový průraz (LiMT)'.\n"
+        "- Sentiment Divergence: Pokud cena mírně konsoliduje (-6 % až +2 %), ale cíl analytiků roste a target_upside_pct >= 15 %, přidej '🧠 Sentiment Divergence'.\n"
+        "- Sektorový diskont (Pairs): Pokud je aktivum více než 18 % pod 52w maximem při vysokém fundamentálním diskontu, přidej '⚖️ Sektorový diskont (Pairs)'.\n\n"
+        "C. Událostní filtry kalendáře:\n"
         "- Kritické okno před výsledky (days_to_earnings <= 7): Implikovaná volatilita roste. Binární riziko. Confidence nesmí překročit 65 %, pokud nejde o defenzivní dividendový monopol s vysokou jistotou. Do štítků přidej '⏳ Výsledky do 7 dní'.\n"
         "- Předvýsledkový run-up (days_to_earnings mezi 8 a 21 dny): Pokud je change_1m_pct > 0 a delta_target_30d_pct > 0, aktivum je v akumulační fázi před kvartální zprávou. Přidej '📅 Výsledky do 21 dní'.\n"
         "- Dividendový trigger a Ex-Date Recovery (days_to_ex_dividend <= 14): Pokud má aktivum v calendar.dividend_strategy doporučení '🟢 Držet přes Ex-Div (Rychlé zotavení)', kurz historicky rychle maže dividendový gap (do 15 dní). To podporuje BUY a strategii Dividend Capture. Pokud má naopak '🟡 Prodat před Ex-Div', titul před Ex-Date posiluje, ale po Ex-Date padá a zotavení trvá dlouho, což favorizuje realizaci zisku předem.\n\n"
-        "C. Filtry trendu a spolehlivosti:\n"
+        "D. Filtry trendu a spolehlivosti:\n"
         "- Obrat vs. Padající nůž: Test 52w minima (dist_to_52w_high_pct < 70) s klesající cílovou cenou (delta_target_30d_pct < -5) značí strukturální problém -> SELL nebo STRONG SELL. Test 52w minima se stabilní cílovou cenou a rostoucím 1M momentem značí obratový potenciál -> BUY.\n"
         "- Kontrola šumu: Denní skok o více než +/- 3 % ignoruj, pokud není v souladu s 1M momentem nebo novou fundamentální zprávou.\n\n"
         "VÝSTUPNÍ STRUKTURA (STRICT JSON CONTRACT):\n"
@@ -229,8 +241,8 @@ def _call_gemini_batch(client, model_name: str, batch_items: List[Dict[str, Any]
         "   - STRONG SELL: Ztráta fundamentu, masivní snižování cílových cen analytiky.\n"
         "3. 'confidence': Celé číslo od 0 do 100.\n"
         "4. 'impact_direction': Striktně buď '▲ Růst', nebo '▼ Pokles'.\n"
-        "5. 'catalysts': Vyber 1 až 4 relevantní štítky z této přesné sady:\n"
-        "   ['🚀 Silné momentum', '📉 Přeprodáno / Korekce', '🔥 Test 52w Maxima', '🎯 Vysoký diskont', '⚠️ Nad cílem analytiků', '⏳ Výsledky do 7 dní', '📅 Výsledky do 21 dní', '💰 Ex-Div za N dní', '🇨🇿 BCPP Dividendy']\n"
+        "5. 'catalysts': Vyber 1 až 4 relevantní štítky z této schválené sady:\n"
+        "   ['⚡ Objemový průraz (LiMT)', '🧠 Sentiment Divergence', '⚖️ Sektorový diskont (Pairs)', '🚀 Silné momentum', '📉 Přeprodáno / Korekce', '🔥 Test 52w Maxima', '🎯 Vysoký diskont', '⚠️ Nad cílem analytiků', '⏳ Výsledky do 7 dní', '📅 Výsledky do 21 dní', '💰 Ex-Div za N dní', '🇨🇿 BCPP Dividendy']\n"
         "6. 'reasoning': Přesně 1 až 2 věty v češtině. Musí konkrétně zmínit vztah mezi tržním kurzem, cílovou cenou a blížící se událostí (výsledky, dividenda apod.). Zákaz obecných frází typu 'akcie má dobré vyhlídky'.\n"
         "7. 'invalidation_price': Konkrétní cenová hladina (float), při jejímž prolomení celá investiční teze přestává platit.\n\n"
         "PŘÍKLAD:\n"
@@ -338,6 +350,17 @@ def generate_mock_signals_for_universe(items: List[Dict[str, Any]]) -> List[Dict
 
         # 1. Seznam schválených štítků katalyzátorů
         catalysts = []
+
+        vol_z = float(item.get("volume_shock_z") or 0.0)
+        if vol_z >= 1.8:
+            catalysts.append("⚡ Objemový průraz (LiMT)")
+
+        if upside is not None and upside >= 15.0 and -6.0 <= ch_1m <= 2.0:
+            catalysts.append("🧠 Sentiment Divergence")
+
+        if upside is not None and upside >= 22.0 and dist_52w <= 82.0:
+            catalysts.append("⚖️ Sektorový diskont (Pairs)")
+
         if ch_1d >= 3.0 or ch_1m >= 10.0:
             catalysts.append("🚀 Silné momentum")
         elif ch_1d <= -3.0 and ch_3m > 0:
@@ -372,27 +395,25 @@ def generate_mock_signals_for_universe(items: List[Dict[str, Any]]) -> List[Dict
         signal = "HOLD"
         confidence = 55
         impact_direction = "▲ Růst" if ch_1d >= 0 else "▼ Pokles"
-        inv_price = round(price * 0.92, 2) if price > 0 else None
+        quant_inv = item.get("quant_invalidation_price")
+        inv_price = quant_inv if (quant_inv and quant_inv > 0) else (round(price * 0.92, 2) if price > 0 else None)
 
-        # Pravidlo A: Fundamentální diskont (> 20 %)
+        # Pravidlo A: Fundamentální diskont (> 20 %) nebo potvrzený objemový šok
         if upside is not None and upside >= 20.0 and analysts >= 5 and delta_target_30d >= 0:
-            if ch_1m > 5.0 and ch_3m > 10.0 and (days_ed is None or days_ed > 7):
+            if (ch_1m > 5.0 and ch_3m > 10.0) or vol_z >= 1.8 and (days_ed is None or days_ed > 7):
                 signal = "STRONG BUY"
-                confidence = min(92, int(78 + min(upside * 0.3, 14)))
+                confidence = min(94, int(80 + min(upside * 0.3, 14)))
                 impact_direction = "▲ Růst"
-                inv_price = round(price * 0.91, 2)
             else:
                 signal = "BUY"
-                confidence = min(85, int(70 + min(upside * 0.25, 12)))
+                confidence = min(86, int(72 + min(upside * 0.25, 12)))
                 impact_direction = "▲ Růst"
-                inv_price = round(price * 0.90, 2)
 
-        # Pozitivní divergence (cena klesá, cíl roste)
-        elif upside is not None and upside >= 15.0 and ch_1m < 0 and delta_target_30d > 0:
+        # Pozitivní divergence (cena klesá/stojí, cíl roste nebo objemový průraz)
+        elif (upside is not None and upside >= 15.0 and ch_1m < 0 and delta_target_30d > 0) or vol_z >= 2.0:
             signal = "BUY"
-            confidence = 74
+            confidence = 76 if vol_z >= 2.0 else 74
             impact_direction = "▲ Růst"
-            inv_price = round(price * 0.89, 2)
 
         # Přepálená valuace (target upside <= 0)
         elif upside is not None and upside <= 0.0:
@@ -688,6 +709,16 @@ def run_scanner(tiers: List[str] = None, allow_mock_fallback: bool = True) -> st
             "delta_3m_str": f"{mdata['delta_3m']:+.1f} %" if mdata.get("delta_3m") is not None else "—",
             "dist_to_52w_high_pct": mdata.get("dist_to_52w_high_pct", 100.0),
             "delta_target_30d_pct": hist_ctx.get("delta_target_30d_pct", 0.0),
+            "rv_21": mdata.get("rv_21"),
+            "rv_21_str": f"{mdata['rv_21']:.1f} %" if mdata.get("rv_21") is not None else "—",
+            "atr_14": mdata.get("atr_14"),
+            "atr_pct_str": f"{mdata['atr_pct']:.1f} %" if mdata.get("atr_pct") is not None else "—",
+            "volume_shock_z": mdata.get("volume_shock_z"),
+            "limit_buy_price": mdata.get("limit_buy_price"),
+            "limit_buy_price_str": f"{format_currency_value(mdata.get('limit_buy_price'), mdata['currency'])} {mdata['currency']}" if mdata.get("limit_buy_price") else "—",
+            "limit_buy_range": mdata.get("limit_buy_range") or "—",
+            "max_position_turnover_cap": mdata.get("max_position_turnover_cap"),
+            "max_position_cap_str": f"{format_currency_value(mdata.get('max_position_turnover_cap'), mdata['currency'])} {mdata['currency']}" if mdata.get("max_position_turnover_cap") else "—",
             "invalidation_price": inv_price_float,
             "invalidation_price_str": f"{format_currency_value(inv_price_float, mdata['currency'])} {mdata['currency']}" if inv_price_float else "—",
             "invalidation_dist_pct": inv_dist_pct,

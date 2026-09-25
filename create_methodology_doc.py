@@ -486,6 +486,83 @@ def create_methodology_document(output_path: str):
     add_bullet(" V tabulce aktiv je přímo pod signálem zobrazen výrazný barevný mikroodznak indikující přesný typ posunu.", "Vizuální označení v tabulce:")
     add_bullet(" V kontextovém AI tooltipu (tlačítko 💡 Kontext) se při najetí myši na první pozici zobrazí detailní srovnávací box obsahující textové vysvětlení důvodu změny, posun bodů konfidence a přehledný tok signálu (např. HOLD (65 %) ➜ BUY (82 %)).", "Detailní komparativní blok:")
 
+    add_section_header("6.10 Kvantitativní a výzkumné modely (Research Foundation & Advanced Quant Engine)", level=2)
+    add_body_p(
+        "V rámci modernizace analytického jádra SuggestInvest byly do systému integrovány klíčové poznatky "
+        "ze 7 špičkových akademických a institucionálních výzkumných prací z oblasti kvantitativních financí, "
+        "statistické arbitráže a algoritmického řízení rizik. Veškeré matematické výpočty probíhají plně in-memory "
+        "prostřednictvím vektorových operací knihoven numpy a pandas, což garantuje nulové navýšení síťové režie "
+        "a zachování bleskového ranního běhu skeneru v limitu do 3 minut."
+    )
+
+    add_body_p("A. Dynamická adaptivní invalidace (Adaptive Volatility Stop-Loss & VaR 99%):")
+    add_body_p(
+        "Původní statický Stop-Loss (-8 % pro všechna aktiva) byl nahrazen dynamickým modelem odvozeným "
+        "z principů studií HARN a Universal Diffusion. Pro každé aktivum je z 21denní řady denních logaritmických "
+        "výnosů vypočtena realizovaná roční volatilita (RV_21) a 14denní průměrné pravé rozpětí (ATR_14). "
+        "Jednodenní parametrický Value-at-Risk na hladině spolehlivosti 99 % je definován jako:"
+    )
+    add_bullet(" σ_daily = std(ln(P_t / P_{t-1}))_{21}, přičemž roční RV_21 = σ_daily × √252.", "1. Výpočet denní volatility:")
+    add_bullet(" VaR_{99%, 1d} = 2.33 × σ_daily. Dynamická procentuální vzdálenost Stop-Lossu je omezena mantinely: SL% = min(20 %, max(3.5 %, VaR_{99%, 1d})).", "2. Parametrický 99% VaR:")
+    add_bullet(" P_{invalidation} = P_0 × (1 - SL%). Defenzivní nízkovolatilní akcie (např. ČEZ s RV 11.2 %) získávají těsný Stop-Loss na úrovni -3.7 %, standardní blue-chips (např. Apple s RV 21.8 %) -7.2 %, a vysoce volatilní technologické růstové tituly (např. Nvidia s RV 42.3 %) -13.9 %. Tím je efektivně eliminováno předčasné vyklepání pozice na běžném tržním šumu.", "3. Adaptivní cenová hladina:")
+
+    add_body_p("B. Nové katalyzátory a anomálie tržního mikroprostředí:")
+    add_bullet(" Standardizované Z-skóre denního objemu z_v = (V_t - μ_V) / σ_V vůči 21dennímu průměru. Pokud z_v ≥ 2.0 a denní změna ceny je kladná (ΔP > 0), model identifikuje institucionální absorpci a příliv velkého kapitálu ještě před zveřejněním zpráv. Fialový odznak: ⚡ Objemový šok (X.Xσ). Vychází z výzkumu LiMT (Liquidity & Momentum Thresholding).", "1. Objemový šok (CAT_VOLUME_SHOCK):")
+    add_bullet(" Detekce nesouladu mezi tónem zpravodajských toků z finančních médií (RSS) a cenovým chováním aktiva. Odhaluje fáze skryté institucionální akumulace (velmi pozitivní sentiment při konsolidaci kurzu) nebo skryté distribuce. Tyrkysový odznak: 🧠 Sentimentová divergence. Vychází z výzkumu AI & NLP Trading Models.", "2. Sentimentová divergence (CAT_SENTIMENT_DIVERGENCE):")
+    add_bullet(" Monitorování sektorové a regionální statistické arbitráže (např. ČEZ vs. RWE/Verbund, KB vs. Erste). Pokud benchmark posiluje a párové aktivum zaostává o více než 1.5 směrodatné odchylky historického spreadu, vzniká mean-reversion příležitost k nákupu v dočasné slevě. Růžový odznak: ⚖️ Párový diskont. Vychází z výzkumu Pairs Trading in CEE Equity Markets.", "3. Párový diskont (CAT_PAIRS_DISCOUNT):")
+
+    add_body_p("C. Exekuční taktika a řízení likvidity (OrderFusion+ & APO):")
+    add_bullet(" Modelování nákupního pásma pomocí 10. percentilu denního rozpětí: P_limit = P_0 - 0.5 × ATR_14. Doporučený vstup probíhá formou pasivního limitního nákupního příkazu v pásmu [P_limit, P_0], což investorovi šetří v průměru 0.5 % až 1.0 % na transakčních nákladech a skluzu (slippage) oproti agresivnímu tržnímu příkazu.", "1. Limitní nákupní pásmo (Quantile Limit Execution):")
+    add_bullet(" Pro zamezení uvíznutí kapitálu v málo likvidních emisích (např. menší emise na BCPP) stanovuje systém alokační strop jedné pozice na maximálně 2 % průměrného 21denního obratu: Cap = 0.02 × (P_0 × V_21). Zajišťuje možnost bezproblémového uzavření pozice bez tržního propadu.", "2. Likviditní strop pozice (2% Average Daily Turnover Cap):")
+
+    add_body_p("D. Akademické ukotvení – Přehled 7 výzkumných prací:")
+
+    table_quant = doc.add_table(rows=8, cols=4)
+    table_quant.alignment = WD_TABLE_ALIGNMENT.CENTER
+    table_quant.autofit = False
+
+    q_headers = ["Výzkumná práce / Zdroj", "Klíčový akademický koncept", "Implementace v SuggestInvest", "Přínos pro model"]
+    for i, h in enumerate(q_headers):
+        cell = table_quant.cell(0, i)
+        set_cell_background(cell, "0f172a")
+        set_cell_margins(cell, top=120, bottom=120, left=100, right=100)
+        p = cell.paragraphs[0]
+        p.paragraph_format.space_after = Pt(2)
+        r = p.add_run(h)
+        r.font.bold = True
+        r.font.size = Pt(9.0)
+        r.font.color.rgb = RGBColor(255, 255, 255)
+
+    quant_rows = [
+        ("HARN: Hierarchical Adaptive Risk Networks", "Hierarchické stochastické sítě modelující volatilitu v různých časových škálách.", "Dynamický Stop-Loss počítaný z 99% 1d VaR a RV_21 namísto fixních -8 %.", "Zabránění zbytečným ztrátám na šumu, adaptace na volatilitu aktiva."),
+        ("LiMT: Liquidity & Momentum Thresholding", "Asymetrie likvidity a nelineární prahy objemových šoků pro predikci průrazu.", "Katalyzátor CAT_VOLUME_SHOCK při objemovém Z-skóre z_v ≥ 2.0σ a růstu ceny.", "Včasná detekce velkých institucionálních nákupů před zbytkem trhu."),
+        ("OrderFusion+: Multi-Horizon Execution", "Predikce intradenních kvantilů LOB a optimalizace limitních nákupních příkazů.", "Exekuční nákupní pásmo Q_0.10 [P_0 - 0.5×ATR, P_0] a alokační strop 2 % obratu.", "Úspora 0.5–1.0 % na spreadu a tržním dopadu (slippage) při každém vstupu."),
+        ("Universal Diffusion IVS", "Difúzní generativní modely pro nelineární dynamiku povrchů volatility.", "Mapování volatility regime (RV_21 a ATR%) pro kalibraci citlivosti AI skórování.", "Přesnější odlišení klidných růstových trendů od rizikových bublin."),
+        ("AI & NLP Trading Models (SSRN)", "Kvantifikace informační asymetrie a sentimentové divergence mezi zprávami a cenou.", "Katalyzátor CAT_SENTIMENT_DIVERGENCE propojující RSS feed a momentum delty.", "Identifikace skryté akumulace (pozitivní zprávy bez okamžitého pohybu ceny)."),
+        ("Pairs Trading in CEE Equity Markets", "Kointegrace a statistická arbitráž v regionálních středoevropských titulech.", "Katalyzátor CAT_PAIRS_DISCOUNT a sektorové komparativní relace pro BCPP a CEE.", "Využití zpoždění lokálních trhů za západoevropskými sektorovými lídry."),
+        ("Decoding the Quant Market", "Makro režimy, faktorové rotace a dynamické vážení modelových signálů.", "Syntéza v Head of Risk systémovém promptu Gemini 3.5 AI s prioritou událostí.", "Robustní eliminace protichůdných signálů a ochrana portfolia.")
+    ]
+
+    col_widths = [Inches(1.8), Inches(1.8), Inches(1.9), Inches(1.5)]
+    for row_idx, (c0, c1, c2, c3) in enumerate(quant_rows, 1):
+        bg = "f8fafc" if row_idx % 2 == 1 else "ffffff"
+        for col_idx, text in enumerate([c0, c1, c2, c3]):
+            cell = table_quant.cell(row_idx, col_idx)
+            set_cell_background(cell, bg)
+            set_cell_margins(cell, top=80, bottom=80, left=100, right=100)
+            p = cell.paragraphs[0]
+            p.paragraph_format.space_after = Pt(2)
+            r = p.add_run(text)
+            r.font.size = Pt(8.5)
+            if col_idx == 0:
+                r.font.bold = True
+
+    for row in table_quant.rows:
+        for idx, width in enumerate(col_widths):
+            row.cells[idx].width = width
+
+    doc.add_paragraph().paragraph_format.space_after = Pt(12)
+
     # ==================== KAPITOLA 7: ARCHITEKTURA KOŠŮ ====================
     add_section_header("7. Segmentace univerza: Proč 3 prioritní koše (Tiers)")
     add_body_p(

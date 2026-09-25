@@ -443,6 +443,9 @@
             position: relative;
             flex-grow: 1;
             min-width: 260px;
+            margin: 0;
+            padding: 0;
+            display: block;
         }
 
         .search-input-wrapper input {
@@ -453,8 +456,18 @@
             padding: 0.65rem 1rem 0.65rem 2.5rem;
             border-radius: var(--radius-md);
             font-size: 0.9rem;
+            font-family: inherit;
             outline: none;
             transition: border-color 0.2s;
+            box-sizing: border-box;
+            cursor: text;
+        }
+
+        .search-input-wrapper input::-webkit-search-decoration,
+        .search-input-wrapper input::-webkit-search-cancel-button,
+        .search-input-wrapper input::-webkit-search-results-button,
+        .search-input-wrapper input::-webkit-search-results-decoration {
+            -webkit-appearance: none;
         }
 
         .search-input-wrapper input:focus {
@@ -882,7 +895,42 @@
         .trig-bcpp { background: rgba(14, 165, 233, 0.15); color: #7dd3fc; border: 1px solid rgba(14, 165, 233, 0.3); }
         .trig-etf { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
         .trig-crypto { background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.3); }
+        .trig-volume-shock { background: rgba(217, 70, 239, 0.2); color: #e879f9; border: 1px solid rgba(217, 70, 239, 0.5); font-weight: 800; animation: pulseWarm 2.5s infinite; }
+        .trig-sentiment-divergence { background: rgba(20, 184, 166, 0.2); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.45); }
+        .trig-pairs-discount { background: rgba(244, 63, 94, 0.2); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.45); }
         .trig-generic { background: rgba(59, 130, 246, 0.15); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.3); }
+
+        .tooltip-quant-box {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin: 10px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .quant-box-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: #a5b4fc;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.25);
+            padding-bottom: 4px;
+        }
+        .quant-box-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 12px;
+            font-size: 0.72rem;
+        }
+        .quant-box-stat {
+            display: flex;
+            justify-content: space-between;
+            gap: 4px;
+        }
 
         .invalidation-pill {
             font-size: 0.68rem;
@@ -1633,6 +1681,11 @@
             font-family: monospace;
             font-size: 0.88rem;
             letter-spacing: 0.02em;
+            -webkit-text-security: disc;
+        }
+
+        .pat-input-wrapper input.revealed {
+            -webkit-text-security: none;
         }
 
         .btn-toggle-pat {
@@ -1837,13 +1890,13 @@
             <section class="filter-panel">
                 <!-- Vyhledávací pole -->
                 <div class="search-row">
-                    <div class="search-input-wrapper">
+                    <form class="search-input-wrapper" role="search" onsubmit="event.preventDefault(); applyFilters();" autocomplete="off">
                         <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="11" cy="11" r="8"></circle>
                             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                         </svg>
-                        <input type="text" id="searchInput" name="asset_search" placeholder="Jaký titul tě zajímá?" autocomplete="off" autocorrect="off" spellcheck="false" oninput="applyFilters()">
-                    </div>
+                        <input type="search" id="searchInput" name="market_asset_search_query" placeholder="Jaký titul tě zajímá?" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true" data-1p-ignore data-form-type="other" readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly', true);" oninput="applyFilters()">
+                    </form>
                 </div>
 
                 <!-- Tlačítkové skupiny filtrů -->
@@ -1981,7 +2034,8 @@
                             <span class="company-name" title="{{ item.name }}">{{ item.name }}</span>
                             {% if item.catalysts %}
                             <div class="asset-triggers-row">
-                                <span class="trigger-chip trig-generic" title="{{ item.catalysts|join(', ') }}">{{ item.catalysts[0] }}</span>
+                                {% set cat0 = item.catalysts[0] %}
+                                <span class="trigger-chip {% if 'Objemový šok' in cat0 %}trig-volume-shock{% elif 'Sentiment' in cat0 %}trig-sentiment-divergence{% elif 'Párový diskont' in cat0 %}trig-pairs-discount{% elif 'Vysoký diskont' in cat0 %}trig-upside-high{% elif 'Výsledky' in cat0 %}trig-earnings-hot{% elif 'Ex-Div' in cat0 %}trig-dividend{% elif '52w Maxima' in cat0 %}trig-ath{% elif 'Silné momentum' in cat0 %}trig-trend-up{% else %}trig-generic{% endif %}" title="{{ item.catalysts|join(', ') }}">{{ cat0 }}</span>
                                 {% if item.catalysts|length > 1 %}
                                 <span class="trigger-chip trig-more" title="{{ item.catalysts[1:]|join(', ') }}">+{{ item.catalysts|length - 1 }}</span>
                                 {% endif %}
@@ -2154,6 +2208,37 @@
                                         {% endif %}
                                     </div>
 
+                                    {% if item.limit_buy_range != '—' or item.rv_21_str != '—' %}
+                                    <div class="tooltip-quant-box">
+                                        <div class="quant-box-header">
+                                            <span>⚡ Kvantitativní exekuce (OrderFusion+ & LiMT)</span>
+                                            <span style="color: #cbd5e1; font-size: 0.68rem;">VaR 99% SL</span>
+                                        </div>
+                                        <div class="quant-box-grid">
+                                            <div class="quant-box-stat">
+                                                <span class="stat-lbl">Limitní nákupní pásmo:</span>
+                                                <span class="stat-val font-accent" style="font-weight: 700;">{{ item.limit_buy_range }}</span>
+                                            </div>
+                                            <div class="quant-box-stat">
+                                                <span class="stat-lbl">Realizovaná vol. (RV 21d):</span>
+                                                <span class="stat-val">{{ item.rv_21_str }} (ATR: {{ item.atr_pct_str }})</span>
+                                            </div>
+                                            {% if item.volume_shock_z %}
+                                            <div class="quant-box-stat">
+                                                <span class="stat-lbl">Volume Shock (Z-Score):</span>
+                                                <span class="stat-val {% if item.volume_shock_z >= 2.0 %}font-warning{% endif %}" style="font-weight: 700;">{{ item.volume_shock_z }}σ</span>
+                                            </div>
+                                            {% endif %}
+                                            {% if item.max_position_cap_str != '—' %}
+                                            <div class="quant-box-stat">
+                                                <span class="stat-lbl">Max. obratová alokace (2% APO):</span>
+                                                <span class="stat-val">{{ item.max_position_cap_str }}</span>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+
                                     {% if item.dividend_analysis %}
                                     <div class="tooltip-div-box">
                                         <div class="div-box-header">
@@ -2238,16 +2323,35 @@
             return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
         }
 
+        function sanitizeSearchInput() {
+            const si = document.getElementById("searchInput");
+            if (!si) return;
+            if (si.value && (si.value.toLowerCase().trim() === "suggestinvest" || si.value.trim() === "SuggestInvest")) {
+                si.value = "";
+                if (typeof applyFilters === "function") {
+                    applyFilters();
+                }
+            }
+        }
+
         function checkAuthStatus() {
             const isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
             const overlay = document.getElementById("loginOverlay");
             const app = document.getElementById("appContainer");
+            const lu = document.getElementById("loginUser");
+            const lp = document.getElementById("loginPass");
 
             if (isAuth) {
-                overlay.style.display = "none";
+                if (overlay) {
+                    overlay.remove();
+                }
                 app.style.display = "block";
+                sanitizeSearchInput();
+                setTimeout(sanitizeSearchInput, 50);
+                setTimeout(sanitizeSearchInput, 200);
+                setTimeout(sanitizeSearchInput, 500);
             } else {
-                overlay.style.display = "flex";
+                if (overlay) overlay.style.display = "flex";
                 app.style.display = "none";
             }
         }
@@ -2279,13 +2383,29 @@
         function logout() {
             sessionStorage.removeItem("si_authenticated");
             localStorage.removeItem("si_authenticated");
-            checkAuthStatus();
+            window.location.reload();
         }
 
         // Běžné spuštění kontroly při načtení stránky
         window.addEventListener("DOMContentLoaded", () => {
             checkAuthStatus();
             initSmartTooltips();
+            const si = document.getElementById("searchInput");
+            if (si) {
+                si.addEventListener("focus", sanitizeSearchInput);
+                si.addEventListener("input", function() {
+                    if (this.value && this.value.toLowerCase().trim() === "suggestinvest") {
+                        this.value = "";
+                        applyFilters();
+                    }
+                });
+            }
+        });
+
+        window.addEventListener("load", () => {
+            sanitizeSearchInput();
+            setTimeout(sanitizeSearchInput, 100);
+            setTimeout(sanitizeSearchInput, 350);
         });
 
         // ==================== CHYTRÉ ZOBRAZENÍ TOOLTIPŮ (100% VIDITELNÉ V OKNĚ) ====================
@@ -2633,7 +2753,7 @@
         function togglePatVisibility() {
             const patInput = document.getElementById('ghPatInput');
             if (!patInput) return;
-            patInput.type = patInput.type === 'password' ? 'text' : 'password';
+            patInput.classList.toggle('revealed');
         }
 
         function deleteSavedToken() {
@@ -2868,14 +2988,16 @@
                     </ol>
                 </div>
 
-                <div class="form-group" style="margin-top: 1rem;">
-                    <label class="input-label" for="ghPatInput">GitHub Personal Access Token (PAT)</label>
-                    <div class="pat-input-wrapper">
-                        <input type="password" id="ghPatInput" class="login-input" placeholder="github_pat_... nebo ghp_..." autocomplete="off">
-                        <button type="button" class="btn-toggle-pat" onclick="togglePatVisibility()" title="Zobrazit / skrýt token">👁️</button>
+                <form class="pat-form" autocomplete="off" onsubmit="return false;" data-lpignore="true" data-1p-ignore>
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <label class="input-label" for="ghPatInput">GitHub Personal Access Token (PAT)</label>
+                        <div class="pat-input-wrapper">
+                            <input type="text" id="ghPatInput" name="github_pat_token_field" class="login-input" placeholder="github_pat_... nebo ghp_..." autocomplete="off" data-lpignore="true" data-1p-ignore data-form-type="other">
+                            <button type="button" class="btn-toggle-pat" onclick="togglePatVisibility()" title="Zobrazit / skrýt token">👁️</button>
+                        </div>
+                        <div id="tokenModalError" class="login-error" style="display: none; margin-top: 6px;"></div>
                     </div>
-                    <div id="tokenModalError" class="login-error" style="display: none; margin-top: 6px;"></div>
-                </div>
+                </form>
 
                 <label class="remember-row" style="margin-top: 0.75rem;">
                     <input type="checkbox" id="rememberPat" checked>

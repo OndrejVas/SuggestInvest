@@ -443,6 +443,9 @@
             position: relative;
             flex-grow: 1;
             min-width: 260px;
+            margin: 0;
+            padding: 0;
+            display: block;
         }
 
         .search-input-wrapper input {
@@ -453,8 +456,18 @@
             padding: 0.65rem 1rem 0.65rem 2.5rem;
             border-radius: var(--radius-md);
             font-size: 0.9rem;
+            font-family: inherit;
             outline: none;
             transition: border-color 0.2s;
+            box-sizing: border-box;
+            cursor: text;
+        }
+
+        .search-input-wrapper input::-webkit-search-decoration,
+        .search-input-wrapper input::-webkit-search-cancel-button,
+        .search-input-wrapper input::-webkit-search-results-button,
+        .search-input-wrapper input::-webkit-search-results-decoration {
+            -webkit-appearance: none;
         }
 
         .search-input-wrapper input:focus {
@@ -1633,6 +1646,11 @@
             font-family: monospace;
             font-size: 0.88rem;
             letter-spacing: 0.02em;
+            -webkit-text-security: disc;
+        }
+
+        .pat-input-wrapper input.revealed {
+            -webkit-text-security: none;
         }
 
         .btn-toggle-pat {
@@ -1837,13 +1855,13 @@
             <section class="filter-panel">
                 <!-- Vyhledávací pole -->
                 <div class="search-row">
-                    <div class="search-input-wrapper">
+                    <form class="search-input-wrapper" role="search" onsubmit="event.preventDefault(); applyFilters();" autocomplete="off">
                         <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="11" cy="11" r="8"></circle>
                             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                         </svg>
-                        <input type="text" id="searchInput" name="asset_search" placeholder="Jaký titul tě zajímá?" autocomplete="off" autocorrect="off" spellcheck="false" oninput="applyFilters()">
-                    </div>
+                        <input type="search" id="searchInput" name="market_asset_search_query" placeholder="Jaký titul tě zajímá?" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true" data-1p-ignore data-form-type="other" readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly', true);" oninput="applyFilters()">
+                    </form>
                 </div>
 
                 <!-- Tlačítkové skupiny filtrů -->
@@ -107655,16 +107673,35 @@
             return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
         }
 
+        function sanitizeSearchInput() {
+            const si = document.getElementById("searchInput");
+            if (!si) return;
+            if (si.value && (si.value.toLowerCase().trim() === "suggestinvest" || si.value.trim() === "SuggestInvest")) {
+                si.value = "";
+                if (typeof applyFilters === "function") {
+                    applyFilters();
+                }
+            }
+        }
+
         function checkAuthStatus() {
             const isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
             const overlay = document.getElementById("loginOverlay");
             const app = document.getElementById("appContainer");
+            const lu = document.getElementById("loginUser");
+            const lp = document.getElementById("loginPass");
 
             if (isAuth) {
-                overlay.style.display = "none";
+                if (overlay) {
+                    overlay.remove();
+                }
                 app.style.display = "block";
+                sanitizeSearchInput();
+                setTimeout(sanitizeSearchInput, 50);
+                setTimeout(sanitizeSearchInput, 200);
+                setTimeout(sanitizeSearchInput, 500);
             } else {
-                overlay.style.display = "flex";
+                if (overlay) overlay.style.display = "flex";
                 app.style.display = "none";
             }
         }
@@ -107696,13 +107733,29 @@
         function logout() {
             sessionStorage.removeItem("si_authenticated");
             localStorage.removeItem("si_authenticated");
-            checkAuthStatus();
+            window.location.reload();
         }
 
         // Běžné spuštění kontroly při načtení stránky
         window.addEventListener("DOMContentLoaded", () => {
             checkAuthStatus();
             initSmartTooltips();
+            const si = document.getElementById("searchInput");
+            if (si) {
+                si.addEventListener("focus", sanitizeSearchInput);
+                si.addEventListener("input", function() {
+                    if (this.value && this.value.toLowerCase().trim() === "suggestinvest") {
+                        this.value = "";
+                        applyFilters();
+                    }
+                });
+            }
+        });
+
+        window.addEventListener("load", () => {
+            sanitizeSearchInput();
+            setTimeout(sanitizeSearchInput, 100);
+            setTimeout(sanitizeSearchInput, 350);
         });
 
         // ==================== CHYTRÉ ZOBRAZENÍ TOOLTIPŮ (100% VIDITELNÉ V OKNĚ) ====================
@@ -108050,7 +108103,7 @@
         function togglePatVisibility() {
             const patInput = document.getElementById('ghPatInput');
             if (!patInput) return;
-            patInput.type = patInput.type === 'password' ? 'text' : 'password';
+            patInput.classList.toggle('revealed');
         }
 
         function deleteSavedToken() {
@@ -108285,14 +108338,16 @@
                     </ol>
                 </div>
 
-                <div class="form-group" style="margin-top: 1rem;">
-                    <label class="input-label" for="ghPatInput">GitHub Personal Access Token (PAT)</label>
-                    <div class="pat-input-wrapper">
-                        <input type="password" id="ghPatInput" class="login-input" placeholder="github_pat_... nebo ghp_..." autocomplete="off">
-                        <button type="button" class="btn-toggle-pat" onclick="togglePatVisibility()" title="Zobrazit / skrýt token">👁️</button>
+                <form class="pat-form" autocomplete="off" onsubmit="return false;" data-lpignore="true" data-1p-ignore>
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <label class="input-label" for="ghPatInput">GitHub Personal Access Token (PAT)</label>
+                        <div class="pat-input-wrapper">
+                            <input type="text" id="ghPatInput" name="github_pat_token_field" class="login-input" placeholder="github_pat_... nebo ghp_..." autocomplete="off" data-lpignore="true" data-1p-ignore data-form-type="other">
+                            <button type="button" class="btn-toggle-pat" onclick="togglePatVisibility()" title="Zobrazit / skrýt token">👁️</button>
+                        </div>
+                        <div id="tokenModalError" class="login-error" style="display: none; margin-top: 6px;"></div>
                     </div>
-                    <div id="tokenModalError" class="login-error" style="display: none; margin-top: 6px;"></div>
-                </div>
+                </form>
 
                 <label class="remember-row" style="margin-top: 0.75rem;">
                     <input type="checkbox" id="rememberPat" checked>

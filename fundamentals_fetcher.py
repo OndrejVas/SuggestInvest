@@ -216,18 +216,32 @@ def get_universe_fundamentals(universe_items: List[Dict[str, Any]], max_workers:
     return results
 
 
+import numpy as np
+
+
 def fetch_momentum_deltas(universe_items: List[Dict[str, Any]], batch_size: int = 80) -> Dict[str, Dict[str, Optional[float]]]:
     """
-    Vypočítá 1měsíční a 3měsíční momentum pro všechna aktiva pomocí efektivního dávkového yf.download.
+    Vypočítá 1M/3M momentum, 21denní realizovanou volatilitu (RV21), 14denní ATR,
+    objemový šok (LiMT Z-score) a kvantilová exekuční pásma pomocí efektivního dávkového yf.download.
     """
     all_symbols = [item["yahoo_symbol"] for item in universe_items]
     deltas: Dict[str, Dict[str, Optional[float]]] = {}
 
     # Inicializace výchozími hodnotami
     for sym in all_symbols:
-        deltas[sym] = {"delta_1m": None, "delta_3m": None}
+        deltas[sym] = {
+            "delta_1m": None,
+            "delta_3m": None,
+            "rv_21": None,
+            "atr_14": None,
+            "atr_pct": None,
+            "volume_shock_z": None,
+            "daily_turnover": None,
+            "limit_buy_price": None,
+            "quant_invalidation_price": None,
+        }
 
-    logger.info(f"Počítám 1M a 3M momentum delty pro {len(all_symbols)} aktiv...")
+    logger.info(f"Počítám momentum a kvantitativní metriky (RV21, ATR, Volume Shock) pro {len(all_symbols)} aktiv...")
 
     chunks = [all_symbols[i:i + batch_size] for i in range(0, len(all_symbols), batch_size)]
 
@@ -238,15 +252,25 @@ def fetch_momentum_deltas(universe_items: List[Dict[str, Any]], batch_size: int 
                 continue
 
             closes = df.get("Close")
+            highs = df.get("High")
+            lows = df.get("Low")
+            vols = df.get("Volume")
             if closes is None:
                 continue
 
             for sym in chunk:
                 try:
+                    # Extrakce cenových řad pro ticker (podpora MultiIndex i SingleIndex)
                     if sym in closes.columns:
                         series = closes[sym].dropna()
+                        h_series = highs[sym].dropna() if highs is not None and sym in highs.columns else None
+                        l_series = lows[sym].dropna() if lows is not None and sym in lows.columns else None
+                        v_series = vols[sym].dropna() if vols is not None and sym in vols.columns else None
                     elif len(chunk) == 1 and not closes.empty:
                         series = closes.dropna()
+                        h_series = highs.dropna() if highs is not None else None
+                        l_series = lows.dropna() if lows is not None else None
+                        v_series = vols.dropna() if vols is not None else None
                     else:
                         continue
 
@@ -258,23 +282,66 @@ def fetch_momentum_deltas(universe_items: List[Dict[str, Any]], batch_size: int 
                     if curr_price <= 0:
                         continue
 
-                    # 1M delta (~21 obchodních dnů)
+                    # 1. 1M delta (~21 obchodních dnů)
                     idx_1m = max(0, n - 22)
                     price_1m = float(series.iloc[idx_1m])
                     delta_1m = ((curr_price - price_1m) / price_1m) * 100 if price_1m > 0 else None
 
-                    # 3M delta (~63 obchodních dnů nebo první dostupný den v 3M periodě)
+                    # 2. 3M delta (~63 obchodních dnů nebo první dostupný den v 3M periodě)
                     price_3m = float(series.iloc[0])
                     delta_3m = ((curr_price - price_3m) / price_3m) * 100 if price_3m > 0 else None
+
+                    # 3. 21denní realizovaná volatilita (RV21) dle SRC-4
+                    ret_21 = np.diff(np.log(series.iloc[-min(22, n):].values))
+                    rv_21 = float(np.sqrt(np.sum(ret_21**2) * (252.0 / len(ret_21)))) if len(ret_21) > 2 else 0.25
+
+                    # 4. 14denní Average True Range (ATR14)
+                    if h_series is not None and l_series is not None and len(h_series) >= 15:
+                        h = h_series.iloc[-14:].values
+                        l = l_series.iloc[-14:].values
+                        c_prev = series.iloc[-15:-1].values
+                        tr = np.maximum(h - l, np.maximum(np.abs(h - c_prev), np.abs(l - c_prev)))
+                        atr_14 = float(np.mean(tr))
+                    else:
+                        atr_14 = float(curr_price * (rv_21 / np.sqrt(252.0)))
+
+                    atr_pct = float((atr_14 / curr_price) * 100) if curr_price > 0 else 2.0
+
+                    # 5. Objemový šok Z-skóre (LiMT Model - SRC-2)
+                    vol_z = 0.0
+                    daily_turnover = 0.0
+                    if v_series is not None and len(v_series) >= 6:
+                        v_curr = float(v_series.iloc[-1])
+                        v_hist = v_series.iloc[-6:-1].values
+                        daily_turnover = float(curr_price * v_curr)
+                        if v_curr > 0 and np.mean(v_hist) > 0:
+                            vol_z = float(np.log(v_curr + 1) - np.mean(np.log(v_hist + 1)))
+
+                    # 6. Dynamická hladina zneplatnění teze (Diffusion IVS VaR99% Stop-Loss - SRC-4)
+                    inv_loss_pct = max(0.035, min(0.15, max(1.5 * (atr_14 / curr_price), 2.33 * rv_21 * np.sqrt(5.0 / 252.0))))
+                    quant_invalidation_price = round(curr_price * (1.0 - inv_loss_pct), 2)
+
+                    # 7. Kvantilové pásmo limitního nákupu Q0.1 (OrderFusion+ - SRC-3)
+                    limit_buy_price = round(curr_price - 0.45 * atr_14, 2)
+                    if limit_buy_price >= curr_price:
+                        limit_buy_price = round(curr_price * 0.995, 2)
 
                     deltas[sym] = {
                         "delta_1m": round(delta_1m, 2) if delta_1m is not None else None,
                         "delta_3m": round(delta_3m, 2) if delta_3m is not None else None,
+                        "rv_21": round(rv_21 * 100, 1),
+                        "atr_14": round(atr_14, 2),
+                        "atr_pct": round(atr_pct, 1),
+                        "volume_shock_z": round(vol_z, 2),
+                        "daily_turnover": round(daily_turnover, 0),
+                        "limit_buy_price": limit_buy_price,
+                        "quant_invalidation_price": quant_invalidation_price,
                     }
                 except Exception:
                     continue
         except Exception as e:
             logger.warning(f"Chyba při dávkovém stažení historie: {e}")
 
-    logger.info("Momentum delty (1M a 3M) úspěšně spočteny.")
+    logger.info("Momentum delty a kvantitativní metriky úspěšně spočteny.")
     return deltas
+
