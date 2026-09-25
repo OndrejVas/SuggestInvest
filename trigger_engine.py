@@ -95,6 +95,17 @@ def evaluate_asset_triggers(
             "priority": 13
         })
 
+    # D2) Výzkumný katalyzátor 4: Bankovní úrokový cyklus a expanze marží (Sadasivan - SRC-8)
+    # Finanční instituce se stabilní volatilitou a ziskovostí v prostředí stabilních/vyšších sazeb
+    is_financial = any(k in mdata.get("name", "").lower() or k in mdata.get("xtb_symbol", "").lower() for k in ["bank", "banco", "group", "finan", "reinsurance", "insurance", "pko", "pekao", "erste", "komb", "monet", "rbi", "raw"])
+    if is_financial and target_upside_pct is not None and target_upside_pct >= 8.0 and (rv_21 is not None and rv_21 <= 38.0):
+        triggers.append({
+            "id": "CAT_FINANCIAL_CYCLE",
+            "label": "🏛️ Úrokový cyklus (NIM)",
+            "css_class": "trig-financial-cycle",
+            "priority": 12
+        })
+
     # E) Kalendářní triggery událostí (Hospodářské výsledky & Dividendy)
     if days_to_earnings is not None:
         if 0 <= days_to_earnings <= 7:
@@ -227,6 +238,24 @@ def evaluate_asset_triggers(
     # 5. Maximální bezpečná kapacita alokace dle 2% obratu (LiMT-APO - SRC-2)
     max_position_turnover_cap = round(0.02 * daily_turnover, 0) if daily_turnover else None
 
+    # 6. Masuda Conviction Score (poměr růstu k volatilitě očištěný o katalyzátory - SRC-9)
+    conviction_score = 0.0
+    if target_upside_pct and target_upside_pct > 0 and rv_21 and rv_21 > 0:
+        base_sharpe_proxy = target_upside_pct / max(rv_21, 10.0)
+        catalyst_mult = 1.0 + (0.12 * len(triggers))
+        conviction_score = round(base_sharpe_proxy * catalyst_mult, 3)
+
+    # 7. Volatilitně adaptivní citlivost na sentiment (Ahmad - SRC-11)
+    if rv_21 is not None:
+        if rv_21 >= 25.0:
+            sentiment_regime = "HIGH_VOLATILITY_FAST_NEWS"
+        elif rv_21 <= 18.0:
+            sentiment_regime = "DEFENSIVE_FUNDAMENTAL_DOMINANT"
+        else:
+            sentiment_regime = "BALANCED"
+    else:
+        sentiment_regime = "BALANCED"
+
     return {
         "target_mean": target_mean,
         "target_high": target_high,
@@ -249,10 +278,64 @@ def evaluate_asset_triggers(
         "limit_buy_price": limit_buy_price,
         "limit_buy_range": limit_buy_range,
         "max_position_turnover_cap": max_position_turnover_cap,
+        "conviction_score": conviction_score,
+        "sentiment_regime": sentiment_regime,
         "triggers": triggers,
         "trigger_ids": [t["id"] for t in triggers],
         "primary_catalyst_tag": primary_catalyst_tag,
         "ai_forward_context": ai_forward_context,
         "dividend_analysis": dividend_analysis,
     }
+
+
+def compute_top_5_conviction_basket(cards: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Vybere denní TOP 5 aktiv s nejvyšším Masuda Sharpe Conviction skóre
+    s diverzifikačním omezením (max 2 aktiva ze stejné měny/regionu).
+    Váhy portfolia odpovídají Mean-Variance rozptylu: 25%, 25%, 20%, 15%, 15%.
+    """
+    eligible = [
+        c for c in cards 
+        if c.get("signal") in ["STRONG BUY", "BUY"] 
+        and (c.get("conviction_score") or 0.0) > 0.0
+    ]
+    if not eligible:
+        # Fallback na jakákoliv aktiva s nejvyšším conviction score
+        eligible = [c for c in cards if (c.get("conviction_score") or 0.0) > 0.0]
+
+    # Seřadit sestupně dle conviction_score
+    eligible.sort(key=lambda x: x.get("conviction_score", 0.0), reverse=True)
+
+    weights = ["25 %", "25 %", "20 %", "15 %", "15 %"]
+    selected = []
+    curr_counts = {}
+
+    for c in eligible:
+        curr = c.get("currency", "USD")
+        if curr_counts.get(curr, 0) >= 2:
+            continue
+        
+        idx = len(selected)
+        w = weights[idx]
+        curr_counts[curr] = curr_counts.get(curr, 0) + 1
+
+        selected.append({
+            "rank": idx + 1,
+            "xtb_symbol": c.get("xtb_symbol"),
+            "name": c.get("name"),
+            "currency": curr,
+            "target_upside": c.get("target_upside", "N/A"),
+            "rv_21_str": c.get("rv_21_str", "N/A"),
+            "conviction_score": f"{c.get('conviction_score', 0.0):.2f}",
+            "portfolio_weight": w,
+            "tactical_note": c.get("reasoning", "Vysoký poměr očekávaného růstu k volatilitě."),
+            "catalysts": c.get("catalysts", [])[:2],
+            "sentiment_regime": c.get("sentiment_regime", "BALANCED"),
+        })
+
+        if len(selected) == 5:
+            break
+
+    return selected
+
 

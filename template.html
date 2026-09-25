@@ -898,6 +898,7 @@
         .trig-volume-shock { background: rgba(217, 70, 239, 0.2); color: #e879f9; border: 1px solid rgba(217, 70, 239, 0.5); font-weight: 800; animation: pulseWarm 2.5s infinite; }
         .trig-sentiment-divergence { background: rgba(20, 184, 166, 0.2); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.45); }
         .trig-pairs-discount { background: rgba(244, 63, 94, 0.2); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.45); }
+        .trig-financial-cycle { background: rgba(245, 158, 11, 0.2); color: #fde047; border: 1px solid rgba(245, 158, 11, 0.45); }
         .trig-generic { background: rgba(59, 130, 246, 0.15); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.3); }
 
         .tooltip-quant-box {
@@ -1769,6 +1770,160 @@
             color: #fca5a5;
         }
 
+        /* 🏆 MASUDA TOP 5 CONVICTION BASKET (MIT SHARPE ALLOCATION - SRC-9) */
+        .top-conviction-section {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.75) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(245, 158, 11, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .top-conviction-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #f59e0b, #fbbf24, transparent);
+        }
+
+        .top-conviction-header {
+            margin-bottom: 0.85rem;
+        }
+
+        .top-conviction-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .top-conviction-title h2 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #f8fafc;
+            margin: 0;
+            letter-spacing: -0.01em;
+        }
+
+        .top-badge {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.45);
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 2px 8px;
+            border-radius: 999px;
+        }
+
+        .top-conviction-sub {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        .top-conviction-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.85rem;
+            margin-top: 0.85rem;
+        }
+
+        .conviction-card {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-md);
+            padding: 0.85rem 1rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            position: relative;
+        }
+
+        .conviction-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(245, 158, 11, 0.5);
+            box-shadow: 0 10px 20px -5px rgba(245, 158, 11, 0.15);
+            background: rgba(26, 36, 54, 0.9);
+        }
+
+        .conv-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .conv-rank {
+            font-size: 0.75rem;
+            font-weight: 900;
+            color: #f59e0b;
+            background: rgba(245, 158, 11, 0.15);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .conv-weight {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.12);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .conv-symbol {
+            font-size: 0.98rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.02em;
+        }
+
+        .conv-name {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .conv-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            font-size: 0.72rem;
+            color: #cbd5e1;
+            margin-top: 4px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 4px;
+        }
+
+        .conv-stats > div {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .conv-reason {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            font-style: italic;
+            margin-top: 2px;
+            line-height: 1.25;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
         @media (max-width: 1200px) {
             .filter-groups { grid-template-columns: repeat(3, 1fr); }
         }
@@ -1885,6 +2040,33 @@
                     <div>🌐 Zdroje dat: <strong>{{ data_sources }}</strong></div>
                 </div>
             </header>
+
+            {% if top_5_basket %}
+            <!-- 🏆 TOP 5 CONVICTION ALLOCATION BASKET (Masuda MIT Thesis MVO) -->
+            <section class="top-conviction-section">
+                <div class="top-conviction-header">
+                    <div class="top-conviction-title">
+                        <span>🏆</span> Masuda TOP 5 Conviction Allocation (MIT MVO)
+                    </div>
+                    <div class="top-conviction-desc">
+                        Denní modelové portfolio 5 aktiv s nejvyšším Sharpe Conviction poměrem ($\mathbb{E}[R] / (RV_{21} \cdot ATR)$) a diverzifikací.
+                    </div>
+                </div>
+                <div class="top-conviction-grid">
+                    {% for item in top_5_basket %}
+                    <div class="conviction-card" onclick="filterToAsset('{{ item.xtb_symbol }}')" title="Klikněte pro zobrazení a vyfiltrování titulu {{ item.xtb_symbol }}">
+                        <div class="conv-rank">#{{ item.rank }}</div>
+                        <div class="conv-weight">Váha: {{ item.portfolio_weight }}</div>
+                        <div class="conv-sym">{{ item.xtb_symbol }}</div>
+                        <div class="conv-name">{{ item.name }}</div>
+                        <div class="conv-score">Conviction: <strong>{{ item.conviction_score }}</strong> | Cíl: <strong>{{ item.target_upside }}</strong></div>
+                        <div class="conv-metrics">RV21: {{ item.rv_21_str }} • {{ item.sentiment_regime }}</div>
+                        <div class="conv-reason">„{{ item.tactical_note }}“</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
 
             <!-- FILTRAČNÍ PANEL -->
             <section class="filter-panel">
@@ -2488,6 +2670,24 @@
             }
 
             applyFilters();
+        }
+
+        function filterToAsset(sym) {
+            if (!sym) return;
+            ['tier', 'type', 'curr', 'signal', 'trigger', 'change'].forEach(cat => setFilter(cat, 'all'));
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.removeAttribute('readonly');
+                searchInput.value = sym;
+            }
+            activeFilters.search = sym.toLowerCase();
+            applyFilters();
+            const targetRow = document.querySelector(`.asset-row[data-symbol="${sym}"]`);
+            if (targetRow) {
+                targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                targetRow.style.outline = '2px solid #3b82f6';
+                setTimeout(() => { targetRow.style.outline = 'none'; }, 2500);
+            }
         }
 
         let currentSort = { col: 'rank', asc: true };

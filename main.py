@@ -16,7 +16,7 @@ from pydantic import BaseModel, Field
 
 from universe import get_all_universe, TIER_1_TOP, TIER_2_MID, TIER_3_LOW
 from fundamentals_fetcher import get_universe_fundamentals, fetch_momentum_deltas
-from trigger_engine import evaluate_asset_triggers
+from trigger_engine import evaluate_asset_triggers, compute_top_5_conviction_basket
 from history_manager import (
     save_scan_history, 
     get_ticker_signal_history, 
@@ -189,7 +189,9 @@ def _call_gemini_batch(client, model_name: str, batch_items: List[Dict[str, Any]
                 "atr_pct": item.get("atr_pct"),
                 "volume_shock_z": item.get("volume_shock_z"),
                 "limit_buy_price": item.get("limit_buy_price"),
-                "quant_invalidation_price": item.get("quant_invalidation_price")
+                "quant_invalidation_price": item.get("quant_invalidation_price"),
+                "conviction_score": item.get("conviction_score"),
+                "sentiment_regime": item.get("sentiment_regime", "BALANCED")
             },
             "calendar": {
                 "days_to_earnings": item.get("days_to_earnings"),
@@ -242,7 +244,8 @@ def _call_gemini_batch(client, model_name: str, batch_items: List[Dict[str, Any]
         "3. 'confidence': Celé číslo od 0 do 100.\n"
         "4. 'impact_direction': Striktně buď '▲ Růst', nebo '▼ Pokles'.\n"
         "5. 'catalysts': Vyber 1 až 4 relevantní štítky z této schválené sady:\n"
-        "   ['⚡ Objemový průraz (LiMT)', '🧠 Sentiment Divergence', '⚖️ Sektorový diskont (Pairs)', '🚀 Silné momentum', '📉 Přeprodáno / Korekce', '🔥 Test 52w Maxima', '🎯 Vysoký diskont', '⚠️ Nad cílem analytiků', '⏳ Výsledky do 7 dní', '📅 Výsledky do 21 dní', '💰 Ex-Div za N dní', '🇨🇿 BCPP Dividendy']\n"
+        "   ['⚡ Objemový průraz (LiMT)', '🧠 Sentiment Divergence', '⚖️ Sektorový diskont (Pairs)', '🏛️ Úrokový cyklus (NIM)', '🚀 Silné momentum', '📉 Přeprodáno / Korekce', '🔥 Test 52w Maxima', '🎯 Vysoký diskont', '⚠️ Nad cílem analytiků', '⏳ Výsledky do 7 dní', '📅 Výsledky do 21 dní', '💰 Ex-Div za N dní', '🇨🇿 BCPP Dividendy']\n"
+        "   - Sektorově adaptivní sentiment (Ahmad SRC-11): Pokud je sentiment_regime=='HIGH_VOLATILITY_FAST_NEWS', zprávy mají vysokou váhu s krátkým horizontem (1-2 dny). Pokud je sentiment_regime=='DEFENSIVE_FUNDAMENTAL_DOMINANT', novinový šum ignoruj a rozhoduj primárně dle diskontu k cíli a dividend.\n"
         "6. 'reasoning': Přesně 1 až 2 věty v češtině. Musí konkrétně zmínit vztah mezi tržním kurzem, cílovou cenou a blížící se událostí (výsledky, dividenda apod.). Zákaz obecných frází typu 'akcie má dobré vyhlídky'.\n"
         "7. 'invalidation_price': Konkrétní cenová hladina (float), při jejímž prolomení celá investiční teze přestává platit.\n\n"
         "PŘÍKLAD:\n"
@@ -387,6 +390,10 @@ def generate_mock_signals_for_universe(items: List[Dict[str, Any]]) -> List[Dict
         if curr == "CZK" and item.get("asset_type") == "AKCIE":
             catalysts.append("🇨🇿 BCPP Dividendy")
 
+        is_fin = any(k in item.get("name", "").lower() or k in sym.lower() for k in ["bank", "banco", "group", "finan", "reinsurance", "insurance", "pko", "pekao", "erste", "komb", "monet", "rbi", "raw"])
+        if is_fin and upside is not None and upside >= 8.0:
+            catalysts.append("🏛️ Úrokový cyklus (NIM)")
+
         if not catalysts:
             catalysts = ["🚀 Silné momentum"] if ch_1d >= 0 else ["📉 Přeprodáno / Korekce"]
         catalysts = catalysts[:4]
@@ -509,7 +516,7 @@ def format_currency_value(value: Optional[float], currency: str) -> str:
         return f"{value:.2f}"
 
 
-def build_html_report(processed_cards: List[Dict[str, Any]], is_demo: bool = False, scan_duration: str = "45 s", data_sources: str = "", change_stats: Optional[Dict[str, Any]] = None) -> str:
+def build_html_report(processed_cards: List[Dict[str, Any]], is_demo: bool = False, scan_duration: str = "45 s", data_sources: str = "", change_stats: Optional[Dict[str, Any]] = None, top_5_basket: Optional[List[Dict[str, Any]]] = None) -> str:
     """Zkompiluje finální index.html přes Jinja2 šablonu."""
     now_utc = datetime.now(timezone.utc)
     cet_offset = timedelta(hours=2) # Letní čas SELČ
@@ -563,6 +570,7 @@ def build_html_report(processed_cards: List[Dict[str, Any]], is_demo: bool = Fal
         data_sources=data_sources,
         ai_model=GEMINI_MODEL if not is_demo else f"{GEMINI_MODEL} (Záložní Quant Režim)",
         is_demo=is_demo,
+        top_5_basket=top_5_basket,
     )
     return html_content
 
@@ -714,6 +722,8 @@ def run_scanner(tiers: List[str] = None, allow_mock_fallback: bool = True) -> st
             "atr_14": mdata.get("atr_14"),
             "atr_pct_str": f"{mdata['atr_pct']:.1f} %" if mdata.get("atr_pct") is not None else "—",
             "volume_shock_z": mdata.get("volume_shock_z"),
+            "conviction_score": mdata.get("conviction_score", 0.0),
+            "sentiment_regime": mdata.get("sentiment_regime", "BALANCED"),
             "limit_buy_price": mdata.get("limit_buy_price"),
             "limit_buy_price_str": f"{format_currency_value(mdata.get('limit_buy_price'), mdata['currency'])} {mdata['currency']}" if mdata.get("limit_buy_price") else "—",
             "limit_buy_range": mdata.get("limit_buy_range") or "—",
@@ -743,6 +753,10 @@ def run_scanner(tiers: List[str] = None, allow_mock_fallback: bool = True) -> st
     final_cards, change_stats = compute_daily_changes(final_cards, current_scan_date=current_date_str)
     logger.info(f"Denní posuny vyhodnoceny: {change_stats.get('total_changed', 0)} změn (⬆️ {change_stats.get('upgrades', 0)} upgradů, ⬇️ {change_stats.get('downgrades', 0)} downgradů).")
 
+    # 8.6. Výběr TOP 5 Conviction Basket (Masuda Sharpe Optimization - SRC-9)
+    top_5_basket = compute_top_5_conviction_basket(final_cards)
+    logger.info(f"TOP 5 Conviction Basket (Masuda Sharpe Allocation) sestaven: {[x['xtb_symbol'] for x in top_5_basket]}")
+
     # 9. Vygenerování a uložení index.html
     elapsed = time.time() - scan_start
     if elapsed >= 60:
@@ -751,7 +765,7 @@ def run_scanner(tiers: List[str] = None, allow_mock_fallback: bool = True) -> st
         scan_duration_str = f"{elapsed:.1f} s"
 
     data_sources_str = "XTB Market Catalog • Yahoo Finance Realtime • Yahoo Analyst Consensus & Calendars • Yahoo Financial News RSS • Google Gemini 3.5 AI"
-    html_output = build_html_report(final_cards, is_demo=is_demo, scan_duration=scan_duration_str, data_sources=data_sources_str, change_stats=change_stats)
+    html_output = build_html_report(final_cards, is_demo=is_demo, scan_duration=scan_duration_str, data_sources=data_sources_str, change_stats=change_stats, top_5_basket=top_5_basket)
 
     output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "index.html")
     with open(output_path, "w", encoding="utf-8") as f:

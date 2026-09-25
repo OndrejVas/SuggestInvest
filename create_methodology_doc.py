@@ -563,6 +563,70 @@ def create_methodology_document(output_path: str):
 
     doc.add_paragraph().paragraph_format.space_after = Pt(12)
 
+    # ==================== KAPITOLA 6.11: VÝZKUMNÁ DÁVKA 2 ====================
+    add_section_header("6.11 Pokročilá syntéza a portfolio management (Výzkumná dávka 2 – Zdroje 8 až 11)", level=2)
+    add_body_p(
+        "V navazující fázi výzkumu byly do architektury SuggestInvest integrovány poznatky ze čtyř rozsáhlých "
+        "diplomových a disertačních prací předních světových univerzit (Massachusetts Institute of Technology, "
+        "Brock University, Universidad Politécnica de Madrid a Victoria University). Tato rozšíření posouvají "
+        "model od pouhé bodové predikce jednotlivých titulů k sofistikované konstrukci portfolia, dynamické filtraci "
+        "tržního sentimentu a modelování bankovního úrokového cyklu."
+    )
+
+    add_body_p("A. Masuda TOP 5 Conviction Allocation (MIT MVO Portfolio):")
+    add_bullet(" Inspirováno prací Jamese Masudy (MIT EECS 2024), která prokázala, že hybridní modely dosahují špičkového výkonu pouze při spojení prediktivní síly s Mean-Variance optimalizací (MVO). SuggestInvest denně sestavuje modelový koš 5 nejsilnějších titulů s nejvyšším poměrem očekávaného zisku vůči realizované volatilitě a riziku: Conviction = (Target_Upside / max(RV_21, 10)) × (1 + 0.12 × K), kde K je počet aktivních katalyzátorů.", "1. Sharpe Proxy Conviction skóre:")
+    add_bullet(" Alokace kapitálu do TOP 5 aktiv probíhá v sestupných vahách 25 %, 25 %, 20 %, 15 % a 15 % při současném uplatnění regionální a měnové diverzifikace (maximálně 2 tituly v identické měně či regionu v koši). Tím je zabráněno nezdravé koncentraci rizika.", "2. Diversifikované vážení portfolia:")
+
+    add_body_p("B. Volatility-Adaptive News Sentiment Filtering (Brock University & UPM Madrid):")
+    add_bullet(" Sheraz Ahmad (Brock University 2025) a Juan Luis Ruiz-Tagle (UPM Madrid 2023) prokázali, že vliv zpravodajského sentimentu se zásadně liší napříč sektory a režimy volatility. Vysoce volatilní aktiva (RV_21 ≥ 25 %, např. technologické růstové akcie, krypto-proxies, energetika) reagují na novinky okamžitě s poločasem rozpadu 1–2 dny.", "1. Rychlý sentiment u růstových aktiv:")
+    add_bullet(" U nízkovolatilních a defenzivních aktiv (RV_21 ≤ 18 %, např. banky, utility, telekomunikace) působí krátkodobý sentiment jako šum degradující přesnost modelu. SuggestInvest v tomto režimu potlačuje vliv zpráv a klade dominantní důraz na fundamentální valuační diskont a dividendovou stabilitu.", "2. Potlačení šumu u defenzivních titulů:")
+
+    add_body_p("C. Cyklický katalyzátor bankovního sektoru (Victoria University):")
+    add_bullet(" Disertační práce Praveena Sadasivana (Victoria University 2024/25) modelující bankovní sektorové indexy identifikovala silnou statistickou závislost (R² > 0.78) mezi úrokovým diferenciálem (výnosovou křivkou) a výkonností bankovních akcií se zpožděním 15 až 30 obchodních dnů. SuggestInvest proto zavedl katalyzátor CAT_FINANCIAL_CYCLE (🏛️ Úrokový cyklus / NIM), který pro bankovní tituly (Erste, KB, Moneta, Santander, BNP Paribas, ING) systematicky zohledňuje stabilitu čisté úrokové marže a prostředí úrokových sazeb.", "Katalyzátor CAT_FINANCIAL_CYCLE:")
+
+    add_body_p("D. Akademické ukotvení – Přehled 4 nových výzkumných prací:")
+
+    table_quant2 = doc.add_table(rows=5, cols=4)
+    table_quant2.alignment = WD_TABLE_ALIGNMENT.CENTER
+    table_quant2.autofit = False
+
+    for i, h in enumerate(q_headers):
+        cell = table_quant2.cell(0, i)
+        set_cell_background(cell, "0f172a")
+        set_cell_margins(cell, top=120, bottom=120, left=100, right=100)
+        p = cell.paragraphs[0]
+        p.paragraph_format.space_after = Pt(2)
+        r = p.add_run(h)
+        r.font.bold = True
+        r.font.size = Pt(9.0)
+        r.font.color.rgb = RGBColor(255, 255, 255)
+
+    quant2_rows = [
+        ("James Masuda\n(MIT EECS, 2024)", "Hybridní CNN-LSTM, BiLSTM-BO-LightGBM a Mean-Variance Portfolio Optimization.", "Modul TOP 5 Conviction Basket s MVO váhami 25-25-20-15-15 % a Sharpe proxy.", "Transformace izolovaných tipů na přímo investovatelné, diverzifikované minitportfolio."),
+        ("Sheraz Ahmad\n(Brock University, 2025)", "Analýza vlivu sentimentu napříč modely, sektory a režimy tržní volatility.", "Režimové vážení sentimentu (HIGH_VOLATILITY vs. DEFENSIVE_FUNDAMENTAL).", "Eliminace falešných signálů u defenzivních titulů a zrychlení reakce u technologií."),
+        ("Juan Luis Ruiz-Tagle\n(UPM Madrid, 2023)", "Predikce krátkodobých trendů pomocí FinBERT a technických indikátorů.", "Pravidlo nepotvrzeného sentimentu v Gemini AI (sentiment vyžaduje technický impuls).", "Ochrana před nákupem do padajícího nože na pouhou 'pozitivní PR zprávu'."),
+        ("Praveen Sadasivan\n(Victoria University, 2024/25)", "Predikce bankovních indexů pomocí optimalizovaných AI modelů a úrokových sazeb.", "Katalyzátor CAT_FINANCIAL_CYCLE se zpožděnou transmisí úrokových marží (NIM).", "Přesnější časování vstupů do evropských a českých bank (KB, Erste, Moneta).")
+    ]
+
+    for row_idx, (c0, c1, c2, c3) in enumerate(quant2_rows, 1):
+        bg = "f8fafc" if row_idx % 2 == 1 else "ffffff"
+        for col_idx, text in enumerate([c0, c1, c2, c3]):
+            cell = table_quant2.cell(row_idx, col_idx)
+            set_cell_background(cell, bg)
+            set_cell_margins(cell, top=80, bottom=80, left=100, right=100)
+            p = cell.paragraphs[0]
+            p.paragraph_format.space_after = Pt(2)
+            r = p.add_run(text)
+            r.font.size = Pt(8.5)
+            if col_idx == 0:
+                r.font.bold = True
+
+    for row in table_quant2.rows:
+        for idx, width in enumerate(col_widths):
+            row.cells[idx].width = width
+
+    doc.add_paragraph().paragraph_format.space_after = Pt(12)
+
     # ==================== KAPITOLA 7: ARCHITEKTURA KOŠŮ ====================
     add_section_header("7. Segmentace univerza: Proč 3 prioritní koše (Tiers)")
     add_body_p(
