@@ -45,6 +45,9 @@ TIER_1_TOP: List[Dict[str, str]] = [
     {"xtb_symbol": "VIG.CZ", "yahoo_symbol": "VIG.PR", "name": "Vienna Insurance Group", "asset_type": "AKCIE", "currency": "CZK", "tier": "TOP"},
 
     # Evropští lídři (EUR)
+    {"xtb_symbol": "RAW.DE", "yahoo_symbol": "RAW.DE", "name": "Raiffeisen Bank International AG", "asset_type": "AKCIE", "currency": "EUR", "tier": "TOP"},
+    {"xtb_symbol": "RHM.DE", "yahoo_symbol": "RHM.DE", "name": "Rheinmetall AG", "asset_type": "AKCIE", "currency": "EUR", "tier": "TOP"},
+    {"xtb_symbol": "SAN.ES", "yahoo_symbol": "SAN.MC", "name": "Banco Santander SA", "asset_type": "AKCIE", "currency": "EUR", "tier": "TOP"},
     {"xtb_symbol": "ASML.NL", "yahoo_symbol": "ASML.AS", "name": "ASML Holding NV", "asset_type": "AKCIE", "currency": "EUR", "tier": "TOP"},
     {"xtb_symbol": "SAP.DE", "yahoo_symbol": "SAP.DE", "name": "SAP SE", "asset_type": "AKCIE", "currency": "EUR", "tier": "TOP"},
     {"xtb_symbol": "SIE.DE", "yahoo_symbol": "SIE.DE", "name": "Siemens AG", "asset_type": "AKCIE", "currency": "EUR", "tier": "TOP"},
@@ -112,9 +115,23 @@ TIER_2_MID: List[Dict[str, str]] = [
     {"xtb_symbol": "TTE.FR", "yahoo_symbol": "TTE.PA", "name": "TotalEnergies SE", "asset_type": "AKCIE", "currency": "EUR", "tier": "MID"},
     {"xtb_symbol": "SAN.FR", "yahoo_symbol": "SAN.PA", "name": "Sanofi SA", "asset_type": "AKCIE", "currency": "EUR", "tier": "MID"},
     {"xtb_symbol": "RMS.FR", "yahoo_symbol": "RMS.PA", "name": "Hermes International", "asset_type": "AKCIE", "currency": "EUR", "tier": "MID"},
+    {"xtb_symbol": "UCG.IT", "yahoo_symbol": "UCG.MI", "name": "UniCredit SpA", "asset_type": "AKCIE", "currency": "EUR", "tier": "MID"},
+    {"xtb_symbol": "ISP.IT", "yahoo_symbol": "ISP.MI", "name": "Intesa Sanpaolo SpA", "asset_type": "AKCIE", "currency": "EUR", "tier": "MID"},
+    {"xtb_symbol": "KBC.BE", "yahoo_symbol": "KBC.BR", "name": "KBC Group NV (ČSOB)", "asset_type": "AKCIE", "currency": "EUR", "tier": "MID"},
+    {"xtb_symbol": "UBSG.CH", "yahoo_symbol": "UBSG.SW", "name": "UBS Group AG", "asset_type": "AKCIE", "currency": "CHF", "tier": "MID"},
+    {"xtb_symbol": "GLE.FR", "yahoo_symbol": "GLE.PA", "name": "Société Générale SA", "asset_type": "AKCIE", "currency": "EUR", "tier": "MID"},
+    {"xtb_symbol": "MUV2.DE", "yahoo_symbol": "MUV2.DE", "name": "Munich Re (Münchener Rück)", "asset_type": "AKCIE", "currency": "EUR", "tier": "MID"},
+    {"xtb_symbol": "DHL.DE", "yahoo_symbol": "DHL.DE", "name": "Deutsche Post AG (DHL Group)", "asset_type": "AKCIE", "currency": "EUR", "tier": "MID"},
+
+    # Středoevropští lídři XTB (Polsko WIG20 - PLN)
+    {"xtb_symbol": "PKO.PL", "yahoo_symbol": "PKO.WA", "name": "PKO Bank Polski SA", "asset_type": "AKCIE", "currency": "PLN", "tier": "MID"},
+    {"xtb_symbol": "PEO.PL", "yahoo_symbol": "PEO.WA", "name": "Bank Pekao SA", "asset_type": "AKCIE", "currency": "PLN", "tier": "MID"},
+    {"xtb_symbol": "PKN.PL", "yahoo_symbol": "PKN.WA", "name": "ORLEN SA", "asset_type": "AKCIE", "currency": "PLN", "tier": "MID"},
+    {"xtb_symbol": "DNP.PL", "yahoo_symbol": "DNP.WA", "name": "Dino Polska SA", "asset_type": "AKCIE", "currency": "PLN", "tier": "MID"},
+    {"xtb_symbol": "KGH.PL", "yahoo_symbol": "KGH.WA", "name": "KGHM Polska Miedź SA", "asset_type": "AKCIE", "currency": "PLN", "tier": "MID"},
 
     # Sektorová & Komoditní ETF na XTB (EUR)
-
+    {"xtb_symbol": "SEC0.DE", "yahoo_symbol": "SEC0.DE", "name": "iShares MSCI Semiconductors ETF", "asset_type": "ETF", "currency": "EUR", "tier": "MID"},
     {"xtb_symbol": "4GLD.DE", "yahoo_symbol": "4GLD.DE", "name": "Xetra-Gold ETC", "asset_type": "ETF", "currency": "EUR", "tier": "MID"},
     {"xtb_symbol": "CBRS.DE", "yahoo_symbol": "CBRS.DE", "name": "First Trust Nasdaq Cybersecurity ETF", "asset_type": "ETF", "currency": "EUR", "tier": "MID"},
     {"xtb_symbol": "EQQQ.DE", "yahoo_symbol": "EQQQ.DE", "name": "Invesco EQQQ Nasdaq-100 ETF", "asset_type": "ETF", "currency": "EUR", "tier": "MID"},
