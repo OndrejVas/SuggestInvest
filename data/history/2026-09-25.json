@@ -91,6 +91,13 @@
           "probability": 91,
           "price": 224.5800018310547,
           "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "STRONG BUY",
+          "probability": 91,
+          "price": 225.66000366210938,
+          "impact_direction": "▲ Růst"
         }
       ],
       "time_horizon": "1-3 měsíce",
@@ -296,6 +303,13 @@
           "probability": 90,
           "price": 161.61000061035156,
           "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "STRONG BUY",
+          "probability": 91,
+          "price": 158.64999389648438,
+          "impact_direction": "▲ Růst"
         }
       ],
       "time_horizon": "1-3 měsíce",
@@ -393,6 +407,13 @@
           "signal": "BUY",
           "probability": 76,
           "price": 342.3599853515625,
+          "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 82,
+          "price": 353.7149963378906,
           "impact_direction": "▲ Růst"
         }
       ],
@@ -518,6 +539,104 @@
         "prev_conf": 82,
         "curr_conf": 85,
         "change_desc": "Zvýšení doporučení z BUY na STRONG BUY. Konfidence vzrostla na 85 % (+3 b.p.). Nový katalyzátor: 📅 Výsledky do 21 dní.",
+        "prev_date_str": "24. 09. 2026 v 22:24 SELČ"
+      }
+    },
+    {
+      "xtb_symbol": "APP.US",
+      "yahoo_symbol": "APP",
+      "name": "Applovin Corp - class A",
+      "tier": "MID",
+      "asset_type": "AKCIE",
+      "currency": "USD",
+      "price": "314.14",
+      "price_raw": 314.1440124511719,
+      "change_pct": "+0.47 %",
+      "change_pct_raw": 0.47142752779987174,
+      "change_direction": "positive",
+      "catalysts": [
+        "🎯 Vysoký diskont"
+      ],
+      "triggers": [
+        {
+          "id": "CAT_HIGH_DISCOUNT",
+          "label": "🎯 Vysoký diskont",
+          "css_class": "trig-upside-high",
+          "priority": 10
+        }
+      ],
+      "trigger_ids": [
+        "CAT_HIGH_DISCOUNT"
+      ],
+      "target_mean": "498.37 USD",
+      "target_mean_raw": 498.36807,
+      "target_upside": "+58.6 %",
+      "target_upside_raw": 58.64,
+      "target_upside_class": "upside-positive",
+      "target_high": "790.00",
+      "target_low": "325.00",
+      "analysts_count": 31,
+      "next_earnings_date": "04. 11. 2026",
+      "days_to_earnings": 40,
+      "earnings_time": null,
+      "ex_dividend_date": null,
+      "days_to_ex_dividend": null,
+      "dividend_analysis": null,
+      "delta_1m": null,
+      "delta_3m": null,
+      "delta_1m_str": "—",
+      "delta_3m_str": "—",
+      "dist_to_52w_high_pct": 42.1,
+      "delta_target_30d_pct": 0.0,
+      "invalidation_price": 282.73,
+      "invalidation_price_str": "282.73 USD",
+      "invalidation_dist_pct": -10.0,
+      "history_minitrend": [
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 55,
+          "price": 313.1000061035156,
+          "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 82,
+          "price": 313.0150146484375,
+          "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 55,
+          "price": 314.7699890136719,
+          "impact_direction": "▲ Růst"
+        }
+      ],
+      "time_horizon": "1-3 měsíce",
+      "signal": "BUY",
+      "signal_rank": 4,
+      "signal_class": "signal-buy",
+      "progress_class": "fill-buy",
+      "probability": 82,
+      "confidence": 82,
+      "impact_direction": "▲ Růst",
+      "reasoning": "Konsenzuální cílová cena na 498.4 USD (+58.6 %) vytváří atraktivní asymetrii výnosu a rizika při 1M momentu +0.0 %. Teze zůstává v platnosti nad hranicí podpory 282.73 USD.",
+      "chart_url": "https://finance.yahoo.com/quote/APP",
+      "daily_change": {
+        "is_changed": false,
+        "change_type": "UNCHANGED",
+        "change_badge": "",
+        "badge_class": "",
+        "change_color": "#94a3b8",
+        "prev_signal": "BUY",
+        "curr_signal": "BUY",
+        "rank_diff": 0,
+        "conf_diff": 0,
+        "prev_conf": 82,
+        "curr_conf": 82,
+        "change_desc": "Signál BUY beze změny oproti předchozímu skenu (24. 09. 2026 v 22:24 SELČ).",
         "prev_date_str": "24. 09. 2026 v 22:24 SELČ"
       }
     },
@@ -660,6 +779,13 @@
           "signal": "BUY",
           "probability": 82,
           "price": 139.5399932861328,
+          "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 82,
+          "price": 138.47999572753906,
           "impact_direction": "▲ Růst"
         }
       ],
@@ -2689,6 +2815,13 @@
           "probability": 82,
           "price": 172.16000366210938,
           "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 78,
+          "price": 1522.5999755859375,
+          "impact_direction": "▲ Růst"
         }
       ],
       "time_horizon": "1-3 měsíce",
@@ -3090,6 +3223,13 @@
           "signal": "BUY",
           "probability": 78,
           "price": 22.049999237060547,
+          "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 78,
+          "price": 22.200000762939453,
           "impact_direction": "▲ Růst"
         }
       ],
@@ -3834,6 +3974,13 @@
           "probability": 77,
           "price": 71.72000122070312,
           "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 77,
+          "price": 71.2300033569336,
+          "impact_direction": "▲ Růst"
         }
       ],
       "time_horizon": "1-3 měsíce",
@@ -4131,6 +4278,13 @@
           "probability": 76,
           "price": 69.86000061035156,
           "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 76,
+          "price": 345.15008544921875,
+          "impact_direction": "▲ Růst"
         }
       ],
       "time_horizon": "1-3 měsíce",
@@ -4143,6 +4297,104 @@
       "impact_direction": "▲ Růst",
       "reasoning": "S tržní cenou na 72.06 USD a 11 analytiky stanoveným cílem 89.36 USD vykazuje titul 24,01% diskont a zdravé 1M momentum 3,63 %.",
       "chart_url": "https://finance.yahoo.com/quote/AMBA",
+      "daily_change": {
+        "is_changed": false,
+        "change_type": "UNCHANGED",
+        "change_badge": "",
+        "badge_class": "",
+        "change_color": "#94a3b8",
+        "prev_signal": "BUY",
+        "curr_signal": "BUY",
+        "rank_diff": 0,
+        "conf_diff": 0,
+        "prev_conf": 76,
+        "curr_conf": 76,
+        "change_desc": "Signál BUY beze změny oproti předchozímu skenu (24. 09. 2026 v 22:24 SELČ).",
+        "prev_date_str": "24. 09. 2026 v 22:24 SELČ"
+      }
+    },
+    {
+      "xtb_symbol": "APO.US",
+      "yahoo_symbol": "APO",
+      "name": "Apollo Global Management Inc (Cboe BZX Real-Time Quote)",
+      "tier": "MID",
+      "asset_type": "AKCIE",
+      "currency": "USD",
+      "price": "121.34",
+      "price_raw": 121.33999633789062,
+      "change_pct": "+1.07 %",
+      "change_pct_raw": 1.0661305496340352,
+      "change_direction": "positive",
+      "catalysts": [
+        "🎯 Vysoký diskont"
+      ],
+      "triggers": [
+        {
+          "id": "CAT_HIGH_DISCOUNT",
+          "label": "🎯 Vysoký diskont",
+          "css_class": "trig-upside-high",
+          "priority": 10
+        }
+      ],
+      "trigger_ids": [
+        "CAT_HIGH_DISCOUNT"
+      ],
+      "target_mean": "153.47 USD",
+      "target_mean_raw": 153.47368,
+      "target_upside": "+26.5 %",
+      "target_upside_raw": 26.48,
+      "target_upside_class": "upside-positive",
+      "target_high": "173.00",
+      "target_low": "130.00",
+      "analysts_count": 19,
+      "next_earnings_date": "03. 11. 2026",
+      "days_to_earnings": 39,
+      "earnings_time": null,
+      "ex_dividend_date": null,
+      "days_to_ex_dividend": null,
+      "dividend_analysis": null,
+      "delta_1m": null,
+      "delta_3m": null,
+      "delta_1m_str": "—",
+      "delta_3m_str": "—",
+      "dist_to_52w_high_pct": 79.2,
+      "delta_target_30d_pct": 0.0,
+      "invalidation_price": 109.21,
+      "invalidation_price_str": "109.21 USD",
+      "invalidation_dist_pct": -10.0,
+      "history_minitrend": [
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 76,
+          "price": 120.48500061035156,
+          "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 76,
+          "price": 120.44999694824219,
+          "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 55,
+          "price": 121.51499938964844,
+          "impact_direction": "▲ Růst"
+        }
+      ],
+      "time_horizon": "1-3 měsíce",
+      "signal": "BUY",
+      "signal_rank": 4,
+      "signal_class": "signal-buy",
+      "progress_class": "fill-buy",
+      "probability": 76,
+      "confidence": 76,
+      "impact_direction": "▲ Růst",
+      "reasoning": "Konsenzuální cílová cena na 153.5 USD (+26.5 %) vytváří atraktivní asymetrii výnosu a rizika při 1M momentu +0.0 %. Teze zůstává v platnosti nad hranicí podpory 109.21 USD.",
+      "chart_url": "https://finance.yahoo.com/quote/APO",
       "daily_change": {
         "is_changed": false,
         "change_type": "UNCHANGED",
@@ -4276,8 +4528,8 @@
           }
         ]
       },
-      "delta_1m": -4.14,
-      "delta_3m": -9.13,
+      "delta_1m": -4.08,
+      "delta_3m": -9.07,
       "delta_1m_str": "-4.1 %",
       "delta_3m_str": "-9.1 %",
       "dist_to_52w_high_pct": 82.5,
@@ -4504,6 +4756,13 @@
           "probability": 76,
           "price": 508.9800109863281,
           "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 76,
+          "price": 512.4099731445312,
+          "impact_direction": "▲ Růst"
         }
       ],
       "time_horizon": "1-3 měsíce",
@@ -4700,6 +4959,13 @@
           "signal": "BUY",
           "probability": 76,
           "price": 188.61000061035156,
+          "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 75,
+          "price": 16.895000457763672,
           "impact_direction": "▲ Růst"
         }
       ],
@@ -4898,6 +5164,13 @@
           "signal": "HOLD",
           "probability": 55,
           "price": 497.92999267578125,
+          "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 75,
+          "price": 45.88999938964844,
           "impact_direction": "▲ Růst"
         }
       ],
@@ -5411,18 +5684,18 @@
       "reasoning": "Cena 58.09 USD poskytuje 20,34% upside k cíli 69.91 USD při stabilním analytickém krytí.",
       "chart_url": "https://finance.yahoo.com/quote/AOS",
       "daily_change": {
-        "is_changed": false,
-        "change_type": "UNCHANGED",
-        "change_badge": "",
-        "badge_class": "",
-        "change_color": "#94a3b8",
-        "prev_signal": "BUY",
+        "is_changed": true,
+        "change_type": "UPGRADE",
+        "change_badge": "⬆️ UPGRADE",
+        "badge_class": "badge-upgrade",
+        "change_color": "#34d399",
+        "prev_signal": "HOLD",
         "curr_signal": "BUY",
-        "rank_diff": 0,
-        "conf_diff": 0,
-        "prev_conf": 75,
+        "rank_diff": 1,
+        "conf_diff": 20,
+        "prev_conf": 55,
         "curr_conf": 75,
-        "change_desc": "Signál BUY beze změny oproti předchozímu skenu (24. 09. 2026 v 22:24 SELČ).",
+        "change_desc": "Zvýšení doporučení z HOLD na BUY. Konfidence vzrostla na 75 % (+20 b.p.). Nový katalyzátor: 🎯 Vysoký diskont.",
         "prev_date_str": "24. 09. 2026 v 22:24 SELČ"
       }
     },
@@ -5791,6 +6064,13 @@
           "probability": 75,
           "price": 134.3000030517578,
           "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 75,
+          "price": 134.44000244140625,
+          "impact_direction": "▲ Růst"
         }
       ],
       "time_horizon": "1-3 měsíce",
@@ -5816,6 +6096,181 @@
         "prev_conf": 75,
         "curr_conf": 75,
         "change_desc": "Aktivován nový předstihový katalyzátor: 🚀 Silné momentum.",
+        "prev_date_str": "24. 09. 2026 v 22:24 SELČ"
+      }
+    },
+    {
+      "xtb_symbol": "APD.US",
+      "yahoo_symbol": "APD",
+      "name": "Air Products & Chemicals Inc",
+      "tier": "MID",
+      "asset_type": "AKCIE",
+      "currency": "USD",
+      "price": "284.32",
+      "price_raw": 284.32000732421875,
+      "change_pct": "-0.06 %",
+      "change_pct_raw": -0.05975348018603785,
+      "change_direction": "negative",
+      "catalysts": [
+        "🎯 Vysoký diskont",
+        "💰 Ex-Div za 6 dní"
+      ],
+      "triggers": [
+        {
+          "id": "CAT_HIGH_DISCOUNT",
+          "label": "🎯 Vysoký diskont",
+          "css_class": "trig-upside-high",
+          "priority": 10
+        },
+        {
+          "id": "CAT_DIV_CAPTURE",
+          "label": "🟢 Ex-Div: Držet (Zotavení)",
+          "css_class": "trig-dividend",
+          "priority": 12
+        },
+        {
+          "id": "CAT_DIVIDEND_SOON",
+          "label": "💰 Ex-Div za 6 dní",
+          "css_class": "trig-dividend",
+          "priority": 35
+        }
+      ],
+      "trigger_ids": [
+        "CAT_HIGH_DISCOUNT",
+        "CAT_DIV_CAPTURE",
+        "CAT_DIVIDEND_SOON"
+      ],
+      "target_mean": "345.11 USD",
+      "target_mean_raw": 345.10526,
+      "target_upside": "+21.4 %",
+      "target_upside_raw": 21.38,
+      "target_upside_class": "upside-positive",
+      "target_high": "373.00",
+      "target_low": "314.00",
+      "analysts_count": 19,
+      "next_earnings_date": "05. 11. 2026",
+      "days_to_earnings": 41,
+      "earnings_time": null,
+      "ex_dividend_date": "01. 10. 2026",
+      "days_to_ex_dividend": 6,
+      "dividend_analysis": {
+        "events_count": 6,
+        "avg_div_yield_pct": 0.64,
+        "avg_pre_ex_runup_pct": -0.5,
+        "avg_drop_off_ratio": -1.25,
+        "recovery_rate_15d_pct": 83.3,
+        "recovery_rate_30d_pct": 83.3,
+        "median_recovery_days": 0,
+        "recommendation_code": "CAPTURE",
+        "recommendation_badge": "🟢 Držet přes Ex-Div (Rychlé zotavení)",
+        "recommendation_color": "success",
+        "recommendation_summary": "V 83 % případů titul smazal dividendový gap do 15 dní (medián zotavení: — dní). Kurz vykazuje silný nákupní polštář a historicky se vyplatí pozici držet přes Ex-Date a inkasovat dividendu.",
+        "recent_events": [
+          {
+            "ex_date": "2026-07-01",
+            "dividend": 1.81,
+            "cum_close": 293.18,
+            "ex_close": 306.4,
+            "div_yield_pct": 0.62,
+            "drop_off_ratio": -7.3,
+            "runup_20d_pct": 5.12,
+            "recovered_in_30d": true,
+            "recovered_in_15d": true,
+            "recovery_days": 0
+          },
+          {
+            "ex_date": "2026-04-01",
+            "dividend": 1.81,
+            "cum_close": 290.49,
+            "ex_close": 289.43,
+            "div_yield_pct": 0.62,
+            "drop_off_ratio": 0.59,
+            "runup_20d_pct": 6.39,
+            "recovered_in_30d": true,
+            "recovered_in_15d": true,
+            "recovery_days": 1
+          },
+          {
+            "ex_date": "2026-01-02",
+            "dividend": 1.79,
+            "cum_close": 247.02,
+            "ex_close": 250.47,
+            "div_yield_pct": 0.72,
+            "drop_off_ratio": -1.93,
+            "runup_20d_pct": -3.8,
+            "recovered_in_30d": true,
+            "recovered_in_15d": true,
+            "recovery_days": 0
+          },
+          {
+            "ex_date": "2025-10-01",
+            "dividend": 1.79,
+            "cum_close": 272.72,
+            "ex_close": 268.7,
+            "div_yield_pct": 0.66,
+            "drop_off_ratio": 2.25,
+            "runup_20d_pct": -6.66,
+            "recovered_in_30d": false,
+            "recovered_in_15d": false,
+            "recovery_days": null
+          }
+        ]
+      },
+      "delta_1m": null,
+      "delta_3m": null,
+      "delta_1m_str": "—",
+      "delta_3m_str": "—",
+      "dist_to_52w_high_pct": 90.3,
+      "delta_target_30d_pct": 0.0,
+      "invalidation_price": 255.89,
+      "invalidation_price_str": "255.89 USD",
+      "invalidation_dist_pct": -10.0,
+      "history_minitrend": [
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 75,
+          "price": 283.7300109863281,
+          "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 75,
+          "price": 283.4700012207031,
+          "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 55,
+          "price": 284.5,
+          "impact_direction": "▲ Růst"
+        }
+      ],
+      "time_horizon": "1-3 měsíce",
+      "signal": "BUY",
+      "signal_rank": 4,
+      "signal_class": "signal-buy",
+      "progress_class": "fill-buy",
+      "probability": 75,
+      "confidence": 75,
+      "impact_direction": "▲ Růst",
+      "reasoning": "Konsenzuální cílová cena na 345.1 USD (+21.4 %) vytváří atraktivní asymetrii výnosu a rizika při 1M momentu +0.0 %. Teze zůstává v platnosti nad hranicí podpory 255.89 USD.",
+      "chart_url": "https://finance.yahoo.com/quote/APD",
+      "daily_change": {
+        "is_changed": true,
+        "change_type": "UPGRADE",
+        "change_badge": "⬆️ UPGRADE",
+        "badge_class": "badge-upgrade",
+        "change_color": "#34d399",
+        "prev_signal": "HOLD",
+        "curr_signal": "BUY",
+        "rank_diff": 1,
+        "conf_diff": 20,
+        "prev_conf": 55,
+        "curr_conf": 75,
+        "change_desc": "Zvýšení doporučení z HOLD na BUY. Konfidence vzrostla na 75 % (+20 b.p.). Nový katalyzátor: 🎯 Vysoký diskont, 💰 Ex-Div za 6 dní.",
         "prev_date_str": "24. 09. 2026 v 22:24 SELČ"
       }
     },
@@ -6161,6 +6616,13 @@
           "signal": "BUY",
           "probability": 75,
           "price": 523.7000122070312,
+          "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 75,
+          "price": 522.77001953125,
           "impact_direction": "▲ Růst"
         }
       ],
@@ -7107,6 +7569,13 @@
           "probability": 55,
           "price": 227.1300048828125,
           "impact_direction": "▼ Pokles"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 71,
+          "price": 10.774999618530273,
+          "impact_direction": "▲ Růst"
         }
       ],
       "time_horizon": "1-3 měsíce",
@@ -8899,6 +9368,13 @@
           "probability": 71,
           "price": 146.1999969482422,
           "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 71,
+          "price": 12.425000190734863,
+          "impact_direction": "▲ Růst"
         }
       ],
       "time_horizon": "1-3 měsíce",
@@ -9541,6 +10017,13 @@
           "signal": "BUY",
           "probability": 71,
           "price": 136.2899932861328,
+          "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 71,
+          "price": 132.88999938964844,
           "impact_direction": "▲ Růst"
         }
       ],
@@ -10898,6 +11381,13 @@
           "signal": "HOLD",
           "probability": 55,
           "price": 42.27000045776367,
+          "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 64,
+          "price": 9.675000190734863,
           "impact_direction": "▲ Růst"
         }
       ],
@@ -12443,6 +12933,13 @@
           "probability": 64,
           "price": 1080.530029296875,
           "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "BUY",
+          "probability": 64,
+          "price": 1081.2349853515625,
+          "impact_direction": "▲ Růst"
         }
       ],
       "time_horizon": "1-3 měsíce",
@@ -12636,6 +13133,13 @@
           "signal": "HOLD",
           "probability": 60,
           "price": 335.9200134277344,
+          "impact_direction": "▼ Pokles"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 60,
+          "price": 339.5249938964844,
           "impact_direction": "▼ Pokles"
         }
       ],
@@ -27766,6 +28270,13 @@
           "probability": 55,
           "price": 678.3900146484375,
           "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 55,
+          "price": 566.0482177734375,
+          "impact_direction": "▲ Růst"
         }
       ],
       "time_horizon": "1-3 měsíce",
@@ -27854,6 +28365,13 @@
           "signal": "HOLD",
           "probability": 55,
           "price": 46.95000076293945,
+          "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 55,
+          "price": 55.11000061035156,
           "impact_direction": "▲ Růst"
         }
       ],
@@ -28033,6 +28551,13 @@
           "probability": 55,
           "price": 156.4199981689453,
           "impact_direction": "▲ Růst"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 55,
+          "price": 156.49000549316406,
+          "impact_direction": "▲ Růst"
         }
       ],
       "time_horizon": "1-3 měsíce",
@@ -28047,15 +28572,15 @@
       "chart_url": "https://finance.yahoo.com/quote/ATO",
       "daily_change": {
         "is_changed": true,
-        "change_type": "NEW_CATALYST",
-        "change_badge": "🔥 KATALYZÁTOR",
-        "badge_class": "badge-new-catalyst",
-        "change_color": "#f472b6",
-        "prev_signal": "HOLD",
+        "change_type": "DOWNGRADE",
+        "change_badge": "⬇️ DOWNGRADE",
+        "badge_class": "badge-downgrade",
+        "change_color": "#f87171",
+        "prev_signal": "BUY",
         "curr_signal": "HOLD",
-        "rank_diff": 0,
-        "conf_diff": 0,
-        "prev_conf": 55,
+        "rank_diff": -1,
+        "conf_diff": -20,
+        "prev_conf": 75,
         "curr_conf": 55,
         "change_desc": "Aktivován nový předstihový katalyzátor: 🎯 Vysoký diskont.",
         "prev_date_str": "24. 09. 2026 v 22:24 SELČ"
@@ -28329,10 +28854,10 @@
       }
     },
     {
-      "xtb_symbol": "AFG.US",
-      "yahoo_symbol": "AFG",
-      "name": "American Financial Group Inc",
-      "tier": "MID",
+      "xtb_symbol": "PATH.US",
+      "yahoo_symbol": "PATH",
+      "name": "UiPath Inc (Automation)",
+      "tier": "LOW",
       "asset_type": "AKCIE",
       "currency": "USD",
       "price": "137.53",
@@ -29337,7 +29862,7 @@
       "change_pct_raw": -0.7743362831858407,
       "change_direction": "negative",
       "catalysts": [
-        "🎯 Vysoký diskont"
+        "📉 Přeprodáno / Korekce"
       ],
       "triggers": [
         {
@@ -29482,6 +30007,13 @@
           "signal": "HOLD",
           "probability": 55,
           "price": 11.484999656677246,
+          "impact_direction": "▼ Pokles"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 55,
+          "price": 396.8500061035156,
           "impact_direction": "▼ Pokles"
         }
       ],
@@ -32964,11 +33496,11 @@
       "reasoning": "Cena 23.63 USD mírně oslabuje o 3,09 % za poslední měsíc a pohybuje se v rámci stabilního bočního rozpětí.",
       "chart_url": "https://finance.yahoo.com/quote/KHC",
       "daily_change": {
-        "is_changed": true,
-        "change_type": "NEW_CATALYST",
-        "change_badge": "🔥 KATALYZÁTOR",
-        "badge_class": "badge-new-catalyst",
-        "change_color": "#f472b6",
+        "is_changed": false,
+        "change_type": "UNCHANGED",
+        "change_badge": "",
+        "badge_class": "",
+        "change_color": "#94a3b8",
         "prev_signal": "HOLD",
         "curr_signal": "HOLD",
         "rank_diff": 0,
@@ -34409,6 +34941,104 @@
         "prev_conf": 55,
         "curr_conf": 52,
         "change_desc": "Aktivován nový předstihový katalyzátor: 📉 Přeprodáno / Korekce.",
+        "prev_date_str": "24. 09. 2026 v 22:24 SELČ"
+      }
+    },
+    {
+      "xtb_symbol": "AEP.US",
+      "yahoo_symbol": "AEP",
+      "name": "American Electric Power Co Inc",
+      "tier": "MID",
+      "asset_type": "AKCIE",
+      "currency": "USD",
+      "price": "117.16",
+      "price_raw": 117.16000366210938,
+      "change_pct": "-0.46 %",
+      "change_pct_raw": -0.45879043151285287,
+      "change_direction": "negative",
+      "catalysts": [
+        "🎯 Vysoký diskont"
+      ],
+      "triggers": [
+        {
+          "id": "CAT_HIGH_DISCOUNT",
+          "label": "🎯 Vysoký diskont",
+          "css_class": "trig-upside-high",
+          "priority": 10
+        }
+      ],
+      "trigger_ids": [
+        "CAT_HIGH_DISCOUNT"
+      ],
+      "target_mean": "142.97 USD",
+      "target_mean_raw": 142.975,
+      "target_upside": "+22.0 %",
+      "target_upside_raw": 22.03,
+      "target_upside_class": "upside-positive",
+      "target_high": "173.00",
+      "target_low": "128.00",
+      "analysts_count": 20,
+      "next_earnings_date": "29. 10. 2026",
+      "days_to_earnings": 34,
+      "earnings_time": null,
+      "ex_dividend_date": null,
+      "days_to_ex_dividend": null,
+      "dividend_analysis": null,
+      "delta_1m": null,
+      "delta_3m": null,
+      "delta_1m_str": "—",
+      "delta_3m_str": "—",
+      "dist_to_52w_high_pct": 83.3,
+      "delta_target_30d_pct": -0.17,
+      "invalidation_price": 107.79,
+      "invalidation_price_str": "107.79 USD",
+      "invalidation_dist_pct": -8.0,
+      "history_minitrend": [
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 55,
+          "price": 116.86000061035156,
+          "impact_direction": "▼ Pokles"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 55,
+          "price": 116.8499984741211,
+          "impact_direction": "▼ Pokles"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 55,
+          "price": 117.12999725341797,
+          "impact_direction": "▼ Pokles"
+        }
+      ],
+      "time_horizon": "1-3 měsíce",
+      "signal": "HOLD",
+      "signal_rank": 3,
+      "signal_class": "signal-hold",
+      "progress_class": "fill-hold",
+      "probability": 55,
+      "confidence": 55,
+      "impact_direction": "▼ Pokles",
+      "reasoning": "Titul prochází technickou konsolidací s 1M změnou +0.0 % a trh vyčkává na kvartální report za 34 dní. Doporučujeme vyčkat na jasný fundamentální katalyzátor nad hladinou 107.79 USD.",
+      "chart_url": "https://finance.yahoo.com/quote/AEP",
+      "daily_change": {
+        "is_changed": true,
+        "change_type": "DOWNGRADE",
+        "change_badge": "⬇️ DOWNGRADE",
+        "badge_class": "badge-downgrade",
+        "change_color": "#f87171",
+        "prev_signal": "BUY",
+        "curr_signal": "HOLD",
+        "rank_diff": -1,
+        "conf_diff": -20,
+        "prev_conf": 75,
+        "curr_conf": 55,
+        "change_desc": "Snížení doporučení z BUY na HOLD. Konfidence se změnila na 55 % (-20 b.p.).",
         "prev_date_str": "24. 09. 2026 v 22:24 SELČ"
       }
     },
@@ -38497,9 +39127,9 @@
       }
     },
     {
-      "xtb_symbol": "DLR.US",
-      "yahoo_symbol": "DLR",
-      "name": "Digital Realty Trust Inc",
+      "xtb_symbol": "CVX.US",
+      "yahoo_symbol": "CVX",
+      "name": "Chevron Corp",
       "tier": "MID",
       "asset_type": "AKCIE",
       "currency": "USD",
@@ -38645,6 +39275,13 @@
           "signal": "HOLD",
           "probability": 55,
           "price": 75.62000274658203,
+          "impact_direction": "▼ Pokles"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 55,
+          "price": 58.54999923706055,
           "impact_direction": "▼ Pokles"
         }
       ],
@@ -40713,10 +41350,10 @@
       }
     },
     {
-      "xtb_symbol": "ES.US",
-      "yahoo_symbol": "ES",
-      "name": "Eversource Energy",
-      "tier": "MID",
+      "xtb_symbol": "BABA.US",
+      "yahoo_symbol": "BABA",
+      "name": "Alibaba Group Holding",
+      "tier": "LOW",
       "asset_type": "AKCIE",
       "currency": "USD",
       "price": "63.33",
@@ -42287,6 +42924,13 @@
           "probability": 55,
           "price": 143.5500030517578,
           "impact_direction": "▼ Pokles"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 55,
+          "price": 143.89999389648438,
+          "impact_direction": "▼ Pokles"
         }
       ],
       "time_horizon": "1-3 měsíce",
@@ -42375,6 +43019,13 @@
           "signal": "HOLD",
           "probability": 55,
           "price": 26.75,
+          "impact_direction": "▼ Pokles"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 55,
+          "price": 22.360000610351562,
           "impact_direction": "▼ Pokles"
         }
       ],
@@ -42956,9 +43607,9 @@
       }
     },
     {
-      "xtb_symbol": "SHOP.US",
-      "yahoo_symbol": "SHOP",
-      "name": "Shopify Inc. - class A",
+      "xtb_symbol": "GWW.US",
+      "yahoo_symbol": "GWW",
+      "name": "WW Grainger Inc",
       "tier": "MID",
       "asset_type": "AKCIE",
       "currency": "USD",
@@ -43203,6 +43854,13 @@
           "probability": 55,
           "price": 36.81999969482422,
           "impact_direction": "▼ Pokles"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 55,
+          "price": 291.1099853515625,
+          "impact_direction": "▼ Pokles"
         }
       ],
       "time_horizon": "1-3 měsíce",
@@ -43292,6 +43950,13 @@
           "probability": 55,
           "price": 63.310001373291016,
           "impact_direction": "▼ Pokles"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 55,
+          "price": 62.93000030517578,
+          "impact_direction": "▼ Pokles"
         }
       ],
       "time_horizon": "1-3 měsíce",
@@ -43337,16 +44002,16 @@
       ],
       "triggers": [],
       "trigger_ids": [],
-      "target_mean": "—",
-      "target_mean_raw": -9999.0,
-      "target_upside": "—",
-      "target_upside_raw": -9999.0,
-      "target_upside_class": "upside-neutral",
-      "target_high": "—",
-      "target_low": "—",
-      "analysts_count": null,
-      "next_earnings_date": null,
-      "days_to_earnings": null,
+      "target_mean": "1,325.39 USD",
+      "target_mean_raw": 1325.3855,
+      "target_upside": "+14.0 %",
+      "target_upside_raw": 13.98,
+      "target_upside_class": "upside-positive",
+      "target_high": "1,600.00",
+      "target_low": "930.00",
+      "analysts_count": 29,
+      "next_earnings_date": "29. 10. 2026",
+      "days_to_earnings": 34,
       "earnings_time": null,
       "ex_dividend_date": null,
       "days_to_ex_dividend": null,
@@ -48787,6 +49452,13 @@
           "probability": 55,
           "price": 38.650001525878906,
           "impact_direction": "▼ Pokles"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 55,
+          "price": 58.900001525878906,
+          "impact_direction": "▼ Pokles"
         }
       ],
       "time_horizon": "1-3 měsíce",
@@ -49150,6 +49822,13 @@
           "probability": 60,
           "price": 192.6999969482422,
           "impact_direction": "▼ Pokles"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 55,
+          "price": 42.540000915527344,
+          "impact_direction": "▼ Pokles"
         }
       ],
       "time_horizon": "1-3 měsíce",
@@ -49175,6 +49854,104 @@
         "prev_conf": 60,
         "curr_conf": 65,
         "change_desc": "Snížení doporučení z HOLD na SELL. Konfidence se změnila na 65 % (+5 b.p.).",
+        "prev_date_str": "24. 09. 2026 v 22:24 SELČ"
+      }
+    },
+    {
+      "xtb_symbol": "AMGN.US",
+      "yahoo_symbol": "AMGN",
+      "name": "Amgen Inc",
+      "tier": "MID",
+      "asset_type": "AKCIE",
+      "currency": "USD",
+      "price": "409.79",
+      "price_raw": 409.7900085449219,
+      "change_pct": "+1.61 %",
+      "change_pct_raw": 1.6067066387944442,
+      "change_direction": "positive",
+      "catalysts": [
+        "⚠️ Nad cílem analytiků"
+      ],
+      "triggers": [
+        {
+          "id": "CAT_OVER_TARGET",
+          "label": "⚠️ Nad cílem analytiků",
+          "css_class": "trig-exhausted",
+          "priority": 30
+        }
+      ],
+      "trigger_ids": [
+        "CAT_OVER_TARGET"
+      ],
+      "target_mean": "389.22 USD",
+      "target_mean_raw": 389.21967,
+      "target_upside": "-5.0 %",
+      "target_upside_raw": -5.02,
+      "target_upside_class": "upside-negative",
+      "target_high": "457.00",
+      "target_low": "225.00",
+      "analysts_count": 29,
+      "next_earnings_date": "03. 11. 2026",
+      "days_to_earnings": 39,
+      "earnings_time": null,
+      "ex_dividend_date": null,
+      "days_to_ex_dividend": null,
+      "dividend_analysis": null,
+      "delta_1m": -6.88,
+      "delta_3m": 16.9,
+      "delta_1m_str": "-6.9 %",
+      "delta_3m_str": "+16.9 %",
+      "dist_to_52w_high_pct": 91.7,
+      "delta_target_30d_pct": 0.0,
+      "invalidation_price": 442.57,
+      "invalidation_price_str": "442.57 USD",
+      "invalidation_dist_pct": 8.0,
+      "history_minitrend": [
+        {
+          "date": "2026-09-25",
+          "signal": "SELL",
+          "probability": 72,
+          "price": 409.8900146484375,
+          "impact_direction": "▼ Pokles"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 60,
+          "price": 409.20001220703125,
+          "impact_direction": "▼ Pokles"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "HOLD",
+          "probability": 60,
+          "price": 409.9200134277344,
+          "impact_direction": "▼ Pokles"
+        }
+      ],
+      "time_horizon": "1-3 měsíce",
+      "signal": "SELL",
+      "signal_rank": 2,
+      "signal_class": "signal-sell",
+      "progress_class": "fill-sell",
+      "probability": 72,
+      "confidence": 72,
+      "impact_direction": "▼ Pokles",
+      "reasoning": "Tržní cena překročila průměrný cíl analytiků 389.2 USD a 3M momentum +16.9 % indikuje vyčerpání nákupního tlaku. Zvýšené distribuční riziko signalizuje obrat s validační hladinou na 442.57 USD.",
+      "chart_url": "https://finance.yahoo.com/quote/AMGN",
+      "daily_change": {
+        "is_changed": false,
+        "change_type": "UNCHANGED",
+        "change_badge": "",
+        "badge_class": "",
+        "change_color": "#94a3b8",
+        "prev_signal": "SELL",
+        "curr_signal": "SELL",
+        "rank_diff": 0,
+        "conf_diff": 0,
+        "prev_conf": 72,
+        "curr_conf": 72,
+        "change_desc": "Signál SELL beze změny oproti předchozímu skenu (24. 09. 2026 v 22:24 SELČ).",
         "prev_date_str": "24. 09. 2026 v 22:24 SELČ"
       }
     },
@@ -49254,6 +50031,13 @@
           "signal": "HOLD",
           "probability": 60,
           "price": 127.38999938964844,
+          "impact_direction": "▼ Pokles"
+        },
+        {
+          "date": "2026-09-25",
+          "signal": "SELL",
+          "probability": 72,
+          "price": 124.33899688720703,
           "impact_direction": "▼ Pokles"
         }
       ],
