@@ -789,3 +789,128 @@ Architektonický plán nevzniká ve vzduchoprázdnu, ale přímo navazuje a syst
   - [x] **Vizuální rozhraní (`template.html`):** Dynamické mikroodznaky nových katalyzátorů s jemnou animací a nový taktický blok *Kvantitativní exekuce (OrderFusion+ & LiMT)* v kontextovém detailu aktiva.
   - [x] **Formální aktualizace metodiky (`create_methodology_doc.py` $\to$ `Analyza_Dat_a_Metodika_SuggestInvest.docx`):** Vytvořena nová podrobná kapitola 6.10 dokumentující všech 7 výzkumných prací, matematické vzorce a praktický přínos pro investora.
 - [x] **FÁZE 3 DOKONČENA (Plná implementace v kódu i v oficiální dokumentaci)**
+
+---
+
+## 9. Výzkumná dávka 2: Pokročilé ML architektury, optimalizace portfolia a sektorově specifický sentiment (Zdroje 8–11)
+
+Tato sekce rozšiřuje institucionální výzkumný korpus o 4 nové recenzované univerzitní práce (Victoria University, MIT, Universidad Politécnica de Madrid, Brock University). Tyto práce se přímo zaměřují na slabá místa tradičních modelů: predikci bankovního a finančního sektoru v různých úrokových cyklech, hybridní predikční architektury (CNN-LSTM a BiLSTM-BO-LightGBM), fúzi sentimentu s cenou a sektorově specifickou asymetrii časových zpoždění (sentiment lags) v závislosti na volatilitě.
+
+---
+
+### 9.1 SRC-8: Predikce bankovního a finančního sektoru pomocí AI a makroekonomických faktorů
+- **Bibliografická identifikace:** Sadasivan, Praveen. *Application of Artificial Intelligence Models for Prediction of Australian Share Market Index for Financial Sector*. PhD Thesis, Victoria University (Melbourne, Australia), 2024/2025. 291 stran.
+- **Zkoumaná doména & Instrumenty:** Bankovní sektor a finanční instituce (ASX Financials, Commonwealth Bank of Australia, Westpac, ANZ, NAB), zkoumání transmisních kanálů makroekonomických šoků (úrokové sazby, inflace CPI, výnosová křivka, přeshraniční spillovery z amerického trhu S&P 500 a NASDAQ).
+- **Testované modely & Architektury:**
+  1. *Artificial Neural Networks (ANN)* – standardní mělké vícevrstvé sítě (2–3 vrstvy)
+  2. *Long Short-Term Memory (LSTM)* – rekurentní sítě pro časové řady
+  3. *Deep Multi-Layer Perceptron (Deep Learning MLP)* – 4 až 6 skrytých vrstev s 50–200 neurony, optimalizátor Adam, regularizace dropout, testováno pro 50, 100 a 200 epoch.
+- **Klíčové matematické a empirické nálezy:**
+  - **Nejvyšší predikční přesnost Deep MLP:** Optimalizovaná 4vrstvá architektura (100 neuronů na vrstvu, trénovaná 100 epoch) dosáhla směrové predikční přesnosti **91,82 %** s efektivní ztrátovou funkcí (Loss) $0{,}0032$, čímž překonala jak mělké ANN (které rychle uvízly na suboptimálním plató), tak těžké rekurentní sítě LSTM.
+  - **Omezení LSTM na krátkých horizontech:** Rekurentní sítě LSTM vyžadovaly neúměrně vysoký počet trénovacích iterací (>500 epoch) a vykazovaly tendenci k přeučení na šumu denních bankovních výnosů bez statisticky významného zvýšení přesnosti oproti hlubokému MLP.
+  - **Dominance úrokového transmisního mechanismu:** Úrokové sazby centrální banky a sklon výnosové křivky ($10Y - 2Y$) vykazují nejsilnější vysvětlovací sílu pro bankovní ziskovost ($R^2 > 0{,}78$) s předstihem 15–30 obchodních dnů.
+- **Praktická využitelnost pro SuggestInvest:**
+  - Vzhledem k našemu novému rozšíření portfolia o evropské banky (**Raiffeisen Bank `RAW.DE`**, **Santander `SAN.ES`**, **UniCredit `UCG.IT`**, **Intesa `ISP.IT`**, **KBC `KBC.BE`**, **Erste `RBAG.CZ`**, **KB `KOMB.CZ`**, **PKO `PKO.PL`**) je tento výzkum klíčový.
+  - Umožňuje formalizovat pravidlový katalyzátor **`CAT_FINANCIAL_CYCLE`** reagující na úrokové diference a bankovní čisté úrokové marže (NIM).
+- **Hodnocení škál:**
+  - **Škála A (Relevance pro investiční predikce):** **8.5 / 10** – Zásadní pro sektorové vyhodnocování bankovních blue-chips, které v našem univerzu tvoří více než 15 % kapitalizace.
+  - **Škála B (Technická proveditelnost pro CI/CD):** **9.0 / 10** – Závěry práce potvrzují, že není nutné nasazovat těžké rekurentní sítě; sektorové makro-vztahy a citlivost na úroky lze v SuggestInvestu formalizovat lehkými analytickými filtry a promptem pro Gemini AI bez časové penalizace.
+
+---
+
+### 9.2 SRC-9: Hybridní strojové učení a optimalizace portfolia (MIT)
+- **Bibliografická identifikace:** Masuda, James. *Machine Learning for Stock Price Prediction and Portfolio Optimization*. Master of Engineering in Computer Science, Economics, and Data Science, Massachusetts Institute of Technology (MIT), May 2024. Školitel: Prof. Nathaniel Hendren. 76 stran.
+- **Zkoumaná doména & Instrumenty:** 50 největších mega-caps amerického trhu (S&P 500 Top 50 – identická skladba s naším košem TIER 1 TOP: AAPL, MSFT, NVDA, AMZN, GOOGL, META, LLY, TSLA, AVGO, JPM, WMT, UNH, V, MA, PG, JNJ, ORCL atd.).
+- **Testované modely & Metodika:**
+  - Porovnání 7 základních modelů (Linear Regression, SVM, Random Forest, RNN, LSTM, BiLSTM, LightGBM) a 2 inovativních hybridních architektur:
+    1. **CNN-LSTM:** Konvoluční vrstvy pro extrakci lokálních cenových patternů propojené s LSTM vrstvami pro časové závislosti.
+    2. **BiLSTM-BO-LightGBM:** Obousměrné LSTM s Bayesovsky optimalizovaným gradient boostingem (LightGBM).
+  - Konstrukce dynamického portfolia: Denní simulace celého roku 2023 s výběrem **TOP 5 akcií** v rámci Mean-Variance Optimization (MVO) s limitem na rozptyl a sledováním transakčních nákladů.
+- **Klíčové matematické a empirické nálezy:**
+  - **Jednoznačné vítězství hybridu CNN-LSTM v portfoliovém zhodnocení:**
+    - **Sharpe Ratio:** dosáhlo **2,41** (oproti 1,28 pro benchmark S&P 500 a 1,12 pro lineární modely).
+    - **Generovaná Alpha ($\alpha$):** dosáhla **+6,18 % p.a.** nad úroveň indexu S&P 500 (očištěno o tržní beta).
+  - **Nejmenší chyba predikce BiLSTM-BO-LightGBM:** dosáhl nejnižší chyby SMAPE (**2,655 %**), avšak při tvorbě portfolia měl CNN-LSTM mírně lepší schopnost vybrat dynamické lídry.
+  - **Riziko mechanických lineárních predikcí:** Běžná lineární regrese v testovacím roce vygenerovala zápornou alfu a Sharpe ratio pouze 0,85 (horší než pasivní držení indexu), což dokazuje nutnost nelineárních a regularizovaných modelů pro finanční data.
+  - **Pravidlo TOP 5 selekce:** Denní koncentrace kapitálu do 5 nejlepších titulů s váhovým omezením na rozptyl minimalizovala drawdown během tržních korekcí.
+- **Praktická využitelnost pro SuggestInvest:**
+  - Architektura SuggestInvest přímo vybízí k vytvoření **"Denního koše nejvyšší konvikce (Top 5 Conviction Basket / Masuda Sharpe Allocation)"**.
+  - Z 557 aktiv můžeme na frontendu vygenerovat prestižní scorecard 5 nejlepších příležitostí dne, kde očekávaný zisk / riziko ($\frac{\text{Upside}}{RV_{21}}$) dosahuje maxima.
+- **Hodnocení škál:**
+  - **Škála A (Relevance pro investiční predikce):** **10 / 10** – Dokonalá shoda s naším investičním cílem (výběr nejvýkonnějších blue-chips pro reálné portfolio s maximálním Sharpe poměrem).
+  - **Škála B (Technická proveditelnost pro CI/CD):** **8.5 / 10** – Plné trénování CNN-LSTM a Bayesian Optimization v GitHub Actions by trvalo déle než 5 minut, ale matematický princip **alokace TOP 5 aktiv dle poměru $\frac{\mathbb{E}[R]}{RV_{21} \cdot ATR\%}$ s rozptylovým stropem** je v `trigger_engine.py` a na frontendu implementovatelný okamžitě v řádu milisekund.
+
+---
+
+### 9.3 SRC-10: Predikce akcií s využitím sentimentu ze zpráv a NLP (UPM Madrid)
+- **Bibliografická identifikace:** Ruiz-Tagle Oriol, Juan Luis. *Stock Forecasting Utilizing News Sentiment Data: A Comparative Study*. Master Thesis in Data Science, Universidad Politécnica de Madrid (ETSI Informáticos), July 2023. Školitel: Emilio Serrano. 78 stran.
+- **Zkoumaná doména & Instrumenty:** Velké likvidní tituly napříč sektory (AAPL, MSFT, MCD, GS, PEP, KHC, OXY), predikce tří tříd pro následující obchodní den ($y_t \in \{\text{BUY}, \text{HOLD}, \text{SELL}\}$).
+- **Testované modely & Metodika:**
+  - Porovnání tří informačních režimů:
+    1. *Sentiment-only* (pouze skóre ze zpráv extrahované transformerem FinBERT / RoBERTa)
+    2. *Price-only* (technické indikátory a zpožděné výnosy)
+    3. *Mixed data* (společná fúze technických cenových dat + zpráv)
+  - Klasifikátory: XGBoost, Random Forest, SVM a simulace obchodní strategie (nákup při BUY, short/cash při SELL) porovnaná vůči Buy & Hold.
+- **Klíčové matematické a empirické nálezy:**
+  - **Sentiment samotný je pro trading nedostatečný:** Modely trénované výhradně na sentimentu ze zpráv vykazovaly AUC pod 0,52 (téměř na úrovni náhodného hodu mincí). Sentiment sám o sobě neurčuje okamžitý směr ceny.
+  - **Fúze ceny a sentimentu generuje systematickou nadhodnotu:** Smíšené modely (*Mixed data*) konzistentně překonávaly modely založené pouze na ceně i pasivní Buy & Hold na velkých retailových a technologických titulech (zejména McDonald's, Goldman Sachs, Apple a Microsoft).
+  - **Selhání u komoditních titulů:** Model selhal u akcie Occidental Petroleum (`OXY`), kde dominantní vliv měla cena ropy a globální makro, které běžný korporátní sentiment z novinových titulků nedokázal zachytit.
+  - **Limity náhodného ladění hyperparametrů (Random Search):** Random Search zlepšil AUC skóre pouze ve **40 % případů**, přičemž zvýšil výpočetní čas o více než 500 %. Cílené heuristické nastavení parametrů je pro produkční systémy řádově efektivnější.
+- **Praktická využitelnost pro SuggestInvest:**
+  - Důkaz, že sentiment nesmí fungovat jako samostatný signál, ale striktně jako **potvrzující multiplikátor technického a fundamentálního setupu**.
+  - To stoprocentně potvrzuje správnost našeho katalyzátoru `CAT_SENTIMENT_DIVERGENCE` a Head of Risk filtru v Gemini AI, kde sentiment pouze filtruje falešné technické průrazy.
+- **Hodnocení škál:**
+  - **Škála A (Relevance pro investiční predikce):** **8.5 / 10** – Praktické ověření tradingové strategie s reálným nákupem/prodejem na velkých akciích z našeho univerza.
+  - **Škála B (Technická proveditelnost pro CI/CD):** **9.5 / 10** – FinBERT embeddingy nahrazujeme přímým zpracováním novinových RSS feedů v Gemini 3.5 Flash Lite v rámci existujícího volání (žádné extra GPU servery, nulové zpoždění).
+
+---
+
+### 9.4 SRC-11: Vliv sentimentu napříč modely, volatilitními třídami a časovými horizonty (Brock University)
+- **Bibliografická identifikace:** Ahmad, Sheraz. *Enhancing Stock Price Predictions: The Impact of Sentiment Analysis on Forecasting Accuracy Across Models and Time Horizons*. Master of Science in Mathematics and Statistics, Brock University (Ontario, Canada), 2025. Školitel: Dr. Tianyu Guan. 45 stran.
+- **Zkoumaná doména & Metodika:**
+  - Testování predikce na krátkém horizontu (1 rok s denními daty) a dlouhém horizontu (5 let).
+  - Modely: **SARIMAX** s exogenním sentimentem, Random Forest, SVR, LSTM, GRU a lineární regrese.
+  - Vyhodnocovací metrika: Root Mean Squared Percentage Error (RMSPE).
+  - Zkoumání vlivu volatility ($RV$) a sektorové příslušnosti na optimální časové zpoždění sentimentu (*Lag Structure Analysis*).
+- **Klíčové matematické a empirické nálezy:**
+  - **Asymetrie přínosu sentimentu dle volatility a sektoru:**
+    - **Vysokovolatilní a technologické sektory (Technology, Energy):** Zahrnutí sentimentu vedlo k dramatickému snížení chyby RMSPE. Zde zprávy a nálada investorů přímo hýbou kurzem.
+    - **Defenzivní a stabilní sektory (Consumer Staples, Financials):** Modely dosahovaly **lepších výsledků BEZ sentimentu**! U stabilních dividendových stálic (např. Walmart) funguje sentiment jako matoucí šum, který zhoršuje predikci fundamentálních peněžních toků.
+  - **Optimální délka zpoždění sentimentu (Sentiment Lag Dynamics):**
+    - Rychlé, volatilní akcie (Tech/AI, Krypto, Zelená energie): optimální lag sentimentu je **1 až 2 dny** ($\tau_{\text{opt}} \in [1, 2]$), protože trh informaci diskontuje téměř okamžitě.
+    - Stabilní hodnotové akcie (Consumer, Utility): optimální lag je **5 až 10 dní** ($\tau_{\text{opt}} \in [5, 10]$), protože fundamentální dopad se projevuje postupně.
+  - **Převaha lehkých modelů nad složitými:** Regresní modely a Random Forest vykazovaly na 1letém horizontu celkově nejnižší chybu RMSPE, zatímco SARIMAX s exogenním sentimentem byl nejcitlivější na zachycení náhlých zlomů trendu.
+- **Praktická využitelnost pro SuggestInvest:**
+  - **Sektorově adaptivní váha sentimentu:** Můžeme přímo v logice `main.py` a `trigger_engine.py` řídit váhu sentimentu:
+    - Pokud je aktivum v sektoru Tech/Semis/Krypto nebo má $RV_{21} > 30\,\%$, sentimentu dáváme vysokou váhu s krátkým oknem (1–2 dny).
+    - Pokud je aktivum utilita, spotřební blue-chip (WMT, PG, KO) nebo banka s $RV_{21} < 18\,\%$, zprávy tlumíme a spoléháme se primárně na fundamentální diskont a dividendový výnos.
+- **Hodnocení škál:**
+  - **Škála A (Relevance pro investiční predikce):** **9.5 / 10** – Naprosto zásadní poznatek, který přímo řeší problém falešných zpráv u defenzivních titulů a dává exaktní matematické pravidlo pro lagování zpráv.
+  - **Škála B (Technická proveditelnost pro CI/CD):** **10 / 10** – Plně analytické pravidlo, implementovatelné několika řádky kódu bez nutnosti nových balíčků či API dotazů.
+
+---
+
+### 9.5 Shrnutí a syntéza výzkumné dávky 2 (Zdroje 8–11)
+
+| Zdroj | Instituce & Rok | Klíčová doména / Model | Hlavní kvantitativní výstup | Škála A (Relevance) | Škála B (Proveditelnost) | Praktická implementace v SuggestInvest |
+| :--- | :--- | :--- | :--- | :---: | :---: | :--- |
+| **SRC-8** (Sadasivan) | Victoria Univ, 2024/25 | Predikce bankovního sektoru, Deep MLP vs. LSTM | Hluboký 4vrstvý MLP dosáhl 91,8 % přesnosti; úrokové sazby klíčové ($R^2 > 0{,}78$) | **8.5 / 10** | **9.0 / 10** | Katalyzátor `CAT_FINANCIAL_CYCLE` pro nově přidané evropské a CEE banky |
+| **SRC-9** (Masuda) | MIT, 2024 | Hybridní CNN-LSTM, Mean-Variance TOP 5 selekce | **Sharpe Ratio 2,41**, Alpha **+6,18 %** nad S&P 500, SMAPE 2,655 % | **10.0 / 10** | **8.5 / 10** | **"TOP 5 Conviction Basket (Masuda Sharpe Allocation)"** na frontendu |
+| **SRC-10** (Ruiz-Tagle) | UPM Madrid, 2023 | Fúze FinBERT sentimentu s technickými daty | Samotný sentiment selhává (AUC < 0,52); fúze cena+sentiment poráží Buy & Hold | **8.5 / 10** | **9.5 / 10** | Pravidlo: Sentiment nikdy sám, pouze jako multiplikátor technického průrazu |
+| **SRC-11** (Ahmad) | Brock Univ, 2025 | Sektorová a volatilitní závislost sentimentu | Sentiment pomáhá jen při $RV > 25\,\%$ (Tech/Energy, lag 1-2 dny); u defenziv škodí | **9.5 / 10** | **10.0 / 10** | **Sektorově a volatilitně adaptivní filtr sentimentu** v AI promptu a screeneru |
+
+---
+
+### 9.6 Návrh Fáze 4: Architektonická integrace výzkumné dávky 2
+
+1. **TOP 5 Conviction Basket (Masuda Sharpe Allocation - SRC-9):**
+   - Vypočítat pro každé aktivum syntetické skóre očekávaného poměru výnos/riziko:
+     $$\text{Conviction Score}_i = \frac{\text{Target Upside}_i}{\max(RV_{21, i}, 10.0)} \cdot (1.0 + 0.1 \cdot \text{Catalyst Count}_i)$$
+   - Vybrat denně 5 nejlepších aktiv s diverzifikačním omezením (max. 2 tituly ze stejného sektoru) a zvýraznit je ve zlatém vizuálním boxu na vrcholu dashboardu.
+2. **Volatilitně a sektorově adaptivní filtr sentimentu (Ahmad SRC-11 & Ruiz-Tagle SRC-10):**
+   - V `main.py` dynamicky modulovat systémový prompt a váhu sentimentu:
+     - U technologických, polovodičových a růstových aktiv s $RV_{21} > 25\,\%$ přiřazovat sentimentu vysokou prioritu s krátkým horizontem zpráv ($\le 48\text{ hodin}$).
+     - U defenzivních, dividendových a utilitních aktiv ($RV_{21} < 18\,\%$) zprávy potlačovat jako potenciální tržní šum a rozhodovat výhradně na základě diskontu k cílové ceně a fundamentálních násobků.
+3. **Bankovní úrokový katalyzátor `CAT_FINANCIAL_CYCLE` (Sadasivan SRC-8):**
+   - Identifikace bankovních a pojišťovacích titulů v prostředí stabilních či rostoucích sazeb s vysokou rentabilitou vlastního kapitálu ($ROE > 12\,\%$).
+
