@@ -472,52 +472,73 @@
 
         .filter-groups {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 0.65rem;
+            align-items: stretch;
         }
 
         .filter-group {
             display: flex;
             flex-direction: column;
-            gap: 0.35rem;
+            gap: 0.4rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: var(--radius-md);
+            padding: 0.65rem 0.55rem;
+            min-width: 0;
         }
 
         .filter-title {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
-            color: var(--text-muted);
+            color: #94a3b8;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
+            padding-bottom: 0.35rem;
+            margin-bottom: 0.1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .pill-row {
             display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
+            flex-direction: column;
+            gap: 4px;
+            width: 100%;
         }
 
         .pill-btn {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid var(--border-color);
             color: var(--text-secondary);
-            padding: 5px 11px;
+            padding: 5px 8px;
             border-radius: var(--radius-sm);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.15s ease;
+            text-align: left;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
         }
 
         .pill-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.09);
             color: var(--text-main);
+            border-color: rgba(255, 255, 255, 0.18);
         }
 
         .pill-btn.active {
-            background: #3b82f6;
+            background: #2563eb;
             color: #ffffff;
             border-color: #3b82f6;
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.35);
+            box-shadow: 0 0 10px rgba(37, 99, 235, 0.4);
+            font-weight: 700;
         }
 
         /* VÝSLEDKOVÝ STATUS */
@@ -1700,11 +1721,19 @@
             color: #fca5a5;
         }
 
+        @media (max-width: 1200px) {
+            .filter-groups { grid-template-columns: repeat(3, 1fr); }
+        }
+
         @media (max-width: 768px) {
-            .filter-groups { grid-template-columns: 1fr; }
+            .filter-groups { grid-template-columns: repeat(2, 1fr); }
             .meta-bar { flex-direction: column; gap: 0.5rem; }
             .header-top { flex-direction: column; gap: 0.75rem; }
             .doc-download-btn, .refresh-btn, .trigger-scan-btn { width: 100%; justify-content: center; }
+        }
+
+        @media (max-width: 480px) {
+            .filter-groups { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -1818,7 +1847,7 @@
                             <circle cx="11" cy="11" r="8"></circle>
                             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                         </svg>
-                        <input type="text" id="searchInput" placeholder="Hledat podle tickeru, XTB kódu (např. CEZ1.CZ, NVDA) nebo názvu..." oninput="applyFilters()">
+                        <input type="text" id="searchInput" name="asset_search" placeholder="Jaký titul tě zajímá?" autocomplete="off" autocorrect="off" spellcheck="false" oninput="applyFilters()">
                     </div>
                 </div>
 
