@@ -283,10 +283,9 @@ def analyze_universe_with_gemini(market_items: List[Dict[str, Any]], global_news
     client = genai.Client(api_key=api_key)
 
     models_to_try = [GEMINI_MODEL]
-    if "gemini-3.5-flash-lite" not in models_to_try:
-        models_to_try.append("gemini-3.5-flash-lite")
-    if "gemini-flash-latest" not in models_to_try:
-        models_to_try.append("gemini-flash-latest")
+    for m_cand in ["gemini-3.5-flash-lite", "gemini-3.8-flash", "gemini-flash-latest"]:
+        if m_cand not in models_to_try:
+            models_to_try.append(m_cand)
 
     batches = [market_items[i:i + batch_size] for i in range(0, len(market_items), batch_size)]
     logger.info(f"Odesílám {len(market_items)} aktiv do Gemini rozdělených do {len(batches)} dávek (po {batch_size} ks)...")

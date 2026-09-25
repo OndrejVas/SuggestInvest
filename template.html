@@ -1451,11 +1451,11 @@
                         <span>📄 Metodika analýzy (.docx)</span>
                     </a>
 
-                    <button id="refreshBtn" class="refresh-btn" onclick="triggerManualScan()">
+                    <button id="refreshBtn" class="refresh-btn" onclick="triggerManualScan()" title="Stáhnout nejnovější publikovaný report ze serveru (vyčistí mezipaměť prohlížeče)">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
                         </svg>
-                        <span>Aktualizovat data</span>
+                        <span>Obnovit data</span>
                     </button>
                 </div>
                 
@@ -2154,9 +2154,9 @@
                     setTimeout(() => { window.location.reload(); }, 800);
                 }
             } else {
-                // Běh online na GitHub Pages – okamžité načtení nejnovějších dat přímo na stránce
-                btnSpan.innerText = 'Aktualizuji...';
-                toast.innerText = '🔄 Načítám nejnovější tržní data ze serveru...';
+                // Běh online na GitHub Pages – okamžité stažení nejnovějšího publikovaného reportu bez mezipaměti
+                btnSpan.innerText = 'Načítám...';
+                toast.innerText = '🔄 Stahuji nejnovější publikovaný report ze serveru (vyčištění mezipaměti)...';
 
                 try {
                     // Vynucené stažení čerstvého stavu bez mezipaměti prohlížeče
@@ -2165,7 +2165,7 @@
 
                 setTimeout(() => {
                     window.location.reload();
-                }, 500);
+                }, 600);
             }
         }
 
