@@ -901,16 +901,26 @@ Tato sekce rozšiřuje institucionální výzkumný korpus o 4 nové recenzovan�
 
 ---
 
-### 9.6 Návrh Fáze 4: Architektonická integrace výzkumné dávky 2
+### 9.6 Realizace Fáze 4: Architektonická integrace výzkumné dávky 2
 
-1. **TOP 5 Conviction Basket (Masuda Sharpe Allocation - SRC-9):**
-   - Vypočítat pro každé aktivum syntetické skóre očekávaného poměru výnos/riziko:
-     $$\text{Conviction Score}_i = \frac{\text{Target Upside}_i}{\max(RV_{21, i}, 10.0)} \cdot (1.0 + 0.1 \cdot \text{Catalyst Count}_i)$$
-   - Vybrat denně 5 nejlepších aktiv s diverzifikačním omezením (max. 2 tituly ze stejného sektoru) a zvýraznit je ve zlatém vizuálním boxu na vrcholu dashboardu.
-2. **Volatilitně a sektorově adaptivní filtr sentimentu (Ahmad SRC-11 & Ruiz-Tagle SRC-10):**
-   - V `main.py` dynamicky modulovat systémový prompt a váhu sentimentu:
-     - U technologických, polovodičových a růstových aktiv s $RV_{21} > 25\,\%$ přiřazovat sentimentu vysokou prioritu s krátkým horizontem zpráv ($\le 48\text{ hodin}$).
-     - U defenzivních, dividendových a utilitních aktiv ($RV_{21} < 18\,\%$) zprávy potlačovat jako potenciální tržní šum a rozhodovat výhradně na základě diskontu k cílové ceně a fundamentálních násobků.
-3. **Bankovní úrokový katalyzátor `CAT_FINANCIAL_CYCLE` (Sadasivan SRC-8):**
-   - Identifikace bankovních a pojišťovacích titulů v prostředí stabilních či rostoucích sazeb s vysokou rentabilitou vlastního kapitálu ($ROE > 12\,\%$).
+- [x] **1. TOP 5 Conviction Basket (Masuda Sharpe Allocation - SRC-9):**
+  - Implementováno v `trigger_engine.py` (`compute_top_5_conviction_basket`) a `main.py`.
+  - Vypočteno Sharpe Proxy skóre:
+    $$\text{Conviction Score}_i = \frac{\text{Target Upside}_i}{\max(RV_{21, i}, 10.0)} \cdot (1.0 + 0.12 \cdot K_i)$$
+  - Dynamické váhy portfolia dle Masuda MVO: **25 %, 25 %, 20 %, 15 %, 15 %** s diverzifikačním limitem (max 2 tituly ze stejné měny/regionu).
+  - Vizuální sekce a interaktivní proklik (`filterToAsset`) nasazeny v `template.html` a `index.html`.
+
+- [x] **2. Volatilitně a sektorově adaptivní filtr sentimentu (Ahmad SRC-11 & Ruiz-Tagle SRC-10):**
+  - Každé aktivum je automaticky klasifikováno do režimu:
+    - `HIGH_VOLATILITY_FAST_NEWS` ($RV_{21} \ge 25\,\%$) – citlivost na rychlý sentiment s krátkým poločasem rozpadu (1–2 dny).
+    - `DEFENSIVE_FUNDAMENTAL_DOMINANT` ($RV_{21} \le 18\,\%$) – potlačení šumu novinek, priorita valuačního diskontu a dividend.
+  - V promptu Gemini AI zavedeno pravidlo nepotvrzeného sentimentu (samotná zpráva bez technického průrazu či katalyzátoru nestačí).
+
+- [x] **3. Bankovní úrokový katalyzátor `CAT_FINANCIAL_CYCLE` (Sadasivan SRC-8):**
+  - V `trigger_engine.py` a `main.py` integrován katalyzátor **🏛️ Úrokový cyklus (NIM)** (priorita 12, label `trig-financial-cycle`).
+  - Systém sleduje bankovní domy (Erste, KB, Moneta, Santander, BNP Paribas, ING) a zohledňuje stabilitu úrokové marže a prostředí výnosové křivky s 15–30denním lagem.
+
+- [x] **4. Formální aktualizace metodického dokumentu (`create_methodology_doc.py` $\to$ `Analyza_Dat_a_Metodika_SuggestInvest.docx`):**
+  - Přidána kapitola **6.11 Pokročilá syntéza a portfolio management (Výzkumná dávka 2 – Zdroje 8 až 11)** s detailním popisem modelů, vzorců a novou srovnávací tabulkou 4 akademických prací.
+  - Oficiální dokument Word `Analyza_Dat_a_Metodika_SuggestInvest.docx` znovu zkompilován a vystaven ke stažení v hlavičce aplikace.
 

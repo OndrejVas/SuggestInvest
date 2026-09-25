@@ -479,3 +479,26 @@ Umožnit uživateli kdykoliv z webového rozhraní (i mimo automatické ranní h
   - Živý časovač běhu a přímý proklik na běžící log na GitHubu (`Sledovat živý log na GitHubu ↗`).
   - Po úspěšném dokončení automatický reload stránky s cache-busting parametrem.
 
+---
+
+## Fáze 10: Integrace akademických modelů (Výzkumná dávka 2 – Zdroje 8 až 11)
+
+### Koncepční cíl
+Implementovat kvantitativní poznatky ze čtyř mezinárodních univerzitních výzkumů (MIT, Brock University, UPM Madrid, Victoria University) pro konstrukci optimalizovaného minitportfolia, volatilitní filtraci zpravodajského sentimentu a modelování bankovního úrokového cyklu.
+
+### Implementované komponenty
+- **Masuda TOP 5 Conviction Allocation (MIT MVO - SRC-9)**:
+  - V `trigger_engine.py` implementována funkce `compute_top_5_conviction_basket`:
+    $$\text{Conviction Score} = \frac{\text{Target Upside}}{\max(RV_{21}, 10)} \cdot (1 + 0{,}12 \cdot K)$$
+  - Portfolio váženo MVO vahou: **25 %, 25 %, 20 %, 15 %, 15 %** s limitem max 2 tituly na měnu/region.
+  - V `template.html` / `index.html` vytvořena sekce `.top-conviction-section` a funkce `filterToAsset(sym)` pro okamžitý proklik a filtrování.
+- **Volatilitně adaptivní filtr sentimentu (Ahmad SRC-11 & Ruiz-Tagle SRC-10)**:
+  - Automatická klasifikace na `HIGH_VOLATILITY_FAST_NEWS` ($RV_{21} \ge 25\,\%$) a `DEFENSIVE_FUNDAMENTAL_DOMINANT` ($RV_{21} \le 18\,\%$).
+  - V systémovém promptu Gemini AI zavedeno pravidlo nepotvrzeného sentimentu.
+- **Bankovní úrokový katalyzátor `CAT_FINANCIAL_CYCLE` (Sadasivan SRC-8)**:
+  - Přidán katalyzátor `CAT_FINANCIAL_CYCLE` (🏛️ Úrokový cyklus / NIM) sledující transmisi úrokových sazeb se zpožděním 15–30 dnů pro bankovní emise.
+- **Aktualizace metodického dokumentu (`Analyza_Dat_a_Metodika_SuggestInvest.docx`)**:
+  - Do `create_methodology_doc.py` přidána podrobná kapitola **6.11 Pokročilá syntéza a portfolio management (Výzkumná dávka 2 – Zdroje 8 až 11)** s akademickou srovnávací tabulkou.
+  - Dokument znovu zkompilován a vystaven k přímému stažení z aplikace.
+
+
