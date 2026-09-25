@@ -274,7 +274,7 @@ def _call_gemini_batch(client, model_name: str, batch_items: List[Dict[str, Any]
 
 def analyze_universe_with_gemini(market_items: List[Dict[str, Any]], global_news: List[str], batch_size: int = 25) -> Tuple[List[Dict[str, Any]], bool]:
     """Rozdělí aktiva do dávek a vyhodnotí je přes Gemini API (s automatickým fallbackem)."""
-    api_key = os.getenv("GEMINI_API_KEY")
+    api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GEMINI_KEY") or os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API")
     if not api_key:
         logger.warning("[TIP] Pro ostré AI vyhodnocení nastavte GEMINI_API_KEY v .env. Používám demo signály.")
         return generate_mock_signals_for_universe(market_items), True

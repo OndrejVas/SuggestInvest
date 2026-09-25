@@ -1027,51 +1027,46 @@
         .ai-tooltip-popup {
             visibility: hidden;
             opacity: 0;
-            position: absolute;
-            bottom: calc(100% + 10px);
-            right: 0;
-            left: auto;
-            transform: translateY(6px);
-            width: 380px;
+            position: fixed;
+            width: 390px;
+            max-width: calc(100vw - 24px);
             background: #0f172a;
-            border: 1px solid rgba(99, 102, 241, 0.45);
-            border-radius: 10px;
-            padding: 0.95rem;
-            box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(99, 102, 241, 0.2);
-            backdrop-filter: blur(14px);
-            z-index: 9999;
-            pointer-events: none;
-            transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s;
+            border: 1px solid rgba(99, 102, 241, 0.55);
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 20px 45px -5px rgba(0, 0, 0, 0.9), 0 0 25px rgba(99, 102, 241, 0.25);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 99999;
+            pointer-events: auto;
+            transition: opacity 0.15s ease, visibility 0.15s ease;
             text-align: left;
+            overflow-y: auto;
+            overscroll-behavior: contain;
         }
 
-        .ai-tooltip-popup::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            right: 28px;
-            left: auto;
-            border-width: 6px;
-            border-style: solid;
-            border-color: #0f172a transparent transparent transparent;
+        .ai-tooltip-popup::-webkit-scrollbar {
+            width: 5px;
         }
 
-        /* Pro prvních 5 řádků otevřeme tooltip směrem dolů */
-        .asset-row:nth-child(-n+5) .ai-tooltip-popup {
-            bottom: auto;
-            top: calc(100% + 10px);
-            transform: translateY(-6px);
-        }
-        .asset-row:nth-child(-n+5) .ai-tooltip-popup::after {
-            top: auto;
-            bottom: 100%;
-            border-color: transparent transparent #0f172a transparent;
+        .ai-tooltip-popup::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 4px;
         }
 
-        .ai-tooltip-wrapper:hover .ai-tooltip-popup {
+        .ai-tooltip-popup::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.45);
+            border-radius: 4px;
+        }
+
+        .ai-tooltip-popup::-webkit-scrollbar-thumb:hover {
+            background: rgba(99, 102, 241, 0.7);
+        }
+
+        .ai-tooltip-wrapper:hover .ai-tooltip-popup,
+        .ai-tooltip-popup:hover {
             visibility: visible;
             opacity: 1;
-            transform: translateY(0);
         }
 
         .tooltip-header {
@@ -2290,7 +2285,53 @@
         // Běžné spuštění kontroly při načtení stránky
         window.addEventListener("DOMContentLoaded", () => {
             checkAuthStatus();
+            initSmartTooltips();
         });
+
+        // ==================== CHYTRÉ ZOBRAZENÍ TOOLTIPŮ (100% VIDITELNÉ V OKNĚ) ====================
+        function initSmartTooltips() {
+            document.addEventListener('mouseover', (e) => {
+                const trigger = e.target.closest('.ai-tooltip-trigger') || e.target.closest('.ai-tooltip-wrapper');
+                if (!trigger) return;
+                const wrapper = trigger.closest('.ai-tooltip-wrapper');
+                if (!wrapper) return;
+                const popup = wrapper.querySelector('.ai-tooltip-popup');
+                if (!popup) return;
+
+                const triggerBtn = wrapper.querySelector('.ai-tooltip-trigger') || trigger;
+                const rect = triggerBtn.getBoundingClientRect();
+                const tooltipWidth = Math.min(390, window.innerWidth - 24);
+                const padding = 12;
+
+                // Horizontální pozice: zarovnáno k pravé hraně tlačítka, nepustí mimo obrazovku
+                let left = rect.right - tooltipWidth;
+                if (left < padding) left = padding;
+                if (left + tooltipWidth > window.innerWidth - padding) {
+                    left = window.innerWidth - tooltipWidth - padding;
+                }
+
+                popup.style.left = `${left}px`;
+                popup.style.right = 'auto';
+                popup.style.width = `${tooltipWidth}px`;
+
+                // Vertikální pozice: zjistíme volný prostor nad a pod tlačítkem
+                const spaceBelow = window.innerHeight - rect.bottom - 12;
+                const spaceAbove = rect.top - 12;
+
+                if (spaceBelow >= 340 || spaceBelow >= spaceAbove) {
+                    // Otevřít dolů pod tlačítko
+                    popup.style.top = `${rect.bottom + 6}px`;
+                    popup.style.bottom = 'auto';
+                    popup.style.maxHeight = `${Math.max(200, spaceBelow)}px`;
+                } else {
+                    // Otevřít nahoru nad tlačítko
+                    popup.style.bottom = `${window.innerHeight - rect.top + 6}px`;
+                    popup.style.top = 'auto';
+                    popup.style.maxHeight = `${Math.max(200, spaceAbove)}px`;
+                }
+            }, { passive: true });
+        }
+        initSmartTooltips();
 
         // ==================== FILTRY ====================
         const activeFilters = {

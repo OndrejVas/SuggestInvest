@@ -6,12 +6,7 @@ on:
     # 05:50 UTC v letním čase (SELČ = 07:50) a 06:50 UTC v zimním čase (SEČ = 07:50)
     - cron: '50 5 * * *'
     - cron: '50 6 * * *'
-  workflow_dispatch: # Umožňuje okamžitý manuální refresh kdykoliv přímo z GitHubu
-
-  push:
-    branches:
-      - main
-      - master
+  workflow_dispatch: # Umožňuje okamžitý manuální refresh kdykoliv přímo z tlačítka
 
 # Nastavení oprávnění pro GitHub Pages a uložení aktualizovaného index.html do repozitáře
 permissions:
@@ -24,12 +19,9 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  scan-and-publish:
-    name: Market Scan & Publish to GitHub Pages + Forpsi
+  scan:
+    name: Market Scan & AI Analysis
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: 📥 Checkout repository
@@ -48,9 +40,10 @@ jobs:
 
       - name: 🤖 Run Market Scanner & AI Analysis
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || secrets.GEMINI_KEY || secrets.GOOGLE_API_KEY || secrets.GEMINI_API }}
           GEMINI_MODEL: gemini-3.5-flash-lite
         run: |
+          python -c "import os; print('=== SECRET CHECK: GEMINI_API_KEY length:', len(os.getenv('GEMINI_API_KEY', '')))"
           python main.py
 
       - name: 💾 Commit & Push updated index.html & history snapshots to Repository
@@ -68,10 +61,6 @@ jobs:
         with:
           path: '.'
 
-      - name: 🚀 Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
       - name: 🌐 Optional Deploy to Forpsi Hosting via FTP
         if: env.FTP_SERVER != ''
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -84,3 +73,17 @@ jobs:
           local-dir: ./
           server-dir: /www/
 
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: scan
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 🚀 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
