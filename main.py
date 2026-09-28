@@ -17,12 +17,16 @@ from pydantic import BaseModel, Field
 from universe import get_all_universe, TIER_1_TOP, TIER_2_MID, TIER_3_LOW
 from fundamentals_fetcher import get_universe_fundamentals, fetch_momentum_deltas
 from trigger_engine import evaluate_asset_triggers, compute_top_5_conviction_basket
+from macro_engine import get_macro_recession_barometer
+from trading_engine import BrokerExecutionEngine
 from history_manager import (
     save_scan_history, 
     get_ticker_signal_history, 
     get_ticker_historical_context,
     compute_daily_changes,
-    get_all_ticker_signal_dots
+    get_all_ticker_signal_dots,
+    save_macro_snapshot,
+    save_trading_orders
 )
 
 # Automatické načtení proměnných z .env
@@ -517,7 +521,16 @@ def format_currency_value(value: Optional[float], currency: str) -> str:
         return f"{value:.2f}"
 
 
-def build_html_report(processed_cards: List[Dict[str, Any]], is_demo: bool = False, scan_duration: str = "45 s", data_sources: str = "", change_stats: Optional[Dict[str, Any]] = None, top_5_basket: Optional[List[Dict[str, Any]]] = None) -> str:
+def build_html_report(
+    processed_cards: List[Dict[str, Any]], 
+    is_demo: bool = False, 
+    scan_duration: str = "45 s", 
+    data_sources: str = "", 
+    change_stats: Optional[Dict[str, Any]] = None, 
+    top_5_basket: Optional[List[Dict[str, Any]]] = None,
+    macro_barometer: Optional[Dict[str, Any]] = None,
+    trading_orders: Optional[List[Dict[str, Any]]] = None
+) -> str:
     """Zkompiluje finální index.html přes Jinja2 šablonu."""
     now_utc = datetime.now(timezone.utc)
     cet_offset = timedelta(hours=2) # Letní čas SELČ
@@ -527,7 +540,11 @@ def build_html_report(processed_cards: List[Dict[str, Any]], is_demo: bool = Fal
     timestamp_utc_str = now_utc.strftime("%Y-%m-%d %H:%M:%S")
 
     if not data_sources:
-        data_sources = "XTB Market Catalog • Yahoo Finance Realtime • Yahoo Analyst Consensus & Calendars • Yahoo Financial News RSS • Google Gemini 3.5 AI"
+        data_sources = (
+            "XTB Market Catalog • Yahoo Finance Realtime & Consensus • "
+            "CBOE Yield Curve (10Y/3M) & VIX • HYG/LQD Credit Spreads • "
+            "S&P Sector Rotation (XLY/XLP) • Yahoo Financial News RSS • Google Gemini 3.5 AI"
+        )
 
     # Statistiky pro záhlaví dle 5úrovňového modelu
     counts = {
@@ -572,6 +589,8 @@ def build_html_report(processed_cards: List[Dict[str, Any]], is_demo: bool = Fal
         ai_model=GEMINI_MODEL if not is_demo else f"{GEMINI_MODEL} (Záložní Quant Režim)",
         is_demo=is_demo,
         top_5_basket=top_5_basket,
+        macro_barometer=macro_barometer,
+        trading_orders=trading_orders,
     )
     return html_content
 
@@ -814,9 +833,50 @@ def run_scanner(tiers: List[str] = None, allow_mock_fallback: bool = True) -> st
     top_5_basket = compute_top_5_conviction_basket(final_cards)
     logger.info(f"TOP 5 Conviction Basket (Masuda Sharpe Allocation) sestaven: {[x['xtb_symbol'] for x in top_5_basket]}")
 
+    # 8.9. Výpočet Makroekonomického Barometru Recese & Krachu (CBOE, Spready, Sektory, Šíře trhu)
+    logger.info("Počítám Makroekonomický Barometr Recese a Sektorový Radar...")
+    try:
+        macro_barometer = get_macro_recession_barometer(final_cards, use_cache=False)
+        save_macro_snapshot(macro_barometer)
+        logger.info(f"Makro Barometr: Index {macro_barometer['composite_index']}/100 ({macro_barometer['risk_level']}).")
+    except Exception as e:
+        logger.warning(f"Chyba při výpočtu makro barometru: {e}")
+        from macro_engine import _get_fallback_macro_state
+        macro_barometer = _get_fallback_macro_state()
+
+    # 8.10. Generování obchodních příkazů a aktivace Risk Gatekeeperu pro autonomní trading
+    logger.info("Generuji obchodní příkazy pro Autonomní Trading Portál (XTB xAPI & Paper Sandbox)...")
+    try:
+        trading_engine = BrokerExecutionEngine(
+            mode=os.getenv("TRADING_MODE", "PAPER"),
+            portfolio_capital=float(os.getenv("PORTFOLIO_CAPITAL", "250000"))
+        )
+        trading_orders = trading_engine.generate_orders_from_conviction_basket(
+            top_5_basket,
+            macro_risk_level_code=macro_barometer.get("risk_level_code", "LATE_CYCLE")
+        )
+        save_trading_orders(trading_orders)
+        logger.info(f"Vygenerováno {len(trading_orders)} limitních příkazů schválených Risk Gatekeeperem.")
+    except Exception as e:
+        logger.warning(f"Chyba při generování obchodních příkazů: {e}")
+        trading_orders = []
+
     # 9. Vygenerování a uložení index.html
-    data_sources_str = "XTB Market Catalog • Yahoo Finance Realtime • Yahoo Analyst Consensus & Calendars • Yahoo Financial News RSS • Google Gemini 3.5 AI"
-    html_output = build_html_report(final_cards, is_demo=is_demo, scan_duration=scan_duration_str, data_sources=data_sources_str, change_stats=change_stats, top_5_basket=top_5_basket)
+    data_sources_str = (
+        "XTB Market Catalog • Yahoo Finance Realtime & Consensus • "
+        "CBOE Yield Curve (10Y/3M) & VIX • HYG/LQD Credit Spreads • "
+        "S&P Sector Rotation (XLY/XLP) • Yahoo Financial News RSS • Google Gemini 3.5 AI"
+    )
+    html_output = build_html_report(
+        final_cards, 
+        is_demo=is_demo, 
+        scan_duration=scan_duration_str, 
+        data_sources=data_sources_str, 
+        change_stats=change_stats, 
+        top_5_basket=top_5_basket,
+        macro_barometer=macro_barometer,
+        trading_orders=trading_orders
+    )
 
     output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "index.html")
     with open(output_path, "w", encoding="utf-8") as f:

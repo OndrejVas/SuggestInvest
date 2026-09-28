@@ -627,10 +627,34 @@ def create_methodology_document(output_path: str):
 
     doc.add_paragraph().paragraph_format.space_after = Pt(12)
 
+    # 6.12 Makroekonomický Barometr
+    add_section_header("6.12 Makroekonomický Barometr: Index Rizika Recese, Krachu a Sektorové Kontrakce", level=2)
+    add_body_p(
+        "Na samotném začátku vizuálního rozhraní byl zaveden Kompozitní Makroekonomický Barometr (0 až 100) s vertikální stupnicí, "
+        "který slouží jako předstihový systém včasného varování před hospodářskou recesí a systémovým krachem trhů. "
+        "Syntetizuje 5 klíčových institucionálních datových proudů: výnosovou křivku US Treasuries (10Y/3M, 10Y/5Y spread – váha 25 %), "
+        "úvěrové spready firemních dluhopisů (HYG vs LQD – váha 20 %), volatilitní režim CBOE VIX (váha 20 %), "
+        "spotřebitelskou poptávku a výrobní cyklus (poměr cyklického a defenzivního koše XLY/XLP a průmysl XLI – váha 20 %) "
+        "a vnitřní šíři trhu z 557 aktiv univerza SuggestInvest (váha 15 %). Součástí je Sektorový radar recese monitorující 9 odvětví."
+    )
+
+    # 6.13 Autonomní Trading Portál
+    add_section_header("6.13 Autonomní Trading Portál & Broker Execution Bridge (XTB xAPI)", level=2)
+    add_body_p(
+        "Systém disponuje přímým rozhraním pro napojení na investiční portál brokera XTB prostřednictvím oficiálního xAPI WebSocket protokolu. "
+        "Modul Broker Execution Bridge obsahuje kvantitativní Risk Gatekeeper, který z TOP 5 MVO koše a Strong Buy aktiv "
+        "automaticky generuje exekučně připravené bracket příkazy (Limit Entry, Stop-Loss, Take-Profit). "
+        "Pozicování vychází z pevného kapitálového risku (výchozí 1,5 % celkového portfolia na obchod), minimálního poměru zisku k riziku (RRR ≥ 1,8) "
+        "a makroekonomické ochrany kapitálu, která při zvýšeném riziku recese automaticky krátí alokaci na 50 % nebo blokuje nákupy cyklických titulů. "
+        "Systém podporuje bezrizikový Paper Trading Sandbox i živé/demo párování s XTB xStation."
+    )
+
+    doc.add_paragraph().paragraph_format.space_after = Pt(12)
+
     # ==================== KAPITOLA 7: ARCHITEKTURA KOŠŮ ====================
     add_section_header("7. Segmentace univerza: Proč 3 prioritní koše (Tiers)")
     add_body_p(
-        "Všech 541 aktiv je kategorizováno do 3 logických košů, které umožňují okamžité filtrování podle investičního stylu:"
+        "Všech 557 aktiv je kategorizováno do 3 logických košů, které umožňují okamžité filtrování podle investičního stylu:"
     )
 
     table_tiers = doc.add_table(rows=4, cols=4)

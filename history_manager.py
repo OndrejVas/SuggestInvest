@@ -67,6 +67,45 @@ def init_history_storage() -> None:
             );
             """)
 
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS macro_snapshots (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                timestamp_utc TEXT,
+                scan_date TEXT,
+                composite_index REAL,
+                risk_level TEXT,
+                risk_level_code TEXT,
+                yield_curve_score REAL,
+                credit_spread_score REAL,
+                volatility_score REAL,
+                consumer_score REAL,
+                breadth_score REAL,
+                macro_json TEXT
+            );
+            """)
+
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS trading_orders (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                order_id TEXT UNIQUE,
+                created_at TEXT,
+                symbol_xtb TEXT,
+                symbol_yahoo TEXT,
+                action TEXT,
+                order_type TEXT,
+                shares INTEGER,
+                limit_price REAL,
+                sl_price REAL,
+                tp_price REAL,
+                rrr REAL,
+                capital_risk_czk REAL,
+                capital_risk_pct REAL,
+                status TEXT,
+                mode TEXT,
+                order_json TEXT
+            );
+            """)
+
             # Migrace existující databáze, pokud sloupce chybí
             for col_sql in [
                 "ALTER TABLE signal_history ADD COLUMN invalidation_price REAL;",
@@ -82,6 +121,8 @@ def init_history_storage() -> None:
 
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_sig_sym ON signal_history(yahoo_symbol, scan_date);")
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_scan_date ON scans(scan_date);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_macro_date ON macro_snapshots(scan_date);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_order_id ON trading_orders(order_id);")
             conn.commit()
     except Exception as e:
         logger.warning(f"Chyba při inicializaci SQLite databáze {DB_FILE}: {e}")
@@ -674,3 +715,89 @@ def get_all_ticker_signal_dots(limit_per_ticker: int = 30) -> Dict[str, List[Dic
     except Exception as e:
         logger.warning(f"Chyba při hromadném načítání historie teček v history_manager: {e}")
     return result
+
+
+def save_macro_snapshot(macro_data: Dict[str, Any]) -> None:
+    """Uloží snapshot makroekonomického barometru do SQLite databáze."""
+    init_history_storage()
+    try:
+        now_utc = datetime.now(timezone.utc)
+        sub = macro_data.get("subfactors", {})
+        with sqlite3.connect(DB_FILE) as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+            INSERT INTO macro_snapshots (
+                timestamp_utc, scan_date, composite_index, risk_level, risk_level_code,
+                yield_curve_score, credit_spread_score, volatility_score, consumer_score,
+                breadth_score, macro_json
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+            """, (
+                now_utc.strftime("%Y-%m-%d %H:%M:%S"),
+                now_utc.strftime("%Y-%m-%d"),
+                macro_data.get("composite_index", 0.0),
+                macro_data.get("risk_level", ""),
+                macro_data.get("risk_level_code", ""),
+                sub.get("yield_curve", {}).get("score", 0.0),
+                sub.get("credit_spread", {}).get("score", 0.0),
+                sub.get("volatility", {}).get("score", 0.0),
+                sub.get("consumer_cycle", {}).get("score", 0.0),
+                sub.get("breadth", {}).get("score", 0.0),
+                json.dumps(macro_data, ensure_ascii=False)
+            ))
+            conn.commit()
+        logger.info(f"Makro snapshot úspěšně uložen do SQLite (Index: {macro_data.get('composite_index')}).")
+    except Exception as e:
+        logger.warning(f"Chyba při ukládání makro snapshotu: {e}")
+
+
+def get_latest_macro_snapshot() -> Optional[Dict[str, Any]]:
+    """Načte nejnovější makro snapshot z SQLite databáze."""
+    if not os.path.exists(DB_FILE):
+        return None
+    try:
+        with sqlite3.connect(DB_FILE) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT macro_json FROM macro_snapshots ORDER BY id DESC LIMIT 1;")
+            row = cursor.fetchone()
+            if row and row[0]:
+                return json.loads(row[0])
+    except Exception as e:
+        logger.warning(f"Chyba při čtení nejnovějšího makro snapshotu: {e}")
+    return None
+
+
+def save_trading_orders(orders: List[Dict[str, Any]]) -> None:
+    """Uloží vygenerované obchodní příkazy do SQLite databáze."""
+    init_history_storage()
+    try:
+        with sqlite3.connect(DB_FILE) as conn:
+            cursor = conn.cursor()
+            for o in orders:
+                cursor.execute("""
+                INSERT OR REPLACE INTO trading_orders (
+                    order_id, created_at, symbol_xtb, symbol_yahoo, action, order_type,
+                    shares, limit_price, sl_price, tp_price, rrr, capital_risk_czk,
+                    capital_risk_pct, status, mode, order_json
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                """, (
+                    o.get("order_id"),
+                    o.get("created_at"),
+                    o.get("symbol_xtb"),
+                    o.get("symbol_yahoo"),
+                    o.get("action"),
+                    o.get("order_type"),
+                    o.get("shares"),
+                    o.get("limit_price"),
+                    o.get("sl_price"),
+                    o.get("tp_price"),
+                    o.get("rrr"),
+                    o.get("capital_risk_czk"),
+                    o.get("capital_risk_pct"),
+                    o.get("status"),
+                    o.get("mode"),
+                    json.dumps(o, ensure_ascii=False)
+                ))
+            conn.commit()
+        logger.info(f"Uloženo {len(orders)} obchodních příkazů do SQLite tabulky trading_orders.")
+    except Exception as e:
+        logger.warning(f"Chyba při ukládání obchodních příkazů: {e}")

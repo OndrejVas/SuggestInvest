@@ -501,4 +501,54 @@ Implementovat kvantitativní poznatky ze čtyř mezinárodních univerzitních v
   - Do `create_methodology_doc.py` přidána podrobná kapitola **6.11 Pokročilá syntéza a portfolio management (Výzkumná dávka 2 – Zdroje 8 až 11)** s akademickou srovnávací tabulkou.
   - Dokument znovu zkompilován a vystaven k přímému stažení z aplikace.
 
+---
+
+## Fáze 11: Makroekonomický Barometr: Index Rizika Recese & Krachu Trhu (Vertikální stupnice)
+
+### Koncepční cíl
+Implementovat do systému institucionální makroekonomický engine čerpající z klíčových globálních indikátorů pro včasnou detekci hospodářské recese, systémového krachu a sektorové kontrakce, a umístit jej na samotný začátek vizuálního dashboardu v podobě vertikální stupnice.
+
+### Implementované komponenty
+- **Nový modul `macro_engine.py`**:
+  - Stahuje v reálném čase makro košík:
+    - US Treasuries (`^TNX` 10Y výnos, `^IRX` 3M T-Bill, `^FVX` 5Y výnos)
+    - Volatilitní indexy CBOE (`^VIX`, `^VXN`)
+    - Úvěrové spready firemních dluhopisů (`HYG` vs `LQD` / `IEF`)
+    - Sektorové ETF (`XLY`, `XLP`, `XLK`, `XLF`, `XLI`, `XLRE`, `XLE`, `XLV`, `XLU`)
+    - Tržní šíři z 557 aktiv univerza SuggestInvest
+  - Vypočítává **Kompozitní Index Rizika Recese & Krachu (0 až 100)**:
+    $$\text{Index} = 0.25 \cdot S_{\text{yield}} + 0.20 \cdot S_{\text{credit}} + 0.20 \cdot S_{\text{vol}} + 0.20 \cdot S_{\text{macro}} + 0.15 \cdot S_{\text{breadth}}$$
+  - Sestavuje **Sektorový radar recese** s 1M/3M relativní výkonností vůči `SPY`, určením fáze cyklu (`EXPANZE`, `ZPOMALENÍ`, `KONTRAKCE / RECESE`, `DEFENZIVNÍ ÚTĚK`) a pravděpodobností sektorové recese.
+  - Generuje taktické alokační doporučení a odhad předstihového časového horizontu (3–12 měsíců).
+- **Vizuální komponenta v `template.html` / `index.html`**:
+  - Umístěna na **samotný začátek dashboardu** přímo pod záhlaví.
+  - **Vertikální stupnice (teploměr/barometr)** s gradientem (zelená 0 ➔ červená 85 ➔ fialová 100), dělením po 25 bodech a animovanou ručičkou na přesné vypočtené hodnotě.
+  - Digitální odečet skóre, status badge, 5 horizontálních sub-faktorových progress barů a interaktivní mřížka sektorového radaru.
+- **Perzistence do SQLite (`history_manager.py`)**:
+  - Tabulka `macro_snapshots` ukládá kompletní časovou řadu kompozitního indexu i dílčích sub-skóre pro historický backtesting.
+
+---
+
+## Fáze 12: Autonomní Trading Portál & Broker Execution Bridge (XTB xAPI)
+
+### Koncepční cíl
+Připravit ekosystém SuggestInvest na brzké autonomní obchodování přímým generováním exekučně připravených bracket příkazů s přísným řízením rizik a podporou pro oficiální XTB xAPI WebSocket protokol.
+
+### Implementované komponenty
+- **Nový modul `trading_engine.py`**:
+  - **Kvantitativní Risk Gatekeeper**:
+    - Automatický výpočet velikosti pozice (počet akcií) podle zadaného kapitálu a max povoleného risku na obchod (výchozí 1.5 % kapitálu).
+    - Vynucení striktního Stop-Lossu (Invalidační cena) a Take-Profitu (Cílová cena analytiků).
+    - Minimální filtr poměru zisku k riziku: $RRR \ge 1.8$.
+    - Makroekonomická ochrana kapitálu: Při zvýšeném riziku recese v Makro Barometru automaticky krátí velikost pozic na 50 % nebo blokuje nákupy cyklických titulů.
+  - **XTB xAPI Socket Protocol Bridge**:
+    - Generuje příkazy v přesném JSON formátu pro XTB `tradeTransaction` (příkaz `BUY LIMIT` se Stop-Lossem, Take-Profitem a unikátním komentářem `SI-AI-MVO-#Rank`).
+    - Připraveno pro websocket spojení na `wss://ws.xtb.com` (Demo i Real účty).
+- **Interaktivní UI panel v `template.html` / `index.html`**:
+  - Přepínač režimů: `🛡️ Paper Sandbox (Aktivní)` vs `⚡ XTB xAPI Bridge`.
+  - Živá kontrolní lišta: Uživatel může zadat libovolný kapitál portfolia (např. 250 000 CZK) a max risk %, což v reálném čase v JavaScriptu okamžitě přepočítá počty kusů i alokaci pro všechny příkazy.
+  - Tlačítka: `▶ Simulovat exekuci (Paper Fill)`, `📋 Kopírovat JSON pro XTB`, `📥 Stáhnout JSON soubor` a modální okno pro konfiguraci XTB API údajů.
+- **Perzistence do SQLite (`history_manager.py`)**:
+  - Tabulka `trading_orders` uchovává všechny vygenerované i simulované příkazy pro evidenci PnL a audit trail.
+
 

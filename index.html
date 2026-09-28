@@ -1770,6 +1770,647 @@
             color: #fca5a5;
         }
 
+        /* 🧭 MAKROEKONOMICKÝ BAROMETR: INDEX RIZIKA RECESE & KRÁCHU TRHU (VERTIKÁLNÍ STUPNICE) */
+        .macro-barometer-section {
+            background: linear-gradient(135deg, rgba(17, 24, 39, 0.9) 0%, rgba(10, 15, 29, 0.98) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.35);
+            border-radius: var(--radius-lg);
+            padding: 1.35rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(59, 130, 246, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .macro-barometer-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #10b981, #eab308, #ef4444, #9333ea);
+        }
+
+        .macro-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.15rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .macro-title-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .macro-title {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #f8fafc;
+            letter-spacing: -0.01em;
+        }
+
+        .macro-subtitle {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            max-width: 850px;
+            line-height: 1.4;
+        }
+
+        .macro-header-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .macro-badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+        }
+
+        /* 3-sloupcový layout makro barometru */
+        .macro-grid {
+            display: grid;
+            grid-template-columns: 310px 1.25fr 1.35fr;
+            gap: 1.25rem;
+            align-items: stretch;
+        }
+
+        @media (max-width: 1200px) {
+            .macro-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 1. SLOUPEC: Vertikální stupnice & Skóre */
+        .vertical-scale-card {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-md);
+            padding: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 0.85rem;
+            position: relative;
+        }
+
+        .scale-visual-wrap {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 0.5rem 0.2rem;
+        }
+
+        .vertical-barometer-track-wrap {
+            position: relative;
+            padding-left: 65px;
+            padding-right: 45px;
+        }
+
+        .vertical-barometer {
+            position: relative;
+            width: 22px;
+            height: 220px;
+            border-radius: 11px;
+            background: linear-gradient(to top, 
+                #10b981 0%, 
+                #84cc16 22%, 
+                #eab308 42%, 
+                #f97316 62%, 
+                #ef4444 82%, 
+                #991b1b 100%
+            );
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.7), 0 0 16px rgba(239, 68, 68, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+        }
+
+        .barometer-ticks {
+            position: absolute;
+            left: 2px;
+            top: 0;
+            bottom: 0;
+            width: 58px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-size: 0.67rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-align: right;
+            pointer-events: none;
+        }
+
+        .barometer-tick-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 4px;
+            white-space: nowrap;
+        }
+
+        .barometer-needle {
+            position: absolute;
+            left: 20px;
+            transform: translateY(50%);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            pointer-events: none;
+            transition: bottom 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 10;
+        }
+
+        .needle-arrow {
+            color: #f8fafc;
+            font-size: 0.95rem;
+            line-height: 1;
+            filter: drop-shadow(0 0 4px rgba(0,0,0,0.8));
+        }
+
+        .needle-pill {
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 900;
+            color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+
+        .score-details-pane {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex-grow: 1;
+        }
+
+        .digital-readout-box {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+
+        .digital-readout-val {
+            font-size: 2.3rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+
+        .digital-readout-max {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .risk-level-badge {
+            font-size: 0.78rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid;
+            display: inline-block;
+            width: fit-content;
+        }
+
+        .macro-lead-time {
+            font-size: 0.74rem;
+            color: var(--text-secondary);
+        }
+
+        .tactical-callout {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid;
+            border-radius: 0 6px 6px 0;
+            padding: 7px 10px;
+            font-size: 0.75rem;
+            line-height: 1.35;
+            color: #e2e8f0;
+            margin-top: 4px;
+        }
+
+        .tactical-callout strong {
+            display: block;
+            color: #f1f5f9;
+            margin-bottom: 2px;
+        }
+
+        /* 2. SLOUPEC: 5 Sub-faktorů */
+        .subfactors-card {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-md);
+            padding: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+
+        .subfactors-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .subfactor-row {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            padding: 6px 9px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .subfactor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.77rem;
+        }
+
+        .subfactor-name {
+            font-weight: 700;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .subfactor-score-badge {
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 1px 6px;
+            border-radius: 4px;
+        }
+
+        .subfactor-bar-bg {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .subfactor-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.4s ease;
+        }
+
+        .subfactor-status-desc {
+            font-size: 0.71rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* 3. SLOUPEC: Sektorový radar recese */
+        .sector-radar-card {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-md);
+            padding: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+
+        .sector-radar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sector-radar-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sector-radar-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 2px;
+        }
+
+        @media (max-width: 640px) {
+            .sector-radar-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sector-radar-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 6px;
+            padding: 6px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            transition: background 0.15s ease, border-color 0.15s ease;
+        }
+
+        .sector-radar-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .sector-item-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .sector-item-name {
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 110px;
+        }
+
+        .sector-item-sym {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+        }
+
+        .sector-item-mid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.7rem;
+        }
+
+        .phase-pill {
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 1px 5px;
+            border-radius: 4px;
+        }
+
+        .phase-contraction { background: rgba(239, 68, 68, 0.18); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35); }
+        .phase-slowdown { background: rgba(245, 158, 11, 0.18); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.35); }
+        .phase-expansion { background: rgba(16, 185, 129, 0.18); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); }
+        .phase-hedge { background: rgba(147, 51, 234, 0.18); color: #c084fc; border: 1px solid rgba(147, 51, 234, 0.35); }
+        .phase-stable { background: rgba(59, 130, 246, 0.18); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.35); }
+        .phase-late { background: rgba(234, 179, 8, 0.18); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.35); }
+
+        /* 🤖 BROKER AUTONOMNÍ TRADING PORTÁL */
+        .broker-trading-section {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(8, 13, 26, 0.98) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            border-radius: var(--radius-lg);
+            padding: 1.35rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(16, 185, 129, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .broker-trading-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #10b981, #06b6d4, transparent);
+        }
+
+        .trading-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .trading-title-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .trading-title {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #f8fafc;
+        }
+
+        .trading-subtitle {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            max-width: 850px;
+            line-height: 1.4;
+        }
+
+        .trading-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .trading-controls-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: var(--radius-md);
+            padding: 0.65rem 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .trading-params-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .trading-param-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .trading-input {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #f8fafc;
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            width: 110px;
+        }
+
+        .trading-select {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #f8fafc;
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .trading-mode-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--text-secondary);
+            border-radius: 6px;
+            padding: 5px 10px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .trading-mode-btn.active {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: #10b981;
+            color: #34d399;
+        }
+
+        .trading-action-btn {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.35);
+            color: #60a5fa;
+            border-radius: 6px;
+            padding: 5px 10px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .trading-action-btn:hover {
+            background: rgba(59, 130, 246, 0.25);
+            color: #93c5fd;
+        }
+
+        /* Orders Table */
+        .orders-table-wrapper {
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-md);
+            background: rgba(11, 17, 33, 0.6);
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            min-width: 920px;
+        }
+
+        .orders-table th {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-muted);
+            font-weight: 700;
+            text-align: left;
+            padding: 0.6rem 0.85rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .orders-table td {
+            padding: 0.65rem 0.85rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #f1f5f9;
+        }
+
+        .orders-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .order-badge-buy {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .order-btn-exec {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #34d399;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .order-btn-exec:hover {
+            background: rgba(16, 185, 129, 0.35);
+            color: #ffffff;
+        }
+
+        .order-btn-copy {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-secondary);
+            padding: 3px 7px;
+            border-radius: 5px;
+            font-size: 0.72rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .order-btn-copy:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #f8fafc;
+        }
+
         /* 🏆 MASUDA TOP 5 CONVICTION BASKET (MIT SHARPE ALLOCATION - SRC-9) */
         .top-conviction-section {
             background: linear-gradient(135deg, rgba(30, 41, 59, 0.75) 0%, rgba(15, 23, 42, 0.95) 100%);
@@ -2171,16 +2812,336 @@
                 <p class="subtitle">Stupňovitý screening a AI analýza titulů z platformy XTB (Akcie, ETF, BCPP v CZK, Krypto) poháněná modelem Gemini.</p>
                 
                 <div class="meta-bar">
-                    <div>Poslední sken: <strong>28. 09. 2026 v 22:02 SELČ</strong></div>
-                    <div>⏱️ Doba analýzy: <strong>1 min 0 s</strong></div>
+                    <div>Poslední sken: <strong>28. 09. 2026 v 22:35 SELČ</strong></div>
+                    <div>⏱️ Doba analýzy: <strong>42 s</strong></div>
                     <div>Aktiv celkem: <strong>557</strong></div>
                     <div>🥇 TOP: <strong>51</strong> | 🥈 MID: <strong>485</strong> | 🥉 LOW: <strong>21</strong></div>
                     <div>🟢 Strong Buy: <strong>1</strong> | Buy: <strong>66</strong> | Hold: <strong>489</strong> | Sell: <strong>1</strong> | Strong Sell: <strong>0</strong></div>
                     <div>⚡ Změny od včerejška: <strong>268</strong> (⬆️ 13 | ⬇️ 9)</div>
                     <div>AI Model: <strong>gemini-3.5-flash-lite</strong></div>
-                    <div>🌐 Zdroje dat: <strong>XTB Market Catalog • Yahoo Finance Realtime • Yahoo Analyst Consensus & Calendars • Yahoo Financial News RSS • Google Gemini 3.5 AI</strong></div>
+                    <div>🌐 Zdroje dat: <strong>XTB Market Catalog • Yahoo Finance Realtime & Consensus • CBOE Yield Curve (10Y/3M) & VIX • HYG/LQD Credit Spreads • S&P Sector Rotation (XLY/XLP) • Yahoo Financial News RSS • Google Gemini 3.5 AI</strong></div>
                 </div>
             </header>
+
+            
+            <!-- 🧭 MAKROEKONOMICKÝ BAROMETR: INDEX RIZIKA RECESE & KRÁCHU TRHU (VERTIKÁLNÍ STUPNICE) -->
+            <section class="macro-barometer-section">
+                <div class="macro-header">
+                    <div class="macro-title-group">
+                        <div class="macro-title">
+                            <span>🧭</span> Makroekonomický Barometr: Index Rizika Recese & Krachu Trhu
+                        </div>
+                        <div class="macro-subtitle">
+                            Předstihový kvantitativní model kombinující výnosovou křivku US Treasuries (10Y/3M), volatilitu CBOE VIX, úvěrové spready (HYG/LQD), sektorovou rotaci spotřeby (XLY/XLP) a vnitřní šíři trhu pro včasnou detekci hospodářské kontrakce.
+                        </div>
+                    </div>
+                    <div class="macro-header-badges">
+                        <span class="macro-badge">🌐 Makro Wire Data</span>
+                        <span class="macro-badge">⏱️ Předstihový horizont 6–12 měsíců</span>
+                        <span class="macro-badge" style="color: #60a5fa; border-color: rgba(96, 165, 250, 0.3);">Aktualizace: 28. 09. 2026 20:34 UTC</span>
+                    </div>
+                </div>
+
+                <div class="macro-grid">
+                    <!-- 1. SLOUPEC: Vertikální stupnice & Celkové skóre -->
+                    <div class="vertical-scale-card">
+                        <div style="font-size: 0.8rem; font-weight: 800; color: #f8fafc; display: flex; align-items: center; justify-content: space-between;">
+                            <span>📊 Barometr rizika</span>
+                            <span style="font-size: 0.7rem; color: var(--text-muted);">0 = Expanze | 100 = Krach</span>
+                        </div>
+
+                        <div class="scale-visual-wrap">
+                            <!-- Samotná vertikální stupnice -->
+                            <div class="vertical-barometer-track-wrap">
+                                <div class="barometer-ticks">
+                                    <div class="barometer-tick-item"><small>🚨 100</small></div>
+                                    <div class="barometer-tick-item"><small>🔴 75</small></div>
+                                    <div class="barometer-tick-item"><small>🟠 50</small></div>
+                                    <div class="barometer-tick-item"><small>🟡 25</small></div>
+                                    <div class="barometer-tick-item"><small>🟢 0</small></div>
+                                </div>
+                                <div class="vertical-barometer" title="Vertikální stupnice rizika recese a krachu (0-100)">
+                                    <!-- Ukazatel / ručička -->
+                                    <div class="barometer-needle" style="bottom: 29.0%;">
+                                        <div class="needle-arrow">◀</div>
+                                        <div class="needle-pill" style="background: #fbbf24;">
+                                            29
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Digitální odečet a stav -->
+                            <div class="score-details-pane">
+                                <div class="digital-readout-box">
+                                    <span class="digital-readout-val" style="color: #fbbf24;">29</span>
+                                    <span class="digital-readout-max">/100</span>
+                                </div>
+                                <div class="risk-level-badge" style="border-color: #fbbf24; color: #fbbf24; background: rgba(255,255,255,0.02);">
+                                    🟡 POZDNÍ CYKLUS (Zvýšená selektivita)
+                                </div>
+                                <div class="macro-lead-time">
+                                    ⏱️ Předstihový horizont 6–12 měsíců
+                                </div>
+                                <div class="tactical-callout" style="border-left-color: #fbbf24;">
+                                    <strong>💡 Taktické doporučení:</strong>
+                                    Selektivní expozice: Zaměření na kvalitní firmy s vysokým Sharpe Conviction (TOP 5 basket).
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. SLOUPEC: 5 Kvantitativních sub-faktorů -->
+                    <div class="subfactors-card">
+                        <div class="subfactors-title">
+                            <span>🔬</span> 5 Institucionálních Sub-Faktorů
+                        </div>
+
+                        <!-- 1. Výnosová křivka -->
+                        <div class="subfactor-row">
+                            <div class="subfactor-header">
+                                <span class="subfactor-name">📉 Výnosová křivka 10Y-3M (US Treasuries)</span>
+                                <span class="subfactor-score-badge" style="background: rgba(255,255,255,0.06); color: #f1f5f9;">18.0 / 100</span>
+                            </div>
+                            <div class="subfactor-bar-bg">
+                                <div class="subfactor-bar-fill" style="width: 18.0%; background: #10b981;"></div>
+                            </div>
+                            <div class="subfactor-status-desc">
+                                <span>Spread: <strong>1.18 %</strong> (10Y: 5.24% | 3M: 4.06%)</span>
+                                <span>Normální rostoucí křivka (Ekonomická expanze)</span>
+                            </div>
+                        </div>
+
+                        <!-- 2. Kreditní spready -->
+                        <div class="subfactor-row">
+                            <div class="subfactor-header">
+                                <span class="subfactor-name">💳 Úvěrové spready HYG / LQD (Kreditní riziko)</span>
+                                <span class="subfactor-score-badge" style="background: rgba(255,255,255,0.06); color: #f1f5f9;">15.0 / 100</span>
+                            </div>
+                            <div class="subfactor-bar-bg">
+                                <div class="subfactor-bar-fill" style="width: 15.0%; background: #10b981;"></div>
+                            </div>
+                            <div class="subfactor-status-desc">
+                                <span>HYG/LQD: <strong>0.7567</strong> (vs 50d MA: 1.07 %)</span>
+                                <span>Uvolněné úvěrové podmínky (Vysoká likvidita)</span>
+                            </div>
+                        </div>
+
+                        <!-- 3. Volatilita VIX -->
+                        <div class="subfactor-row">
+                            <div class="subfactor-header">
+                                <span class="subfactor-name">⚡ Volatilita & VIX šok (CBOE ^VIX)</span>
+                                <span class="subfactor-score-badge" style="background: rgba(255,255,255,0.06); color: #f1f5f9;">25.0 / 100</span>
+                            </div>
+                            <div class="subfactor-bar-bg">
+                                <div class="subfactor-bar-fill" style="width: 25.0%; background: #10b981;"></div>
+                            </div>
+                            <div class="subfactor-status-desc">
+                                <span>VIX: <strong>16.07</strong> (20d průměr: 15.73)</span>
+                                <span>Stabilní tržní režim (Běžná volatilita)</span>
+                            </div>
+                        </div>
+
+                        <!-- 4. Spotřebitelský cyklus -->
+                        <div class="subfactor-row">
+                            <div class="subfactor-header">
+                                <span class="subfactor-name">🛒 Spotřební poptávka XLY / XLP & Průmysl XLI</span>
+                                <span class="subfactor-score-badge" style="background: rgba(255,255,255,0.06); color: #f1f5f9;">60.0 / 100</span>
+                            </div>
+                            <div class="subfactor-bar-bg">
+                                <div class="subfactor-bar-fill" style="width: 60.0%; background: #f59e0b;"></div>
+                            </div>
+                            <div class="subfactor-status-desc">
+                                <span>XLY/XLP trend: <strong>-2.6 %</strong></span>
+                                <span>Zpomalování cyklické poptávky</span>
+                            </div>
+                        </div>
+
+                        <!-- 5. Tržní šíře univerza -->
+                        <div class="subfactor-row">
+                            <div class="subfactor-header">
+                                <span class="subfactor-name">🏛️ Vnitřní šíře trhu (557 aktiv SuggestInvest)</span>
+                                <span class="subfactor-score-badge" style="background: rgba(255,255,255,0.06); color: #f1f5f9;">80.0 / 100</span>
+                            </div>
+                            <div class="subfactor-bar-bg">
+                                <div class="subfactor-bar-fill" style="width: 80.0%; background: #ef4444;"></div>
+                            </div>
+                            <div class="subfactor-status-desc">
+                                <span>Medvědí signály: <strong>0.2 %</strong></span>
+                                <span>Silná vnitřní tržní slabost (Většina aktiv klesá)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. SLOUPEC: Sektorový radar recese -->
+                    <div class="sector-radar-card">
+                        <div class="sector-radar-header">
+                            <div class="sector-radar-title">
+                                <span>🎯</span> Sektorový Radar Kontrakce
+                            </div>
+                            <span style="font-size: 0.7rem; color: var(--text-muted);">Relativně k SPY</span>
+                        </div>
+
+                        <div class="sector-radar-list">
+                            
+                            <div class="sector-radar-item" title="Cyklické spotřební zboží: Automobily, retail, volný čas. První sektor zasažený poklesem reálných mezd. (1M změna: -6.8 %, Relativně vůči SPY: -6.6 %)">
+                                <div class="sector-item-top">
+                                    <span class="sector-item-name">Cyklické spotřební zboží</span>
+                                    <span class="sector-item-sym">XLY</span>
+                                </div>
+                                <div class="sector-item-mid">
+                                    <span class="phase-pill phase-contraction">KONTRAKCE / RECESE</span>
+                                    <span style="font-weight: 700; font-size: 0.7rem; color: #f87171;">
+                                        Riziko: 79 %
+                                    </span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.67rem; color: var(--text-muted); margin-top: 2px;">
+                                    <span>1M vs SPY: <strong style="color: #f87171;">-6.6 %</strong></span>
+                                    <span>🔴 Vysoké riziko</span>
+                                </div>
+                            </div>
+                            
+                            <div class="sector-radar-item" title="Finanční sektor & Banky: Komerční a investiční banky, pojišťovny. Indikátor úvěrového utahování a NPL. (1M změna: -6.4 %, Relativně vůči SPY: -6.2 %)">
+                                <div class="sector-item-top">
+                                    <span class="sector-item-name">Finanční sektor & Banky</span>
+                                    <span class="sector-item-sym">XLF</span>
+                                </div>
+                                <div class="sector-item-mid">
+                                    <span class="phase-pill phase-contraction">KONTRAKCE / RECESE</span>
+                                    <span style="font-weight: 700; font-size: 0.7rem; color: #f87171;">
+                                        Riziko: 78 %
+                                    </span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.67rem; color: var(--text-muted); margin-top: 2px;">
+                                    <span>1M vs SPY: <strong style="color: #f87171;">-6.2 %</strong></span>
+                                    <span>🔴 Vysoké riziko</span>
+                                </div>
+                            </div>
+                            
+                            <div class="sector-radar-item" title="Nemovitosti & REITs: Komerční nemovitosti, sklady, rezidenční nájmy. Zranitelné při vysokých sazbách. (1M změna: -6.3 %, Relativně vůči SPY: -6.0 %)">
+                                <div class="sector-item-top">
+                                    <span class="sector-item-name">Nemovitosti & REITs</span>
+                                    <span class="sector-item-sym">XLRE</span>
+                                </div>
+                                <div class="sector-item-mid">
+                                    <span class="phase-pill phase-contraction">KONTRAKCE / RECESE</span>
+                                    <span style="font-weight: 700; font-size: 0.7rem; color: #f87171;">
+                                        Riziko: 78 %
+                                    </span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.67rem; color: var(--text-muted); margin-top: 2px;">
+                                    <span>1M vs SPY: <strong style="color: #f87171;">-6.0 %</strong></span>
+                                    <span>🔴 Vysoké riziko</span>
+                                </div>
+                            </div>
+                            
+                            <div class="sector-radar-item" title="Průmysl, Výroba & Logistika: Strojírenství, logistika, obrana. Klíčový předstihový indikátor výrobního PMI. (1M změna: -4.5 %, Relativně vůči SPY: -4.2 %)">
+                                <div class="sector-item-top">
+                                    <span class="sector-item-name">Průmysl, Výroba & Logistika</span>
+                                    <span class="sector-item-sym">XLI</span>
+                                </div>
+                                <div class="sector-item-mid">
+                                    <span class="phase-pill phase-contraction">KONTRAKCE / RECESE</span>
+                                    <span style="font-weight: 700; font-size: 0.7rem; color: #f87171;">
+                                        Riziko: 72 %
+                                    </span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.67rem; color: var(--text-muted); margin-top: 2px;">
+                                    <span>1M vs SPY: <strong style="color: #f87171;">-4.2 %</strong></span>
+                                    <span>🔴 Vysoké riziko</span>
+                                </div>
+                            </div>
+                            
+                            <div class="sector-radar-item" title="Energie & Komodity: Těžba ropy, plynu, rafinérie. Varovný signál při destrukci poptávky. (1M změna: -0.3 %, Relativně vůči SPY: -0.1 %)">
+                                <div class="sector-item-top">
+                                    <span class="sector-item-name">Energie & Komodity</span>
+                                    <span class="sector-item-sym">XLE</span>
+                                </div>
+                                <div class="sector-item-mid">
+                                    <span class="phase-pill phase-late">POZDNÍ CYKLUS</span>
+                                    <span style="font-weight: 700; font-size: 0.7rem; color: #34d399;">
+                                        Riziko: 35 %
+                                    </span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.67rem; color: var(--text-muted); margin-top: 2px;">
+                                    <span>1M vs SPY: <strong style="color: #f87171;">-0.1 %</strong></span>
+                                    <span>⚖️ Mírné riziko</span>
+                                </div>
+                            </div>
+                            
+                            <div class="sector-radar-item" title="Defenzivní spotřební zboží: Potraviny, hygiena, nezbytné výdaje. Roste relativně v recesi. (1M změna: -3.1 %, Relativně vůči SPY: -2.8 %)">
+                                <div class="sector-item-top">
+                                    <span class="sector-item-name">Defenzivní spotřební zboží</span>
+                                    <span class="sector-item-sym">XLP</span>
+                                </div>
+                                <div class="sector-item-mid">
+                                    <span class="phase-pill phase-stable">STABILITA</span>
+                                    <span style="font-weight: 700; font-size: 0.7rem; color: #34d399;">
+                                        Riziko: 25 %
+                                    </span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.67rem; color: var(--text-muted); margin-top: 2px;">
+                                    <span>1M vs SPY: <strong style="color: #f87171;">-2.8 %</strong></span>
+                                    <span>🟢 Neutrální</span>
+                                </div>
+                            </div>
+                            
+                            <div class="sector-radar-item" title="Zdravotnictví & Pharma: Stabilní peněžní toky nezávislé na hospodářském cyklu. (1M změna: +0.4 %, Relativně vůči SPY: +0.7 %)">
+                                <div class="sector-item-top">
+                                    <span class="sector-item-name">Zdravotnictví & Pharma</span>
+                                    <span class="sector-item-sym">XLV</span>
+                                </div>
+                                <div class="sector-item-mid">
+                                    <span class="phase-pill phase-stable">STABILITA</span>
+                                    <span style="font-weight: 700; font-size: 0.7rem; color: #34d399;">
+                                        Riziko: 25 %
+                                    </span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.67rem; color: var(--text-muted); margin-top: 2px;">
+                                    <span>1M vs SPY: <strong style="color: #34d399;">+0.7 %</strong></span>
+                                    <span>🟢 Neutrální</span>
+                                </div>
+                            </div>
+                            
+                            <div class="sector-radar-item" title="Veřejné služby (Utility): Energetické sítě, voda. Masivní příliv institucionálního kapitálu před krizí. (1M změna: -7.5 %, Relativně vůči SPY: -7.2 %)">
+                                <div class="sector-item-top">
+                                    <span class="sector-item-name">Veřejné služby (Utility)</span>
+                                    <span class="sector-item-sym">XLU</span>
+                                </div>
+                                <div class="sector-item-mid">
+                                    <span class="phase-pill phase-stable">STABILITA</span>
+                                    <span style="font-weight: 700; font-size: 0.7rem; color: #34d399;">
+                                        Riziko: 25 %
+                                    </span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.67rem; color: var(--text-muted); margin-top: 2px;">
+                                    <span>1M vs SPY: <strong style="color: #f87171;">-7.2 %</strong></span>
+                                    <span>🟢 Neutrální</span>
+                                </div>
+                            </div>
+                            
+                            <div class="sector-radar-item" title="Technologie & AI: Polovodiče, software, cloud. Citlivý na úrokové sazby a firemní IT investice. (1M změna: +4.9 %, Relativně vůči SPY: +5.1 %)">
+                                <div class="sector-item-top">
+                                    <span class="sector-item-name">Technologie & AI</span>
+                                    <span class="sector-item-sym">XLK</span>
+                                </div>
+                                <div class="sector-item-mid">
+                                    <span class="phase-pill phase-expansion">EXPANZE</span>
+                                    <span style="font-weight: 700; font-size: 0.7rem; color: #34d399;">
+                                        Riziko: 19 %
+                                    </span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.67rem; color: var(--text-muted); margin-top: 2px;">
+                                    <span>1M vs SPY: <strong style="color: #34d399;">+5.1 %</strong></span>
+                                    <span>🟢 Nízké riziko</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
 
             
             <!-- 🏆 TOP 5 CONVICTION ALLOCATION BASKET (Masuda MIT Thesis MVO) -->
@@ -2605,6 +3566,245 @@
                         </div>
                     </div>
                     
+                </div>
+            </section>
+            
+
+            
+            <!-- 🤖 AUTONOMNÍ TRADING PORTÁL / BROKER EXECUTION BRIDGE -->
+            <section class="broker-trading-section">
+                <div class="trading-header">
+                    <div class="trading-title-group">
+                        <div class="trading-title">
+                            <span>🤖</span> Autonomní Trading Portál / Broker Execution Bridge
+                        </div>
+                        <div class="trading-subtitle">
+                            Generátor bracket příkazů (Limit Entry, Stop-Loss, Take-Profit) s kvantitativním Risk Gatekeeperem připravený pro přímé napojení na XTB xAPI WebSocket protokol a autonomní exekuci.
+                        </div>
+                    </div>
+                    <div class="trading-header-actions">
+                        <button class="trading-mode-btn active" id="modeBtnPaper" onclick="switchTradingMode('PAPER')" title="Aktivní režim bezrizikového paper tradingu v sandboxu">
+                            🛡️ Paper Sandbox
+                        </button>
+                        <button class="trading-mode-btn" id="modeBtnXtb" onclick="switchTradingMode('XTB_LIVE')" title="Připraveno k párování s XTB xStation účtem přes WebSocket">
+                            ⚡ XTB xAPI Bridge
+                        </button>
+                        <button class="trading-action-btn" onclick="openXtbConfigModal()" title="Konfigurace přístupových údajů k XTB xAPI">
+                            ⚙️ Nastavení XTB
+                        </button>
+                        <button class="trading-action-btn" onclick="exportTradingOrdersJSON()" title="Stáhnout připravenou dávku příkazů ve formátu JSON">
+                            📥 Stáhnout JSON
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Kontrolní lišta parametrů kapitálu a rizika -->
+                <div class="trading-controls-row">
+                    <div class="trading-params-left">
+                        <div class="trading-param-group">
+                            <label for="portfolioCapInput">Kapitál portfolia:</label>
+                            <input type="number" id="portfolioCapInput" class="trading-input" value="250000" step="10000" min="10000" onchange="recalcTradingOrders()" title="Zadejte velikost vašeho obchodního kapitálu v CZK">
+                            <span style="font-weight: 700; color: #f1f5f9;">CZK</span>
+                        </div>
+                        <div class="trading-param-group">
+                            <label for="maxRiskSelect">Max risk / obchod:</label>
+                            <select id="maxRiskSelect" class="trading-select" onchange="recalcTradingOrders()" title="Maximální povolená ztráta při zasažení Stop-Lossu">
+                                <option value="1.0">1.0 % (Konzervativní)</option>
+                                <option value="1.5" selected>1.5 % (Vyvážený)</option>
+                                <option value="2.0">2.0 % (Agresivní)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="font-size: 0.78rem; display: flex; align-items: center; gap: 8px;">
+                        <span style="color: #34d399; font-weight: 800;">🛡️ Risk Gatekeeper:</span>
+                        <span style="color: var(--text-secondary);">RRR &ge; 1.8 | Max limit pozice 20 % | Bracket SL & TP aktivní</span>
+                    </div>
+                </div>
+
+                <!-- Tabulka vygenerovaných příkazů -->
+                <div class="orders-table-wrapper">
+                    <table class="orders-table" id="ordersTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Ticker (XTB)</th>
+                                <th>Akce & Typ</th>
+                                <th>Počet ks</th>
+                                <th>Limitní nákup</th>
+                                <th>Stop-Loss (SL)</th>
+                                <th>Take-Profit (TP)</th>
+                                <th>RRR</th>
+                                <th>Alokace (CZK)</th>
+                                <th>Max Risk (CZK)</th>
+                                <th>Risk Gatekeeper</th>
+                                <th style="text-align: right;">Akce</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody">
+                            
+                            <tr id="orderRow-ORD-20260928-AVGO-4DF0" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2966.25, &#34;capital_risk_pct&#34;: 1.19, &#34;conviction_score&#34;: &#34;2.38&#34;, &#34;created_at&#34;: &#34;2026-09-28 20:35:48 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 350.62, &#34;limit_price&#34;: 350.62, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Broadcom Inc&#34;, &#34;order_id&#34;: &#34;ORD-20260928-AVGO-4DF0&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 49437.42, &#34;rank&#34;: 1, &#34;rrr&#34;: 8.61, &#34;shares&#34;: 6, &#34;sl_price&#34;: 329.58, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_xtb&#34;: &#34;AVGO.US&#34;, &#34;symbol_yahoo&#34;: &#34;AVGO&#34;, &#34;tp_price&#34;: 531.85, &#34;weight_pct&#34;: 25.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-1&#34;, &#34;price&#34;: 350.62, &#34;sl&#34;: 329.58, &#34;symbol&#34;: &#34;AVGO.US&#34;, &#34;tp&#34;: 531.85, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                                <td style="font-weight: 800; color: var(--text-muted);">#1</td>
+                                <td>
+                                    <div style="font-weight: 800; color: #f8fafc;">AVGO.US</div>
+                                    <div style="font-size: 0.72rem; color: var(--text-muted);">Broadcom Inc</div>
+                                </td>
+                                <td>
+                                    <span class="order-badge-buy">BUY LIMIT</span>
+                                </td>
+                                <td style="font-weight: 800; color: #60a5fa;" class="order-shares-cell">6 ks</td>
+                                <td style="font-weight: 700;">350.62 USD</td>
+                                <td style="color: #f87171; font-weight: 700;">329.58 USD</td>
+                                <td style="color: #34d399; font-weight: 700;">531.85 USD</td>
+                                <td style="font-weight: 800; color: #fbbf24;">8.61:1</td>
+                                <td style="font-weight: 700;" class="order-alloc-cell">49437 CZK</td>
+                                <td style="color: #fca5a5;" class="order-risk-cell">2966 CZK (1.19 %)</td>
+                                <td>
+                                    <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
+                                    <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
+                                </td>
+                                <td style="text-align: right;">
+                                    <div style="display: flex; justify-content: flex-end; gap: 5px;">
+                                        <button class="order-btn-exec" onclick="simulatePaperExecution('ORD-20260928-AVGO-4DF0', 'AVGO.US')" title="Simulovat exekuci příkazu v Paper Trading sandboxu">
+                                            ▶ Exekuce
+                                        </button>
+                                        <button class="order-btn-copy" onclick="copyOrderJson('ORD-20260928-AVGO-4DF0')" title="Kopírovat JSON příkaz pro XTB xAPI do schránky">
+                                            📋 JSON
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <tr id="orderRow-ORD-20260928-ALC-16AE" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2948.56, &#34;capital_risk_pct&#34;: 1.18, &#34;conviction_score&#34;: &#34;2.38&#34;, &#34;created_at&#34;: &#34;2026-09-28 20:35:48 UTC&#34;, &#34;currency&#34;: &#34;CHF&#34;, &#34;current_price&#34;: 53.62, &#34;limit_price&#34;: 53.62, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Alcon Inc&#34;, &#34;order_id&#34;: &#34;ORD-20260928-ALC-16AE&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 49142.73, &#34;rank&#34;: 2, &#34;rrr&#34;: 6.94, &#34;shares&#34;: 39, &#34;sl_price&#34;: 50.4, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_xtb&#34;: &#34;ALC.CH&#34;, &#34;symbol_yahoo&#34;: &#34;ALC.SW&#34;, &#34;tp_price&#34;: 75.96, &#34;weight_pct&#34;: 25.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-2&#34;, &#34;price&#34;: 53.62, &#34;sl&#34;: 50.4, &#34;symbol&#34;: &#34;ALC.CH&#34;, &#34;tp&#34;: 75.96, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                                <td style="font-weight: 800; color: var(--text-muted);">#2</td>
+                                <td>
+                                    <div style="font-weight: 800; color: #f8fafc;">ALC.CH</div>
+                                    <div style="font-size: 0.72rem; color: var(--text-muted);">Alcon Inc</div>
+                                </td>
+                                <td>
+                                    <span class="order-badge-buy">BUY LIMIT</span>
+                                </td>
+                                <td style="font-weight: 800; color: #60a5fa;" class="order-shares-cell">39 ks</td>
+                                <td style="font-weight: 700;">53.62 CHF</td>
+                                <td style="color: #f87171; font-weight: 700;">50.4 CHF</td>
+                                <td style="color: #34d399; font-weight: 700;">75.96 CHF</td>
+                                <td style="font-weight: 800; color: #fbbf24;">6.94:1</td>
+                                <td style="font-weight: 700;" class="order-alloc-cell">49143 CZK</td>
+                                <td style="color: #fca5a5;" class="order-risk-cell">2949 CZK (1.18 %)</td>
+                                <td>
+                                    <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
+                                    <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
+                                </td>
+                                <td style="text-align: right;">
+                                    <div style="display: flex; justify-content: flex-end; gap: 5px;">
+                                        <button class="order-btn-exec" onclick="simulatePaperExecution('ORD-20260928-ALC-16AE', 'ALC.CH')" title="Simulovat exekuci příkazu v Paper Trading sandboxu">
+                                            ▶ Exekuce
+                                        </button>
+                                        <button class="order-btn-copy" onclick="copyOrderJson('ORD-20260928-ALC-16AE')" title="Kopírovat JSON příkaz pro XTB xAPI do schránky">
+                                            📋 JSON
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <tr id="orderRow-ORD-20260928-RHM-35E6" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2922.09, &#34;capital_risk_pct&#34;: 1.17, &#34;conviction_score&#34;: &#34;2.34&#34;, &#34;created_at&#34;: &#34;2026-09-28 20:35:48 UTC&#34;, &#34;currency&#34;: &#34;EUR&#34;, &#34;current_price&#34;: 966.3, &#34;limit_price&#34;: 966.3, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Rheinmetall AG&#34;, &#34;order_id&#34;: &#34;ORD-20260928-RHM-35E6&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 48701.52, &#34;rank&#34;: 3, &#34;rrr&#34;: 2.5, &#34;shares&#34;: 2, &#34;sl_price&#34;: 908.32, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_xtb&#34;: &#34;RHM.DE&#34;, &#34;symbol_yahoo&#34;: &#34;RHM.DE&#34;, &#34;tp_price&#34;: 1111.24, &#34;weight_pct&#34;: 20.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-3&#34;, &#34;price&#34;: 966.3, &#34;sl&#34;: 908.32, &#34;symbol&#34;: &#34;RHM.DE&#34;, &#34;tp&#34;: 1111.24, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                                <td style="font-weight: 800; color: var(--text-muted);">#3</td>
+                                <td>
+                                    <div style="font-weight: 800; color: #f8fafc;">RHM.DE</div>
+                                    <div style="font-size: 0.72rem; color: var(--text-muted);">Rheinmetall AG</div>
+                                </td>
+                                <td>
+                                    <span class="order-badge-buy">BUY LIMIT</span>
+                                </td>
+                                <td style="font-weight: 800; color: #60a5fa;" class="order-shares-cell">2 ks</td>
+                                <td style="font-weight: 700;">966.3 EUR</td>
+                                <td style="color: #f87171; font-weight: 700;">908.32 EUR</td>
+                                <td style="color: #34d399; font-weight: 700;">1111.24 EUR</td>
+                                <td style="font-weight: 800; color: #fbbf24;">2.5:1</td>
+                                <td style="font-weight: 700;" class="order-alloc-cell">48702 CZK</td>
+                                <td style="color: #fca5a5;" class="order-risk-cell">2922 CZK (1.17 %)</td>
+                                <td>
+                                    <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
+                                    <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
+                                </td>
+                                <td style="text-align: right;">
+                                    <div style="display: flex; justify-content: flex-end; gap: 5px;">
+                                        <button class="order-btn-exec" onclick="simulatePaperExecution('ORD-20260928-RHM-35E6', 'RHM.DE')" title="Simulovat exekuci příkazu v Paper Trading sandboxu">
+                                            ▶ Exekuce
+                                        </button>
+                                        <button class="order-btn-copy" onclick="copyOrderJson('ORD-20260928-RHM-35E6')" title="Kopírovat JSON příkaz pro XTB xAPI do schránky">
+                                            📋 JSON
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <tr id="orderRow-ORD-20260928-ALM-B007" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2235.34, &#34;capital_risk_pct&#34;: 0.89, &#34;conviction_score&#34;: &#34;2.31&#34;, &#34;created_at&#34;: &#34;2026-09-28 20:35:48 UTC&#34;, &#34;currency&#34;: &#34;EUR&#34;, &#34;current_price&#34;: 10.56, &#34;limit_price&#34;: 10.56, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Almirall SA&#34;, &#34;order_id&#34;: &#34;ORD-20260928-ALM-B007&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 37255.68, &#34;rank&#34;: 4, &#34;rrr&#34;: 5.93, &#34;shares&#34;: 140, &#34;sl_price&#34;: 9.93, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_xtb&#34;: &#34;ALM.ES&#34;, &#34;symbol_yahoo&#34;: &#34;ALM.MC&#34;, &#34;tp_price&#34;: 14.32, &#34;weight_pct&#34;: 15.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-4&#34;, &#34;price&#34;: 10.56, &#34;sl&#34;: 9.93, &#34;symbol&#34;: &#34;ALM.ES&#34;, &#34;tp&#34;: 14.32, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                                <td style="font-weight: 800; color: var(--text-muted);">#4</td>
+                                <td>
+                                    <div style="font-weight: 800; color: #f8fafc;">ALM.ES</div>
+                                    <div style="font-size: 0.72rem; color: var(--text-muted);">Almirall SA</div>
+                                </td>
+                                <td>
+                                    <span class="order-badge-buy">BUY LIMIT</span>
+                                </td>
+                                <td style="font-weight: 800; color: #60a5fa;" class="order-shares-cell">140 ks</td>
+                                <td style="font-weight: 700;">10.56 EUR</td>
+                                <td style="color: #f87171; font-weight: 700;">9.93 EUR</td>
+                                <td style="color: #34d399; font-weight: 700;">14.32 EUR</td>
+                                <td style="font-weight: 800; color: #fbbf24;">5.93:1</td>
+                                <td style="font-weight: 700;" class="order-alloc-cell">37256 CZK</td>
+                                <td style="color: #fca5a5;" class="order-risk-cell">2235 CZK (0.89 %)</td>
+                                <td>
+                                    <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
+                                    <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
+                                </td>
+                                <td style="text-align: right;">
+                                    <div style="display: flex; justify-content: flex-end; gap: 5px;">
+                                        <button class="order-btn-exec" onclick="simulatePaperExecution('ORD-20260928-ALM-B007', 'ALM.ES')" title="Simulovat exekuci příkazu v Paper Trading sandboxu">
+                                            ▶ Exekuce
+                                        </button>
+                                        <button class="order-btn-copy" onclick="copyOrderJson('ORD-20260928-ALM-B007')" title="Kopírovat JSON příkaz pro XTB xAPI do schránky">
+                                            📋 JSON
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <tr id="orderRow-ORD-20260928-ORCL-03E2" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2068.41, &#34;capital_risk_pct&#34;: 0.83, &#34;conviction_score&#34;: &#34;2.31&#34;, &#34;created_at&#34;: &#34;2026-09-28 20:35:48 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 133.36, &#34;limit_price&#34;: 133.36, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Oracle Corp&#34;, &#34;order_id&#34;: &#34;ORD-20260928-ORCL-03E2&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 34473.56, &#34;rank&#34;: 5, &#34;rrr&#34;: 13.07, &#34;shares&#34;: 11, &#34;sl_price&#34;: 125.36, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_xtb&#34;: &#34;ORCL.US&#34;, &#34;symbol_yahoo&#34;: &#34;ORCL&#34;, &#34;tp_price&#34;: 237.97, &#34;weight_pct&#34;: 15.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-5&#34;, &#34;price&#34;: 133.36, &#34;sl&#34;: 125.36, &#34;symbol&#34;: &#34;ORCL.US&#34;, &#34;tp&#34;: 237.97, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                                <td style="font-weight: 800; color: var(--text-muted);">#5</td>
+                                <td>
+                                    <div style="font-weight: 800; color: #f8fafc;">ORCL.US</div>
+                                    <div style="font-size: 0.72rem; color: var(--text-muted);">Oracle Corp</div>
+                                </td>
+                                <td>
+                                    <span class="order-badge-buy">BUY LIMIT</span>
+                                </td>
+                                <td style="font-weight: 800; color: #60a5fa;" class="order-shares-cell">11 ks</td>
+                                <td style="font-weight: 700;">133.36 USD</td>
+                                <td style="color: #f87171; font-weight: 700;">125.36 USD</td>
+                                <td style="color: #34d399; font-weight: 700;">237.97 USD</td>
+                                <td style="font-weight: 800; color: #fbbf24;">13.07:1</td>
+                                <td style="font-weight: 700;" class="order-alloc-cell">34474 CZK</td>
+                                <td style="color: #fca5a5;" class="order-risk-cell">2068 CZK (0.83 %)</td>
+                                <td>
+                                    <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
+                                    <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
+                                </td>
+                                <td style="text-align: right;">
+                                    <div style="display: flex; justify-content: flex-end; gap: 5px;">
+                                        <button class="order-btn-exec" onclick="simulatePaperExecution('ORD-20260928-ORCL-03E2', 'ORCL.US')" title="Simulovat exekuci příkazu v Paper Trading sandboxu">
+                                            ▶ Exekuce
+                                        </button>
+                                        <button class="order-btn-copy" onclick="copyOrderJson('ORD-20260928-ORCL-03E2')" title="Kopírovat JSON příkaz pro XTB xAPI do schránky">
+                                            📋 JSON
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
                 </div>
             </section>
             
@@ -20733,7 +21933,7 @@
                         <!-- 8. Změna doporučení & Historická řada skenů (až 30 skenů) -->
                         <div class="row-cell cell-change-history">
                             
-                            <span class="badge-change badge-new-catalyst" title="Aktivován nový předstihový katalyzátor: 💰 Ex-Div za 11 dní, ⚖️ Sektorový diskont (Pairs).">
+                            <span class="badge-change badge-new-catalyst" title="Aktivován nový předstihový katalyzátor: ⚖️ Sektorový diskont (Pairs), 💰 Ex-Div za 11 dní.">
                                 🔥 KATALYZÁTOR
                             </span>
                             
@@ -20856,7 +22056,7 @@
                                             <span class="delta-badge" style="color: #f472b6;">🔥 KATALYZÁTOR</span>
                                             <span class="delta-date">vs. 27. 09. 2026 v 14:31 SELČ</span>
                                         </div>
-                                        <div class="delta-body">Aktivován nový předstihový katalyzátor: 💰 Ex-Div za 11 dní, ⚖️ Sektorový diskont (Pairs).</div>
+                                        <div class="delta-body">Aktivován nový předstihový katalyzátor: ⚖️ Sektorový diskont (Pairs), 💰 Ex-Div za 11 dní.</div>
                                         
                                     </div>
                                     
@@ -137165,7 +138365,7 @@
                         <!-- 8. Změna doporučení & Historická řada skenů (až 30 skenů) -->
                         <div class="row-cell cell-change-history">
                             
-                            <span class="badge-change badge-new-catalyst" title="Aktivován nový předstihový katalyzátor: 📅 Výsledky do 21 dní, 💰 Ex-Div za 2 dní.">
+                            <span class="badge-change badge-new-catalyst" title="Aktivován nový předstihový katalyzátor: 💰 Ex-Div za 2 dní, 📅 Výsledky do 21 dní.">
                                 🔥 KATALYZÁTOR
                             </span>
                             
@@ -137288,7 +138488,7 @@
                                             <span class="delta-badge" style="color: #f472b6;">🔥 KATALYZÁTOR</span>
                                             <span class="delta-date">vs. 27. 09. 2026 v 14:31 SELČ</span>
                                         </div>
-                                        <div class="delta-body">Aktivován nový předstihový katalyzátor: 📅 Výsledky do 21 dní, 💰 Ex-Div za 2 dní.</div>
+                                        <div class="delta-body">Aktivován nový předstihový katalyzátor: 💰 Ex-Div za 2 dní, 📅 Výsledky do 21 dní.</div>
                                         
                                     </div>
                                     
@@ -170765,7 +171965,7 @@
                     <strong>Upozornění:</strong> Tyto analýzy a signály jsou generovány experimentálním AI modelem a slouží výhradně k informačním a studijním účelům. V žádném případě se nejedná o investiční doporučení, investiční poradenství či nabídku ke koupi nebo prodeji cenných papírů ve smyslu zákona č. 256/2004 Sb., o podnikání na kapitálovém trhu.
                 </p>
                 <div>
-                    Vygenerováno: 2026-09-28 20:02:29 UTC | XTB Multithreaded Engine & Gemini Pro
+                    Vygenerováno: 2026-09-28 20:35:48 UTC | XTB Multithreaded Engine & Gemini Pro
                 </div>
             </footer>
         </div>
@@ -171449,6 +172649,152 @@
                 }
             }, 10000);
         }
+
+        /* ============================================================
+           🤖 AUTONOMNÍ TRADING PORTÁL & BROKER BRIDGE (XTB XAPI)
+        ============================================================ */
+        let currentTradingMode = 'PAPER';
+
+        function switchTradingMode(mode) {
+            currentTradingMode = mode;
+            const paperBtn = document.getElementById('modeBtnPaper');
+            const xtbBtn = document.getElementById('modeBtnXtb');
+            if (mode === 'PAPER') {
+                if (paperBtn) paperBtn.classList.add('active');
+                if (xtbBtn) xtbBtn.classList.remove('active');
+                showScanToast('🛡️ Režim Paper Sandbox aktivován. Exekuce budou simulovány bez reálného kapitálu.', 'info');
+            } else {
+                if (paperBtn) paperBtn.classList.remove('active');
+                if (xtbBtn) xtbBtn.classList.add('active');
+                const xtbCfg = localStorage.getItem('xtb_api_config');
+                if (!xtbCfg) {
+                    showScanToast('⚡ XTB xAPI Bridge: Pro živé/demo párování zadejte své API údaje v nastavení.', 'warning');
+                    openXtbConfigModal();
+                } else {
+                    showScanToast('⚡ XTB xAPI Bridge aktivován. Příkazy budou předávány přes WebSocket xapi.xtb.com.', 'success');
+                }
+            }
+        }
+
+        function recalcTradingOrders() {
+            const capInput = document.getElementById('portfolioCapInput');
+            const riskSelect = document.getElementById('maxRiskSelect');
+            const capital = parseFloat(capInput ? capInput.value : 250000) || 250000;
+            const maxRiskPct = parseFloat(riskSelect ? riskSelect.value : 1.5) || 1.5;
+
+            const rows = document.querySelectorAll('#ordersTableBody tr');
+            rows.forEach(row => {
+                const rawAttr = row.getAttribute('data-order-raw');
+                if (!rawAttr) return;
+                try {
+                    const ord = JSON.parse(rawAttr);
+                    const fxRates = { 'CZK': 1.0, 'USD': 23.5, 'EUR': 25.2, 'GBX': 0.31, 'GBP': 30.5 };
+                    const fx = fxRates[ord.currency] || 23.5;
+                    const entryCzk = ord.limit_price * fx;
+                    const slCzk = ord.sl_price * fx;
+                    const riskPerShareCzk = Math.max(0.1, entryCzk - slCzk);
+
+                    const maxAllowedRiskCzk = capital * (maxRiskPct / 100.0);
+                    const sharesByRisk = Math.floor(maxAllowedRiskCzk / riskPerShareCzk);
+                    const maxPosCzk = capital * 0.20;
+                    const sharesByCap = Math.floor(maxPosCzk / entryCzk);
+                    const finalShares = Math.max(1, Math.min(sharesByRisk, sharesByCap));
+
+                    const allocCzk = Math.round(finalShares * entryCzk);
+                    const actualRiskCzk = Math.round(finalShares * riskPerShareCzk);
+                    const actualRiskPct = ((actualRiskCzk / capital) * 100).toFixed(1);
+
+                    const sharesCell = row.querySelector('.order-shares-cell');
+                    if (sharesCell) sharesCell.innerText = `${finalShares} ks`;
+                    const allocCell = row.querySelector('.order-alloc-cell');
+                    if (allocCell) allocCell.innerText = `${allocCzk.toLocaleString('cs-CZ')} CZK`;
+                    const riskCell = row.querySelector('.order-risk-cell');
+                    if (riskCell) riskCell.innerText = `${actualRiskCzk.toLocaleString('cs-CZ')} CZK (${actualRiskPct} %)`;
+                } catch (e) {
+                    console.warn('Recalc error:', e);
+                }
+            });
+            showScanToast(`🔄 Příkazy přepočteny pro kapitál ${capital.toLocaleString('cs-CZ')} CZK (Max risk ${maxRiskPct} %).`, 'info', 3000);
+        }
+
+        function simulatePaperExecution(orderId, symbol) {
+            const row = document.getElementById(`orderRow-${orderId}`);
+            if (!row) return;
+            const btn = row.querySelector('.order-btn-exec');
+            if (btn) {
+                btn.innerText = '✅ Vyplněno';
+                btn.style.background = 'rgba(16, 185, 129, 0.4)';
+                btn.style.borderColor = '#10b981';
+                btn.disabled = true;
+            }
+            showScanToast(`🚀 Paper Trading: Příkaz ${symbol} byl simulovaně vyplněn na limitní ceně se Stop-Lossem a Take-Profitem!`, 'success', 5000);
+        }
+
+        function copyOrderJson(orderId) {
+            const row = document.getElementById(`orderRow-${orderId}`);
+            if (!row) return;
+            const raw = row.getAttribute('data-order-raw');
+            if (!raw) return;
+            try {
+                const ord = JSON.parse(raw);
+                const xapiPayload = ord.xtb_xapi_payload || ord;
+                navigator.clipboard.writeText(JSON.stringify(xapiPayload, null, 2)).then(() => {
+                    showScanToast(`📋 JSON příkaz pro XTB xAPI (${ord.symbol_xtb}) byl zkopírován do schránky!`, 'success', 4000);
+                });
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        function exportTradingOrdersJSON() {
+            const rows = document.querySelectorAll('#ordersTableBody tr');
+            const orders = [];
+            rows.forEach(r => {
+                const raw = r.getAttribute('data-order-raw');
+                if (raw) {
+                    try { orders.push(JSON.parse(raw)); } catch(e){}
+                }
+            });
+            const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(orders, null, 2));
+            const dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute('href', dataStr);
+            dlAnchor.setAttribute('download', `SuggestInvest_XTB_Orders_${new Date().toISOString().slice(0,10)}.json`);
+            dlAnchor.click();
+            showScanToast(`📥 Exportováno ${orders.length} příkazů do JSON souboru pro XTB.`, 'success');
+        }
+
+        /* XTB API CONFIG MODAL */
+        function openXtbConfigModal() {
+            const m = document.getElementById('xtbConfigModal');
+            if (m) {
+                const saved = localStorage.getItem('xtb_api_config');
+                if (saved) {
+                    try {
+                        const parsed = JSON.parse(saved);
+                        document.getElementById('xtbUserIdInput').value = parsed.userId || '';
+                        document.getElementById('xtbServerSelect').value = parsed.server || 'demo';
+                    } catch(e){}
+                }
+                m.style.display = 'flex';
+            }
+        }
+
+        function closeXtbConfigModal() {
+            const m = document.getElementById('xtbConfigModal');
+            if (m) m.style.display = 'none';
+        }
+
+        function saveXtbConfig() {
+            const userId = document.getElementById('xtbUserIdInput').value.trim();
+            const server = document.getElementById('xtbServerSelect').value;
+            if (!userId) {
+                alert('Zadejte prosím vaše XTB ID / číslo účtu.');
+                return;
+            }
+            localStorage.setItem('xtb_api_config', JSON.stringify({ userId, server, savedAt: new Date().toISOString() }));
+            closeXtbConfigModal();
+            showScanToast('✅ Nastavení XTB xAPI uloženo lokálně v prohlížeči.', 'success');
+        }
     </script>
 
     <!-- ⚙️ GITHUB ACTIONS TOKEN MODAL -->
@@ -171503,6 +172849,47 @@
                     <button type="button" class="btn-modal-cancel" onclick="closeTokenModal()">Zrušit</button>
                     <button type="button" class="btn-modal-submit" onclick="submitTokenAndRun()">🚀 Spustit sken</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🤖 XTB XAPI CONFIG MODAL -->
+    <div id="xtbConfigModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title-row">
+                    <span class="modal-icon">🤖</span>
+                    <h3>Konfigurace brokera XTB (xAPI Bridge)</h3>
+                </div>
+                <button class="modal-close-btn" onclick="closeXtbConfigModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-desc">
+                    SuggestInvest komunikuje s platformou XTB prostřednictvím oficiálního <strong>xAPI WebSocket protokolu</strong> (kompatibilního s <code>xapi-python</code> a xStation5).
+                </p>
+
+                <div class="modal-callout">
+                    <div class="callout-header">🔒 Lokální bezpečnostní šifrování</div>
+                    <p>Přístupové údaje zůstávají výhradně v paměti vašeho prohlížeče a používají se pouze k přímému navázání spojení na zabezpečený server <code>wss://ws.xtb.com</code>.</p>
+                </div>
+
+                <form class="pat-form" autocomplete="off" onsubmit="event.preventDefault(); saveXtbConfig();">
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <label class="input-label" for="xtbUserIdInput">XTB Uživatelské ID / Číslo účtu</label>
+                        <input type="text" id="xtbUserIdInput" class="login-input" placeholder="např. 12345678" autocomplete="off">
+                    </div>
+                    <div class="form-group" style="margin-top: 0.75rem;">
+                        <label class="input-label" for="xtbServerSelect">Typ účtu & Server</label>
+                        <select id="xtbServerSelect" class="trading-select" style="width: 100%; height: 38px;">
+                            <option value="demo" selected>Demo účet (wss://ws.xtb.com/demo)</option>
+                            <option value="real">Reálný účet (wss://ws.xtb.com/real)</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-modal-cancel" onclick="closeXtbConfigModal()">Zavřít</button>
+                <button type="button" class="btn-modal-submit" onclick="saveXtbConfig()">💾 Uložit nastavení</button>
             </div>
         </div>
     </div>

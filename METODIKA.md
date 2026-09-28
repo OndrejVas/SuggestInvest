@@ -292,21 +292,83 @@ D. Akademické ukotvení – Přehled 4 nových výzkumných prací:
 | Juan Luis Ruiz-Tagle (UPM Madrid, 2023) | Predikce krátkodobých trendů pomocí FinBERT a technických indikátorů. | Pravidlo nepotvrzeného sentimentu v Gemini AI (sentiment vyžaduje technický impuls). | Ochrana před nákupem do padajícího nože na pouhou 'pozitivní PR zprávu'. |
 | Praveen Sadasivan (Victoria University, 2024/25) | Predikce bankovních indexů pomocí optimalizovaných AI modelů a úrokových sazeb. | Katalyzátor CAT_FINANCIAL_CYCLE se zpožděnou transmisí úrokových marží (NIM). | Přesnější časování vstupů do evropských a českých bank (KB, Erste, Moneta). |
 
+### 6.12 Makroekonomický Barometr: Index Rizika Recese, Krachu a Sektorové Kontrakce
 
+Na samotném začátku vizuálního dashboardu byl implementován **Kompozitní Makroekonomický Barometr (0 až 100)** s vertikální stupnicí pro předstihovou identifikaci příchodu hospodářské recese, systémového tržního krachu a kontrakce v jednotlivých sektorech.
+
+#### A. Kvantitativní složení a vážení sub-faktorů:
+Model syntetizuje 5 klíčových institucionálních datových proudů:
+1. **Výnosová křivka US Treasuries (Váha 25 %)**:
+   - Sleduje spread mezi 10letým výnosem (`^TNX`) a 3měsíční pokladniční poukázkou (`^IRX`) a 5letým výnosem (`^FVX`).
+   - Inverze křivky ($10Y - 3M < 0$) spolehlivě předpovídá recesi s předstihem 6–18 měsíců. Nejkritičtější je fáze *un-inversion* (opětovné napřimování po inverzi), kdy recese fakticky propuká.
+2. **Kreditní spready & Dluhopisové riziko (Váha 20 %)**:
+   - Poměr rizikových high-yield dluhopisů (`HYG`) vůči kvalitním dluhopisům (`LQD`) a státním bondům (`IEF`).
+   - Pokles poměru pod 50denní klouzavý průměr indikuje útěk institucionálního kapitálu před rizikem selhání dlužníků.
+3. **Volatilita & CBOE VIX režim (Váha 20 %)**:
+   - Úroveň a 20denní kinetika indexu `^VIX`. Rozlišuje klidný trh ($VIX < 15$), normální stav ($15–20$), korekční napětí ($21–28$), panický výprodej ($28–40$) a likviditní krizi ($VIX > 40$).
+4. **Spotřební poptávka & Průmyslový cyklus (Váha 20 %)**:
+   - Poměr cyklického a defenzivního spotřebního koše (`XLY / XLP`) a relativní hybnost průmyslu (`XLI`) vůči `SPY`.
+   - Domácnosti před recesí omezují zbytné výdaje (auta, luxus) ve prospěch základních potravin a energií, což se projevuje prudkým propadem poměru $XLY/XLP$ o 2 až 4 měsíce dříve než v oficiálních datech HDP.
+5. **Vnitřní šíře univerza SuggestInvest (Váha 15 %)**:
+   - Poměr prodejních (Sell / Strong Sell) vs nákupních doporučení a průměrné 1M momentum napříč všemi 557 aktivy univerza.
+
+#### B. Pásma vertikální stupnice barometru:
+- **0 – 25**: 🟢 **BÝČÍ EXPANZE (Minimální riziko)** – Příznivé makro klima, plná alokace do akciových lídrů.
+- **26 – 45**: 🟡 **POZDNÍ CYKLUS (Zvýšená obezřetnost)** – Zpomalování tempa, selektivní rotace do TOP 5 MVO konvikčních titulů.
+- **46 – 65**: 🟠 **PŘEDSTIHOVÉ VAROVÁNÍ (Riziko korekce)** – Rozšiřování spreadů, nákupy pouze s limity a RRR $\ge 2.0$.
+- **66 – 85**: 🔴 **VYSOKÉ RIZIKO RECESE (Medvědí trh)** – Silné signály kontrakce, redukce cyklických titulů, rotace do hotovosti a XLP/XLU.
+- **86 – 100**: 🚨 **AKUTNÍ KRACH / SYSTÉMOVÝ ŠOK (Krizový režim)** – Volatilní zlom, aktivace stop-lossů a kapitálové ochrany.
+
+#### C. Sektorový radar recese:
+Pro 9 sektorových ETF (`XLY`, `XLP`, `XLK`, `XLF`, `XLI`, `XLRE`, `XLE`, `XLV`, `XLU`) systém počítá:
+- 1M a 3M relativní výkonnost vůči benchmarku `SPY`.
+- Fázi cyklu (`EXPANZE`, `ZPOMALENÍ`, `KONTRAKCE / RECESE`, `DEFENZIVNÍ ÚTĚK`).
+- Pravděpodobnost sektorové recese (0 až 100 %).
+
+---
+
+### 6.13 Autonomní Trading Portál & Broker Execution Bridge (XTB xAPI WebSocket)
+
+Pro přechod od pasivního screeningu k plně autonomnímu či poloautonomnímu tradingu systém disponuje modulem **Broker Execution Bridge**:
+
+#### A. Kvantitativní Risk Gatekeeper:
+Každý vygenerovaný nákupní příkaz prochází striktní validací:
+1. **Striktní Stop-Loss (Invalidační cena)**: Každý příkaz musí mít definovanou invalidační hladinu vycházející z ATR a supportu.
+2. **Minimální Risk/Reward Ratio ($RRR \ge 1.8$)**: Poměr potenciálního zisku (k cílové ceně analytiků) vůči riziku na stop-lossu.
+3. **Position Sizing dle rizika**:
+   $$\text{Max Risk (CZK)} = \text{Kapitál portfolia} \times \frac{\text{Max Risk \%}}{100}$$
+   $$\text{Počet akcií} = \left\lfloor \frac{\text{Max Risk (CZK)}}{(\text{Limitní cena} - \text{SL cena}) \times \text{FX rate}} \right\rfloor$$
+   Přičemž platí strop maximální velikosti jedné pozice (výchozí 20 % celkového kapitálu).
+4. **Makroekonomický multiplikátor expozice**: Při indikaci vysokého rizika recese či krachu v Makro Barometru Risk Gatekeeper automaticky redukuje velikost pozic na 50 % nebo zamezuje otevírání nových cyklických pozic.
+
+#### B. Standardizovaný XTB xAPI Socket Protocol:
+Příkazy jsou formátovány přímo do oficiální JSON struktury XTB `tradeTransaction`:
+- `cmd: 0` (BUY)
+- `type: 2` (PENDING LIMIT)
+- `price`: Vypočtená limitní nákupní cena při stažení (pullback)
+- `sl`: Invalidační stop-loss úroveň
+- `tp`: Konsenzuální cílová cena analytiků
+- `customComment`: Značka identifikující zdroj signálu (`SI-AI-MVO-#Rank`)
+
+#### C. Provozní režimy:
+1. **Paper Sandbox (Výchozí bezpečný režim)**: Umožňuje simulovat exekuce, sledovat virtuální portfolio a ověřovat ziskovost bez rizika reálného kapitálu.
+2. **XTB xAPI Live / Demo Bridge**: Přímé propojení přes zabezpečený WebSocket na `wss://ws.xtb.com` s lokálně šifrovanými přihlašovacími údaji.
+
+---
 
 ## 7. Segmentace univerza: Proč 3 prioritní koše (Tiers)
 
-Všech 541 aktiv je kategorizováno do 3 logických košů, které umožňují okamžité filtrování podle investičního stylu:
+Všech 557 aktiv je kategorizováno do 3 logických košů, které umožňují okamžité filtrování podle investičního stylu:
 
 
 | Koš (Tier) | Počet aktiv | Charakteristika a složení | Účel v portfoliu |
 | --- | --- | --- | --- |
 | 🥇 TIER 1 TOP Leaders | 48 aktiv | US Mega-Caps (Apple, Nvidia, Microsoft, Amazon), kompletní BCPP v CZK (ČEZ, banky, Colt), evropské stálice (ASML, SAP) a klíčová indexová ETF (S&P 500, All-World, Nasdaq). | Základní stavební kameny, nejvyšší likvidita, globální tržní kapitalizace a minimální spread. |
-| 🥈 TIER 2 MID Growth | 472 aktiv | Rozsáhlé spektrum světových blue-chips (A–Z), polovodičoví lídři, jaderná energetika, obranný sektor, kosmonautika, krypto-proxies a sektorová UCITS ETF na XTB. | Růstový potenciál, sektorové megatrendy a diverzifikace napříč kontinenty i měnami. |
+| 🥈 TIER 2 MID Growth | 488 aktiv | Rozsáhlé spektrum světových blue-chips (A–Z), polovodičoví lídři, jaderná energetika, obranný sektor, kosmonautika, krypto-proxies a sektorová UCITS ETF na XTB. | Růstový potenciál, sektorové megatrendy a diverzifikace napříč kontinenty i měnami. |
 | 🥉 TIER 3 LOW Discovery | 21 aktiv | Vysoce volatilní tituly, obratové (turnaround) akcie, čínské tech akcie v US a průkopnická biotechnologie. | Asymetrický poměr rizika a výnosu pro dynamickou část kapitálu. |
 
 
 
 ## 8. Závěrečné shrnutí: Přidaná hodnota pro investora
 
-Systém SuggestInvest odstraňuje z investičního rozhodování dvě největší slabiny lidského investora: emoční zkreslení a informační zahlcení. Díky spojení reálných tržních dat z XTB, konsenzu analytiků, firemních kalendářů a syntézy modelu Google Gemini dostává investor každé ráno ucelený a forward-looking screening trhu, který mu během několika vteřin ukáže, kde se dnes otevírají nejzajímavější příležitosti.
+Systém SuggestInvest odstraňuje z investičního rozhodování dvě největší slabiny lidského investora: emoční zkreslení a informační zahlcení. Díky spojení reálných tržních dat z XTB, konsenzu analytiků, firemních kalendářů, makroekonomického barometru recese a autonomního obchodního můstku dostává investor ucelený a forward-looking ekosystém, který mu během několika vteřin ukáže stav globální ekonomiky, sektorová rizika i konkrétní exekuční bracket příkazy s přísným řízením rizik.

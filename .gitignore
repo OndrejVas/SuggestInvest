@@ -8,4 +8,6 @@ venv/
 Thumbs.db
 ~$*
 cache_fundamentals.json
+cache_macro.json
+data/cache_macro.json
 *.cache
