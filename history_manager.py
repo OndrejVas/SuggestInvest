@@ -592,3 +592,85 @@ def compute_daily_changes(
     except Exception as e:
         logger.warning(f"Chyba při výpočtu denních změn v history_manager: {e}")
         return cards, default_stats
+
+
+def get_all_ticker_signal_dots(limit_per_ticker: int = 30) -> Dict[str, List[Dict[str, Any]]]:
+    """
+    Vrátí pro všechny tickery chronologickou historii signálů (až limit_per_ticker skenů)
+    optimalizovaným jediným SQL dotazem pomocí window funkce ROW_NUMBER().
+    Každý záznam obsahuje: date_str, signal, signal_class, probability, price, price_str, color.
+    """
+    result: Dict[str, List[Dict[str, Any]]] = {}
+    if not os.path.exists(DB_FILE):
+        return result
+    try:
+        with sqlite3.connect(DB_FILE) as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+            SELECT UPPER(sh.yahoo_symbol), sh.scan_date, sh.signal, sh.probability, sh.price, s.timestamp_cet
+            FROM (
+                SELECT id, scan_id, yahoo_symbol, scan_date, signal, probability, price,
+                       ROW_NUMBER() OVER (PARTITION BY UPPER(yahoo_symbol) ORDER BY id DESC) as rn
+                FROM signal_history
+            ) sh
+            LEFT JOIN scans s ON s.scan_id = sh.scan_id
+            WHERE sh.rn <= ?
+            ORDER BY UPPER(sh.yahoo_symbol), sh.id ASC
+            """, (limit_per_ticker,))
+
+            rows = cursor.fetchall()
+            for sym, sdate, sig, prob, price, ts_cet in rows:
+                if sym not in result:
+                    result[sym] = []
+
+                sig_str = (sig or "HOLD").upper().strip()
+                if "STRONG BUY" in sig_str:
+                    color = "#10b981"
+                    sig_cls = "strong-buy"
+                elif "BUY" in sig_str:
+                    color = "#22c55e"
+                    sig_cls = "buy"
+                elif "STRONG SELL" in sig_str:
+                    color = "#b91c1c"
+                    sig_cls = "strong-sell"
+                elif "SELL" in sig_str:
+                    color = "#ef4444"
+                    sig_cls = "sell"
+                else:
+                    color = "#eab308"
+                    sig_cls = "hold"
+
+                # Extrahujeme datum a čas pro kompaktní a přesný tooltip (např. '28.09. 19:01')
+                label = sdate
+                if ts_cet and " v " in ts_cet:
+                    try:
+                        date_part, time_part = ts_cet.split(" v ")
+                        # '28. 09. 2026' -> '28.09.'
+                        d_parts = [p.strip() for p in date_part.split(".") if p.strip()]
+                        if len(d_parts) >= 2:
+                            d_clean = f"{d_parts[0]}.{d_parts[1]}."
+                        else:
+                            d_clean = date_part.strip()
+                        t_clean = time_part.split(" ")[0].strip()
+                        label = f"{d_clean} {t_clean}"
+                    except Exception:
+                        label = sdate
+                elif sdate and len(sdate) == 10:
+                    parts = sdate.split("-")
+                    label = f"{parts[2]}.{parts[1]}."
+
+                price_str = f"{price:.2f}" if price is not None else ""
+
+                result[sym].append({
+                    "date": sdate,
+                    "date_str": label,
+                    "signal": sig_str,
+                    "signal_class": sig_cls,
+                    "probability": prob or 50,
+                    "price": price,
+                    "price_str": price_str,
+                    "color": color
+                })
+    except Exception as e:
+        logger.warning(f"Chyba při hromadném načítání historie teček v history_manager: {e}")
+    return result

@@ -597,8 +597,8 @@
 
         .asset-table-header {
             display: grid;
-            grid-template-columns: 40px minmax(200px, 2fr) 95px 95px 95px 120px 125px 130px 90px 70px;
-            gap: 12px;
+            grid-template-columns: 38px minmax(180px, 2fr) 90px 90px 90px 115px 110px 165px 125px 85px;
+            gap: 10px;
             align-items: center;
             padding: 0.75rem 1.25rem;
             background: rgba(255, 255, 255, 0.03);
@@ -608,7 +608,7 @@
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            min-width: 1060px;
+            min-width: 1080px;
             user-select: none;
         }
 
@@ -635,13 +635,13 @@
         .asset-rows-body {
             display: flex;
             flex-direction: column;
-            min-width: 1060px;
+            min-width: 1080px;
         }
 
         .asset-row {
             display: grid;
-            grid-template-columns: 40px minmax(200px, 2fr) 95px 95px 95px 120px 125px 130px 90px 70px;
-            gap: 12px;
+            grid-template-columns: 38px minmax(180px, 2fr) 90px 90px 90px 115px 110px 165px 125px 85px;
+            gap: 10px;
             align-items: center;
             padding: 0.65rem 1.25rem;
             border-bottom: 1px solid var(--border-color);
@@ -1830,23 +1830,39 @@
             line-height: 1.4;
         }
 
-        .top-conviction-cards {
+        .top-conviction-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 0.85rem;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 0.75rem;
             margin-top: 0.85rem;
+        }
+
+        @media (max-width: 1100px) {
+            .top-conviction-grid {
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 0.5rem;
+                gap: 0.75rem;
+            }
+            .conviction-card {
+                min-width: 210px;
+                flex: 0 0 210px;
+                scroll-snap-align: start;
+            }
         }
 
         .conviction-card {
             background: rgba(15, 23, 42, 0.75);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: var(--radius-md);
-            padding: 0.85rem 1rem;
+            padding: 0.75rem 0.85rem;
             cursor: pointer;
             transition: all 0.25s ease;
             display: flex;
             flex-direction: column;
-            gap: 0.4rem;
+            gap: 0.35rem;
             position: relative;
         }
 
@@ -1861,35 +1877,71 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 4px;
         }
 
         .conv-rank {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 900;
             color: #f59e0b;
             background: rgba(245, 158, 11, 0.15);
-            padding: 2px 6px;
+            padding: 2px 5px;
             border-radius: 4px;
         }
 
         .conv-weight {
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 700;
             color: #38bdf8;
             background: rgba(56, 189, 248, 0.12);
-            padding: 2px 6px;
+            padding: 2px 5px;
             border-radius: 4px;
         }
 
+        .conv-chart-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            color: #38bdf8;
+            text-decoration: none;
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 1px 6px;
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 4px;
+            transition: all 0.15s ease;
+        }
+
+        .conv-chart-link:hover {
+            background: rgba(56, 189, 248, 0.25);
+            color: #7dd3fc;
+            border-color: rgba(56, 189, 248, 0.6);
+            text-decoration: none;
+        }
+
+        .conv-symbol-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-top: 2px;
+        }
+
         .conv-symbol {
-            font-size: 0.98rem;
+            font-size: 0.95rem;
             font-weight: 800;
             color: #ffffff;
             letter-spacing: 0.02em;
         }
 
+        .conv-curr {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
         .conv-name {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             color: var(--text-muted);
             white-space: nowrap;
             overflow: hidden;
@@ -1900,11 +1952,11 @@
             display: flex;
             flex-direction: column;
             gap: 2px;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             color: #cbd5e1;
-            margin-top: 4px;
+            margin-top: 2px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 4px;
+            padding-top: 3px;
         }
 
         .conv-stats > div {
@@ -1913,7 +1965,7 @@
         }
 
         .conv-reason {
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             color: #94a3b8;
             font-style: italic;
             margin-top: 2px;
@@ -1922,6 +1974,95 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+        }
+
+        .conv-tooltip-wrapper {
+            position: relative;
+            margin-top: auto;
+            padding-top: 4px;
+        }
+
+        .conv-tooltip-trigger {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #fbbf24;
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .conv-tooltip-trigger:hover {
+            background: rgba(245, 158, 11, 0.25);
+            border-color: rgba(245, 158, 11, 0.6);
+            color: #fef08a;
+        }
+
+        .conv-tooltip-wrapper:hover .conv-tooltip-popup,
+        .conv-tooltip-popup:hover {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .conv-tooltip-popup {
+            border-color: rgba(245, 158, 11, 0.55) !important;
+            box-shadow: 0 20px 45px -5px rgba(0, 0, 0, 0.9), 0 0 25px rgba(245, 158, 11, 0.25) !important;
+        }
+
+        /* 📊 SLOUPEC ZMĚNA & HISTORIE DOPORUČENÍ (TEČKY) */
+        .cell-change-history {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .badge-stable {
+            background: rgba(148, 163, 184, 0.12);
+            color: #94a3b8;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 4px;
+            letter-spacing: 0.02em;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .history-dots-row {
+            display: flex;
+            align-items: center;
+            gap: 2.5px;
+            flex-wrap: wrap;
+            max-width: 160px;
+            padding: 1px 0;
+        }
+
+        .sig-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            display: inline-block;
+            cursor: pointer;
+            transition: transform 0.15s ease, filter 0.15s ease;
+            flex-shrink: 0;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .sig-dot:hover {
+            transform: scale(1.8);
+            filter: brightness(1.35);
+            z-index: 10;
         }
 
         @media (max-width: 1200px) {
@@ -2054,14 +2195,86 @@
                 </div>
                 <div class="top-conviction-grid">
                     {% for item in top_5_basket %}
-                    <div class="conviction-card" onclick="filterToAsset('{{ item.xtb_symbol }}')" title="Klikněte pro zobrazení a vyfiltrování titulu {{ item.xtb_symbol }}">
-                        <div class="conv-rank">#{{ item.rank }}</div>
-                        <div class="conv-weight">Váha: {{ item.portfolio_weight }}</div>
-                        <div class="conv-sym">{{ item.xtb_symbol }}</div>
-                        <div class="conv-name">{{ item.name }}</div>
-                        <div class="conv-score">Conviction: <strong>{{ item.conviction_score }}</strong> | Cíl: <strong>{{ item.target_upside }}</strong></div>
-                        <div class="conv-metrics">RV21: {{ item.rv_21_str }} • {{ item.sentiment_regime }}</div>
+                    <div class="conviction-card" onclick="filterToAsset('{{ item.xtb_symbol }}')" title="Klikněte pro vyfiltrování v tabulce níže">
+                        <div class="conv-card-top">
+                            <span class="conv-rank">#{{ item.rank }}</span>
+                            <span class="conv-weight">{{ item.portfolio_weight }}</span>
+                            <a href="{{ item.chart_url }}" target="_blank" rel="noopener noreferrer" class="conv-chart-link" onclick="event.stopPropagation();" title="Otevřít živý interaktivní graf na Yahoo Finance">📈 Graf ↗</a>
+                        </div>
+                        <div class="conv-symbol-row">
+                            <span class="conv-symbol">{{ item.xtb_symbol }}</span>
+                            <span class="conv-curr">{{ item.currency }}</span>
+                        </div>
+                        <div class="conv-name" title="{{ item.name }}">{{ item.name }}</div>
+                        <div class="conv-stats">
+                            <div><span>Conviction:</span> <strong style="color: #fbbf24;">{{ item.conviction_score }}</strong></div>
+                            <div><span>Cíl analytiků:</span> <strong class="{{ item.target_upside_class }}">{{ item.target_upside }}</strong></div>
+                            <div><span>Volatilita:</span> <span>{{ item.rv_21_str }}</span></div>
+                        </div>
                         <div class="conv-reason">„{{ item.tactical_note }}“</div>
+
+                        <!-- 💡 Rich Tooltip pro TOP 5 dlaždici -->
+                        <div class="conv-tooltip-wrapper">
+                            <button type="button" class="conv-tooltip-trigger" onclick="event.stopPropagation();" aria-label="Zobrazit detailní analýzu alokace">
+                                <span>💡</span>
+                                <span>Detail alokace</span>
+                            </button>
+                            <div class="ai-tooltip-popup conv-tooltip-popup" role="tooltip" onclick="event.stopPropagation();">
+                                <div class="tooltip-header">
+                                    <span class="tooltip-title">🏆 Masuda Conviction Alokace #{{ item.rank }}</span>
+                                    <span class="tooltip-ticker">{{ item.yahoo_symbol }}</span>
+                                </div>
+                                <div class="tooltip-grid">
+                                    <div class="tooltip-stat">
+                                        <span class="stat-lbl">Titul / Instrument:</span>
+                                        <span class="stat-val font-accent">{{ item.name }} ({{ item.xtb_symbol }})</span>
+                                    </div>
+                                    <div class="tooltip-stat">
+                                        <span class="stat-lbl">MVO Váha portfolia:</span>
+                                        <span class="stat-val font-success" style="font-weight: 800;">{{ item.portfolio_weight }}</span>
+                                    </div>
+                                    <div class="tooltip-stat">
+                                        <span class="stat-lbl">Sharpe Conviction Skóre:</span>
+                                        <span class="stat-val font-warning" style="font-weight: 800;">{{ item.conviction_score }}</span>
+                                    </div>
+                                    <div class="tooltip-stat">
+                                        <span class="stat-lbl">Aktuální cena:</span>
+                                        <span class="stat-val font-accent">{{ item.price }} {{ item.currency }}</span>
+                                    </div>
+                                    <div class="tooltip-stat">
+                                        <span class="stat-lbl">Cílová cena (Upside):</span>
+                                        <span class="stat-val {{ item.target_upside_class }}">{{ item.target_mean }} (<strong>{{ item.target_upside }}</strong>)</span>
+                                    </div>
+                                    <div class="tooltip-stat">
+                                        <span class="stat-lbl">Realizovaná vol. (RV 21d):</span>
+                                        <span class="stat-val">{{ item.rv_21_str }}</span>
+                                    </div>
+                                    <div class="tooltip-stat">
+                                        <span class="stat-lbl">Režim sentimentu:</span>
+                                        <span class="stat-val">{{ item.sentiment_regime }}</span>
+                                    </div>
+                                    {% if item.limit_buy_range and item.limit_buy_range != '—' %}
+                                    <div class="tooltip-stat">
+                                        <span class="stat-lbl">Limitní nákupní pásmo:</span>
+                                        <span class="stat-val font-accent">{{ item.limit_buy_range }}</span>
+                                    </div>
+                                    {% endif %}
+                                    {% if item.catalysts %}
+                                    <div class="tooltip-stat">
+                                        <span class="stat-lbl">Aktivní katalyzátory:</span>
+                                        <span class="stat-val font-highlight">{{ item.catalysts|join(', ') }}</span>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="tooltip-divider"></div>
+                                <p class="tooltip-reasoning">{{ item.tactical_note }}</p>
+                                <div class="tooltip-footer" style="margin-top: 8px;">
+                                    <a href="{{ item.chart_url }}" target="_blank" rel="noopener noreferrer" class="conv-chart-link" style="width: 100%; justify-content: center; padding: 4px 8px;">
+                                        📈 Otevřít interaktivní graf na Yahoo Finance ↗
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     {% endfor %}
                 </div>
@@ -2143,17 +2356,18 @@
                         </div>
                     </div>
 
-                    <!-- 6. Filtr Posuny od včerejška -->
+                    <!-- 6. Filtr Posuny & Změny (Changes) -->
                     <div class="filter-group">
-                        <span class="filter-title">⚡ Posuny od včerejška</span>
+                        <span class="filter-title">⚡ Klíčové změny (Changes)</span>
                         <div class="pill-row" id="changeFilter">
                             <button class="pill-btn active" data-val="all" onclick="setFilter('change', 'all')">Všechny tituly</button>
-                            <button class="pill-btn" data-val="changed" onclick="setFilter('change', 'changed')" title="Zobrazit pouze tituly se změnou doporučení, konfidence či katalyzátoru">⚡ Všechny změny ({{ counts.total_changed or 0 }})</button>
+                            <button class="pill-btn" data-val="changed" onclick="setFilter('change', 'changed')" title="Zobrazit pouze tituly se změnou doporučení či katalyzátoru">⚡ Všechny změny ({{ counts.total_changed or 0 }})</button>
                             <button class="pill-btn" data-val="upgrades" onclick="setFilter('change', 'upgrades')" title="Tituly se zvýšeným doporučením (např. HOLD -> BUY)">⬆️ Upgrady ({{ counts.upgrades or 0 }})</button>
                             <button class="pill-btn" data-val="downgrades" onclick="setFilter('change', 'downgrades')" title="Tituly se sníženým doporučením (např. BUY -> HOLD)">⬇️ Downgrady ({{ counts.downgrades or 0 }})</button>
                             {% if counts.conf_jumps %}
                             <button class="pill-btn" data-val="conf_jumps" onclick="setFilter('change', 'conf_jumps')" title="Tituly s výrazným posunem konfidence o 10%+">🔥 Změna konfidence ({{ counts.conf_jumps }})</button>
                             {% endif %}
+                            <button class="pill-btn" data-val="stable" onclick="setFilter('change', 'stable')" title="Tituly beze změny doporučení od posledního skenu">⚖️ Stabilní</button>
                         </div>
                     </div>
                 </div>
@@ -2175,9 +2389,9 @@
                     <div class="th-cell th-sortable text-right" onclick="sortTable('change')" title="Řadit podle denní změny">Denní změna <span id="sort-change" class="sort-icon">↕</span></div>
                     <div class="th-cell th-sortable text-right" onclick="sortTable('upside')" title="Řadit podle růstového potenciálu k cílové ceně analytiků">Cílová cena <span id="sort-upside" class="sort-icon">↕</span></div>
                     <div class="th-cell th-sortable text-center" onclick="sortTable('signal')" title="Řadit podle síly AI signálu">AI Signál <span id="sort-signal" class="sort-icon">↕</span></div>
+                    <div class="th-cell th-sortable" onclick="sortTable('delta')" title="Řadit podle posunu doporučení (Upgrady nahoře)">Změna & Historie <span id="sort-delta" class="sort-icon">↕</span></div>
                     <div class="th-cell th-sortable" onclick="sortTable('prob')" title="Řadit podle míry konfidence">Konfidence & Impuls <span id="sort-prob" class="sort-icon">↕</span></div>
                     <div class="th-cell text-center" title="AI analýza a fundamentální kontext při najetí myši">AI Kontext</div>
-                    <div class="th-cell text-center">Graf</div>
                 </div>
 
                 <div class="asset-rows-body" id="assetRowsBody">
@@ -2198,7 +2412,8 @@
                              data-signal-rank="{{ item.signal_rank }}"
                              data-prob="{{ item.confidence }}"
                              data-changed="{{ 1 if item.daily_change and item.daily_change.is_changed else 0 }}"
-                             data-change-type="{{ item.daily_change.change_type if item.daily_change else 'UNCHANGED' }}">
+                             data-change-type="{{ item.daily_change.change_type if item.daily_change else 'UNCHANGED' }}"
+                             data-delta="{{ item.daily_change.rank_diff if item.daily_change else 0 }}">
                         
                         <!-- 1. Pořadí -->
                         <div class="row-cell cell-rank">
@@ -2257,15 +2472,32 @@
                         </div>
 
                         <!-- 7. AI Signál -->
-                        <div class="row-cell cell-signal text-center" style="flex-direction: column;">
+                        <div class="row-cell cell-signal text-center">
                             <span class="signal-badge {{ item.signal_class }}">
                                 {{ item.signal }}
                             </span>
+                        </div>
+
+                        <!-- 8. Změna doporučení & Historická řada skenů (až 30 skenů) -->
+                        <div class="row-cell cell-change-history">
                             {% if item.daily_change and item.daily_change.is_changed %}
                             <span class="badge-change {{ item.daily_change.badge_class }}" title="{{ item.daily_change.change_desc }}">
                                 {{ item.daily_change.change_badge }}
                             </span>
+                            {% else %}
+                            <span class="badge-change badge-stable" title="Doporučení beze změny od posledního skenu">
+                                ⚖️ Stabilní
+                            </span>
                             {% endif %}
+
+                            <!-- Řada barevných teček historie doporučení (až 30 skenů) -->
+                            <div class="history-dots-row" title="Historie doporučení za posledních až 30 skenů (najetím myši zobrazíte čas, signál a cenu)">
+                                {% for dot in item.signal_history_dots %}
+                                <span class="sig-dot sig-dot-{{ dot.signal_class }}" 
+                                      style="background-color: {{ dot.color }};" 
+                                      title="{{ dot.date_str }}: {{ dot.signal }}{% if dot.probability %} ({{ dot.probability }}%){% endif %}{% if dot.price_str %} - {{ dot.price_str }} {{ item.currency }}{% endif %}"></span>
+                                {% endfor %}
+                            </div>
                         </div>
 
                         <!-- 8. Konfidence & Impuls -->
@@ -2462,12 +2694,6 @@
                             </div>
                         </div>
 
-                        <!-- 10. Hyperlink na graf titulu -->
-                        <div class="row-cell text-center">
-                            <a href="{{ item.chart_url }}" target="_blank" rel="noopener noreferrer" class="chart-btn" title="Otevřít živý interaktivní graf na Yahoo Finance">
-                                📈 Graf
-                            </a>
-                        </div>
                     </article>
                     {% endfor %}
 
@@ -2593,14 +2819,14 @@
         // ==================== CHYTRÉ ZOBRAZENÍ TOOLTIPŮ (100% VIDITELNÉ V OKNĚ) ====================
         function initSmartTooltips() {
             document.addEventListener('mouseover', (e) => {
-                const trigger = e.target.closest('.ai-tooltip-trigger') || e.target.closest('.ai-tooltip-wrapper');
+                const trigger = e.target.closest('.ai-tooltip-trigger') || e.target.closest('.ai-tooltip-wrapper') || e.target.closest('.conv-tooltip-trigger') || e.target.closest('.conv-tooltip-wrapper');
                 if (!trigger) return;
-                const wrapper = trigger.closest('.ai-tooltip-wrapper');
+                const wrapper = trigger.closest('.ai-tooltip-wrapper') || trigger.closest('.conv-tooltip-wrapper');
                 if (!wrapper) return;
                 const popup = wrapper.querySelector('.ai-tooltip-popup');
                 if (!popup) return;
 
-                const triggerBtn = wrapper.querySelector('.ai-tooltip-trigger') || trigger;
+                const triggerBtn = wrapper.querySelector('.ai-tooltip-trigger') || wrapper.querySelector('.conv-tooltip-trigger') || trigger;
                 const rect = triggerBtn.getBoundingClientRect();
                 const tooltipWidth = Math.min(390, window.innerWidth - 24);
                 const padding = 12;
@@ -2746,6 +2972,15 @@
                     const valA = parseInt(a.getAttribute('data-prob'), 10) || 0;
                     const valB = parseInt(b.getAttribute('data-prob'), 10) || 0;
                     return currentSort.asc ? (valA - valB) : (valB - valA);
+                } else if (col === 'delta') {
+                    const valA = parseInt(a.getAttribute('data-delta'), 10) || 0;
+                    const valB = parseInt(b.getAttribute('data-delta'), 10) || 0;
+                    if (valA !== valB) {
+                        return currentSort.asc ? (valA - valB) : (valB - valA);
+                    }
+                    const confA = parseInt(a.getAttribute('data-prob'), 10) || 0;
+                    const confB = parseInt(b.getAttribute('data-prob'), 10) || 0;
+                    return currentSort.asc ? (confA - confB) : (confB - confA);
                 }
                 return 0;
             });
@@ -2819,6 +3054,8 @@
                         matchChange = (changeType === 'DOWNGRADE');
                     } else if (activeFilters.change === 'conf_jumps') {
                         matchChange = (changeType === 'CONFIDENCE_JUMP' || changeType === 'CONFIDENCE_DROP');
+                    } else if (activeFilters.change === 'stable') {
+                        matchChange = !isChanged || changeType === 'UNCHANGED';
                     }
                 }
 

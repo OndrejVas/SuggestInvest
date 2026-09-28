@@ -317,20 +317,35 @@ def compute_top_5_conviction_basket(cards: List[Dict[str, Any]]) -> List[Dict[st
         
         idx = len(selected)
         w = weights[idx]
-        curr_counts[curr] = curr_counts.get(curr, 0) + 1
+        sym = c.get("yahoo_symbol") or (c.get("xtb_symbol", "").split(".")[0])
+        chart_url = c.get("chart_url") or f"https://finance.yahoo.com/quote/{sym}"
 
         selected.append({
             "rank": idx + 1,
             "xtb_symbol": c.get("xtb_symbol"),
+            "yahoo_symbol": sym,
             "name": c.get("name"),
             "currency": curr,
+            "price": c.get("price", "—"),
+            "signal": c.get("signal", "BUY"),
+            "signal_class": c.get("signal_class", "signal-buy"),
+            "confidence": c.get("confidence") or c.get("probability", 80),
+            "target_mean": c.get("target_mean", "—"),
             "target_upside": c.get("target_upside", "N/A"),
+            "target_upside_class": c.get("target_upside_class", "target-upside-positive"),
             "rv_21_str": c.get("rv_21_str", "N/A"),
             "conviction_score": f"{c.get('conviction_score', 0.0):.2f}",
             "portfolio_weight": w,
             "tactical_note": c.get("reasoning", "Vysoký poměr očekávaného růstu k volatilitě."),
-            "catalysts": c.get("catalysts", [])[:2],
+            "catalysts": c.get("catalysts", [])[:3],
             "sentiment_regime": c.get("sentiment_regime", "BALANCED"),
+            "chart_url": chart_url,
+            "invalidation_price_str": c.get("invalidation_price_str", "—"),
+            "limit_buy_range": c.get("limit_buy_range", "—"),
+            "days_to_earnings": c.get("days_to_earnings"),
+            "next_earnings_date": c.get("next_earnings_date"),
+            "days_to_ex_dividend": c.get("days_to_ex_dividend"),
+            "ex_dividend_date": c.get("ex_dividend_date"),
         })
 
         if len(selected) == 5:

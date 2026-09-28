@@ -21,7 +21,8 @@ from history_manager import (
     save_scan_history, 
     get_ticker_signal_history, 
     get_ticker_historical_context,
-    compute_daily_changes
+    compute_daily_changes,
+    get_all_ticker_signal_dots
 )
 
 # Automatické načtení proměnných z .env
@@ -753,27 +754,13 @@ def run_scanner(tiers: List[str] = None, allow_mock_fallback: bool = True) -> st
     final_cards, change_stats = compute_daily_changes(final_cards, current_scan_date=current_date_str)
     logger.info(f"Denní posuny vyhodnoceny: {change_stats.get('total_changed', 0)} změn (⬆️ {change_stats.get('upgrades', 0)} upgradů, ⬇️ {change_stats.get('downgrades', 0)} downgradů).")
 
-    # 8.6. Výběr TOP 5 Conviction Basket (Masuda Sharpe Optimization - SRC-9)
-    top_5_basket = compute_top_5_conviction_basket(final_cards)
-    logger.info(f"TOP 5 Conviction Basket (Masuda Sharpe Allocation) sestaven: {[x['xtb_symbol'] for x in top_5_basket]}")
-
-    # 9. Vygenerování a uložení index.html
     elapsed = time.time() - scan_start
     if elapsed >= 60:
         scan_duration_str = f"{int(elapsed // 60)} min {int(elapsed % 60)} s"
     else:
         scan_duration_str = f"{elapsed:.1f} s"
 
-    data_sources_str = "XTB Market Catalog • Yahoo Finance Realtime • Yahoo Analyst Consensus & Calendars • Yahoo Financial News RSS • Google Gemini 3.5 AI"
-    html_output = build_html_report(final_cards, is_demo=is_demo, scan_duration=scan_duration_str, data_sources=data_sources_str, change_stats=change_stats, top_5_basket=top_5_basket)
-
-    output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "index.html")
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write(html_output)
-
-    logger.info(f"Report pro {len(final_cards)} aktiv byl úspěšně vygenerován do: {output_path}")
-
-    # 10. Uložení historického snapshotu (JSON Data Lake + SQLite history.db)
+    # 8.6. Uložení historického snapshotu (JSON Data Lake + SQLite history.db) před načtením teček
     try:
         now_utc = datetime.now(timezone.utc)
         now_cet = now_utc + timedelta(hours=2)
@@ -798,6 +785,44 @@ def run_scanner(tiers: List[str] = None, allow_mock_fallback: bool = True) -> st
     except Exception as e:
         logger.warning(f"Chyba při ukládání do historie: {e}")
 
+    # 8.7. Hromadné načtení až 30 historických teček doporučení pro každé aktivum
+    try:
+        all_signal_dots = get_all_ticker_signal_dots(limit_per_ticker=30)
+        for card in final_cards:
+            sym_key = (card.get("yahoo_symbol") or "").upper().strip()
+            dots = all_signal_dots.get(sym_key, [])
+            if not dots:
+                # Pokud ještě nemá historii v databázi, vložíme alespoň aktuální signál
+                sig_upper = card.get("signal", "HOLD").upper()
+                c_color = "#10b981" if "STRONG BUY" in sig_upper else ("#22c55e" if "BUY" in sig_upper else ("#ef4444" if "SELL" in sig_upper else "#eab308"))
+                dots = [{
+                    "date": current_date_str,
+                    "date_str": "Dnes",
+                    "signal": card.get("signal", "HOLD"),
+                    "signal_class": card.get("signal_class", "signal-hold"),
+                    "probability": card.get("confidence", 50),
+                    "price_str": f"{card.get('price_raw', 0):.2f}" if card.get("price_raw") else "",
+                    "color": c_color
+                }]
+            card["signal_history_dots"] = dots
+    except Exception as e:
+        logger.warning(f"Chyba při přiřazování teček historie: {e}")
+        for card in final_cards:
+            card["signal_history_dots"] = []
+
+    # 8.8. Výběr TOP 5 Conviction Basket (Masuda Sharpe Optimization - SRC-9)
+    top_5_basket = compute_top_5_conviction_basket(final_cards)
+    logger.info(f"TOP 5 Conviction Basket (Masuda Sharpe Allocation) sestaven: {[x['xtb_symbol'] for x in top_5_basket]}")
+
+    # 9. Vygenerování a uložení index.html
+    data_sources_str = "XTB Market Catalog • Yahoo Finance Realtime • Yahoo Analyst Consensus & Calendars • Yahoo Financial News RSS • Google Gemini 3.5 AI"
+    html_output = build_html_report(final_cards, is_demo=is_demo, scan_duration=scan_duration_str, data_sources=data_sources_str, change_stats=change_stats, top_5_basket=top_5_basket)
+
+    output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "index.html")
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(html_output)
+
+    logger.info(f"Report pro {len(final_cards)} aktiv byl úspěšně vygenerován do: {output_path}")
     logger.info("=== Běh skeneru úspěšně dokončen ===")
     return output_path
 
