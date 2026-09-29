@@ -184,7 +184,7 @@
         /* 3-GRID CONNECTIVITY CARDS */
         .broker-status-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1rem;
         }
 
@@ -800,7 +800,7 @@
                         <span class="pulse-dot"></span> Socket API: Ready
                     </span>
                     <span style="font-size: 0.74rem; color: var(--text-muted);">
-                        Poslední sken: <strong>29.09.2026 15:06 SELČ</strong>
+                        Poslední sken: <strong>29.09.2026 16:32 SELČ</strong>
                     </span>
                 </div>
             </div>
@@ -815,12 +815,28 @@
             </div>
         </header>
 
-        <!-- 3 BROKER STATUS CHIPS -->
+        <!-- 4 BROKER STATUS CHIPS -->
         <div class="broker-status-grid">
             <div class="broker-card active-broker">
                 <div class="broker-card-header">
-                    <span class="broker-card-title">🏦 Interactive Brokers TWS API</span>
-                    <span class="status-chip ready">Aktivní režim</span>
+                    <span class="broker-card-title">🌐 IBKR Client Portal Gateway</span>
+                    <span class="status-chip ready">Port 5000</span>
+                </div>
+                <div class="broker-card-meta">https://localhost:5000 (Java 17 JRE)</div>
+                <p class="broker-card-desc">
+                    Zabezpečená lokální REST / WebSocket brána v adresáři <code>IB Gateway</code>. Umožňuje přímé webové přihlášení a autonomní exekuce.
+                </p>
+                <div style="margin-top: 6px;">
+                    <a href="https://localhost:5000/" target="_blank" rel="noopener noreferrer" class="action-btn primary-ibkr" style="text-decoration: none; display: inline-flex; align-items: center; gap: 5px; font-size: 0.74rem; padding: 4px 9px;">
+                        <span>🔐</span> Otevřít IBKR Login (localhost:5000) ↗
+                    </a>
+                </div>
+            </div>
+
+            <div class="broker-card">
+                <div class="broker-card-header">
+                    <span class="broker-card-title">🏦 IBKR TWS Socket API</span>
+                    <span class="status-chip ready">Předpřipraveno</span>
                 </div>
                 <div class="broker-card-meta">Socket Port 7497 (Paper) / 7496 (Live)</div>
                 <p class="broker-card-desc">
@@ -959,12 +975,12 @@
                 </thead>
                 <tbody id="ordersTableBody">
                     
-                    <tr id="orderRow-ORD-20260929-RHM-CD02" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 3159.07, &#34;capital_risk_pct&#34;: 1.26, &#34;conviction_score&#34;: &#34;2.55&#34;, &#34;created_at&#34;: &#34;2026-09-29 13:06:50 UTC&#34;, &#34;currency&#34;: &#34;EUR&#34;, &#34;current_price&#34;: 958.0, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,2,RHM,STK,SMART,EUR,LMT,944.04,881.36&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027RHM\u0027, \u0027SMART\u0027, \u0027EUR\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=2,\n    limitPrice=944.04,\n    takeProfitPrice=1085.65,\n    stopLossPrice=881.36\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 944.04, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Rheinmetall AG&#34;, &#34;order_id&#34;: &#34;ORD-20260929-RHM-CD02&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 47579.62, &#34;rank&#34;: 1, &#34;rrr&#34;: 2.26, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 2, &#34;sl_price&#34;: 881.36, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;RHM&#34;, &#34;symbol_xtb&#34;: &#34;RHM.DE&#34;, &#34;symbol_yahoo&#34;: &#34;RHM.DE&#34;, &#34;tp_price&#34;: 1085.65, &#34;weight_pct&#34;: 25.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-1&#34;, &#34;price&#34;: 944.04, &#34;sl&#34;: 881.36, &#34;symbol&#34;: &#34;RHM.DE&#34;, &#34;tp&#34;: 1085.65, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                    <tr id="orderRow-ORD-20260929-RHM-E646" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2896.99, &#34;capital_risk_pct&#34;: 1.16, &#34;conviction_score&#34;: &#34;2.55&#34;, &#34;created_at&#34;: &#34;2026-09-29 11:37:30 UTC&#34;, &#34;currency&#34;: &#34;EUR&#34;, &#34;current_price&#34;: 958.0, &#34;limit_price&#34;: 958.0, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Rheinmetall AG&#34;, &#34;order_id&#34;: &#34;ORD-20260929-RHM-E646&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 48283.2, &#34;rank&#34;: 1, &#34;rrr&#34;: 2.5, &#34;shares&#34;: 2, &#34;sl_price&#34;: 900.52, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_xtb&#34;: &#34;RHM.DE&#34;, &#34;symbol_yahoo&#34;: &#34;RHM.DE&#34;, &#34;tp_price&#34;: 1101.7, &#34;weight_pct&#34;: 25.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-1&#34;, &#34;price&#34;: 958.0, &#34;sl&#34;: 900.52, &#34;symbol&#34;: &#34;RHM.DE&#34;, &#34;tp&#34;: 1101.7, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
                         <td style="font-weight: 800; color: var(--text-muted);">#1</td>
                         <td>
                             <div class="sym-cell">
                                 <div class="sym-main">
-                                    <span>RHM</span>
+                                    <span>RHM.DE</span>
                                     <span class="sym-ibkr-tag">SMART</span>
                                 </div>
                                 <div class="sym-sub" title="Rheinmetall AG">Rheinmetall AG (RHM.DE)</div>
@@ -974,22 +990,22 @@
                             <span class="badge-buy-lmt">BUY LIMIT</span>
                         </td>
                         <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">2 ks</td>
-                        <td class="font-mono price-entry">944.04 EUR</td>
-                        <td class="font-mono price-sl">881.36 EUR</td>
-                        <td class="font-mono price-tp">1085.65 EUR</td>
-                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">2.26:1</td>
-                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">47580 CZK</td>
-                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">3159 CZK (1.26 %)</td>
+                        <td class="font-mono price-entry">958.0 EUR</td>
+                        <td class="font-mono price-sl">900.52 EUR</td>
+                        <td class="font-mono price-tp">1101.7 EUR</td>
+                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">2.5:1</td>
+                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">48283 CZK</td>
+                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">2897 CZK (1.16 %)</td>
                         <td>
                             <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
                             <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
                         </td>
                         <td style="text-align: right;">
                             <div style="display: flex; justify-content: flex-end; gap: 4px;">
-                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20260929-RHM-CD02', 'RHM')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20260929-RHM-E646', '')" title="Simulovat exekuci v Paper Trading sandboxu">
                                     ▶ Exekuce
                                 </button>
-                                <button class="row-action-btn" onclick="copySingleBracketCode('ORD-20260929-RHM-CD02')" title="Kopírovat Python kód pro tento konkrétní bracket příkaz">
+                                <button class="row-action-btn" onclick="copySingleBracketCode('ORD-20260929-RHM-E646')" title="Kopírovat Python kód pro tento konkrétní bracket příkaz">
                                     📋 Kód
                                 </button>
                                 <a href="https://finance.yahoo.com/chart/RHM.DE" target="_blank" rel="noopener noreferrer" class="row-action-btn" style="text-decoration: none;" title="Otevřít graf">
@@ -999,7 +1015,7 @@
                         </td>
                     </tr>
                     
-                    <tr id="orderRow-ORD-20260929-ALLY-6691" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 3461.08, &#34;capital_risk_pct&#34;: 1.38, &#34;conviction_score&#34;: &#34;2.48&#34;, &#34;created_at&#34;: &#34;2026-09-29 13:06:50 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 38.19, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,56,ALLY,STK,SMART,USD,LMT,37.76,35.13&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027ALLY\u0027, \u0027SMART\u0027, \u0027USD\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=56,\n    limitPrice=37.76,\n    takeProfitPrice=53.23,\n    stopLossPrice=35.13\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 37.76, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Ally Financial Inc&#34;, &#34;order_id&#34;: &#34;ORD-20260929-ALLY-6691&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 49692.16, &#34;rank&#34;: 2, &#34;rrr&#34;: 5.88, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 56, &#34;sl_price&#34;: 35.13, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;ALLY&#34;, &#34;symbol_xtb&#34;: &#34;ALLY.US&#34;, &#34;symbol_yahoo&#34;: &#34;ALLY&#34;, &#34;tp_price&#34;: 53.23, &#34;weight_pct&#34;: 25.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-2&#34;, &#34;price&#34;: 37.76, &#34;sl&#34;: 35.13, &#34;symbol&#34;: &#34;ALLY.US&#34;, &#34;tp&#34;: 53.23, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                    <tr id="orderRow-ORD-20260929-ALLY-C440" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2961.63, &#34;capital_risk_pct&#34;: 1.18, &#34;conviction_score&#34;: &#34;2.48&#34;, &#34;created_at&#34;: &#34;2026-09-29 11:37:30 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 38.19, &#34;limit_price&#34;: 38.19, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Ally Financial Inc&#34;, &#34;order_id&#34;: &#34;ORD-20260929-ALLY-C440&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 49360.57, &#34;rank&#34;: 2, &#34;rrr&#34;: 6.56, &#34;shares&#34;: 55, &#34;sl_price&#34;: 35.9, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_xtb&#34;: &#34;ALLY.US&#34;, &#34;symbol_yahoo&#34;: &#34;ALLY&#34;, &#34;tp_price&#34;: 53.23, &#34;weight_pct&#34;: 25.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-2&#34;, &#34;price&#34;: 38.19, &#34;sl&#34;: 35.9, &#34;symbol&#34;: &#34;ALLY.US&#34;, &#34;tp&#34;: 53.23, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
                         <td style="font-weight: 800; color: var(--text-muted);">#2</td>
                         <td>
                             <div class="sym-cell">
@@ -1013,23 +1029,23 @@
                         <td>
                             <span class="badge-buy-lmt">BUY LIMIT</span>
                         </td>
-                        <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">56 ks</td>
-                        <td class="font-mono price-entry">37.76 USD</td>
-                        <td class="font-mono price-sl">35.13 USD</td>
+                        <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">55 ks</td>
+                        <td class="font-mono price-entry">38.19 USD</td>
+                        <td class="font-mono price-sl">35.9 USD</td>
                         <td class="font-mono price-tp">53.23 USD</td>
-                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">5.88:1</td>
-                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">49692 CZK</td>
-                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">3461 CZK (1.38 %)</td>
+                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">6.56:1</td>
+                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">49361 CZK</td>
+                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">2962 CZK (1.18 %)</td>
                         <td>
                             <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
                             <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
                         </td>
                         <td style="text-align: right;">
                             <div style="display: flex; justify-content: flex-end; gap: 4px;">
-                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20260929-ALLY-6691', 'ALLY')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20260929-ALLY-C440', '')" title="Simulovat exekuci v Paper Trading sandboxu">
                                     ▶ Exekuce
                                 </button>
-                                <button class="row-action-btn" onclick="copySingleBracketCode('ORD-20260929-ALLY-6691')" title="Kopírovat Python kód pro tento konkrétní bracket příkaz">
+                                <button class="row-action-btn" onclick="copySingleBracketCode('ORD-20260929-ALLY-C440')" title="Kopírovat Python kód pro tento konkrétní bracket příkaz">
                                     📋 Kód
                                 </button>
                                 <a href="https://finance.yahoo.com/chart/ALLY" target="_blank" rel="noopener noreferrer" class="row-action-btn" style="text-decoration: none;" title="Otevřít graf">
@@ -1039,7 +1055,7 @@
                         </td>
                     </tr>
                     
-                    <tr id="orderRow-ORD-20260929-AVGO-EF6A" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 3329.01, &#34;capital_risk_pct&#34;: 1.33, &#34;conviction_score&#34;: &#34;2.40&#34;, &#34;created_at&#34;: &#34;2026-09-29 13:06:50 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 349.57, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,6,AVGO,STK,SMART,USD,LMT,345.21,321.6&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027AVGO\u0027, \u0027SMART\u0027, \u0027USD\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=6,\n    limitPrice=345.21,\n    takeProfitPrice=531.85,\n    stopLossPrice=321.6\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 345.21, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Broadcom Inc&#34;, &#34;order_id&#34;: &#34;ORD-20260929-AVGO-EF6A&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 48674.61, &#34;rank&#34;: 3, &#34;rrr&#34;: 7.91, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 6, &#34;sl_price&#34;: 321.6, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;AVGO&#34;, &#34;symbol_xtb&#34;: &#34;AVGO.US&#34;, &#34;symbol_yahoo&#34;: &#34;AVGO&#34;, &#34;tp_price&#34;: 531.85, &#34;weight_pct&#34;: 20.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-3&#34;, &#34;price&#34;: 345.21, &#34;sl&#34;: 321.6, &#34;symbol&#34;: &#34;AVGO.US&#34;, &#34;tp&#34;: 531.85, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                    <tr id="orderRow-ORD-20260929-AVGO-2432" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2957.36, &#34;capital_risk_pct&#34;: 1.18, &#34;conviction_score&#34;: &#34;2.40&#34;, &#34;created_at&#34;: &#34;2026-09-29 11:37:30 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 349.57, &#34;limit_price&#34;: 349.57, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Broadcom Inc&#34;, &#34;order_id&#34;: &#34;ORD-20260929-AVGO-2432&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 49289.37, &#34;rank&#34;: 3, &#34;rrr&#34;: 8.69, &#34;shares&#34;: 6, &#34;sl_price&#34;: 328.6, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_xtb&#34;: &#34;AVGO.US&#34;, &#34;symbol_yahoo&#34;: &#34;AVGO&#34;, &#34;tp_price&#34;: 531.85, &#34;weight_pct&#34;: 20.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-3&#34;, &#34;price&#34;: 349.57, &#34;sl&#34;: 328.6, &#34;symbol&#34;: &#34;AVGO.US&#34;, &#34;tp&#34;: 531.85, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
                         <td style="font-weight: 800; color: var(--text-muted);">#3</td>
                         <td>
                             <div class="sym-cell">
@@ -1054,22 +1070,22 @@
                             <span class="badge-buy-lmt">BUY LIMIT</span>
                         </td>
                         <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">6 ks</td>
-                        <td class="font-mono price-entry">345.21 USD</td>
-                        <td class="font-mono price-sl">321.6 USD</td>
+                        <td class="font-mono price-entry">349.57 USD</td>
+                        <td class="font-mono price-sl">328.6 USD</td>
                         <td class="font-mono price-tp">531.85 USD</td>
-                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">7.91:1</td>
-                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">48675 CZK</td>
-                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">3329 CZK (1.33 %)</td>
+                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">8.69:1</td>
+                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">49289 CZK</td>
+                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">2957 CZK (1.18 %)</td>
                         <td>
                             <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
                             <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
                         </td>
                         <td style="text-align: right;">
                             <div style="display: flex; justify-content: flex-end; gap: 4px;">
-                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20260929-AVGO-EF6A', 'AVGO')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20260929-AVGO-2432', '')" title="Simulovat exekuci v Paper Trading sandboxu">
                                     ▶ Exekuce
                                 </button>
-                                <button class="row-action-btn" onclick="copySingleBracketCode('ORD-20260929-AVGO-EF6A')" title="Kopírovat Python kód pro tento konkrétní bracket příkaz">
+                                <button class="row-action-btn" onclick="copySingleBracketCode('ORD-20260929-AVGO-2432')" title="Kopírovat Python kód pro tento konkrétní bracket příkaz">
                                     📋 Kód
                                 </button>
                                 <a href="https://finance.yahoo.com/chart/AVGO" target="_blank" rel="noopener noreferrer" class="row-action-btn" style="text-decoration: none;" title="Otevřít graf">
@@ -1079,7 +1095,7 @@
                         </td>
                     </tr>
                     
-                    <tr id="orderRow-ORD-20260929-ORCL-8323" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2072.7, &#34;capital_risk_pct&#34;: 0.83, &#34;conviction_score&#34;: &#34;2.32&#34;, &#34;created_at&#34;: &#34;2026-09-29 13:06:50 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 132.6, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,12,ORCL,STK,SMART,USD,LMT,129.34,121.99&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027ORCL\u0027, \u0027SMART\u0027, \u0027USD\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=12,\n    limitPrice=129.34,\n    takeProfitPrice=237.97,\n    stopLossPrice=121.99\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 129.34, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Oracle Corp&#34;, &#34;order_id&#34;: &#34;ORD-20260929-ORCL-8323&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 36473.88, &#34;rank&#34;: 4, &#34;rrr&#34;: 14.78, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 12, &#34;sl_price&#34;: 121.99, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;ORCL&#34;, &#34;symbol_xtb&#34;: &#34;ORCL.US&#34;, &#34;symbol_yahoo&#34;: &#34;ORCL&#34;, &#34;tp_price&#34;: 237.97, &#34;weight_pct&#34;: 15.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-4&#34;, &#34;price&#34;: 129.34, &#34;sl&#34;: 121.99, &#34;symbol&#34;: &#34;ORCL.US&#34;, &#34;tp&#34;: 237.97, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                    <tr id="orderRow-ORD-20260929-ORCL-39F0" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2243.59, &#34;capital_risk_pct&#34;: 0.9, &#34;conviction_score&#34;: &#34;2.32&#34;, &#34;created_at&#34;: &#34;2026-09-29 11:37:30 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 132.6, &#34;limit_price&#34;: 132.6, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Oracle Corp&#34;, &#34;order_id&#34;: &#34;ORD-20260929-ORCL-39F0&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 37393.2, &#34;rank&#34;: 4, &#34;rrr&#34;: 13.24, &#34;shares&#34;: 12, &#34;sl_price&#34;: 124.64, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_xtb&#34;: &#34;ORCL.US&#34;, &#34;symbol_yahoo&#34;: &#34;ORCL&#34;, &#34;tp_price&#34;: 237.97, &#34;weight_pct&#34;: 15.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-4&#34;, &#34;price&#34;: 132.6, &#34;sl&#34;: 124.64, &#34;symbol&#34;: &#34;ORCL.US&#34;, &#34;tp&#34;: 237.97, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
                         <td style="font-weight: 800; color: var(--text-muted);">#4</td>
                         <td>
                             <div class="sym-cell">
@@ -1094,22 +1110,22 @@
                             <span class="badge-buy-lmt">BUY LIMIT</span>
                         </td>
                         <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">12 ks</td>
-                        <td class="font-mono price-entry">129.34 USD</td>
-                        <td class="font-mono price-sl">121.99 USD</td>
+                        <td class="font-mono price-entry">132.6 USD</td>
+                        <td class="font-mono price-sl">124.64 USD</td>
                         <td class="font-mono price-tp">237.97 USD</td>
-                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">14.78:1</td>
-                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">36474 CZK</td>
-                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">2073 CZK (0.83 %)</td>
+                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">13.24:1</td>
+                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">37393 CZK</td>
+                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">2244 CZK (0.9 %)</td>
                         <td>
                             <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
                             <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
                         </td>
                         <td style="text-align: right;">
                             <div style="display: flex; justify-content: flex-end; gap: 4px;">
-                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20260929-ORCL-8323', 'ORCL')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20260929-ORCL-39F0', '')" title="Simulovat exekuci v Paper Trading sandboxu">
                                     ▶ Exekuce
                                 </button>
-                                <button class="row-action-btn" onclick="copySingleBracketCode('ORD-20260929-ORCL-8323')" title="Kopírovat Python kód pro tento konkrétní bracket příkaz">
+                                <button class="row-action-btn" onclick="copySingleBracketCode('ORD-20260929-ORCL-39F0')" title="Kopírovat Python kód pro tento konkrétní bracket příkaz">
                                     📋 Kód
                                 </button>
                                 <a href="https://finance.yahoo.com/chart/ORCL" target="_blank" rel="noopener noreferrer" class="row-action-btn" style="text-decoration: none;" title="Otevřít graf">
@@ -1119,12 +1135,12 @@
                         </td>
                     </tr>
                     
-                    <tr id="orderRow-ORD-20260929-SAN-29BC" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2630.88, &#34;capital_risk_pct&#34;: 1.05, &#34;conviction_score&#34;: &#34;2.31&#34;, &#34;created_at&#34;: &#34;2026-09-29 13:06:50 UTC&#34;, &#34;currency&#34;: &#34;EUR&#34;, &#34;current_price&#34;: 72.25, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,20,SAN,STK,SMART,EUR,LMT,71.69,66.47&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027SAN\u0027, \u0027SMART\u0027, \u0027EUR\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=20,\n    limitPrice=71.69,\n    takeProfitPrice=94.06,\n    stopLossPrice=66.47\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 71.69, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Sanofi SA&#34;, &#34;order_id&#34;: &#34;ORD-20260929-SAN-29BC&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 36131.76, &#34;rank&#34;: 5, &#34;rrr&#34;: 4.29, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 20, &#34;sl_price&#34;: 66.47, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;SAN&#34;, &#34;symbol_xtb&#34;: &#34;SAN.FR&#34;, &#34;symbol_yahoo&#34;: &#34;SAN.PA&#34;, &#34;tp_price&#34;: 94.06, &#34;weight_pct&#34;: 15.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-5&#34;, &#34;price&#34;: 71.69, &#34;sl&#34;: 66.47, &#34;symbol&#34;: &#34;SAN.FR&#34;, &#34;tp&#34;: 94.06, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                    <tr id="orderRow-ORD-20260929-SAN-90F3" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2184.84, &#34;capital_risk_pct&#34;: 0.87, &#34;conviction_score&#34;: &#34;2.31&#34;, &#34;created_at&#34;: &#34;2026-09-29 11:37:30 UTC&#34;, &#34;currency&#34;: &#34;EUR&#34;, &#34;current_price&#34;: 72.25, &#34;limit_price&#34;: 72.25, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Sanofi SA&#34;, &#34;order_id&#34;: &#34;ORD-20260929-SAN-90F3&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 36414.0, &#34;rank&#34;: 5, &#34;rrr&#34;: 5.03, &#34;shares&#34;: 20, &#34;sl_price&#34;: 67.91, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_xtb&#34;: &#34;SAN.FR&#34;, &#34;symbol_yahoo&#34;: &#34;SAN.PA&#34;, &#34;tp_price&#34;: 94.06, &#34;weight_pct&#34;: 15.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-5&#34;, &#34;price&#34;: 72.25, &#34;sl&#34;: 67.91, &#34;symbol&#34;: &#34;SAN.FR&#34;, &#34;tp&#34;: 94.06, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
                         <td style="font-weight: 800; color: var(--text-muted);">#5</td>
                         <td>
                             <div class="sym-cell">
                                 <div class="sym-main">
-                                    <span>SAN</span>
+                                    <span>SAN.PA</span>
                                     <span class="sym-ibkr-tag">SMART</span>
                                 </div>
                                 <div class="sym-sub" title="Sanofi SA">Sanofi SA (SAN.FR)</div>
@@ -1134,25 +1150,225 @@
                             <span class="badge-buy-lmt">BUY LIMIT</span>
                         </td>
                         <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">20 ks</td>
-                        <td class="font-mono price-entry">71.69 EUR</td>
-                        <td class="font-mono price-sl">66.47 EUR</td>
+                        <td class="font-mono price-entry">72.25 EUR</td>
+                        <td class="font-mono price-sl">67.91 EUR</td>
                         <td class="font-mono price-tp">94.06 EUR</td>
-                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">4.29:1</td>
-                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">36132 CZK</td>
-                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">2631 CZK (1.05 %)</td>
+                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">5.03:1</td>
+                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">36414 CZK</td>
+                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">2185 CZK (0.87 %)</td>
                         <td>
                             <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
                             <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
                         </td>
                         <td style="text-align: right;">
                             <div style="display: flex; justify-content: flex-end; gap: 4px;">
-                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20260929-SAN-29BC', 'SAN')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20260929-SAN-90F3', '')" title="Simulovat exekuci v Paper Trading sandboxu">
                                     ▶ Exekuce
                                 </button>
-                                <button class="row-action-btn" onclick="copySingleBracketCode('ORD-20260929-SAN-29BC')" title="Kopírovat Python kód pro tento konkrétní bracket příkaz">
+                                <button class="row-action-btn" onclick="copySingleBracketCode('ORD-20260929-SAN-90F3')" title="Kopírovat Python kód pro tento konkrétní bracket příkaz">
                                     📋 Kód
                                 </button>
                                 <a href="https://finance.yahoo.com/chart/SAN.PA" target="_blank" rel="noopener noreferrer" class="row-action-btn" style="text-decoration: none;" title="Otevřít graf">
+                                    📈 Graf
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr id="orderRow-ORD-20260929-AMX-5223" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2992.98, &#34;capital_risk_pct&#34;: 1.2, &#34;conviction_score&#34;: &#34;3.35&#34;, &#34;created_at&#34;: &#34;2026-09-29 01:19:20 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 21.66, &#34;limit_price&#34;: 21.66, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;America Movil S.A.B. de C.V. - ADR&#34;, &#34;order_id&#34;: &#34;ORD-20260929-AMX-5223&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 49882.98, &#34;rank&#34;: 1, &#34;rrr&#34;: 5.99, &#34;shares&#34;: 98, &#34;sl_price&#34;: 20.36, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_xtb&#34;: &#34;AMX.US&#34;, &#34;symbol_yahoo&#34;: &#34;AMX&#34;, &#34;tp_price&#34;: 29.44, &#34;weight_pct&#34;: 25.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-1&#34;, &#34;price&#34;: 21.66, &#34;sl&#34;: 20.36, &#34;symbol&#34;: &#34;AMX.US&#34;, &#34;tp&#34;: 29.44, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                        <td style="font-weight: 800; color: var(--text-muted);">#1</td>
+                        <td>
+                            <div class="sym-cell">
+                                <div class="sym-main">
+                                    <span>AMX</span>
+                                    <span class="sym-ibkr-tag">SMART</span>
+                                </div>
+                                <div class="sym-sub" title="America Movil S.A.B. de C.V. - ADR">America Movil S.A.B. de C.V. - ADR (AMX.US)</div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge-buy-lmt">BUY LIMIT</span>
+                        </td>
+                        <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">98 ks</td>
+                        <td class="font-mono price-entry">21.66 USD</td>
+                        <td class="font-mono price-sl">20.36 USD</td>
+                        <td class="font-mono price-tp">29.44 USD</td>
+                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">5.99:1</td>
+                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">49883 CZK</td>
+                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">2993 CZK (1.2 %)</td>
+                        <td>
+                            <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
+                            <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
+                        </td>
+                        <td style="text-align: right;">
+                            <div style="display: flex; justify-content: flex-end; gap: 4px;">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20260929-AMX-5223', '')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                    ▶ Exekuce
+                                </button>
+                                <button class="row-action-btn" onclick="copySingleBracketCode('ORD-20260929-AMX-5223')" title="Kopírovat Python kód pro tento konkrétní bracket příkaz">
+                                    📋 Kód
+                                </button>
+                                <a href="https://finance.yahoo.com/chart/AMX" target="_blank" rel="noopener noreferrer" class="row-action-btn" style="text-decoration: none;" title="Otevřít graf">
+                                    📈 Graf
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr id="orderRow-ORD-20260929-HII-F855" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2899.52, &#34;capital_risk_pct&#34;: 1.16, &#34;conviction_score&#34;: &#34;3.15&#34;, &#34;created_at&#34;: &#34;2026-09-29 01:19:20 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 257.05, &#34;limit_price&#34;: 257.05, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Huntington Ingalls Industries Inc&#34;, &#34;order_id&#34;: &#34;ORD-20260929-HII-F855&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 48325.4, &#34;rank&#34;: 2, &#34;rrr&#34;: 7.15, &#34;shares&#34;: 8, &#34;sl_price&#34;: 241.63, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_xtb&#34;: &#34;HII.US&#34;, &#34;symbol_yahoo&#34;: &#34;HII&#34;, &#34;tp_price&#34;: 367.25, &#34;weight_pct&#34;: 25.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-2&#34;, &#34;price&#34;: 257.05, &#34;sl&#34;: 241.63, &#34;symbol&#34;: &#34;HII.US&#34;, &#34;tp&#34;: 367.25, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                        <td style="font-weight: 800; color: var(--text-muted);">#2</td>
+                        <td>
+                            <div class="sym-cell">
+                                <div class="sym-main">
+                                    <span>HII</span>
+                                    <span class="sym-ibkr-tag">SMART</span>
+                                </div>
+                                <div class="sym-sub" title="Huntington Ingalls Industries Inc">Huntington Ingalls Industries Inc (HII.US)</div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge-buy-lmt">BUY LIMIT</span>
+                        </td>
+                        <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">8 ks</td>
+                        <td class="font-mono price-entry">257.05 USD</td>
+                        <td class="font-mono price-sl">241.63 USD</td>
+                        <td class="font-mono price-tp">367.25 USD</td>
+                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">7.15:1</td>
+                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">48325 CZK</td>
+                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">2900 CZK (1.16 %)</td>
+                        <td>
+                            <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
+                            <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
+                        </td>
+                        <td style="text-align: right;">
+                            <div style="display: flex; justify-content: flex-end; gap: 4px;">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20260929-HII-F855', '')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                    ▶ Exekuce
+                                </button>
+                                <button class="row-action-btn" onclick="copySingleBracketCode('ORD-20260929-HII-F855')" title="Kopírovat Python kód pro tento konkrétní bracket příkaz">
+                                    📋 Kód
+                                </button>
+                                <a href="https://finance.yahoo.com/chart/HII" target="_blank" rel="noopener noreferrer" class="row-action-btn" style="text-decoration: none;" title="Otevřít graf">
+                                    📈 Graf
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr id="orderRow-ORD-20260929-BROS-70E9" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2979.95, &#34;capital_risk_pct&#34;: 1.19, &#34;conviction_score&#34;: &#34;3.12&#34;, &#34;created_at&#34;: &#34;2026-09-29 01:19:20 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 37.74, &#34;limit_price&#34;: 37.74, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Dutch Bros Inc (Cboe BZX Real-Time Quote)&#34;, &#34;order_id&#34;: &#34;ORD-20260929-BROS-70E9&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 49665.84, &#34;rank&#34;: 3, &#34;rrr&#34;: 16.67, &#34;shares&#34;: 56, &#34;sl_price&#34;: 35.48, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_xtb&#34;: &#34;BROS.US&#34;, &#34;symbol_yahoo&#34;: &#34;BROS&#34;, &#34;tp_price&#34;: 75.48, &#34;weight_pct&#34;: 20.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-3&#34;, &#34;price&#34;: 37.74, &#34;sl&#34;: 35.48, &#34;symbol&#34;: &#34;BROS.US&#34;, &#34;tp&#34;: 75.48, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                        <td style="font-weight: 800; color: var(--text-muted);">#3</td>
+                        <td>
+                            <div class="sym-cell">
+                                <div class="sym-main">
+                                    <span>BROS</span>
+                                    <span class="sym-ibkr-tag">SMART</span>
+                                </div>
+                                <div class="sym-sub" title="Dutch Bros Inc (Cboe BZX Real-Time Quote)">Dutch Bros Inc (Cboe BZX Real-Time Quote) (BROS.US)</div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge-buy-lmt">BUY LIMIT</span>
+                        </td>
+                        <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">56 ks</td>
+                        <td class="font-mono price-entry">37.74 USD</td>
+                        <td class="font-mono price-sl">35.48 USD</td>
+                        <td class="font-mono price-tp">75.48 USD</td>
+                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">16.67:1</td>
+                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">49666 CZK</td>
+                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">2980 CZK (1.19 %)</td>
+                        <td>
+                            <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
+                            <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
+                        </td>
+                        <td style="text-align: right;">
+                            <div style="display: flex; justify-content: flex-end; gap: 4px;">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20260929-BROS-70E9', '')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                    ▶ Exekuce
+                                </button>
+                                <button class="row-action-btn" onclick="copySingleBracketCode('ORD-20260929-BROS-70E9')" title="Kopírovat Python kód pro tento konkrétní bracket příkaz">
+                                    📋 Kód
+                                </button>
+                                <a href="https://finance.yahoo.com/chart/BROS" target="_blank" rel="noopener noreferrer" class="row-action-btn" style="text-decoration: none;" title="Otevřít graf">
+                                    📈 Graf
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr id="orderRow-ORD-20260929-CHDN-77BF" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2242.07, &#34;capital_risk_pct&#34;: 0.9, &#34;conviction_score&#34;: &#34;2.73&#34;, &#34;created_at&#34;: &#34;2026-09-29 01:19:20 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 75.72, &#34;limit_price&#34;: 75.72, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Churchill Downs Inc&#34;, &#34;order_id&#34;: &#34;ORD-20260929-CHDN-77BF&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 37367.82, &#34;rank&#34;: 4, &#34;rrr&#34;: 12.13, &#34;shares&#34;: 21, &#34;sl_price&#34;: 71.18, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_xtb&#34;: &#34;CHDN.US&#34;, &#34;symbol_yahoo&#34;: &#34;CHDN&#34;, &#34;tp_price&#34;: 130.83, &#34;weight_pct&#34;: 15.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-4&#34;, &#34;price&#34;: 75.72, &#34;sl&#34;: 71.18, &#34;symbol&#34;: &#34;CHDN.US&#34;, &#34;tp&#34;: 130.83, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                        <td style="font-weight: 800; color: var(--text-muted);">#4</td>
+                        <td>
+                            <div class="sym-cell">
+                                <div class="sym-main">
+                                    <span>CHDN</span>
+                                    <span class="sym-ibkr-tag">SMART</span>
+                                </div>
+                                <div class="sym-sub" title="Churchill Downs Inc">Churchill Downs Inc (CHDN.US)</div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge-buy-lmt">BUY LIMIT</span>
+                        </td>
+                        <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">21 ks</td>
+                        <td class="font-mono price-entry">75.72 USD</td>
+                        <td class="font-mono price-sl">71.18 USD</td>
+                        <td class="font-mono price-tp">130.83 USD</td>
+                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">12.13:1</td>
+                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">37368 CZK</td>
+                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">2242 CZK (0.9 %)</td>
+                        <td>
+                            <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
+                            <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
+                        </td>
+                        <td style="text-align: right;">
+                            <div style="display: flex; justify-content: flex-end; gap: 4px;">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20260929-CHDN-77BF', '')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                    ▶ Exekuce
+                                </button>
+                                <button class="row-action-btn" onclick="copySingleBracketCode('ORD-20260929-CHDN-77BF')" title="Kopírovat Python kód pro tento konkrétní bracket příkaz">
+                                    📋 Kód
+                                </button>
+                                <a href="https://finance.yahoo.com/chart/CHDN" target="_blank" rel="noopener noreferrer" class="row-action-btn" style="text-decoration: none;" title="Otevřít graf">
+                                    📈 Graf
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr id="orderRow-ORD-20260929-AMG-3714" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2223.49, &#34;capital_risk_pct&#34;: 0.89, &#34;conviction_score&#34;: &#34;2.71&#34;, &#34;created_at&#34;: &#34;2026-09-29 01:19:20 UTC&#34;, &#34;currency&#34;: &#34;EUR&#34;, &#34;current_price&#34;: 28.28, &#34;limit_price&#34;: 28.28, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;AMG Critical Materials NV&#34;, &#34;order_id&#34;: &#34;ORD-20260929-AMG-3714&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 37058.11, &#34;rank&#34;: 5, &#34;rrr&#34;: 10.66, &#34;shares&#34;: 52, &#34;sl_price&#34;: 26.58, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_xtb&#34;: &#34;AMG.NL&#34;, &#34;symbol_yahoo&#34;: &#34;AMG.AS&#34;, &#34;tp_price&#34;: 46.36, &#34;weight_pct&#34;: 15.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-5&#34;, &#34;price&#34;: 28.28, &#34;sl&#34;: 26.58, &#34;symbol&#34;: &#34;AMG.NL&#34;, &#34;tp&#34;: 46.36, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                        <td style="font-weight: 800; color: var(--text-muted);">#5</td>
+                        <td>
+                            <div class="sym-cell">
+                                <div class="sym-main">
+                                    <span>AMG.AS</span>
+                                    <span class="sym-ibkr-tag">SMART</span>
+                                </div>
+                                <div class="sym-sub" title="AMG Critical Materials NV">AMG Critical Materials NV (AMG.NL)</div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge-buy-lmt">BUY LIMIT</span>
+                        </td>
+                        <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">52 ks</td>
+                        <td class="font-mono price-entry">28.28 EUR</td>
+                        <td class="font-mono price-sl">26.58 EUR</td>
+                        <td class="font-mono price-tp">46.36 EUR</td>
+                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">10.66:1</td>
+                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">37058 CZK</td>
+                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">2223 CZK (0.89 %)</td>
+                        <td>
+                            <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
+                            <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
+                        </td>
+                        <td style="text-align: right;">
+                            <div style="display: flex; justify-content: flex-end; gap: 4px;">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20260929-AMG-3714', '')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                    ▶ Exekuce
+                                </button>
+                                <button class="row-action-btn" onclick="copySingleBracketCode('ORD-20260929-AMG-3714')" title="Kopírovat Python kód pro tento konkrétní bracket příkaz">
+                                    📋 Kód
+                                </button>
+                                <a href="https://finance.yahoo.com/chart/AMG.AS" target="_blank" rel="noopener noreferrer" class="row-action-btn" style="text-decoration: none;" title="Otevřít graf">
                                     📈 Graf
                                 </a>
                             </div>
@@ -1184,53 +1400,103 @@ print(f"✅ Připojeno k IBKR účtu: {ib.managedAccounts()}")
 orders_data = [
 
     {
-        "symbol": "RHM",
-        "exchange": "SMART",
+        "symbol": "",
+        "exchange": "",
         "currency": "EUR",
         "shares": 2,
-        "entry": 944.04,
-        "sl": 881.36,
-        "tp": 1085.65
+        "entry": 958.0,
+        "sl": 900.52,
+        "tp": 1101.7
     },
 
     {
-        "symbol": "ALLY",
-        "exchange": "SMART",
+        "symbol": "",
+        "exchange": "",
         "currency": "USD",
-        "shares": 56,
-        "entry": 37.76,
-        "sl": 35.13,
+        "shares": 55,
+        "entry": 38.19,
+        "sl": 35.9,
         "tp": 53.23
     },
 
     {
-        "symbol": "AVGO",
-        "exchange": "SMART",
+        "symbol": "",
+        "exchange": "",
         "currency": "USD",
         "shares": 6,
-        "entry": 345.21,
-        "sl": 321.6,
+        "entry": 349.57,
+        "sl": 328.6,
         "tp": 531.85
     },
 
     {
-        "symbol": "ORCL",
-        "exchange": "SMART",
+        "symbol": "",
+        "exchange": "",
         "currency": "USD",
         "shares": 12,
-        "entry": 129.34,
-        "sl": 121.99,
+        "entry": 132.6,
+        "sl": 124.64,
         "tp": 237.97
     },
 
     {
-        "symbol": "SAN",
-        "exchange": "SMART",
+        "symbol": "",
+        "exchange": "",
         "currency": "EUR",
         "shares": 20,
-        "entry": 71.69,
-        "sl": 66.47,
+        "entry": 72.25,
+        "sl": 67.91,
         "tp": 94.06
+    },
+
+    {
+        "symbol": "",
+        "exchange": "",
+        "currency": "USD",
+        "shares": 98,
+        "entry": 21.66,
+        "sl": 20.36,
+        "tp": 29.44
+    },
+
+    {
+        "symbol": "",
+        "exchange": "",
+        "currency": "USD",
+        "shares": 8,
+        "entry": 257.05,
+        "sl": 241.63,
+        "tp": 367.25
+    },
+
+    {
+        "symbol": "",
+        "exchange": "",
+        "currency": "USD",
+        "shares": 56,
+        "entry": 37.74,
+        "sl": 35.48,
+        "tp": 75.48
+    },
+
+    {
+        "symbol": "",
+        "exchange": "",
+        "currency": "USD",
+        "shares": 21,
+        "entry": 75.72,
+        "sl": 71.18,
+        "tp": 130.83
+    },
+
+    {
+        "symbol": "",
+        "exchange": "",
+        "currency": "EUR",
+        "shares": 52,
+        "entry": 28.28,
+        "sl": 26.58,
+        "tp": 46.36
     }
 
 ]

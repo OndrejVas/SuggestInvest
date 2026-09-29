@@ -184,7 +184,7 @@
         /* 3-GRID CONNECTIVITY CARDS */
         .broker-status-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1rem;
         }
 
@@ -815,12 +815,28 @@
             </div>
         </header>
 
-        <!-- 3 BROKER STATUS CHIPS -->
+        <!-- 4 BROKER STATUS CHIPS -->
         <div class="broker-status-grid">
             <div class="broker-card active-broker">
                 <div class="broker-card-header">
-                    <span class="broker-card-title">🏦 Interactive Brokers TWS API</span>
-                    <span class="status-chip ready">Aktivní režim</span>
+                    <span class="broker-card-title">🌐 IBKR Client Portal Gateway</span>
+                    <span class="status-chip ready">Port 5000</span>
+                </div>
+                <div class="broker-card-meta">https://localhost:5000 (Java 17 JRE)</div>
+                <p class="broker-card-desc">
+                    Zabezpečená lokální REST / WebSocket brána v adresáři <code>IB Gateway</code>. Umožňuje přímé webové přihlášení a autonomní exekuce.
+                </p>
+                <div style="margin-top: 6px;">
+                    <a href="https://localhost:5000/" target="_blank" rel="noopener noreferrer" class="action-btn primary-ibkr" style="text-decoration: none; display: inline-flex; align-items: center; gap: 5px; font-size: 0.74rem; padding: 4px 9px;">
+                        <span>🔐</span> Otevřít IBKR Login (localhost:5000) ↗
+                    </a>
+                </div>
+            </div>
+
+            <div class="broker-card">
+                <div class="broker-card-header">
+                    <span class="broker-card-title">🏦 IBKR TWS Socket API</span>
+                    <span class="status-chip ready">Předpřipraveno</span>
                 </div>
                 <div class="broker-card-meta">Socket Port 7497 (Paper) / 7496 (Live)</div>
                 <p class="broker-card-desc">
