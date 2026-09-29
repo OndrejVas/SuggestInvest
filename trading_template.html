@@ -2140,6 +2140,14 @@ for o in bracket:
             initSmartTooltips();
             initAutoInvestState();
             checkLiveIbkrBalance();
+
+            // Automatický frontendový Keep-Alive Heartbeat (každých 60s)
+            setInterval(async () => {
+                try {
+                    await fetch('https://localhost:5000/v1/api/tickle');
+                    await checkLiveIbkrBalance();
+                } catch(e) {}
+            }, 60000);
         });
     </script>
 </body>

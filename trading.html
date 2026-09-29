@@ -1214,7 +1214,7 @@
                         <span class="pulse-dot"></span> Socket API: Ready
                     </span>
                     <span style="font-size: 0.74rem; color: var(--text-muted);">
-                        Poslední sken: <strong>29.09.2026 21:53 SELČ</strong>
+                        Poslední sken: <strong>29.09.2026 22:04 SELČ</strong>
                     </span>
                 </div>
             </div>
@@ -2611,6 +2611,14 @@ for o in bracket:
             initSmartTooltips();
             initAutoInvestState();
             checkLiveIbkrBalance();
+
+            // Automatický frontendový Keep-Alive Heartbeat (každých 60s)
+            setInterval(async () => {
+                try {
+                    await fetch('https://localhost:5000/v1/api/tickle');
+                    await checkLiveIbkrBalance();
+                } catch(e) {}
+            }, 60000);
         });
     </script>
 </body>
