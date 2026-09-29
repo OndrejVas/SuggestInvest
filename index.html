@@ -1112,10 +1112,26 @@
             background: rgba(99, 102, 241, 0.7);
         }
 
+        .ai-tooltip-popup::before {
+            content: '';
+            position: absolute;
+            top: -14px;
+            left: -14px;
+            right: -14px;
+            bottom: -14px;
+            z-index: -1;
+            pointer-events: auto;
+        }
+
         .ai-tooltip-wrapper:hover .ai-tooltip-popup,
-        .ai-tooltip-popup:hover {
-            visibility: visible;
-            opacity: 1;
+        .conv-tooltip-wrapper:hover .ai-tooltip-popup,
+        .conv-tooltip-wrapper:hover .conv-tooltip-popup,
+        .ai-tooltip-wrapper:hover .conv-tooltip-popup,
+        .ai-tooltip-popup:hover,
+        .conv-tooltip-popup:hover {
+            visibility: visible !important;
+            opacity: 1 !important;
+            pointer-events: auto !important;
         }
 
         .tooltip-header {
@@ -2202,7 +2218,7 @@
             margin-bottom: 2rem;
             box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(245, 158, 11, 0.2);
             position: relative;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .top-conviction-section::before {
@@ -2290,10 +2306,9 @@
         }
 
         .conviction-card:hover {
-            transform: translateY(-3px);
-            border-color: rgba(245, 158, 11, 0.5);
-            box-shadow: 0 10px 20px -5px rgba(245, 158, 11, 0.15);
-            background: rgba(26, 36, 54, 0.9);
+            border-color: rgba(245, 158, 11, 0.65);
+            box-shadow: 0 12px 28px -4px rgba(245, 158, 11, 0.25), 0 0 16px rgba(245, 158, 11, 0.15);
+            background: rgba(26, 36, 54, 0.95);
         }
 
         .conv-card-top {
@@ -2441,6 +2456,8 @@
             position: relative;
             margin-top: auto;
             padding-top: 4px;
+            display: block;
+            z-index: 50;
         }
 
         .conv-tooltip-trigger {
@@ -2654,8 +2671,8 @@
                 <p class="subtitle">Stupňovitý screening a AI analýza titulů z platformy XTB (Akcie, ETF, BCPP v CZK, Krypto) poháněná modelem Gemini.</p>
                 
                 <div class="meta-bar">
-                    <div>Poslední sken: <strong>29. 09. 2026 v 15:06 SELČ</strong></div>
-                    <div>⏱️ Doba analýzy: <strong>44 s</strong></div>
+                    <div>Poslední sken: <strong>29. 09. 2026 v 15:25 SELČ</strong></div>
+                    <div>⏱️ Doba analýzy: <strong>1 min 4 s</strong></div>
                     <div>Aktiv celkem: <strong>557</strong></div>
                     <div>🥇 TOP: <strong>51</strong> | 🥈 MID: <strong>485</strong> | 🥉 LOW: <strong>21</strong></div>
                     <div>🟢 Strong Buy: <strong>1</strong> | Buy: <strong>57</strong> | Hold: <strong>498</strong> | Sell: <strong>1</strong> | Strong Sell: <strong>0</strong></div>
@@ -2680,7 +2697,7 @@
                     <div class="macro-header-badges">
                         <span class="macro-badge">🌐 Makro Wire Data</span>
                         <span class="macro-badge">⏱️ Předstihový horizont 6–12 měsíců</span>
-                        <span class="macro-badge" style="color: #60a5fa; border-color: rgba(96, 165, 250, 0.3);">Aktualizace: 29. 09. 2026 13:01 UTC</span>
+                        <span class="macro-badge" style="color: #60a5fa; border-color: rgba(96, 165, 250, 0.3);">Aktualizace: 29. 09. 2026 11:37 UTC</span>
                     </div>
                 </div>
 
@@ -2704,10 +2721,10 @@
                                 </div>
                                 <div class="vertical-barometer" title="Vertikální stupnice rizika recese a krachu (0-100)">
                                     <!-- Ukazatel / ručička -->
-                                    <div class="barometer-needle" style="bottom: 36.5%;">
+                                    <div class="barometer-needle" style="bottom: 32.8%;">
                                         <div class="needle-arrow">◀</div>
                                         <div class="needle-pill" style="background: #fbbf24;">
-                                            36
+                                            33
                                         </div>
                                     </div>
                                 </div>
@@ -2716,7 +2733,7 @@
                             <!-- Digitální odečet a stav -->
                             <div class="score-details-pane">
                                 <div class="digital-readout-box">
-                                    <span class="digital-readout-val" style="color: #fbbf24;">36</span>
+                                    <span class="digital-readout-val" style="color: #fbbf24;">33</span>
                                     <span class="digital-readout-max">/100</span>
                                 </div>
                                 <div class="risk-level-badge" style="border-color: #fbbf24; color: #fbbf24; background: rgba(255,255,255,0.02);">
@@ -2749,7 +2766,7 @@
                                 <div class="subfactor-bar-fill" style="width: 18.0%; background: #10b981;"></div>
                             </div>
                             <div class="subfactor-status-desc">
-                                <span>Spread: <strong>1.13 %</strong> (10Y: 5.22% | 3M: 4.09%)</span>
+                                <span>Spread: <strong>1.18 %</strong> (10Y: 5.24% | 3M: 4.06%)</span>
                                 <span>Normální rostoucí křivka (Ekonomická expanze)</span>
                             </div>
                         </div>
@@ -3019,8 +3036,8 @@
                         <div class="conv-reason">„Konsenzuální cílová cena na 1641.3 EUR (+71.3 %) vytváří atraktivní asymetrii výnosu a rizika při 1M momentu -13.8 %. Teze zůstává v platnosti nad hranicí podpory 881.36 EUR.“</div>
 
                         <!-- 💡 Rich Tooltip pro TOP 5 dlaždici (Plná škála informací) -->
-                        <div class="conv-tooltip-wrapper">
-                            <button type="button" class="conv-tooltip-trigger" onclick="handleTooltipClick(event, this)" aria-label="Zobrazit detailní analýzu alokace">
+                        <div class="ai-tooltip-wrapper conv-tooltip-wrapper">
+                            <button type="button" class="ai-tooltip-trigger conv-tooltip-trigger" onclick="handleTooltipClick(event, this)" aria-label="Zobrazit detailní analýzu alokace">
                                 <span>💡</span>
                                 <span>Detail alokace</span>
                             </button>
@@ -3198,8 +3215,8 @@
                         <div class="conv-reason">„Konsenzuální cílová cena na 53.2 USD (+39.4 %) vytváří atraktivní asymetrii výnosu a rizika při 1M momentu -10.7 % a blížícími se výsledky za 21 dní. Teze zůstává v platnosti nad hranicí podpory 35.13 USD.“</div>
 
                         <!-- 💡 Rich Tooltip pro TOP 5 dlaždici (Plná škála informací) -->
-                        <div class="conv-tooltip-wrapper">
-                            <button type="button" class="conv-tooltip-trigger" onclick="handleTooltipClick(event, this)" aria-label="Zobrazit detailní analýzu alokace">
+                        <div class="ai-tooltip-wrapper conv-tooltip-wrapper">
+                            <button type="button" class="ai-tooltip-trigger conv-tooltip-trigger" onclick="handleTooltipClick(event, this)" aria-label="Zobrazit detailní analýzu alokace">
                                 <span>💡</span>
                                 <span>Detail alokace</span>
                             </button>
@@ -3386,8 +3403,8 @@
                         <div class="conv-reason">„Konsenzuální cílová cena na 531.8 USD (+52.1 %) vytváří atraktivní asymetrii výnosu a rizika při 1M momentu -5.7 %. Teze zůstává v platnosti nad hranicí podpory 321.6 USD.“</div>
 
                         <!-- 💡 Rich Tooltip pro TOP 5 dlaždici (Plná škála informací) -->
-                        <div class="conv-tooltip-wrapper">
-                            <button type="button" class="conv-tooltip-trigger" onclick="handleTooltipClick(event, this)" aria-label="Zobrazit detailní analýzu alokace">
+                        <div class="ai-tooltip-wrapper conv-tooltip-wrapper">
+                            <button type="button" class="ai-tooltip-trigger conv-tooltip-trigger" onclick="handleTooltipClick(event, this)" aria-label="Zobrazit detailní analýzu alokace">
                                 <span>💡</span>
                                 <span>Detail alokace</span>
                             </button>
@@ -3565,8 +3582,8 @@
                         <div class="conv-reason">„Konsenzuální cílová cena na 238.0 USD (+79.5 %) vytváří atraktivní asymetrii výnosu a rizika při 1M momentu -12.7 %. Teze zůstává v platnosti nad hranicí podpory 121.99 USD.“</div>
 
                         <!-- 💡 Rich Tooltip pro TOP 5 dlaždici (Plná škála informací) -->
-                        <div class="conv-tooltip-wrapper">
-                            <button type="button" class="conv-tooltip-trigger" onclick="handleTooltipClick(event, this)" aria-label="Zobrazit detailní analýzu alokace">
+                        <div class="ai-tooltip-wrapper conv-tooltip-wrapper">
+                            <button type="button" class="ai-tooltip-trigger conv-tooltip-trigger" onclick="handleTooltipClick(event, this)" aria-label="Zobrazit detailní analýzu alokace">
                                 <span>💡</span>
                                 <span>Detail alokace</span>
                             </button>
@@ -3786,8 +3803,8 @@
                         <div class="conv-reason">„Konsenzuální cílová cena na 94.1 EUR (+30.2 %) vytváří atraktivní asymetrii výnosu a rizika při 1M momentu -5.9 %. Teze zůstává v platnosti nad hranicí podpory 66.47 EUR.“</div>
 
                         <!-- 💡 Rich Tooltip pro TOP 5 dlaždici (Plná škála informací) -->
-                        <div class="conv-tooltip-wrapper">
-                            <button type="button" class="conv-tooltip-trigger" onclick="handleTooltipClick(event, this)" aria-label="Zobrazit detailní analýzu alokace">
+                        <div class="ai-tooltip-wrapper conv-tooltip-wrapper">
+                            <button type="button" class="ai-tooltip-trigger conv-tooltip-trigger" onclick="handleTooltipClick(event, this)" aria-label="Zobrazit detailní analýzu alokace">
                                 <span>💡</span>
                                 <span>Detail alokace</span>
                             </button>
@@ -128836,7 +128853,7 @@
                     <strong>Upozornění:</strong> Tyto analýzy a signály jsou generovány experimentálním AI modelem a slouží výhradně k informačním a studijním účelům. V žádném případě se nejedná o investiční doporučení, investiční poradenství či nabídku ke koupi nebo prodeji cenných papírů ve smyslu zákona č. 256/2004 Sb., o podnikání na kapitálovém trhu.
                 </p>
                 <div>
-                    Vygenerováno: 2026-09-29 13:06:50 UTC | XTB Multithreaded Engine & Gemini Pro
+                    Vygenerováno: 2026-09-29 13:25:48 UTC | XTB Multithreaded Engine & Gemini Pro
                 </div>
             </footer>
         </div>
@@ -128952,7 +128969,7 @@
             });
         }
 
-        function positionTooltipAtPoint(popup, x, y) {
+        function positionTooltipAtPoint(popup, x, y, triggerEl) {
             const pad = 12;
             const tooltipWidth = Math.min(420, window.innerWidth - (pad * 2));
             popup.style.width = `${tooltipWidth}px`;
@@ -128960,11 +128977,14 @@
             popup.style.maxHeight = `calc(100vh - ${pad * 2}px)`;
             popup.style.overflowY = 'auto';
 
-            // 1. Horizontální výpočet vůči kurzoru
-            let left = x + 12;
+            const rect = triggerEl ? triggerEl.getBoundingClientRect() : null;
+
+            // 1. Horizontální výpočet vůči triggeru/bodu
+            let left = x + 8;
             if (left + tooltipWidth > window.innerWidth - pad) {
-                // Přepnout vlevo od kurzoru
-                left = x - tooltipWidth - 12;
+                // Přepnout vlevo
+                const anchorLeft = rect ? rect.left : x;
+                left = anchorLeft - tooltipWidth - 8;
             }
             // Záchranné oříznutí (clamp) do okna
             if (left < pad) {
@@ -128974,9 +128994,9 @@
                 left = window.innerWidth - tooltipWidth - pad;
             }
 
-            // 2. Vertikální výpočet vůči kurzoru
+            // 2. Vertikální výpočet vůči triggeru/bodu
             const estHeight = Math.min(popup.offsetHeight || 520, window.innerHeight - (pad * 2));
-            let top = y - 20;
+            let top = (rect ? rect.top - 10 : y - 20);
             if (top + estHeight > window.innerHeight - pad) {
                 top = window.innerHeight - estHeight - pad;
             }
@@ -129005,9 +129025,10 @@
 
             if (!wasOpen) {
                 popup.classList.add('is-open');
-                const clientX = (e && typeof e.clientX === 'number') ? e.clientX : (btn.getBoundingClientRect().right - 200);
-                const clientY = (e && typeof e.clientY === 'number') ? e.clientY : btn.getBoundingClientRect().bottom;
-                positionTooltipAtPoint(popup, clientX, clientY);
+                const rect = btn.getBoundingClientRect();
+                const clientX = (e && typeof e.clientX === 'number') ? e.clientX : rect.right;
+                const clientY = (e && typeof e.clientY === 'number') ? e.clientY : rect.top;
+                positionTooltipAtPoint(popup, clientX, clientY, btn);
             }
         }
 
@@ -129026,7 +129047,7 @@
                 }
             });
 
-            // Podpora jemného náhledu myší, pokud není okno uzamčeno kliknutím
+            // Podpora náhledu při najetí myší (mouseover), pokud není okno uzamčeno kliknutím
             document.addEventListener('mouseover', (e) => {
                 const trigger = e.target.closest('.ai-tooltip-trigger') || e.target.closest('.conv-tooltip-trigger');
                 if (!trigger) return;
@@ -129036,7 +129057,7 @@
                 if (!popup || popup.classList.contains('is-open')) return;
 
                 const rect = trigger.getBoundingClientRect();
-                positionTooltipAtPoint(popup, rect.right, rect.top);
+                positionTooltipAtPoint(popup, rect.right, rect.top, trigger);
             }, { passive: true });
         }
         initSmartTooltips();
