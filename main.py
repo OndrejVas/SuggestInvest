@@ -602,7 +602,7 @@ def build_trading_page(
     timestamp_cet_str: str = "",
     timestamp_utc_str: str = ""
 ) -> str:
-    """Zkompiluje specializovanou stránku trading.html pro Interactive Brokers & XTB."""
+    """Zkompiluje specializovanou stránku trading.html pro Interactive Brokers."""
     if not timestamp_cet_str:
         now_utc = datetime.now(timezone.utc)
         cet_offset = timedelta(hours=2)
@@ -610,12 +610,15 @@ def build_trading_page(
         timestamp_cet_str = now_cet.strftime("%d.%m.%Y %H:%M SELČ")
         timestamp_utc_str = now_utc.strftime("%Y-%m-%d %H:%M:%S")
 
+    # Zajištění zobrazení přesně aktivních TOP 5 příkazů (odpovídá 100% alokaci 250 000 CZK)
+    active_orders = (trading_orders or [])[:5]
+
     template_dir = os.path.dirname(os.path.abspath(__file__))
     env = Environment(loader=FileSystemLoader(template_dir))
     template = env.get_template("trading_template.html")
 
     html_content = template.render(
-        trading_orders=trading_orders,
+        trading_orders=active_orders,
         macro_barometer=macro_barometer,
         top_5_basket=top_5_basket,
         timestamp_cet_str=timestamp_cet_str,

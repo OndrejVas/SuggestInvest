@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XTB Market Scanner & AI Signal Screener</title>
-    <meta name="description" content="Automatizovaný tržní skener a AI signály pro akcie, ETF a krypto z platformy XTB poháněné modelem Google Gemini.">
+    <title>SuggestInvest • AI Multi-Tier Market Scanner & Autonomní Trading</title>
+    <meta name="description" content="Automatizovaný tržní skener a AI signály pro akcie, ETF a krypto pro Interactive Brokers poháněné modelem Google Gemini.">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -2490,6 +2490,14 @@
             pointer-events: auto !important;
         }
 
+        .ai-tooltip-popup.is-dismissed,
+        .conv-tooltip-popup.is-dismissed {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
         .tooltip-close-btn {
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.15);
@@ -2626,7 +2634,7 @@
             <header>
                 <div class="header-top">
                     <div class="badge-live">
-                        <span class="pulse-dot"></span> XTB Multi-Tier AI Screener
+                        <span class="pulse-dot"></span> Interactive Brokers & AI Screener
                     </div>
                     
                     <div class="user-pill">
@@ -2649,7 +2657,7 @@
                             <line x1="8" y1="21" x2="16" y2="21"></line>
                             <line x1="12" y1="17" x2="12" y2="21"></line>
                         </svg>
-                        <span>🤖 Autonomní Trading (IBKR & XTB)</span>
+                        <span>🤖 Autonomní Trading (IBKR)</span>
                     </a>
 
                     <button id="triggerScanBtn" class="trigger-scan-btn" onclick="triggerCloudOrLocalScan()" title="Spustit kompletní nový sken 541 aktiv a Gemini AI analýzu přímo v cloudu na GitHub Actions">
@@ -2668,7 +2676,7 @@
                 </div>
                 
                 <h1>Market Scanner & AI Signal Screener</h1>
-                <p class="subtitle">Stupňovitý screening a AI analýza titulů z platformy XTB (Akcie, ETF, BCPP v CZK, Krypto) poháněná modelem Gemini.</p>
+                <p class="subtitle">Stupňovitý screening a AI analýza globálních titulů (Akcie, ETF, BCPP v CZK, Krypto pro Interactive Brokers) poháněná modelem Gemini.</p>
                 
                 <div class="meta-bar">
                     <div>Poslední sken: <strong>29. 09. 2026 v 15:25 SELČ</strong></div>
@@ -128853,7 +128861,7 @@
                     <strong>Upozornění:</strong> Tyto analýzy a signály jsou generovány experimentálním AI modelem a slouží výhradně k informačním a studijním účelům. V žádném případě se nejedná o investiční doporučení, investiční poradenství či nabídku ke koupi nebo prodeji cenných papírů ve smyslu zákona č. 256/2004 Sb., o podnikání na kapitálovém trhu.
                 </p>
                 <div>
-                    Vygenerováno: 2026-09-29 13:25:48 UTC | XTB Multithreaded Engine & Gemini Pro
+                    Vygenerováno: 2026-09-29 13:25:48 UTC | SuggestInvest Multithreaded Engine & Gemini 3.5 AI
                 </div>
             </footer>
         </div>
@@ -129024,6 +129032,7 @@
             closeAllTooltips();
 
             if (!wasOpen) {
+                popup.classList.remove('is-dismissed');
                 popup.classList.add('is-open');
                 const rect = btn.getBoundingClientRect();
                 const clientX = (e && typeof e.clientX === 'number') ? e.clientX : rect.right;
@@ -129047,14 +129056,22 @@
                 }
             });
 
-            // Podpora náhledu při najetí myší (mouseover), pokud není okno uzamčeno kliknutím
+            // Obnovení možnosti otevření po opuštění myší (reset dismissed stavu)
+            document.querySelectorAll('.ai-tooltip-wrapper, .conv-tooltip-wrapper').forEach(w => {
+                w.addEventListener('mouseleave', () => {
+                    const pop = w.querySelector('.ai-tooltip-popup, .conv-tooltip-popup');
+                    if (pop) pop.classList.remove('is-dismissed');
+                });
+            });
+
+            // Podpora náhledu při najetí myší (mouseover), pokud není okno uzamčeno kliknutím ani zavřeno křížkem
             document.addEventListener('mouseover', (e) => {
                 const trigger = e.target.closest('.ai-tooltip-trigger') || e.target.closest('.conv-tooltip-trigger');
                 if (!trigger) return;
                 const wrapper = trigger.closest('.ai-tooltip-wrapper') || trigger.closest('.conv-tooltip-wrapper');
                 if (!wrapper) return;
-                const popup = wrapper.querySelector('.ai-tooltip-popup');
-                if (!popup || popup.classList.contains('is-open')) return;
+                const popup = wrapper.querySelector('.ai-tooltip-popup, .conv-tooltip-popup');
+                if (!popup || popup.classList.contains('is-open') || popup.classList.contains('is-dismissed')) return;
 
                 const rect = trigger.getBoundingClientRect();
                 positionTooltipAtPoint(popup, rect.right, rect.top, trigger);
