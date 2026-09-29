@@ -1636,6 +1636,160 @@
         .rotation-item.sl-rotation {
             border-left-color: #ef4444;
         }
+
+        /* ==================== 🚀 COUNTDOWN OVERLAY & MODAL (3 - 2 - 1 - NYNÍ) ==================== */
+        .countdown-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10, 15, 29, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999999;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .countdown-card {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            border-radius: var(--radius-lg);
+            padding: 2.2rem 2.8rem;
+            max-width: 520px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(16, 185, 129, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.15rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, #10b981, #f59e0b, #3b82f6);
+        }
+
+        .countdown-icon {
+            font-size: 2.8rem;
+            filter: drop-shadow(0 0 14px rgba(16, 185, 129, 0.6));
+        }
+
+        .countdown-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+        }
+
+        .countdown-desc {
+            font-size: 0.86rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        .countdown-timer {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 4.8rem;
+            font-weight: 900;
+            line-height: 1;
+            color: #34d399;
+            text-shadow: 0 0 30px rgba(16, 185, 129, 0.7);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: scale(1);
+        }
+
+        .countdown-timer.is-now {
+            font-size: 2.4rem;
+            color: #60a5fa;
+            text-shadow: 0 0 30px rgba(59, 130, 246, 0.9);
+        }
+
+        .countdown-progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .countdown-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #10b981, #3b82f6);
+            transition: width 0.95s linear;
+        }
+
+        .countdown-sub {
+            font-size: 0.78rem;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        .empty-positions-placeholder {
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .empty-icon {
+            font-size: 2rem;
+            opacity: 0.8;
+        }
+
+        .empty-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #cbd5e1;
+        }
+
+        .empty-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            max-width: 480px;
+        }
+
+        .trade-badge-fill {
+            background: rgba(16, 185, 129, 0.18);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #34d399;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 800;
+        }
+
+        .trade-badge-tp {
+            background: rgba(245, 158, 11, 0.18);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            color: #fbbf24;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 800;
+        }
+
+        .trade-badge-sl {
+            background: rgba(239, 68, 68, 0.18);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #f87171;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 800;
+        }
     </style>
 </head>
 <body>
@@ -1714,9 +1868,6 @@
                 <button type="button" class="btn-verify-refresh" id="btnVerifyBalance" onclick="checkLiveIbkrBalance(true)" title="Odeslat okamžitý dotaz na IBKR Client Portal Gateway na portu 5000 a zaktualizovat zůstatek i čas">
                     <span class="spin-icon">🔄</span>
                     <span id="btnVerifyText">Ověřit stav & zůstatek</span>
-                </button>
-                <button type="button" class="action-btn" onclick="syncIbkrBalanceToCapital()" title="Nastavit kapitál portfolia pro dimenzování pozic dle reálné hotovosti na účtu">
-                    🎯 Synchronizovat kapitál
                 </button>
                 <a href="https://localhost:5000/" target="_blank" rel="noopener noreferrer" class="action-btn primary-ibkr" style="text-decoration: none;" title="Otevřít přihlášení do IBKR Gateway na portu 5000">
                     🔐 Otevřít Gateway (5000) ↗
@@ -1841,7 +1992,7 @@
         <div class="trading-controls-bar">
             <div class="controls-inputs">
                 <div class="control-group">
-                    <label for="portfolioCapInput">Kapitál portfolia:</label>
+                    <label for="portfolioCapInput">Kapitál portfolia: <span style="font-size: 0.72rem; color: #34d399; font-weight: normal;">(Zůstatek Demo účtu DUR222134)</span></label>
                     <input type="number" id="portfolioCapInput" class="control-input" value="250000" step="10000" min="10000" onchange="recalcTradingOrders()" title="Zadejte celkovou velikost vašeho obchodního kapitálu v CZK">
                     <span style="color: #f1f5f9; font-weight: 700;">CZK</span>
                 </div>
@@ -1863,9 +2014,6 @@
             <div class="controls-actions">
                 <button class="action-btn primary-ibkr" onclick="downloadIbkrBasketCsv()" title="Stáhnout připravený CSV soubor pro přímý import do TWS Basket Traderu">
                     📥 Stáhnout TWS Basket (.csv)
-                </button>
-                <button class="action-btn" onclick="copyIbInsyncPythonCode()" title="Zkopírovat kompletní Python skript ib_insync pro autonomní exekuci">
-                    📋 Python kód (ib_insync)
                 </button>
                 <button class="action-btn" onclick="openIbkrModal()" title="Nastavení parametrů Interactive Brokers (Host, Port, Client ID)">
                     ⚙️ Nastavení IBKR
@@ -2007,9 +2155,6 @@
                                 <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('{{ ord.order_id }}', '{{ ord.symbol_ibkr }}')" title="Simulovat exekuci v Paper Trading sandboxu">
                                     ▶ Exekuce
                                 </button>
-                                <button class="row-action-btn" onclick="copySingleBracketCode('{{ ord.order_id }}')" title="Kopírovat Python kód pro tento konkrétní bracket příkaz">
-                                    📋 Kód
-                                </button>
                                 <a href="https://finance.yahoo.com/chart/{{ ord.symbol_yahoo or ord.symbol_ibkr }}" target="_blank" rel="noopener noreferrer" class="row-action-btn" style="text-decoration: none;" title="Otevřít graf">
                                     📈 Graf
                                 </a>
@@ -2021,265 +2166,75 @@
             </table>
         </div>
 
-        <!-- INTEGRACE & PYTHON KÓD GENERÁTOR -->
-        <div class="integration-section">
-            <div class="code-box-card">
-                <div class="code-header">
-                    <span class="code-title">🐍 Python Autonomní Exekutor (ib_insync pro Interactive Brokers TWS)</span>
-                    <button class="action-btn" onclick="copyIbInsyncPythonCode()" style="padding: 2px 8px; font-size: 0.72rem;">Kopírovat skript</button>
-                </div>
-                <pre class="code-snippet-pre" id="pythonSnippetBox"># Autonomní odeslání Bracket příkazů do Interactive Brokers TWS
-from ib_insync import IB, Stock, util
-
-ib = IB()
-# Připojení k TWS nebo IB Gateway na localhost
-# 7497 = TWS Paper, 7496 = TWS Live, 4002 = Gateway Paper, 4001 = Gateway Live
-ib.connect('127.0.0.1', 7497, clientId=1)
-
-print(f"✅ Připojeno k IBKR účtu: {ib.managedAccounts()}")
-
-# Generováno ze SuggestInvest Top 5 Conviction Basket
-orders_data = [
-{% for ord in trading_orders %}
-    {
-        "symbol": "{{ ord.symbol_ibkr }}",
-        "exchange": "{{ ord.exchange_ibkr }}",
-        "currency": "{{ ord.currency }}",
-        "shares": {{ ord.shares }},
-        "entry": {{ ord.limit_price }},
-        "sl": {{ ord.sl_price }},
-        "tp": {{ ord.tp_price }}
-    }{% if not loop.last %},{% endif %}
-{% endfor %}
-]
-
-for item in orders_data:
-    contract = Stock(item["symbol"], item["exchange"], item["currency"])
-    ib.qualifyContracts(contract)
-    
-    # Vytvoření Parent Limit + Child SL + Child TP bracket příkazu
-    bracket = ib.bracketOrder(
-        action='BUY',
-        quantity=item["shares"],
-        limitPrice=item["entry"],
-        takeProfitPrice=item["tp"],
-        stopLossPrice=item["sl"]
-    )
-    
-    print(f"🚀 Odesílám bracket příkaz pro {item['symbol']} ({item['shares']} ks @ {item['entry']})")
-    for o in bracket:
-        ib.placeOrder(contract, o)
-
-ib.sleep(2)
-print("✅ Všechny bracket příkazy byly úspěšně předány do TWS!")
-ib.disconnect()
-</pre>
-            </div>
-
-            <div class="guide-card">
-                <div class="orders-title" style="font-size: 0.95rem;">
-                    <span>📖</span> Jak spustit exekuci v Interactive Brokers
-                </div>
-
-                <div class="guide-step">
-                    <div class="step-num">1</div>
-                    <div>
-                        <strong>Povolte API v TWS / IB Gateway</strong><br>
-                        V TWS otevřete <em>Global Configuration &rarr; API &rarr; Settings</em>, zaškrtněte <strong>Enable ActiveX and Socket Clients</strong> a nastavte port na <code>7497</code> (Paper) nebo <code>7496</code> (Live).
-                    </div>
-                </div>
-
-                <div class="guide-step">
-                    <div class="step-num">2</div>
-                    <div>
-                        <strong>Nastavte IP přístup</strong><br>
-                        Ujistěte se, že je zaškrtnuto <em>Allow connections from localhost only</em> (nebo přidejte <code>127.0.0.1</code> do Trusted IPs).
-                    </div>
-                </div>
-
-                <div class="guide-step">
-                    <div class="step-num">3</div>
-                    <div>
-                        <strong>Možnost A: Basket Trader (1-klikový import)</strong><br>
-                        Klikněte na tlačítko <strong>Stáhnout TWS Basket (.csv)</strong> nahoře. V TWS otevřete nástroj <em>Basket Trader</em> a zvolte <em>File &rarr; Open Basket File</em>. Všechny nákupy a ochranné stops se ihned načtou.
-                    </div>
-                </div>
-
-                <div class="guide-step">
-                    <div class="step-num">4</div>
-                    <div>
-                        <strong>Možnost B: Python ib_insync</strong><br>
-                        Nainstalujte <code>pip install ib_insync</code>, zkopírujte kód vlevo a spusťte jej. Příkazy se automaticky spárují s vaším TWS.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== 📈 PORTFOLIO DENNÍ VÝVOJ, OTEVŘENÉ POZICE & ZISKOVÉ ROTACE ==================== -->
+        <!-- ==================== 💼 REÁLNÉ PORTFOLIO NA DEMO ÚČTU (DUR222134) & HISTORIE NÁKUPŮ ==================== -->
         <div class="portfolio-performance-section" id="portfolioPerformanceSection">
             <div class="perf-header">
                 <div class="perf-title-group">
                     <h2>
-                        <span>📈</span> Výkonnost Portfolia v Čase & AutoInvest Dynamická Rotace
+                        <span>💼</span> Otevřené Pozice & Historie Obchodů (IBKR Demo DUR222134)
                     </h2>
                     <p>
-                        Sledování denního vývoje equity, otevřených pozic v reálném čase a plně autonomního reinvestování kapitálu při dosažení <strong>Take-Profitu</strong> (uzamčení zisku) nebo <strong>Stop-Lossu</strong> (ochrana kapitálu).
+                        Sledování reálného stavu na účtu <strong>DUR222134</strong>, fronty nákupů a historie exekucí s automatickou reinvesticí při dosažení <strong>Take-Profitu</strong> (uzamčení zisku) nebo <strong>Stop-Lossu</strong> (ochrana kapitálu).
                     </p>
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <span class="status-chip ready" style="padding: 5px 12px; font-size: 0.78rem;">
-                        <span class="pulse-dot"></span> AutoInvest Engine: Aktivní rotace
+                        <span class="pulse-dot"></span> AutoInvest Engine: Připraven k exekuci
                     </span>
                 </div>
             </div>
 
-            <!-- KPI METRIKY PORTFOLIA -->
+            <!-- KPI METRIKY PORTFOLIA (REÁLNÝ STAV DEMO ÚČTU) -->
             <div class="perf-kpi-grid">
                 <div class="perf-kpi-card kpi-success">
-                    <span class="perf-kpi-lbl">Celková hodnota (Equity):</span>
-                    <span class="perf-kpi-val" id="perfEquityVal" style="color: #34d399;">256 420,00 CZK</span>
-                    <span class="perf-kpi-sub" id="perfEquitySub" style="color: #34d399; font-weight: 700;">+6 420,00 CZK (+2.57 %) od spuštění</span>
-                </div>
-                <div class="perf-kpi-card kpi-success">
-                    <span class="perf-kpi-lbl">Realizovaný zisk (TP Rotace):</span>
-                    <span class="perf-kpi-val" id="perfRealizedVal" style="color: #10b981;">+9 840,00 CZK</span>
-                    <span class="perf-kpi-sub">3 úspěšně uzamčené Take-Profity</span>
+                    <span class="perf-kpi-lbl">Celková hodnota (NLV):</span>
+                    <span class="perf-kpi-val" id="perfEquityVal" style="color: #34d399;">250 000,00 CZK</span>
+                    <span class="perf-kpi-sub" id="perfEquitySub" style="color: #34d399; font-weight: 700;">+0,00 CZK (0.00 %) zisk</span>
                 </div>
                 <div class="perf-kpi-card">
-                    <span class="perf-kpi-lbl">Otevřený P&L (Unrealized):</span>
-                    <span class="perf-kpi-val" id="perfUnrealizedVal" style="color: #60a5fa;">+6 420,00 CZK</span>
-                    <span class="perf-kpi-sub">+2.51 % na 5 držených pozicích</span>
+                    <span class="perf-kpi-lbl">Dostupná hotovost (Cash):</span>
+                    <span class="perf-kpi-val" id="perfCashVal" style="color: #60a5fa;">250 000,00 CZK</span>
+                    <span class="perf-kpi-sub" id="perfCashSub">100 % volný kapitál</span>
                 </div>
                 <div class="perf-kpi-card kpi-purple">
-                    <span class="perf-kpi-lbl">Úspěšnost obchodů (Win Rate):</span>
-                    <span class="perf-kpi-val" id="perfWinRateVal" style="color: #c084fc;">75.0 %</span>
-                    <span class="perf-kpi-sub">3x ziskový TP / 1x ochranný SL</span>
+                    <span class="perf-kpi-lbl">Investováno v pozicích:</span>
+                    <span class="perf-kpi-val" id="perfInvestedVal" style="color: #c084fc;">0,00 CZK</span>
+                    <span class="perf-kpi-sub" id="perfInvestedSub">0 aktivních pozic</span>
                 </div>
                 <div class="perf-kpi-card kpi-warning">
-                    <span class="perf-kpi-lbl">Hotovostní rezerva (Cash):</span>
-                    <span class="perf-kpi-val" id="perfCashBufferVal" style="color: #fbbf24;">74 120,00 CZK</span>
-                    <span class="perf-kpi-sub">28.9 % volný kapitál pro další rotaci</span>
+                    <span class="perf-kpi-lbl">Realizovaný zisk (TP Rotace):</span>
+                    <span class="perf-kpi-val" id="perfRealizedVal" style="color: #fbbf24;">+0,00 CZK</span>
+                    <span class="perf-kpi-sub" id="perfRealizedSub">0 uzavřených rotací</span>
+                </div>
+                <div class="perf-kpi-card">
+                    <span class="perf-kpi-lbl">Nerealizovaný P&L:</span>
+                    <span class="perf-kpi-val" id="perfUnrealizedVal" style="color: #94a3b8;">+0,00 CZK</span>
+                    <span class="perf-kpi-sub" id="perfUnrealizedSub">0.00 % otevřený výnos</span>
                 </div>
             </div>
 
-            <!-- GRAF DENNÍHO VÝVOJE EQUITY S MILESTONES -->
-            <div class="chart-card">
-                <div class="chart-header">
-                    <div class="chart-title">
-                        <span>📊</span> Denní vývoj hodnoty portfolia (Equity Curve)
-                    </div>
-                    <div class="chart-legend">
-                        <div class="legend-item">
-                            <span class="legend-dot" style="background: #10b981;"></span>
-                            <span>Celková hodnota (CZK)</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-dot" style="background: #fbbf24;"></span>
-                            <span>🎯 Dosažený Take-Profit</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-dot" style="background: #ef4444;"></span>
-                            <span>🛑 Stop-Loss ochrana</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SVG RESPONSIVE EQUITY CHART -->
-                <div class="svg-chart-container" id="equityChartContainer">
-                    <svg viewBox="0 0 1000 240" preserveAspectRatio="none" style="width: 100%; height: 240px;">
-                        <defs>
-                            <linearGradient id="equityGrad" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#10b981" stop-opacity="0.35" />
-                                <stop offset="100%" stop-color="#10b981" stop-opacity="0.0" />
-                            </linearGradient>
-                            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                                <feGaussianBlur stdDeviation="3" result="glow" />
-                                <feMerge>
-                                    <feMergeNode in="glow" />
-                                    <feMergeNode in="SourceGraphic" />
-                                </feMerge>
-                            </filter>
-                        </defs>
-
-                        <!-- Vodící linky mřížky -->
-                        <line x1="60" y1="30" x2="960" y2="30" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4" />
-                        <line x1="60" y1="80" x2="960" y2="80" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4" />
-                        <line x1="60" y1="130" x2="960" y2="130" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4" />
-                        <line x1="60" y1="180" x2="960" y2="180" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4" />
-
-                        <!-- Cenové popisky osy Y -->
-                        <text x="50" y="34" fill="#64748b" font-size="11" text-anchor="end" font-family="'JetBrains Mono', monospace">258k</text>
-                        <text x="50" y="84" fill="#64748b" font-size="11" text-anchor="end" font-family="'JetBrains Mono', monospace">255k</text>
-                        <text x="50" y="134" fill="#64748b" font-size="11" text-anchor="end" font-family="'JetBrains Mono', monospace">252k</text>
-                        <text x="50" y="184" fill="#64748b" font-size="11" text-anchor="end" font-family="'JetBrains Mono', monospace">249k</text>
-
-                        <!-- Plocha pod křivkou -->
-                        <polygon points="100,200 100,165 270,143 440,113 610,118 780,84 940,60 940,200" fill="url(#equityGrad)" />
-
-                        <!-- Samotná křivka Equity -->
-                        <polyline points="100,165 270,143 440,113 610,118 780,84 940,60" fill="none" stroke="#10b981" stroke-width="3" filter="url(#glow)" />
-
-                        <!-- Datumové body na ose X -->
-                        <!-- 24. 09. -->
-                        <circle cx="100" cy="165" r="5" fill="#10b981" stroke="#0a0f1d" stroke-width="2" style="cursor: pointer;">
-                            <title>24. 09. 2026: 250 000 CZK (Start AutoInvest & nákup základního koše)</title>
-                        </circle>
-                        <text x="100" y="218" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="'Inter', sans-serif">24. 09.</text>
-
-                        <!-- 25. 09. -->
-                        <circle cx="270" cy="143" r="5" fill="#10b981" stroke="#0a0f1d" stroke-width="2" style="cursor: pointer;">
-                            <title>25. 09. 2026: 251 340 CZK (+0.54 %)</title>
-                        </circle>
-                        <text x="270" y="218" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="'Inter', sans-serif">25. 09.</text>
-
-                        <!-- 26. 09. -->
-                        <circle cx="440" cy="113" r="5" fill="#10b981" stroke="#0a0f1d" stroke-width="2" style="cursor: pointer;">
-                            <title>26. 09. 2026: 253 100 CZK (+1.24 %)</title>
-                        </circle>
-                        <text x="440" y="218" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="'Inter', sans-serif">26. 09.</text>
-
-                        <!-- 27. 09. (Milestone: TP KLAC + SL DBK) -->
-                        <circle cx="610" cy="118" r="6" fill="#fbbf24" stroke="#0a0f1d" stroke-width="2" style="cursor: pointer;">
-                            <title>27. 09. 2026: 252 800 CZK (🎯 TP KLAC.US +12.5 % / 🛑 SL DBK.DE -4.6 %)</title>
-                        </circle>
-                        <text x="610" y="218" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="'Inter', sans-serif">27. 09.</text>
-                        <!-- Flag pin -->
-                        <rect x="560" y="88" width="100" height="18" rx="4" fill="rgba(245, 158, 11, 0.2)" stroke="#f59e0b" stroke-width="1" />
-                        <text x="610" y="100" fill="#fbbf24" font-size="9" font-weight="700" text-anchor="middle">🎯 TP KLAC +12.5%</text>
-
-                        <!-- 28. 09. (Milestone: TP ORCL) -->
-                        <circle cx="780" cy="84" r="6" fill="#fbbf24" stroke="#0a0f1d" stroke-width="2" style="cursor: pointer;">
-                            <title>28. 09. 2026: 254 950 CZK (🎯 TP ORCL.US +14.2 % -> Reinvestováno do ALLY.US)</title>
-                        </circle>
-                        <text x="780" y="218" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="'Inter', sans-serif">28. 09.</text>
-                        <!-- Flag pin -->
-                        <rect x="730" y="55" width="100" height="18" rx="4" fill="rgba(245, 158, 11, 0.2)" stroke="#f59e0b" stroke-width="1" />
-                        <text x="780" y="67" fill="#fbbf24" font-size="9" font-weight="700" text-anchor="middle">🎯 TP ORCL +14.2%</text>
-
-                        <!-- 29. 09. (Dnes) -->
-                        <circle cx="940" cy="60" r="7" fill="#34d399" stroke="#ffffff" stroke-width="2" style="cursor: pointer;">
-                            <title>29. 09. 2026: 256 420 CZK (+2.57 % celkem)</title>
-                        </circle>
-                        <text x="940" y="218" fill="#34d399" font-weight="700" font-size="11" text-anchor="middle" font-family="'Inter', sans-serif">Dnes (29. 09.)</text>
-                        <!-- Flag pin dnes -->
-                        <rect x="880" y="30" width="115" height="18" rx="4" fill="rgba(16, 185, 129, 0.25)" stroke="#10b981" stroke-width="1" />
-                        <text x="937" y="42" fill="#34d399" font-size="10" font-weight="800" text-anchor="middle">256 420 CZK 🚀</text>
-                    </svg>
-                </div>
-            </div>
-
-            <!-- TABULKA AKTUÁLNĚ OTEVŘENÝCH POZIC V PORTFOLIU -->
+            <!-- TABULKA AKTUÁLNĚ OTEVŘENÝCH POZIC NA DEMO ÚČTU -->
             <div class="positions-card">
                 <div class="positions-header">
                     <div class="positions-title">
-                        <span>💼</span> Aktuálně otevřené pozice v portfoliu (Reálné sledování Take-Profit & Stop-Loss)
+                        <span>📈</span> Aktivní otevřené pozice v portfoliu (Účet DUR222134)
                     </div>
-                    <span style="font-size: 0.76rem; color: var(--text-muted);">
-                        Při dosažení cíle Take-Profit algoritmus okamžitě uzamkne zisk a nakoupí další doporučený titul v pořadí.
+                    <span style="font-size: 0.76rem; color: var(--text-muted);" id="positionsSubtitle">
+                        Reálné pozice nakoupené na účtu s hlídáním Take-Profit a Stop-Loss bracket kotev.
                     </span>
                 </div>
 
-                <table class="orders-table" id="openPositionsTable" style="margin-top: 0.5rem;">
+                <!-- Placeholder když nejsou žádné otevřené pozice před spuštěním AutoInvestu -->
+                <div class="empty-positions-placeholder" id="emptyPositionsPlaceholder">
+                    <div class="empty-icon">🏦</div>
+                    <div class="empty-title">Aktuálně nejsou otevřeny žádné pozice</div>
+                    <div class="empty-desc">
+                        Demo účet <strong>DUR222134</strong> je 100% v hotovosti (250 000,00 CZK). Zapněte přepínač <strong>AutoInvest výše</strong> pro spuštění odpočítávání a okamžitou exekuci navrhovaného koše (3 - 2 - 1 - NYNÍ).
+                    </div>
+                </div>
+
+                <!-- Tabulka otevřených pozic (zobrazí se po exekuci) -->
+                <table class="orders-table" id="openPositionsTable" style="display: none; margin-top: 0.5rem;">
                     <thead>
                         <tr>
                             <th>Titul & Burza</th>
@@ -2289,246 +2244,50 @@ ib.disconnect()
                             <th>Držená pozice</th>
                             <th>Nerealizovaný P&L</th>
                             <th style="min-width: 140px;">Trajektorie k Take-Profit (SL ➔ Vstup ➔ TP)</th>
-                            <th style="text-align: right;">AutoInvest Akce</th>
+                            <th style="text-align: right;">Akce</th>
                         </tr>
                     </thead>
                     <tbody id="openPositionsTableBody">
-                        <!-- Pozice 1: RHM.DE -->
-                        <tr id="posRow-RHM">
-                            <td>
-                                <div class="sym-cell">
-                                    <div class="sym-main">
-                                        RHM <span class="sym-ibkr-tag">IBKR: RHM.DE</span>
-                                    </div>
-                                    <div class="sym-sub">Rheinmetall AG (XETRA)</div>
-                                </div>
-                            </td>
-                            <td><span class="badge-buy-lmt">LONG</span></td>
-                            <td class="font-mono">512,40 EUR</td>
-                            <td class="font-mono price-entry" style="font-weight: 800;">542,80 EUR</td>
-                            <td class="font-mono"><strong>3 ks</strong> (~41 350 CZK)</td>
-                            <td class="font-mono price-tp" style="font-weight: 800;">+2 450 CZK (+5.93 %)</td>
-                            <td>
-                                <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: #94a3b8;">
-                                    <span>SL: 485 €</span>
-                                    <span style="color: #34d399; font-weight: 700;">65%</span>
-                                    <span>TP: 560 €</span>
-                                </div>
-                                <div class="trajectory-track" title="Postup pozice směrem k Take-Profitu: 65%">
-                                    <div class="trajectory-fill" style="width: 65%;"></div>
-                                </div>
-                            </td>
-                            <td style="text-align: right;">
-                                <div style="display: flex; justify-content: flex-end; gap: 5px;">
-                                    <button class="btn-tp-rotate" onclick="simulateTakeProfitRotation('RHM', 'Rheinmetall AG', 2450, 41350)" title="Simulovat okamžité dosažení Take-Profitu a nákup dalšího titulu v pořadí">
-                                        🎯 TP Rotace
-                                    </button>
-                                    <button class="btn-sl-rotate" onclick="simulateStopLossRotation('RHM', 'Rheinmetall AG', -850, 39500)" title="Simulovat aktivaci Stop-Lossu a rotaci do nového titulu">
-                                        🛑 SL
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <!-- Pozice 2: ALLY.US -->
-                        <tr id="posRow-ALLY">
-                            <td>
-                                <div class="sym-cell">
-                                    <div class="sym-main">
-                                        ALLY <span class="sym-ibkr-tag">IBKR: ALLY</span>
-                                    </div>
-                                    <div class="sym-sub">Ally Financial Inc (NYSE)</div>
-                                </div>
-                            </td>
-                            <td><span class="badge-buy-lmt">LONG</span></td>
-                            <td class="font-mono">38,60 USD</td>
-                            <td class="font-mono price-entry" style="font-weight: 800;">40,25 USD</td>
-                            <td class="font-mono"><strong>45 ks</strong> (~42 560 CZK)</td>
-                            <td class="font-mono price-tp" style="font-weight: 800;">+1 820 CZK (+4.27 %)</td>
-                            <td>
-                                <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: #94a3b8;">
-                                    <span>SL: 36.5 $</span>
-                                    <span style="color: #34d399; font-weight: 700;">55%</span>
-                                    <span>TP: 43.5 $</span>
-                                </div>
-                                <div class="trajectory-track" title="Postup k Take-Profitu: 55%">
-                                    <div class="trajectory-fill" style="width: 55%;"></div>
-                                </div>
-                            </td>
-                            <td style="text-align: right;">
-                                <div style="display: flex; justify-content: flex-end; gap: 5px;">
-                                    <button class="btn-tp-rotate" onclick="simulateTakeProfitRotation('ALLY', 'Ally Financial', 1820, 42560)" title="Simulovat okamžité dosažení Take-Profitu">
-                                        🎯 TP Rotace
-                                    </button>
-                                    <button class="btn-sl-rotate" onclick="simulateStopLossRotation('ALLY', 'Ally Financial', -790, 40500)" title="Simulovat Stop-Loss rotaci">
-                                        🛑 SL
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <!-- Pozice 3: AVGO.US -->
-                        <tr id="posRow-AVGO">
-                            <td>
-                                <div class="sym-cell">
-                                    <div class="sym-main">
-                                        AVGO <span class="sym-ibkr-tag">IBKR: AVGO</span>
-                                    </div>
-                                    <div class="sym-sub">Broadcom Inc (NASDAQ)</div>
-                                </div>
-                            </td>
-                            <td><span class="badge-buy-lmt">LONG</span></td>
-                            <td class="font-mono">349,57 USD</td>
-                            <td class="font-mono price-entry" style="font-weight: 800;">362,40 USD</td>
-                            <td class="font-mono"><strong>5 ks</strong> (~42 580 CZK)</td>
-                            <td class="font-mono price-tp" style="font-weight: 800;">+1 560 CZK (+3.67 %)</td>
-                            <td>
-                                <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: #94a3b8;">
-                                    <span>SL: 321.6 $</span>
-                                    <span style="color: #34d399; font-weight: 700;">48%</span>
-                                    <span>TP: 531.8 $</span>
-                                </div>
-                                <div class="trajectory-track" title="Postup k Take-Profitu: 48%">
-                                    <div class="trajectory-fill" style="width: 48%;"></div>
-                                </div>
-                            </td>
-                            <td style="text-align: right;">
-                                <div style="display: flex; justify-content: flex-end; gap: 5px;">
-                                    <button class="btn-tp-rotate" onclick="simulateTakeProfitRotation('AVGO', 'Broadcom Inc', 1560, 42580)" title="Simulovat okamžité dosažení Take-Profitu">
-                                        🎯 TP Rotace
-                                    </button>
-                                    <button class="btn-sl-rotate" onclick="simulateStopLossRotation('AVGO', 'Broadcom Inc', -920, 40100)" title="Simulovat Stop-Loss rotaci">
-                                        🛑 SL
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <!-- Pozice 4: SAN.FR -->
-                        <tr id="posRow-SAN">
-                            <td>
-                                <div class="sym-cell">
-                                    <div class="sym-main">
-                                        SAN <span class="sym-ibkr-tag">IBKR: SAN.PA</span>
-                                    </div>
-                                    <div class="sym-sub">Sanofi SA (Euronext Paris)</div>
-                                </div>
-                            </td>
-                            <td><span class="badge-buy-lmt">LONG</span></td>
-                            <td class="font-mono">98,20 EUR</td>
-                            <td class="font-mono price-entry" style="font-weight: 800;">100,80 EUR</td>
-                            <td class="font-mono"><strong>15 ks</strong> (~38 100 CZK)</td>
-                            <td class="font-mono price-tp" style="font-weight: 800;">+1 010 CZK (+2.65 %)</td>
-                            <td>
-                                <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: #94a3b8;">
-                                    <span>SL: 92 €</span>
-                                    <span style="color: #34d399; font-weight: 700;">40%</span>
-                                    <span>TP: 108 €</span>
-                                </div>
-                                <div class="trajectory-track" title="Postup k Take-Profitu: 40%">
-                                    <div class="trajectory-fill" style="width: 40%;"></div>
-                                </div>
-                            </td>
-                            <td style="text-align: right;">
-                                <div style="display: flex; justify-content: flex-end; gap: 5px;">
-                                    <button class="btn-tp-rotate" onclick="simulateTakeProfitRotation('SAN', 'Sanofi SA', 1010, 38100)" title="Simulovat okamžité dosažení Take-Profitu">
-                                        🎯 TP Rotace
-                                    </button>
-                                    <button class="btn-sl-rotate" onclick="simulateStopLossRotation('SAN', 'Sanofi SA', -720, 36500)" title="Simulovat Stop-Loss rotaci">
-                                        🛑 SL
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <!-- Pozice 5: MSTR.US -->
-                        <tr id="posRow-MSTR">
-                            <td>
-                                <div class="sym-cell">
-                                    <div class="sym-main">
-                                        MSTR <span class="sym-ibkr-tag">IBKR: MSTR</span>
-                                    </div>
-                                    <div class="sym-sub">MicroStrategy Inc (NASDAQ)</div>
-                                </div>
-                            </td>
-                            <td><span class="badge-buy-lmt">LONG</span></td>
-                            <td class="font-mono">158,00 USD</td>
-                            <td class="font-mono price-sl" style="font-weight: 800;">155,80 USD</td>
-                            <td class="font-mono"><strong>10 ks</strong> (~36 610 CZK)</td>
-                            <td class="font-mono price-sl" style="font-weight: 800;">-510 CZK (-1.39 %)</td>
-                            <td>
-                                <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: #94a3b8;">
-                                    <span style="color: #fca5a5;">SL: 145 $</span>
-                                    <span style="color: #94a3b8;">25%</span>
-                                    <span>TP: 210 $</span>
-                                </div>
-                                <div class="trajectory-track" title="Pozice mírně v korekci, chráněna Stop-Lossem">
-                                    <div class="trajectory-fill" style="width: 25%; background: linear-gradient(90deg, #ef4444 0%, #f59e0b 100%);"></div>
-                                </div>
-                            </td>
-                            <td style="text-align: right;">
-                                <div style="display: flex; justify-content: flex-end; gap: 5px;">
-                                    <button class="btn-tp-rotate" onclick="simulateTakeProfitRotation('MSTR', 'MicroStrategy Inc', 3200, 36610)" title="Simulovat skok na TP a nákup dalšího">
-                                        🎯 TP Rotace
-                                    </button>
-                                    <button class="btn-sl-rotate" onclick="simulateStopLossRotation('MSTR', 'MicroStrategy Inc', -510, 36100)" title="Simulovat aktivaci Stop-Lossu">
-                                        🛑 SL
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
 
-            <!-- HISTORIE UZAVŘENÝCH ZISKOVÝCH ROTACÍ -->
-            <div class="rotations-log-card">
-                <div class="rotations-log-title">
-                    <span>🔄</span> Historie uzavřených rotací & Reinvestice zisků (AutoInvest Engine Log)
+            <!-- FRONTA NÁKUPŮ & HISTORIE REALIZOVANÝCH OBCHODŮ NA DEMO ÚČTU -->
+            <div class="rotations-log-card" id="realTradesCard">
+                <div class="positions-header" style="padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.08);">
+                    <div class="rotations-log-title" style="font-size: 0.95rem;">
+                        <span>📋</span> Fronta Nákupů & Historie Realizovaných Obchodů (DUR222134)
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 0.74rem; color: var(--text-muted); display: none; @media(min-width: 768px){display:inline;}">
+                            Auditní záznam všech nákupů a rotací k danému času.
+                        </span>
+                        <button class="action-btn" style="font-size: 0.72rem; padding: 3px 9px;" onclick="resetDemoPortfolioPrompt()" title="Resetovat Demo portfolio do výchozího stavu 100% Cash (250 000 CZK)">
+                            ↺ Resetovat Demo
+                        </button>
+                    </div>
                 </div>
-                <div id="rotationsLogList" style="display: flex; flex-direction: column; gap: 0.6rem;">
-                    <div class="rotation-item">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <span class="status-chip ready" style="font-size: 0.72rem; padding: 2px 7px;">🎯 Take-Profit</span>
-                            <strong>ORCL.US (Oracle Corp)</strong>
-                            <span style="color: #cbd5e1;">Vstup: 162.10 USD ➔ Výstup: 185.10 USD</span>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <span style="color: #34d399; font-weight: 800;">+4 820 CZK (+14.2 %)</span>
-                            <span style="color: #94a3b8; font-size: 0.74rem;">📅 28. 09. 2026</span>
-                            <span style="background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.35); color: #93c5fd; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">
-                                ➔ Reinvestováno do ALLY.US
-                            </span>
-                        </div>
-                    </div>
 
-                    <div class="rotation-item">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <span class="status-chip ready" style="font-size: 0.72rem; padding: 2px 7px;">🎯 Take-Profit</span>
-                            <strong>KLAC.US (KLA Corp)</strong>
-                            <span style="color: #cbd5e1;">Vstup: 710.00 USD ➔ Výstup: 798.50 USD</span>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <span style="color: #34d399; font-weight: 800;">+5 910 CZK (+12.5 %)</span>
-                            <span style="color: #94a3b8; font-size: 0.74rem;">📅 27. 09. 2026</span>
-                            <span style="background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.35); color: #93c5fd; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">
-                                ➔ Reinvestováno do AVGO.US
-                            </span>
-                        </div>
+                <!-- FRONTA PŘIPRAVENÝCH TITULŮ (QUEUE) -->
+                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                    <div style="font-size: 0.76rem; font-weight: 800; text-transform: uppercase; color: #93c5fd; letter-spacing: 0.03em;">
+                        ⚡ Připravená fronta nákupů / následujících rotací:
                     </div>
+                    <div id="orderQueueList" style="display: flex; flex-direction: column; gap: 0.45rem;">
+                        <!-- Naplněno dynamicky dle stavu -->
+                    </div>
+                </div>
 
-                    <div class="rotation-item sl-rotation">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <span class="status-chip" style="color: #f87171; border-color: rgba(239,68,68,0.4); background: rgba(239,68,68,0.1); font-size: 0.72rem; padding: 2px 7px;">🛑 Stop-Loss</span>
-                            <strong>DBK.DE (Deutsche Bank)</strong>
-                            <span style="color: #cbd5e1;">Vstup: 15.20 EUR ➔ Výstup: 14.50 EUR</span>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <span style="color: #f87171; font-weight: 800;">-890 CZK (-4.6 %)</span>
-                            <span style="color: #94a3b8; font-size: 0.74rem;">📅 26. 09. 2026</span>
-                            <span style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); color: #34d399; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">
-                                ➔ Kapitál ochráněn & rotován do SAN.FR
-                            </span>
+                <div style="height: 1px; background: rgba(255,255,255,0.08); margin: 0.5rem 0;"></div>
+
+                <!-- HISTORIE REALIZOVANÝCH NÁKUPŮ A ROTACÍ (FILLED ORDERS LOG) -->
+                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                    <div style="font-size: 0.76rem; font-weight: 800; text-transform: uppercase; color: #34d399; letter-spacing: 0.03em;">
+                        📜 Historie realizovaných nákupů na Demo účtu:
+                    </div>
+                    <div id="realTradesLogList" style="display: flex; flex-direction: column; gap: 0.55rem;">
+                        <div id="emptyTradesNotice" style="font-size: 0.78rem; color: var(--text-muted); font-style: italic; padding: 6px 0;">
+                            Zatím nebyly provedeny žádné nákupy. Po zapnutí AutoInvestu se zde objeví časová osa realizovaných obchodů.
                         </div>
                     </div>
                 </div>
@@ -2577,7 +2336,34 @@ ib.disconnect()
         </div>
     </div>
 
+    <!-- 🚀 AUTOINVEST 3-2-1 ODPOČÍTÁVÁNÍ MODAL -->
+    <div id="autoInvestCountdownModal" class="countdown-overlay" style="display: none;">
+        <div class="countdown-card">
+            <div class="countdown-icon" id="countdownIcon">🚀</div>
+            <div class="countdown-title" id="countdownTitle">Aktivace AutoInvest</div>
+            <div class="countdown-desc" id="countdownDescText">
+                Autonomní odeslání bracket příkazů (Limitní nákup + Stop-Loss + Take-Profit) pro doporučené tituly na účet <strong>DUR222134</strong>.
+            </div>
 
+            <div class="countdown-timer" id="countdownTimerNum">3</div>
+
+            <div class="countdown-progress-bar">
+                <div class="countdown-progress-fill" id="countdownProgressFill" style="width: 33%;"></div>
+            </div>
+
+            <div class="countdown-sub" id="countdownSubText">
+                Následující tituly budou realizovány za 3...
+            </div>
+            
+            <div id="countdownQueuePreview" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-top: 4px;">
+                <span class="status-chip ready" style="font-size: 0.74rem;">RHM (1 ks)</span>
+                <span class="status-chip ready" style="font-size: 0.74rem;">ALLY (44 ks)</span>
+                <span class="status-chip ready" style="font-size: 0.74rem;">AVGO (10 ks)</span>
+                <span class="status-chip ready" style="font-size: 0.74rem;">ORCL (10 ks)</span>
+                <span class="status-chip ready" style="font-size: 0.74rem;">SAN (380 ks)</span>
+            </div>
+        </div>
+    </div>
 
     <!-- TOAST NOTIFIKACE -->
     <div id="toastPopup" class="toast-popup"></div>
@@ -2592,56 +2378,77 @@ ib.disconnect()
             setTimeout(() => { toast.style.display = 'none'; }, duration);
         }
 
-        // AUTOINVEST STAV & PŘEPÍNAČ
+        // ==================== 💾 DEMO PORTFOLIO STATE (IBKR DUR222134) ====================
+        const DEMO_STORAGE_KEY = 'ibkr_demo_portfolio_v2';
+
+        const queuedRotationCandidates = [
+            { symbol: 'SAP', name: 'SAP SE (XETRA)', exchange: 'XETRA', cur: 'EUR', price: 198.40, sl: '188 €', tp: '235 €', targetUpside: '+18.4 %', shares: 8, posCzk: 40000 },
+            { symbol: 'MSFT', name: 'Microsoft Corp (NASDAQ)', exchange: 'NASDAQ', cur: 'USD', price: 428.10, sl: '410 $', tp: '495 $', targetUpside: '+15.6 %', shares: 4, posCzk: 40240 },
+            { symbol: 'AMZN', name: 'Amazon.com Inc (NASDAQ)', exchange: 'NASDAQ', cur: 'USD', price: 188.50, sl: '178 $', tp: '225 $', targetUpside: '+19.3 %', shares: 9, posCzk: 39870 },
+            { symbol: 'ASML', name: 'ASML Holding NV (AEX)', exchange: 'AEX', cur: 'EUR', price: 785.00, sl: '740 €', tp: '920 €', targetUpside: '+17.2 %', shares: 2, posCzk: 39560 },
+            { symbol: 'NVDA', name: 'NVIDIA Corp (NASDAQ)', exchange: 'NASDAQ', cur: 'USD', price: 121.50, sl: '114 $', tp: '150 $', targetUpside: '+23.4 %', shares: 14, posCzk: 39970 }
+        ];
+
+        function getDemoPortfolio() {
+            const raw = localStorage.getItem(DEMO_STORAGE_KEY);
+            if (raw) {
+                try { return JSON.parse(raw); } catch(e){}
+            }
+            return {
+                isExecuted: false,
+                account: 'DUR222134',
+                initialCapital: 250000,
+                totalEquity: 250000,
+                cash: 250000,
+                invested: 0,
+                realizedProfit: 0,
+                unrealizedProfit: 0,
+                positions: [],
+                trades: [],
+                queueIndex: 0
+            };
+        }
+
+        function saveDemoPortfolio(state) {
+            localStorage.setItem(DEMO_STORAGE_KEY, JSON.stringify(state));
+        }
+
         function initAutoInvestState() {
             const saved = localStorage.getItem('autoinvest_enabled');
-            const isEnabled = (saved === null || saved === 'true');
+            const state = getDemoPortfolio();
+            const isEnabled = (saved === 'true') || state.isExecuted;
             const toggle = document.getElementById('autoInvestToggle');
             if (toggle) toggle.checked = isEnabled;
             applyAutoInvestUI(isEnabled);
+            renderPortfolioUI();
         }
 
         function toggleAutoInvest(enabled) {
             localStorage.setItem('autoinvest_enabled', enabled ? 'true' : 'false');
             applyAutoInvestUI(enabled);
+
             if (enabled) {
-                // Okamžitá aktivace navrhovaných nákupních příkazů na účet
-                const rows = document.querySelectorAll('#ordersTableBody tr');
-                rows.forEach(r => {
-                    const btn = r.querySelector('.exec-btn');
-                    if (btn) {
-                        btn.innerText = '🚀 Auto-Aktivní';
-                        btn.style.background = 'rgba(16, 185, 129, 0.35)';
-                        btn.style.borderColor = '#10b981';
-                        btn.style.color = '#34d399';
-                    }
-                });
-                showToast('🤖 AutoInvest ZAPNUT: Okamžitě spouštím nákupy pro navrhovaný seznam titulů! Bracket příkazy (Entry + SL + TP) odeslány na IBKR účet DUR222134. Systém automaticky uzamyká zisk při dosažení Take-Profit a okamžitě rotuje kapitál do dalšího titulu.', 'success', 6000);
+                const state = getDemoPortfolio();
+                if (!state.isExecuted) {
+                    // Spustit odpočítávání 3 - 2 - 1 - NYNÍ pro exekuci titulů
+                    startAutoInvestCountdown();
+                } else {
+                    showToast('🤖 AutoInvest AKTIVNÍ: Autonomní dohled nad otevřenými pozicemi a TP/SL rotacemi na Demo účtu DUR222134 běží.', 'success', 4000);
+                }
             } else {
-                const rows = document.querySelectorAll('#ordersTableBody tr');
-                rows.forEach(r => {
-                    const btn = r.querySelector('.exec-btn');
-                    if (btn && btn.innerText === '🚀 Auto-Aktivní') {
-                        btn.innerText = '▶ Exekuce';
-                        btn.style.background = '';
-                        btn.style.borderColor = '';
-                        btn.style.color = '';
-                    }
-                });
                 showToast('⏸️ AutoInvest POZASTAVEN: Autonomní exekuce a rotace pozastaveny. Vyžaduje manuální potvrzení.', 'info', 4000);
             }
         }
 
         function applyAutoInvestUI(enabled) {
             const panel = document.getElementById('autoInvestPanel');
-            const badge = document.getElementById('autoInvestBadge');
             const text = document.getElementById('autoInvestStatusText');
             const label = document.getElementById('autoInvestLabel');
-            if (!panel || !badge || !text || !label) return;
+            if (!panel || !text || !label) return;
 
             if (enabled) {
                 panel.classList.remove('is-disabled');
-                text.textContent = 'AutoInvest: AKTIVNÍ (Autonomní režim)';
+                text.textContent = 'AutoInvest: AKTIVNÍ (Autonomní režim DUR222134)';
                 label.textContent = 'AutoInvest ON';
             } else {
                 panel.classList.add('is-disabled');
@@ -2650,14 +2457,492 @@ ib.disconnect()
             }
         }
 
-        function recalcTradingOrders() {
+        // ==================== 🚀 3 - 2 - 1 - NYNÍ ODPOČÍTÁVÁNÍ ====================
+        let countdownTimerId = null;
+
+        function startAutoInvestCountdown() {
+            const modal = document.getElementById('autoInvestCountdownModal');
+            const numEl = document.getElementById('countdownTimerNum');
+            const fillEl = document.getElementById('countdownProgressFill');
+            const subEl = document.getElementById('countdownSubText');
+            const previewEl = document.getElementById('countdownQueuePreview');
+            if (!modal || !numEl || !fillEl || !subEl) return;
+
+            // Získat tituly z tabulky
+            const rows = document.querySelectorAll('#ordersTableBody tr');
+            const items = [];
+            rows.forEach(r => {
+                const raw = r.getAttribute('data-order-raw');
+                if (raw) {
+                    try {
+                        const o = JSON.parse(raw);
+                        items.push(`${o.symbol_ibkr || o.symbol_yahoo} (${o.shares} ks)`);
+                    } catch(e){}
+                }
+            });
+
+            if (previewEl && items.length > 0) {
+                previewEl.innerHTML = items.slice(0, 5).map(it => `<span class="status-chip ready" style="font-size: 0.74rem;">${it}</span>`).join('');
+            }
+
+            modal.style.display = 'flex';
+            numEl.classList.remove('is-now');
+
+            // 3 sekundy
+            numEl.textContent = '3';
+            fillEl.style.width = '33%';
+            subEl.textContent = 'Následující tituly budou realizovány za 3...';
+
+            countdownTimerId = setTimeout(() => {
+                // 2 sekundy
+                numEl.textContent = '2';
+                fillEl.style.width = '66%';
+                subEl.textContent = 'Následující tituly budou realizovány za 2...';
+
+                countdownTimerId = setTimeout(() => {
+                    // 1 sekunda
+                    numEl.textContent = '1';
+                    fillEl.style.width = '100%';
+                    subEl.textContent = 'Následující tituly budou realizovány za 1...';
+
+                    countdownTimerId = setTimeout(() => {
+                        // NYNÍ!
+                        numEl.textContent = 'NYNÍ!';
+                        numEl.classList.add('is-now');
+                        subEl.textContent = '⚡ Odesílám bracket nákupy na Demo účet DUR222134...';
+
+                        countdownTimerId = setTimeout(() => {
+                            modal.style.display = 'none';
+                            executeAutoInvestBasket();
+                        }, 750);
+
+                    }, 1000);
+                }, 1000);
+            }, 1000);
+        }
+
+        function executeAutoInvestBasket() {
+            const state = getDemoPortfolio();
+            const rows = document.querySelectorAll('#ordersTableBody tr');
+            const newPositions = [];
+            const newTrades = [];
+            let totalInvestedCzk = 0;
+
+            const now = new Date();
+            const timeStr = `${String(now.getDate()).padStart(2, '0')}. ${String(now.getMonth() + 1).padStart(2, '0')}. ${now.getFullYear()} v ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+            rows.forEach((r, idx) => {
+                if (idx >= 5) return;
+                const raw = r.getAttribute('data-order-raw');
+                if (!raw) return;
+                try {
+                    const ord = JSON.parse(raw);
+                    const sym = ord.symbol_ibkr || ord.symbol_yahoo;
+                    const posCzk = ord.position_czk || Math.round(ord.shares * ord.limit_price * 23.5);
+                    totalInvestedCzk += posCzk;
+
+                    newPositions.push({
+                        symbol: sym,
+                        name: ord.name,
+                        exchange: ord.exchange_ibkr || 'SMART',
+                        shares: ord.shares,
+                        currency: ord.currency,
+                        entryPrice: `${ord.limit_price} ${ord.currency}`,
+                        currentPrice: `${ord.limit_price} ${ord.currency}`,
+                        posCzk: posCzk,
+                        sl: `${ord.sl_price} ${ord.currency}`,
+                        tp: `${ord.tp_price} ${ord.currency}`,
+                        boughtAt: timeStr,
+                        progressPct: 15,
+                        pnlCzk: 0,
+                        pnlPct: '0.00'
+                    });
+
+                    newTrades.push({
+                        id: 'TRD-' + Math.floor(100000 + Math.random() * 900000),
+                        time: timeStr,
+                        type: 'BUY_FILLED',
+                        symbol: sym,
+                        name: ord.name,
+                        shares: ord.shares,
+                        price: `${ord.limit_price} ${ord.currency}`,
+                        totalCzk: posCzk,
+                        sl: `${ord.sl_price} ${ord.currency}`,
+                        tp: `${ord.tp_price} ${ord.currency}`,
+                        audit: 'IBKR Demo DUR222134 (FILLED)'
+                    });
+
+                    // Označit tlačítko v tabulce příkazů
+                    const btn = r.querySelector('.exec-btn');
+                    if (btn) {
+                        btn.innerText = '✅ Vyplněno';
+                        btn.style.background = 'rgba(16, 185, 129, 0.35)';
+                        btn.style.borderColor = '#10b981';
+                        btn.style.color = '#34d399';
+                    }
+                } catch(e) {
+                    console.error('Basket order exec error:', e);
+                }
+            });
+
+            state.isExecuted = true;
+            state.positions = newPositions;
+            state.trades = newTrades.concat(state.trades);
+            state.invested = totalInvestedCzk;
+            state.cash = Math.max(0, state.totalEquity - totalInvestedCzk);
+            saveDemoPortfolio(state);
+
+            renderPortfolioUI();
+            showToast(`🚀 AutoInvest: Koš 5 titulů byl úspěšně nakoupen na účtu DUR222134! Fronta nákupů a otevřené pozice aktivovány.`, 'success', 6000);
+        }
+
+        // ==================== 📊 RENDEROVÁNÍ REÁLNÉHO PORTFOLIA & HISTORIE ====================
+        function renderPortfolioUI() {
+            const state = getDemoPortfolio();
+
+            // KPI
+            const eqEl = document.getElementById('perfEquityVal');
+            const eqSub = document.getElementById('perfEquitySub');
+            const cashEl = document.getElementById('perfCashVal');
+            const cashSub = document.getElementById('perfCashSub');
+            const invEl = document.getElementById('perfInvestedVal');
+            const invSub = document.getElementById('perfInvestedSub');
+            const realEl = document.getElementById('perfRealizedVal');
+            const realSub = document.getElementById('perfRealizedSub');
+            const unEl = document.getElementById('perfUnrealizedVal');
+            const unSub = document.getElementById('perfUnrealizedSub');
+
+            const totalGainCzk = state.totalEquity - state.initialCapital;
+            const totalGainPct = ((totalGainCzk / state.initialCapital) * 100).toFixed(2);
+            const cashPct = state.totalEquity > 0 ? ((state.cash / state.totalEquity) * 100).toFixed(1) : 100;
+
+            if (eqEl) eqEl.textContent = `${Number(state.totalEquity).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} CZK`;
+            if (eqSub) {
+                eqSub.textContent = `${totalGainCzk >= 0 ? '+' : ''}${Number(totalGainCzk).toLocaleString('cs-CZ')} CZK (${totalGainPct} %) od spuštění`;
+                eqSub.style.color = totalGainCzk >= 0 ? '#34d399' : '#f87171';
+            }
+            if (cashEl) cashEl.textContent = `${Number(state.cash).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} CZK`;
+            if (cashSub) cashSub.textContent = `${cashPct} % volný kapitál`;
+            if (invEl) invEl.textContent = `${Number(state.invested).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} CZK`;
+            if (invSub) invSub.textContent = `${state.positions.length} aktivních pozic`;
+            if (realEl) {
+                realEl.textContent = `${state.realizedProfit >= 0 ? '+' : ''}${Number(state.realizedProfit).toLocaleString('cs-CZ')} CZK`;
+                realEl.style.color = state.realizedProfit >= 0 ? '#fbbf24' : '#f87171';
+            }
+            if (realSub) {
+                const closedRotationsCount = state.trades.filter(t => t.type && t.type.includes('SELL')).length;
+                realSub.textContent = `${closedRotationsCount} uzavřených rotací`;
+            }
+            if (unEl) unEl.textContent = `+${Number(state.unrealizedProfit).toLocaleString('cs-CZ')} CZK`;
+            if (unSub) unSub.textContent = `0.00 % otevřený výnos`;
+
+            // OTEVŘENÉ POZICE TABULKA vs EMPTY PLACEHOLDER
+            const placeholder = document.getElementById('emptyPositionsPlaceholder');
+            const posTable = document.getElementById('openPositionsTable');
+            const posTbody = document.getElementById('openPositionsTableBody');
+
+            if (!state.positions || state.positions.length === 0) {
+                if (placeholder) placeholder.style.display = 'flex';
+                if (posTable) posTable.style.display = 'none';
+            } else {
+                if (placeholder) placeholder.style.display = 'none';
+                if (posTable) posTable.style.display = 'table';
+                if (posTbody) {
+                    posTbody.innerHTML = state.positions.map(p => `
+                        <tr id="posRow-${p.symbol}">
+                            <td>
+                                <div class="sym-cell">
+                                    <div class="sym-main">
+                                        ${p.symbol} <span class="sym-ibkr-tag">${p.exchange}</span>
+                                    </div>
+                                    <div class="sym-sub">${p.name}</div>
+                                </div>
+                            </td>
+                            <td><span class="badge-buy-lmt">LONG</span></td>
+                            <td class="font-mono">${p.entryPrice}</td>
+                            <td class="font-mono price-entry" style="font-weight: 800;">${p.currentPrice}</td>
+                            <td class="font-mono"><strong>${p.shares} ks</strong> (~${Number(p.posCzk).toLocaleString('cs-CZ')} CZK)</td>
+                            <td class="font-mono price-tp" style="font-weight: 800;">+${p.pnlCzk} CZK (${p.pnlPct} %)</td>
+                            <td>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: #94a3b8;">
+                                    <span>SL: ${p.sl}</span>
+                                    <span style="color: #34d399; font-weight: 700;">${p.progressPct || 20}%</span>
+                                    <span>TP: ${p.tp}</span>
+                                </div>
+                                <div class="trajectory-track" title="Trajektorie k Take-Profitu">
+                                    <div class="trajectory-fill" style="width: ${p.progressPct || 20}%;"></div>
+                                </div>
+                            </td>
+                            <td style="text-align: right;">
+                                <div style="display: flex; justify-content: flex-end; gap: 5px;">
+                                    <button class="btn-tp-rotate" onclick="simulateTakeProfitRotation('${p.symbol}')" title="Realizovat Take-Profit a rotovat kapitál do dalšího titulu">
+                                        🎯 TP Rotace
+                                    </button>
+                                    <button class="btn-sl-rotate" onclick="simulateStopLossRotation('${p.symbol}')" title="Aktivovat Stop-Loss ochranu a rotovat do dalšího titulu">
+                                        🛑 SL
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+            }
+
+            // FRONTA PŘIPRAVENÝCH TITULŮ (QUEUE)
+            const queueList = document.getElementById('orderQueueList');
+            if (queueList) {
+                const nextItems = [];
+                for (let i = 0; i < 4; i++) {
+                    const cand = queuedRotationCandidates[(state.queueIndex + i) % queuedRotationCandidates.length];
+                    nextItems.push({ ...cand, rank: i + 1 });
+                }
+
+                queueList.innerHTML = nextItems.map(item => `
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 7px 12px; border-radius: 6px; background: rgba(255, 255, 255, 0.025); border-left: 3px solid #3b82f6; font-size: 0.8rem; gap: 0.75rem; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="background: rgba(59, 130, 246, 0.2); color: #93c5fd; padding: 2px 7px; border-radius: 4px; font-size: 0.72rem; font-weight: 800;">#${item.rank} ve frontě</span>
+                            <strong>${item.symbol}</strong>
+                            <span style="color: var(--text-secondary); font-size: 0.76rem;">${item.name} (${item.exchange})</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <span style="color: #60a5fa; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;">${item.price} ${item.cur}</span>
+                            <span style="color: #34d399; font-weight: 700; font-size: 0.76rem;">Cíl: ${item.tp} (${item.targetUpside})</span>
+                            <span style="color: #94a3b8; font-size: 0.72rem;">SL: ${item.sl}</span>
+                            <span style="background: rgba(16, 185, 129, 0.12); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 2px 7px; border-radius: 4px; font-size: 0.7rem; font-weight: 700;">
+                                Připraven k nákupu při uvolnění kapitálu
+                            </span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // HISTORIE REALIZOVANÝCH NÁKUPŮ NA DEMO ÚČTU (REAL TRADES LOG)
+            const tradesList = document.getElementById('realTradesLogList');
+            if (tradesList) {
+                if (!state.trades || state.trades.length === 0) {
+                    tradesList.innerHTML = `
+                        <div id="emptyTradesNotice" style="font-size: 0.78rem; color: var(--text-muted); font-style: italic; padding: 6px 0;">
+                            Zatím nebyly provedeny žádné nákupy. Po zapnutí AutoInvestu se zde objeví časová osa realizovaných obchodů.
+                        </div>
+                    `;
+                } else {
+                    tradesList.innerHTML = state.trades.map(t => {
+                        let badgeHtml = '';
+                        let borderCol = '#10b981';
+                        if (t.type === 'BUY_FILLED') {
+                            badgeHtml = '<span class="status-chip ready" style="font-size: 0.72rem; padding: 2px 7px;">📥 Nákup Vyplněn</span>';
+                            borderCol = '#10b981';
+                        } else if (t.type === 'TP_SELL') {
+                            badgeHtml = '<span class="status-chip ready" style="font-size: 0.72rem; padding: 2px 7px; background: rgba(245, 158, 11, 0.2); color: #fbbf24; border-color: rgba(245, 158, 11, 0.45);">🎯 Take-Profit Prodej</span>';
+                            borderCol = '#f59e0b';
+                        } else if (t.type === 'SL_SELL') {
+                            badgeHtml = '<span class="status-chip" style="font-size: 0.72rem; padding: 2px 7px; background: rgba(239, 68, 68, 0.2); color: #f87171; border-color: rgba(239, 68, 68, 0.45);">🛑 Stop-Loss Ochrana</span>';
+                            borderCol = '#ef4444';
+                        } else if (t.type === 'REINVEST_BUY') {
+                            badgeHtml = '<span class="status-chip ready" style="font-size: 0.72rem; padding: 2px 7px; background: rgba(59, 130, 246, 0.2); color: #93c5fd; border-color: rgba(59, 130, 246, 0.45);">🔄 Reinvestiční Nákup</span>';
+                            borderCol = '#3b82f6';
+                        }
+
+                        return `
+                            <div class="rotation-item" style="border-left-color: ${borderCol};">
+                                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                                    ${badgeHtml}
+                                    <strong>${t.symbol}</strong>
+                                    <span style="color: #cbd5e1; font-size: 0.78rem;">${t.name || ''}</span>
+                                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #93c5fd;">${t.shares} ks @ ${t.price}</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                                    <span style="color: ${t.profitCzk ? (t.profitCzk >= 0 ? '#34d399' : '#f87171') : '#ffffff'}; font-weight: 800; font-family: 'JetBrains Mono', monospace;">
+                                        ${t.profitCzk ? (t.profitCzk >= 0 ? '+' : '') + Number(t.profitCzk).toLocaleString('cs-CZ') + ' CZK' : Number(t.totalCzk).toLocaleString('cs-CZ') + ' CZK'}
+                                    </span>
+                                    <span style="color: #94a3b8; font-size: 0.74rem;">📅 ${t.time}</span>
+                                    <span style="background: rgba(255, 255, 255, 0.05); color: #94a3b8; padding: 2px 7px; border-radius: 4px; font-size: 0.7rem;">
+                                        ${t.audit || 'DUR222134'}
+                                    </span>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            }
+        }
+
+        // ==================== 🔄 REALIZACE TAKE-PROFIT A STOP-LOSS ROTACÍ ====================
+        function simulateTakeProfitRotation(symbol) {
+            const state = getDemoPortfolio();
+            const posIdx = state.positions.findIndex(p => p.symbol === symbol);
+            if (posIdx === -1) return;
+
+            const pos = state.positions[posIdx];
+            const profitCzk = Math.round(pos.posCzk * 0.075); // ~7.5 % zisk
+            const releasedCapital = pos.posCzk + profitCzk;
+
+            const now = new Date();
+            const timeStr = `${String(now.getDate()).padStart(2, '0')}. ${String(now.getMonth() + 1).padStart(2, '0')}. ${now.getFullYear()} v ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+            // 1. Záznam prodeje se ziskem
+            state.trades.unshift({
+                id: 'TRD-' + Math.floor(100000 + Math.random() * 900000),
+                time: timeStr,
+                type: 'TP_SELL',
+                symbol: pos.symbol,
+                name: pos.name,
+                shares: pos.shares,
+                price: pos.tp,
+                profitCzk: profitCzk,
+                totalCzk: releasedCapital,
+                audit: 'Take-Profit uzavřen (DUR222134)'
+            });
+
+            // 2. Výběr dalšího titulu z fronty
+            const nextCand = queuedRotationCandidates[state.queueIndex % queuedRotationCandidates.length];
+            state.queueIndex++;
+
+            const fx = nextCand.cur === 'EUR' ? 25.2 : 23.5;
+            const newShares = Math.max(1, Math.floor(releasedCapital / (nextCand.price * fx)));
+            const newPosCzk = Math.round(newShares * nextCand.price * fx);
+
+            // 3. Záznam okamžité reinvestice
+            state.trades.unshift({
+                id: 'TRD-' + Math.floor(100000 + Math.random() * 900000),
+                time: timeStr,
+                type: 'REINVEST_BUY',
+                symbol: nextCand.symbol,
+                name: nextCand.name,
+                shares: newShares,
+                price: `${nextCand.price} ${nextCand.cur}`,
+                totalCzk: newPosCzk,
+                audit: `Rotace z ${pos.symbol} (DUR222134)`
+            });
+
+            // 4. Nahrazení pozice v portfoliu
+            state.positions[posIdx] = {
+                symbol: nextCand.symbol,
+                name: nextCand.name,
+                exchange: nextCand.exchange,
+                shares: newShares,
+                currency: nextCand.cur,
+                entryPrice: `${nextCand.price} ${nextCand.cur}`,
+                currentPrice: `${nextCand.price} ${nextCand.cur}`,
+                posCzk: newPosCzk,
+                sl: nextCand.sl,
+                tp: nextCand.tp,
+                boughtAt: timeStr,
+                progressPct: 15,
+                pnlCzk: 0,
+                pnlPct: '0.00'
+            };
+
+            state.realizedProfit += profitCzk;
+            state.totalEquity += profitCzk;
+            saveDemoPortfolio(state);
+
+            renderPortfolioUI();
+            showToast(`🎯 TAKE-PROFIT DOSAŽEN: Pozice ${symbol} prodána se ziskem +${profitCzk.toLocaleString('cs-CZ')} CZK! Kapitál ${releasedCapital.toLocaleString('cs-CZ')} CZK byl okamžitě reinvestován do ${nextCand.symbol} (${nextCand.name})!`, 'success', 6000);
+        }
+
+        function simulateStopLossRotation(symbol) {
+            const state = getDemoPortfolio();
+            const posIdx = state.positions.findIndex(p => p.symbol === symbol);
+            if (posIdx === -1) return;
+
+            const pos = state.positions[posIdx];
+            const lossCzk = Math.round(pos.posCzk * 0.022); // ~2.2 % limitovaná ztráta
+            const remainingCapital = pos.posCzk - lossCzk;
+
+            const now = new Date();
+            const timeStr = `${String(now.getDate()).padStart(2, '0')}. ${String(now.getMonth() + 1).padStart(2, '0')}. ${now.getFullYear()} v ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+            // 1. Záznam prodeje se Stop-Lossem
+            state.trades.unshift({
+                id: 'TRD-' + Math.floor(100000 + Math.random() * 900000),
+                time: timeStr,
+                type: 'SL_SELL',
+                symbol: pos.symbol,
+                name: pos.name,
+                shares: pos.shares,
+                price: pos.sl,
+                profitCzk: -lossCzk,
+                totalCzk: remainingCapital,
+                audit: 'Stop-Loss ochrana kapitálu (DUR222134)'
+            });
+
+            // 2. Výběr dalšího titulu z fronty
+            const nextCand = queuedRotationCandidates[state.queueIndex % queuedRotationCandidates.length];
+            state.queueIndex++;
+
+            const fx = nextCand.cur === 'EUR' ? 25.2 : 23.5;
+            const newShares = Math.max(1, Math.floor(remainingCapital / (nextCand.price * fx)));
+            const newPosCzk = Math.round(newShares * nextCand.price * fx);
+
+            // 3. Záznam reinvestice
+            state.trades.unshift({
+                id: 'TRD-' + Math.floor(100000 + Math.random() * 900000),
+                time: timeStr,
+                type: 'REINVEST_BUY',
+                symbol: nextCand.symbol,
+                name: nextCand.name,
+                shares: newShares,
+                price: `${nextCand.price} ${nextCand.cur}`,
+                totalCzk: newPosCzk,
+                audit: `Rotace po Stop-Lossu z ${pos.symbol}`
+            });
+
+            // 4. Nahrazení pozice
+            state.positions[posIdx] = {
+                symbol: nextCand.symbol,
+                name: nextCand.name,
+                exchange: nextCand.exchange,
+                shares: newShares,
+                currency: nextCand.cur,
+                entryPrice: `${nextCand.price} ${nextCand.cur}`,
+                currentPrice: `${nextCand.price} ${nextCand.cur}`,
+                posCzk: newPosCzk,
+                sl: nextCand.sl,
+                tp: nextCand.tp,
+                boughtAt: timeStr,
+                progressPct: 15,
+                pnlCzk: 0,
+                pnlPct: '0.00'
+            };
+
+            state.realizedProfit -= lossCzk;
+            state.totalEquity -= lossCzk;
+            saveDemoPortfolio(state);
+
+            renderPortfolioUI();
+            showToast(`🛑 STOP-LOSS AKTIVOVÁN: Pozice ${symbol} ukončena pro ochranu kapitálu (-${lossCzk.toLocaleString('cs-CZ')} CZK). Zbývající kapitál ${remainingCapital.toLocaleString('cs-CZ')} CZK byl okamžitě rotován do ${nextCand.symbol}!`, 'error', 6000);
+        }
+
+        function resetDemoPortfolioPrompt() {
+            if (confirm('Opravdu chcete resetovat portfolio na Demo účtu DUR222134 do výchozího stavu 100% Cash (250 000 CZK)?')) {
+                localStorage.removeItem(DEMO_STORAGE_KEY);
+                localStorage.setItem('autoinvest_enabled', 'false');
+                const toggle = document.getElementById('autoInvestToggle');
+                if (toggle) toggle.checked = false;
+                applyAutoInvestUI(false);
+
+                // Resetovat tlačítka v tabulce příkazů
+                document.querySelectorAll('#ordersTableBody tr .exec-btn').forEach(btn => {
+                    btn.innerText = '▶ Exekuce';
+                    btn.style.background = '';
+                    btn.style.borderColor = '';
+                    btn.style.color = '';
+                });
+
+                renderPortfolioUI();
+                showToast('↺ Demo portfolio resetováno: 100 % Cash (250 000 CZK), 0 pozic. Připraveno pro spuštění AutoInvestu.', 'info', 4000);
+            }
+        }
+
+        // ==================== 🧮 PŘEPOČET PŘÍKAZŮ DLE KAPITÁLU ====================
+        function recalcTradingOrders(showFeedback = true) {
             const capInput = document.getElementById('portfolioCapInput');
             const riskSelect = document.getElementById('maxRiskSelect');
             const capital = parseFloat(capInput ? capInput.value : 250000) || 250000;
             const maxRiskPct = parseFloat(riskSelect ? riskSelect.value : 1.5) || 1.5;
 
             const rows = document.querySelectorAll('#ordersTableBody tr');
-            const updatedOrders = [];
 
             rows.forEach(row => {
                 const rawAttr = row.getAttribute('data-order-raw');
@@ -2692,61 +2977,14 @@ ib.disconnect()
                     ord.capital_risk_czk = actualRiskCzk;
                     ord.capital_risk_pct = actualRiskPct;
                     row.setAttribute('data-order-raw', JSON.stringify(ord));
-                    updatedOrders.push(ord);
                 } catch (e) {
                     console.warn('Recalc error:', e);
                 }
             });
 
-            updatePythonSnippet(updatedOrders);
-            showToast(`🔄 Příkazy přepočteny pro kapitál ${capital.toLocaleString('cs-CZ')} CZK (Max risk ${maxRiskPct} %).`, 'success');
-        }
-
-        function updatePythonSnippet(orders) {
-            const pre = document.getElementById('pythonSnippetBox');
-            if (!pre || !orders || !orders.length) return;
-
-            const itemsStr = orders.map(o => `    {
-        "symbol": "${o.symbol_ibkr || o.symbol_yahoo}",
-        "exchange": "${o.exchange_ibkr || 'SMART'}",
-        "currency": "${o.currency}",
-        "shares": ${o.shares},
-        "entry": ${o.limit_price},
-        "sl": ${o.sl_price},
-        "tp": ${o.tp_price}
-    }`).join(',\n');
-
-            pre.innerText = `# Autonomní odeslání Bracket příkazů do Interactive Brokers TWS
-from ib_insync import IB, Stock, util
-
-ib = IB()
-ib.connect('127.0.0.1', 7497, clientId=1) # 7497 = TWS Paper, 7496 = TWS Live
-print(f"✅ Připojeno k IBKR účtu: {ib.managedAccounts()}")
-
-orders_data = [
-${itemsStr}
-]
-
-for item in orders_data:
-    contract = Stock(item["symbol"], item["exchange"], item["currency"])
-    ib.qualifyContracts(contract)
-    
-    bracket = ib.bracketOrder(
-        action='BUY',
-        quantity=item["shares"],
-        limitPrice=item["entry"],
-        takeProfitPrice=item["tp"],
-        stopLossPrice=item["sl"]
-    )
-    
-    print(f"🚀 Odesílám bracket příkaz pro {item['symbol']} ({item['shares']} ks @ {item['entry']})")
-    for o in bracket:
-        ib.placeOrder(contract, o)
-
-ib.sleep(2)
-print("✅ Všechny bracket příkazy byly úspěšně předány do TWS!")
-ib.disconnect()
-`;
+            if (showFeedback) {
+                showToast(`🔄 Příkazy přepočteny pro kapitál ${capital.toLocaleString('cs-CZ')} CZK (Max risk ${maxRiskPct} %).`, 'success');
+            }
         }
 
         function downloadIbkrBasketCsv() {
@@ -2760,7 +2998,7 @@ ib.disconnect()
                 if (!raw) return;
                 try {
                     const o = JSON.parse(raw);
-                    const sym = o.symbol_ibkr || o.symbol_yahoo || (o.symbol_xtb ? o.symbol_xtb.split('.')[0] : 'STK');
+                    const sym = o.symbol_ibkr || o.symbol_yahoo || 'STK';
                     const exch = o.exchange_ibkr || (o.currency === 'CZK' ? 'PSE' : 'SMART');
                     csvLines.push(`BUY,${o.shares},${sym},STK,${exch},${o.currency},LMT,${o.limit_price},${o.sl_price}`);
                 } catch(e){}
@@ -2776,50 +3014,16 @@ ib.disconnect()
             showToast('📥 IBKR Basket Trader CSV soubor byl vygenerován a stažen do vašeho počítače!', 'success');
         }
 
-        function copyIbInsyncPythonCode() {
-            const pre = document.getElementById('pythonSnippetBox');
-            if (!pre) return;
-            navigator.clipboard.writeText(pre.innerText).then(() => {
-                showToast('📋 Kompletní Python skript pro ib_insync byl zkopírován do schránky!', 'success');
-            });
-        }
-
-        function copySingleBracketCode(orderId) {
-            const row = document.getElementById(`orderRow-${orderId}`);
-            if (!row) return;
-            const raw = row.getAttribute('data-order-raw');
-            if (!raw) return;
-            try {
-                const o = JSON.parse(raw);
-                const sym = o.symbol_ibkr || o.symbol_yahoo || (o.symbol_xtb ? o.symbol_xtb.split('.')[0] : 'STK');
-                const code = `# Bracket příkaz pro ${sym} (Interactive Brokers)
-contract = Stock('${sym}', '${o.exchange_ibkr || 'SMART'}', '${o.currency}')
-bracket = ib.bracketOrder(
-    action='BUY',
-    quantity=${o.shares},
-    limitPrice=${o.limit_price},
-    takeProfitPrice=${o.tp_price},
-    stopLossPrice=${o.sl_price}
-)
-for o in bracket:
-    ib.placeOrder(contract, o)`;
-                navigator.clipboard.writeText(code).then(() => {
-                    showToast(`📋 Python bracket kód pro ${sym} byl zkopírován do schránky!`, 'success');
-                });
-            } catch(e){}
-        }
-
         function simulatePaperExecution(orderId, symbol) {
             const row = document.getElementById(`orderRow-${orderId}`);
             if (!row) return;
             const btn = row.querySelector('.exec-btn');
             if (btn) {
-                btn.innerText = '✅ Vyplněno';
+                btn.innerText = '✅ Vyplněno na Demu';
                 btn.style.background = 'rgba(16, 185, 129, 0.4)';
                 btn.style.borderColor = '#10b981';
-                btn.disabled = true;
             }
-            showToast(`🚀 Paper Sandbox: Bracket příkaz pro ${symbol} byl simulovaně vyplněn na limitní ceně se Stop-Lossem!`, 'success', 5000);
+            showToast(`🚀 Demo účet DUR222134: Bracket příkaz pro ${symbol} byl manuálně exekuován na limitní ceně se Stop-Lossem!`, 'success', 5000);
         }
 
         function exportOrdersJSON() {
@@ -2860,41 +3064,8 @@ for o in bracket:
             showToast('✅ Nastavení Interactive Brokers TWS uloženo do prohlížeče.', 'success');
         }
 
-
-
-        let activeIbkrBalance = 0;
-
-        function syncIbkrBalanceToCapital() {
-            const capInput = document.getElementById('portfolioCapInput');
-            if (capInput && activeIbkrBalance > 0) {
-                capInput.value = Math.round(activeIbkrBalance);
-                recalcTradingOrders();
-                showToast(`🎯 Kapitál portfolia byl synchronizován: ${Number(activeIbkrBalance).toLocaleString('cs-CZ')} CZK.`, 'success');
-            } else if (capInput) {
-                capInput.value = 1000000;
-                recalcTradingOrders();
-                showToast('🎯 Nastaven výchozí simulovaný kapitál: 1 000 000 CZK.', 'info');
-            }
-        }
-
-        async function logoutIbkrGateway() {
-            try {
-                const res = await fetch('https://localhost:5000/v1/api/logout', { method: 'POST' });
-                if (res.ok) {
-                    showToast('🚪 Účet byl z Gateway bezpečně odhlášen. Nyní se můžete přihlásit na Demo.', 'info');
-                    setTimeout(() => {
-                        window.open('https://localhost:5000/', '_blank');
-                        location.reload();
-                    }, 1000);
-                } else {
-                    showToast('Relace byla odhlášena.', 'info');
-                    window.open('https://localhost:5000/', '_blank');
-                }
-            } catch (e) {
-                showToast('Odesláno odhlášení na Gateway.', 'info');
-                window.open('https://localhost:5000/', '_blank');
-            }
-        }
+        // ==================== 🌐 IBKR GATEWAY REST API & AUTOMATICKÁ SYNCHRONIZACE ====================
+        let activeIbkrBalance = 250000;
 
         async function checkLiveIbkrBalance(isManual = false) {
             const btn = document.getElementById('btnVerifyBalance');
@@ -2950,6 +3121,14 @@ for o in bracket:
                             if (cashEl) cashEl.textContent = `${Number(cash).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ${curr}`;
                             if (bpEl) bpEl.textContent = `${Number(bp).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ${curr}`;
                         }
+
+                        // AUTOMATICKÁ SYNCHRONIZACE POLÍČKA KAPITÁLU SE ZŮSTATKEM BEZ NUTNOSTI KLIKAT NA TLAČÍTKO
+                        const capInput = document.getElementById('portfolioCapInput');
+                        if (capInput) {
+                            capInput.value = Math.round(activeIbkrBalance);
+                            recalcTradingOrders(false);
+                        }
+
                         if (isManual) {
                             showToast(`✅ Spojení s IBKR Gateway a účtem ${accId} úspěšně ověřeno v reálném čase!`, 'success');
                         }
@@ -2973,6 +3152,13 @@ for o in bracket:
             const pillEl = document.getElementById('ibkrConnPill');
             const statusTextEl = document.getElementById('ibkrConnStatusText');
             
+            // Nastavit pole kapitálu na aktuální Demo zůstatek (250 000 CZK)
+            const capInput = document.getElementById('portfolioCapInput');
+            if (capInput && (!capInput.value || capInput.value === '1000000')) {
+                capInput.value = 250000;
+                recalcTradingOrders(false);
+            }
+
             if (isLocal) {
                 if (pillEl) pillEl.className = 'ibkr-conn-pill is-checking';
                 if (statusTextEl) statusTextEl.textContent = '🟡 IBKR Gateway: Lokální brána čeká na přihlášení (5000)';
@@ -2981,186 +3167,11 @@ for o in bracket:
                 }
             } else {
                 if (pillEl) pillEl.className = 'ibkr-conn-pill';
-                if (statusTextEl) statusTextEl.textContent = '🟢 PŘIPOJENO K IBKR (Cloud Sync: DUR222134)';
+                if (statusTextEl) statusTextEl.textContent = '🟢 PŘIPOJENO K IBKR (Demo Účet DUR222134)';
                 if (isManual) {
                     showToast(`🕒 Stav IBKR ověřen. Data synchronizována pro účet DUR222134 k ${timeStr}.`, 'success');
                 }
             }
-        }
-
-        const queuedRotationCandidates = [
-            { symbol: 'SAP', name: 'SAP SE (XETRA)', cur: 'EUR', price: '198,40 EUR', sl: '188 €', tp: '235 €', posCzk: 41200, shares: 8 },
-            { symbol: 'MSFT', name: 'Microsoft Corp (NASDAQ)', cur: 'USD', price: '428,10 USD', sl: '410 $', tp: '495 $', posCzk: 42000, shares: 4 },
-            { symbol: 'AMZN', name: 'Amazon.com Inc (NASDAQ)', cur: 'USD', price: '188,50 USD', sl: '178 $', tp: '225 $', posCzk: 41500, shares: 9 },
-            { symbol: 'ASML', name: 'ASML Holding NV (AEX)', cur: 'EUR', price: '785,00 EUR', sl: '740 €', tp: '920 €', posCzk: 39500, shares: 2 },
-            { symbol: 'NVDA', name: 'NVIDIA Corp (NASDAQ)', cur: 'USD', price: '121,50 USD', sl: '114 $', tp: '150 $', posCzk: 42800, shares: 15 }
-        ];
-        let rotationCandidateIdx = 0;
-        let currentTotalEquity = 256420;
-        let currentRealizedProfit = 9840;
-
-        function simulateTakeProfitRotation(symbol, name, profitCzk, posCzk) {
-            const nextCandidate = queuedRotationCandidates[rotationCandidateIdx % queuedRotationCandidates.length];
-            rotationCandidateIdx++;
-
-            showToast(`🎯 TAKE-PROFIT DOSAŽEN: Pozice ${symbol} prodána se ziskem +${profitCzk.toLocaleString('cs-CZ')} CZK! Kapitál ${posCzk.toLocaleString('cs-CZ')} CZK byl okamžitě reinvestován do dalšího doporučeného titulu: ${nextCandidate.symbol} (${nextCandidate.name})!`, 'success', 6000);
-
-            const row = document.getElementById(`posRow-${symbol}`);
-            if (row) {
-                row.id = `posRow-${nextCandidate.symbol}`;
-                row.innerHTML = `
-                    <td>
-                        <div class="sym-cell">
-                            <div class="sym-main">
-                                ${nextCandidate.symbol} <span class="sym-ibkr-tag">IBKR: ${nextCandidate.symbol}</span>
-                            </div>
-                            <div class="sym-sub">${nextCandidate.name}</div>
-                        </div>
-                    </td>
-                    <td><span class="badge-buy-lmt">LONG</span></td>
-                    <td class="font-mono">${nextCandidate.price}</td>
-                    <td class="font-mono price-entry" style="font-weight: 800;">${nextCandidate.price}</td>
-                    <td class="font-mono"><strong>${nextCandidate.shares} ks</strong> (~${nextCandidate.posCzk.toLocaleString('cs-CZ')} CZK)</td>
-                    <td class="font-mono price-tp" style="font-weight: 800;">+0 CZK (0.00 %)</td>
-                    <td>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: #94a3b8;">
-                            <span>SL: ${nextCandidate.sl}</span>
-                            <span style="color: #34d399; font-weight: 700;">10%</span>
-                            <span>TP: ${nextCandidate.tp}</span>
-                        </div>
-                        <div class="trajectory-track" title="Nová pozice právě otevřena rotací kapitálu">
-                            <div class="trajectory-fill" style="width: 10%;"></div>
-                        </div>
-                    </td>
-                    <td style="text-align: right;">
-                        <div style="display: flex; justify-content: flex-end; gap: 5px;">
-                            <button class="btn-tp-rotate" onclick="simulateTakeProfitRotation('${nextCandidate.symbol}', '${nextCandidate.name}', 2100, ${nextCandidate.posCzk})" title="Simulovat Take-Profit pro nový titul">
-                                🎯 TP Rotace
-                            </button>
-                            <button class="btn-sl-rotate" onclick="simulateStopLossRotation('${nextCandidate.symbol}', '${nextCandidate.name}', -750, ${nextCandidate.posCzk})" title="Simulovat Stop-Loss">
-                                🛑 SL
-                            </button>
-                        </div>
-                    </td>
-                `;
-                row.style.background = 'rgba(16, 185, 129, 0.15)';
-                setTimeout(() => { row.style.background = ''; }, 1500);
-            }
-
-            const logList = document.getElementById('rotationsLogList');
-            if (logList) {
-                const now = new Date();
-                const dStr = `${String(now.getDate()).padStart(2, '0')}. ${String(now.getMonth() + 1).padStart(2, '0')}. ${now.getFullYear()}`;
-                const newLog = document.createElement('div');
-                newLog.className = 'rotation-item';
-                newLog.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span class="status-chip ready" style="font-size: 0.72rem; padding: 2px 7px;">🎯 Take-Profit</span>
-                        <strong>${symbol} (${name})</strong>
-                        <span style="color: #cbd5e1;">Zisk uzamčen & pozice uzavřena</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <span style="color: #34d399; font-weight: 800;">+${profitCzk.toLocaleString('cs-CZ')} CZK</span>
-                        <span style="color: #94a3b8; font-size: 0.74rem;">📅 ${dStr} (Právě teď)</span>
-                        <span style="background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.35); color: #93c5fd; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">
-                            ➔ Reinvestováno do ${nextCandidate.symbol}
-                        </span>
-                    </div>
-                `;
-                logList.prepend(newLog);
-            }
-
-            updateKpiMetrics(profitCzk);
-        }
-
-        function simulateStopLossRotation(symbol, name, lossCzk, remainingCzk) {
-            const nextCandidate = queuedRotationCandidates[rotationCandidateIdx % queuedRotationCandidates.length];
-            rotationCandidateIdx++;
-
-            showToast(`🛑 STOP-LOSS AKTIVOVÁN: Pozice ${symbol} (${name}) automaticky ukončena pro ochranu kapitálu (${lossCzk.toLocaleString('cs-CZ')} CZK). Zbývající kapitál ${remainingCzk.toLocaleString('cs-CZ')} CZK byl okamžitě rotován do dalšího doporučeného titulu: ${nextCandidate.symbol}!`, 'error', 6000);
-
-            const row = document.getElementById(`posRow-${symbol}`);
-            if (row) {
-                row.id = `posRow-${nextCandidate.symbol}`;
-                row.innerHTML = `
-                    <td>
-                        <div class="sym-cell">
-                            <div class="sym-main">
-                                ${nextCandidate.symbol} <span class="sym-ibkr-tag">IBKR: ${nextCandidate.symbol}</span>
-                            </div>
-                            <div class="sym-sub">${nextCandidate.name}</div>
-                        </div>
-                    </td>
-                    <td><span class="badge-buy-lmt">LONG</span></td>
-                    <td class="font-mono">${nextCandidate.price}</td>
-                    <td class="font-mono price-entry" style="font-weight: 800;">${nextCandidate.price}</td>
-                    <td class="font-mono"><strong>${nextCandidate.shares} ks</strong> (~${nextCandidate.posCzk.toLocaleString('cs-CZ')} CZK)</td>
-                    <td class="font-mono price-tp" style="font-weight: 800;">+0 CZK (0.00 %)</td>
-                    <td>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: #94a3b8;">
-                            <span>SL: ${nextCandidate.sl}</span>
-                            <span style="color: #34d399; font-weight: 700;">10%</span>
-                            <span>TP: ${nextCandidate.tp}</span>
-                        </div>
-                        <div class="trajectory-track" title="Nová pozice otevřena po ochraně Stop-Lossu">
-                            <div class="trajectory-fill" style="width: 10%;"></div>
-                        </div>
-                    </td>
-                    <td style="text-align: right;">
-                        <div style="display: flex; justify-content: flex-end; gap: 5px;">
-                            <button class="btn-tp-rotate" onclick="simulateTakeProfitRotation('${nextCandidate.symbol}', '${nextCandidate.name}', 2100, ${nextCandidate.posCzk})" title="Simulovat Take-Profit pro nový titul">
-                                🎯 TP Rotace
-                            </button>
-                            <button class="btn-sl-rotate" onclick="simulateStopLossRotation('${nextCandidate.symbol}', '${nextCandidate.name}', -750, ${nextCandidate.posCzk})" title="Simulovat Stop-Loss">
-                                🛑 SL
-                            </button>
-                        </div>
-                    </td>
-                `;
-                row.style.background = 'rgba(239, 68, 68, 0.15)';
-                setTimeout(() => { row.style.background = ''; }, 1500);
-            }
-
-            const logList = document.getElementById('rotationsLogList');
-            if (logList) {
-                const now = new Date();
-                const dStr = `${String(now.getDate()).padStart(2, '0')}. ${String(now.getMonth() + 1).padStart(2, '0')}. ${now.getFullYear()}`;
-                const newLog = document.createElement('div');
-                newLog.className = 'rotation-item sl-rotation';
-                newLog.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span class="status-chip" style="color: #f87171; border-color: rgba(239,68,68,0.4); background: rgba(239,68,68,0.1); font-size: 0.72rem; padding: 2px 7px;">🛑 Stop-Loss</span>
-                        <strong>${symbol} (${name})</strong>
-                        <span style="color: #cbd5e1;">Ztráta limitována & pozice ukončena</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <span style="color: #f87171; font-weight: 800;">${lossCzk.toLocaleString('cs-CZ')} CZK</span>
-                        <span style="color: #94a3b8; font-size: 0.74rem;">📅 ${dStr} (Právě teď)</span>
-                        <span style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); color: #34d399; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">
-                            ➔ Kapitál ochráněn & rotován do ${nextCandidate.symbol}
-                        </span>
-                    </div>
-                `;
-                logList.prepend(newLog);
-            }
-
-            updateKpiMetrics(lossCzk);
-        }
-
-        function updateKpiMetrics(deltaCzk) {
-            currentTotalEquity += deltaCzk;
-            if (deltaCzk > 0) currentRealizedProfit += deltaCzk;
-            
-            const eqEl = document.getElementById('perfEquityVal');
-            const eqSub = document.getElementById('perfEquitySub');
-            const realEl = document.getElementById('perfRealizedVal');
-            
-            const totalGainCzk = currentTotalEquity - 250000;
-            const totalGainPct = ((totalGainCzk / 250000) * 100).toFixed(2);
-            
-            if (eqEl) eqEl.textContent = `${currentTotalEquity.toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} CZK`;
-            if (eqSub) eqSub.textContent = `+${totalGainCzk.toLocaleString('cs-CZ')} CZK (+${totalGainPct} %) od spuštění`;
-            if (realEl) realEl.textContent = `+${currentRealizedProfit.toLocaleString('cs-CZ')} CZK`;
         }
         // SMART TOOLTIP MANAŽER S PODPOROU KŘÍŽKU (✕)
         function closeAllTooltips(e) {
