@@ -3258,13 +3258,15 @@
                             <span>{{ loop.index }}</span>
                         </div>
 
-                        <!-- 2. Aktivum (Ticker, XTB, Název & Katalyzátory) -->
+                        <!-- 2. Aktivum (Ticker, Název & Katalyzátory) -->
                         <div class="row-cell cell-asset">
                             <div class="asset-symbol-row">
                                 <a href="{{ item.chart_url }}" target="_blank" rel="noopener noreferrer" class="ticker-link" title="Otevřít interaktivní graf {{ item.yahoo_symbol }} na Yahoo Finance">
                                     {{ item.yahoo_symbol }}
                                 </a>
-                                <span class="xtb-badge" title="Symbol pro vyhledání v aplikaci XTB / xStation">XTB: {{ item.xtb_symbol }}</span>
+                                {% if item.xtb_symbol and item.xtb_symbol != item.yahoo_symbol %}
+                                <span class="xtb-badge" title="Alternativní burzovní ticker (IBKR / lokální trhy)">{{ item.xtb_symbol }}</span>
+                                {% endif %}
                             </div>
                             <span class="company-name" title="{{ item.name }}">{{ item.name }}</span>
                             {% if item.catalysts %}

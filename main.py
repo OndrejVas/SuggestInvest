@@ -856,6 +856,14 @@ def run_scanner(tiers: List[str] = None, allow_mock_fallback: bool = True) -> st
                     "color": c_color
                 }]
             card["signal_history_dots"] = dots
+
+        # Aktualizujeme denní JSON snapshot o načtené tečky historie pro rychlé znovunačtení
+        try:
+            json_snap_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "history", f"{current_date_str}.json")
+            with open(json_snap_path, "w", encoding="utf-8") as f:
+                json.dump({"metadata": scan_meta, "cards": final_cards}, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            logger.warning(f"Chyba při aktualizaci JSON snapshotu o tečky: {e}")
     except Exception as e:
         logger.warning(f"Chyba při přiřazování teček historie: {e}")
         for card in final_cards:
