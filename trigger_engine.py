@@ -320,7 +320,9 @@ def compute_top_5_conviction_basket(cards: List[Dict[str, Any]]) -> List[Dict[st
         sym = c.get("yahoo_symbol") or (c.get("xtb_symbol", "").split(".")[0])
         chart_url = c.get("chart_url") or f"https://finance.yahoo.com/quote/{sym}"
 
-        selected.append({
+        # Vytvoříme plnou kopii aktivních dat z karty, aby tooltip disponoval 100 % všech informací
+        item_data = dict(c)
+        item_data.update({
             "rank": idx + 1,
             "xtb_symbol": c.get("xtb_symbol"),
             "yahoo_symbol": sym,
@@ -337,7 +339,7 @@ def compute_top_5_conviction_basket(cards: List[Dict[str, Any]]) -> List[Dict[st
             "conviction_score": f"{c.get('conviction_score', 0.0):.2f}",
             "portfolio_weight": w,
             "tactical_note": c.get("reasoning", "Vysoký poměr očekávaného růstu k volatilitě."),
-            "catalysts": c.get("catalysts", [])[:3],
+            "catalysts": c.get("catalysts", [])[:4],
             "sentiment_regime": c.get("sentiment_regime", "BALANCED"),
             "chart_url": chart_url,
             "invalidation_price_str": c.get("invalidation_price_str", "—"),
@@ -347,6 +349,7 @@ def compute_top_5_conviction_basket(cards: List[Dict[str, Any]]) -> List[Dict[st
             "days_to_ex_dividend": c.get("days_to_ex_dividend"),
             "ex_dividend_date": c.get("ex_dividend_date"),
         })
+        selected.append(item_data)
 
         if len(selected) == 5:
             break

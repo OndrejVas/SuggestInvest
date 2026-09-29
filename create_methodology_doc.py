@@ -638,15 +638,17 @@ def create_methodology_document(output_path: str):
         "a vnitřní šíři trhu z 557 aktiv univerza SuggestInvest (váha 15 %). Součástí je Sektorový radar recese monitorující 9 odvětví."
     )
 
-    # 6.13 Autonomní Trading Portál
-    add_section_header("6.13 Autonomní Trading Portál & Broker Execution Bridge (XTB xAPI)", level=2)
+    # 6.13 Autonomní Trading Portál: Interactive Brokers & XTB
+    add_section_header("6.13 Samostatný Autonomní Trading Portál: Interactive Brokers (IBKR) & XTB", level=2)
     add_body_p(
-        "Systém disponuje přímým rozhraním pro napojení na investiční portál brokera XTB prostřednictvím oficiálního xAPI WebSocket protokolu. "
+        "Systém disponuje samostatnou dedikovanou stránkou pro autonomní trading (trading.html), přístupnou přímo z horní navigace terminálu. "
+        "Portál je primárně cílen na institucionálního brokera Interactive Brokers (IBKR) s plnou podporou TWS Socket API (port 7497 Paper / 7496 Live) "
+        "a jednoklikového exportu do TWS modulu Basket Trader (BasketTrader.csv). Zahrnuje také WebSocket most pro brokera XTB (xAPI). "
         "Modul Broker Execution Bridge obsahuje kvantitativní Risk Gatekeeper, který z TOP 5 MVO koše a Strong Buy aktiv "
         "automaticky generuje exekučně připravené bracket příkazy (Limit Entry, Stop-Loss, Take-Profit). "
         "Pozicování vychází z pevného kapitálového risku (výchozí 1,5 % celkového portfolia na obchod), minimálního poměru zisku k riziku (RRR ≥ 1,8) "
         "a makroekonomické ochrany kapitálu, která při zvýšeném riziku recese automaticky krátí alokaci na 50 % nebo blokuje nákupy cyklických titulů. "
-        "Systém podporuje bezrizikový Paper Trading Sandbox i živé/demo párování s XTB xStation."
+        "Systém umožňuje okamžité stažení CSV souboru pro TWS Basket Trader, kopírování Python kódu (ib_insync) i bezrizikový Paper Trading Sandbox."
     )
 
     doc.add_paragraph().paragraph_format.space_after = Pt(12)

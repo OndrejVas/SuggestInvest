@@ -327,32 +327,39 @@ Pro 9 sektorových ETF (`XLY`, `XLP`, `XLK`, `XLF`, `XLI`, `XLRE`, `XLE`, `XLV`,
 
 ---
 
-### 6.13 Autonomní Trading Portál & Broker Execution Bridge (XTB xAPI WebSocket)
+### 6.13 Samostatný Autonomní Trading Portál: Interactive Brokers (IBKR) & XTB
 
-Pro přechod od pasivního screeningu k plně autonomnímu či poloautonomnímu tradingu systém disponuje modulem **Broker Execution Bridge**:
+Pro přechod od pasivního screeningu k plně autonomnímu tradingu a přímé exekuci na globálních trzích systém disponuje dedikovaným exekučním portálem **trading.html**, přístupným z horní navigace hlavního terminálu:
 
-#### A. Kvantitativní Risk Gatekeeper:
+#### A. Interactive Brokers (IBKR) – Primární institucionální napojení:
+1. **TWS Socket API Bridge (Port 7497 Paper / 7496 Live)**:
+   - Nativní podpora bracket příkazů přes knihovnu `ib_insync` / oficiální `ibapi`.
+   - Každý příkaz je automaticky svázán do trojice: **Parent Limit Buy Order** + **Child Stop-Loss Order** (ochranná kotva) + **Child Take-Profit Order** (realizace zisku).
+2. **TWS Basket Trader CSV Export (`BasketTrader.csv`)**:
+   - Možnost vygenerovat a stáhnout oficiální formát souboru pro modul *Basket Trader* v Trader Workstation (TWS):
+     `Action,Quantity,Symbol,SecType,Exchange,Currency,OrderType,LmtPrice,AuxPrice`
+   - Umožňuje investorovi jedním kliknutím v TWS (přes *File &rarr; Open Basket File*) otevřít celé alokované portfolio 5 konvikčních aktiv s přesnými parametry.
+3. **Generátor autonomního Python kódu (`ib_insync`)**:
+   - Vizuální rozhraní generuje plně funkční skript připravený k okamžitému spuštění v Pythonu pro automatické odeslání všech schválených bracket příkazů do TWS.
+
+#### B. XTB xAPI WebSocket Bridge:
+- Oficiální WebSocket protokol pro platformu xStation5 (`wss://ws.xtb.com`).
+- Standardizované JSON datagramy `tradeTransaction` (typ 2 = PENDING LIMIT, cmd = 0 BUY, SL, TP, objem v lotech a identifikační komentář `SI-AI-MVO-#Rank`).
+
+#### C. Kvantitativní Risk Gatekeeper a dynamické pozicování:
 Každý vygenerovaný nákupní příkaz prochází striktní validací:
-1. **Striktní Stop-Loss (Invalidační cena)**: Každý příkaz musí mít definovanou invalidační hladinu vycházející z ATR a supportu.
-2. **Minimální Risk/Reward Ratio ($RRR \ge 1.8$)**: Poměr potenciálního zisku (k cílové ceně analytiků) vůči riziku na stop-lossu.
+1. **Striktní Stop-Loss (Invalidační cena)**: Vychází z 14denního ATR a nejbližšího technického supportu.
+2. **Minimální Risk/Reward Ratio ($RRR \ge 1.8$)**: Poměr potenciálního zisku k riziku.
 3. **Position Sizing dle rizika**:
    $$\text{Max Risk (CZK)} = \text{Kapitál portfolia} \times \frac{\text{Max Risk \%}}{100}$$
    $$\text{Počet akcií} = \left\lfloor \frac{\text{Max Risk (CZK)}}{(\text{Limitní cena} - \text{SL cena}) \times \text{FX rate}} \right\rfloor$$
    Přičemž platí strop maximální velikosti jedné pozice (výchozí 20 % celkového kapitálu).
-4. **Makroekonomický multiplikátor expozice**: Při indikaci vysokého rizika recese či krachu v Makro Barometru Risk Gatekeeper automaticky redukuje velikost pozic na 50 % nebo zamezuje otevírání nových cyklických pozic.
+4. **Makroekonomický multiplikátor expozice**: Při zvýšeném riziku v Makro Barometru Risk Gatekeeper automaticky škáluje alokaci a aplikuje defenzivní pravidla.
 
-#### B. Standardizovaný XTB xAPI Socket Protocol:
-Příkazy jsou formátovány přímo do oficiální JSON struktury XTB `tradeTransaction`:
-- `cmd: 0` (BUY)
-- `type: 2` (PENDING LIMIT)
-- `price`: Vypočtená limitní nákupní cena při stažení (pullback)
-- `sl`: Invalidační stop-loss úroveň
-- `tp`: Konsenzuální cílová cena analytiků
-- `customComment`: Značka identifikující zdroj signálu (`SI-AI-MVO-#Rank`)
-
-#### C. Provozní režimy:
-1. **Paper Sandbox (Výchozí bezpečný režim)**: Umožňuje simulovat exekuce, sledovat virtuální portfolio a ověřovat ziskovost bez rizika reálného kapitálu.
-2. **XTB xAPI Live / Demo Bridge**: Přímé propojení přes zabezpečený WebSocket na `wss://ws.xtb.com` s lokálně šifrovanými přihlašovacími údaji.
+#### D. Uživatelské rozhraní: Ticker Hyperlinky a Kontextové Tooltipy
+- **Přímé grafy na tickeru**: V Top 5 dlaždicích byl odstraněn redundantní prvek grafu a samotný symbol aktiva je formátován jako přímý interaktivní hyperlink na živý svíčkový graf Yahoo Finance.
+- **Kurzorově ukotvené inteligentní tooltipy**: Tooltipy se při kliknutí otevírají okamžitě na souřadnicích myši a jsou ořezávány (clamped) k hranám okna prohlížeče, což garantuje 100% viditelnost bez ořezu.
+- **Sektorový radar bez scrollingu**: Radar 9 sektorových ETF je uspořádán do přehledné matice 3x3, která eliminuje nutnost vertikálního posuvu a poskytuje okamžitý přehled o sektorové rotaci.
 
 ---
 

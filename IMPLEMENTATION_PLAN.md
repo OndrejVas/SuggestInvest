@@ -529,10 +529,10 @@ Implementovat do systému institucionální makroekonomický engine čerpající
 
 ---
 
-## Fáze 12: Autonomní Trading Portál & Broker Execution Bridge (XTB xAPI)
+## Fáze 12: Samostatný Autonomní Trading Portál: Interactive Brokers (IBKR) & XTB
 
 ### Koncepční cíl
-Připravit ekosystém SuggestInvest na brzké autonomní obchodování přímým generováním exekučně připravených bracket příkazů s přísným řízením rizik a podporou pro oficiální XTB xAPI WebSocket protokol.
+Připravit ekosystém SuggestInvest na autonomní obchodování na globálních trzích přímým napojením na institucionálního brokera **Interactive Brokers (IBKR)** (TWS Socket API, Basket Trader CSV, Client Portal Gateway) a **XTB** (xAPI WebSocket) v samostatném vyhrazeném terminálu `trading.html`.
 
 ### Implementované komponenty
 - **Nový modul `trading_engine.py`**:
@@ -541,14 +541,37 @@ Připravit ekosystém SuggestInvest na brzké autonomní obchodování přímým
     - Vynucení striktního Stop-Lossu (Invalidační cena) a Take-Profitu (Cílová cena analytiků).
     - Minimální filtr poměru zisku k riziku: $RRR \ge 1.8$.
     - Makroekonomická ochrana kapitálu: Při zvýšeném riziku recese v Makro Barometru automaticky krátí velikost pozic na 50 % nebo blokuje nákupy cyklických titulů.
+  - **Interactive Brokers (IBKR) integrace**:
+    - Generování dat pro **TWS Basket Trader** (`Action,Quantity,Symbol,SecType,Exchange,Currency,OrderType,LmtPrice,AuxPrice`).
+    - Generování plně funkčního Python kódu pro knihovnu `ib_insync` s `ib.bracketOrder`.
+    - Podpora pro TWS porty 7497 (Paper) a 7496 (Live).
   - **XTB xAPI Socket Protocol Bridge**:
     - Generuje příkazy v přesném JSON formátu pro XTB `tradeTransaction` (příkaz `BUY LIMIT` se Stop-Lossem, Take-Profitem a unikátním komentářem `SI-AI-MVO-#Rank`).
-    - Připraveno pro websocket spojení na `wss://ws.xtb.com` (Demo i Real účty).
-- **Interaktivní UI panel v `template.html` / `index.html`**:
-  - Přepínač režimů: `🛡️ Paper Sandbox (Aktivní)` vs `⚡ XTB xAPI Bridge`.
-  - Živá kontrolní lišta: Uživatel může zadat libovolný kapitál portfolia (např. 250 000 CZK) a max risk %, což v reálném čase v JavaScriptu okamžitě přepočítá počty kusů i alokaci pro všechny příkazy.
-  - Tlačítka: `▶ Simulovat exekuci (Paper Fill)`, `📋 Kopírovat JSON pro XTB`, `📥 Stáhnout JSON soubor` a modální okno pro konfiguraci XTB API údajů.
-- **Perzistence do SQLite (`history_manager.py`)**:
-  - Tabulka `trading_orders` uchovává všechny vygenerované i simulované příkazy pro evidenci PnL a audit trail.
+- **Samostatná stránka `trading.html` (šablona `trading_template.html`)**:
+  - Horní navigace s odkazem zpět na hlavní tržní skener `⬅ Zpět na Tržní Screener & Barometr`.
+  - Živá kontrolní lišta kapitálu portfolia a max risku % s okamžitým přepočtem počtů kusů.
+  - Tlačítka: `📥 Stáhnout TWS Basket (.csv)`, `📋 Python kód (ib_insync)`, `⚙️ Nastavení IBKR`, `⚙️ Nastavení XTB`, `📥 JSON`.
+  - Developer panel s interaktivním blokem Python kódu a návodem k aktivaci API v TWS.
+
+---
+
+## Fáze 13: Optimalizace UX Top 5 dlaždic, Tooltipů a Sektorového Radaru
+
+### Koncepční cíl
+Vyčistit a zrychlit uživatelské rozhraní na základě zpětné vazby: odstranit redundantní ikony a tlačítka, převést grafy na přímé odkazy na tickerech, ukotvit vyskakovací tooltipy přímo ke kurzoru myši se 100% viditelností v okně a zobrazit sektorový radar bez nutnosti scrollování.
+
+### Implementované komponenty
+- **Top 5 Conviction dlaždice**:
+  - Odstraněna redundantní ikonka grafu z horní lišty dlaždice.
+  - Samotný ticker (`.conv-symbol`) převeden na přímý hyperlink (`<a href="..." class="conv-symbol-link">`) otevírající interaktivní svíčkový graf Yahoo Finance.
+- **Kurzorově ukotvené chytré tooltipy**:
+  - Tooltipy reagují na kliknutí (`handleTooltipClick`) a okamžitě se otevírají na přesných souřadnicích kurzoru myši (`e.clientX`, `e.clientY`).
+  - Matematické ořezávání (clamping) garantuje, že okno nikdy nepřeteče okraje obrazovky (`top`, `left`, `max-height: calc(100vh - 24px)`, `overflow-y: auto`).
+  - Top 5 tooltip byl rozšířen o kompletní škálu dat jako v hlavní tabulce (rozpětí konsenzu, počet analytiků, stop-loss a vzdálenost %, pozice v 52w pásmu, 30d revize cíle, earnings datum a BMO/AMC odpočet, ex-dividenda odpočet, 1M/3M delty, historie signálů minitrend, OrderFusion+ limitní pásmo, RV 21d, ATR %, volume shock Z-score, dividendová analýza, AI reasoning a křížek pro zavření `✕`).
+- **Sektorový radar recese (Makro Barometr)**:
+  - Odstraněna omezení `max-height: 250px` a `overflow-y: auto`.
+  - Přepnuto na čistou matici 3x3 (`grid-template-columns: repeat(3, 1fr)`), která zobrazuje všech 9 sledovaných sektorů naráz bez jakéhokoliv scrollování.
+- **Odstranění redundantního odkazu Obnovit data**:
+  - Odstraněno tlačítko `#refreshBtn` a nahrazeno navigačním tlačítkem `🤖 Autonomní Trading (IBKR & XTB)` směřujícím na `trading.html`.
 
 

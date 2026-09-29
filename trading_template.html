@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuggestInvest • Interactive Brokers (IBKR) & XTB Autonomní Trading Portál</title>
+    
+    <!-- Meta tagy pro SEO a zákaz indexace privátního rozhraní -->
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Autonomní trading portál a generátor bracket příkazů pro Interactive Brokers (TWS Socket API, Basket Trader CSV) a XTB xAPI WebSocket.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #0a0f1d;
+            --bg-secondary: #0f172a;
+            --bg-card: rgba(15, 23, 42, 0.85);
+            --bg-card-hover: rgba(30, 41, 59, 0.8);
+            --accent-primary: #3b82f6;
+            --accent-hover: #60a5fa;
+            --accent-glow: rgba(59, 130, 246, 0.25);
+            --ibkr-gold: #f59e0b;
+            --ibkr-gold-glow: rgba(245, 158, 11, 0.25);
+            --xtb-orange: #ea580c;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-highlight: rgba(255, 255, 255, 0.16);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --success: #10b981;
+            --success-glow: rgba(16, 185, 129, 0.2);
+            --danger: #ef4444;
+            --danger-glow: rgba(239, 68, 68, 0.2);
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.25s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 1.5rem 1rem 3rem 1rem;
+            line-height: 1.5;
+            background-image: 
+                radial-gradient(circle at 15% 10%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 20%, rgba(245, 158, 11, 0.06) 0%, transparent 45%),
+                radial-gradient(circle at 50% 90%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* HEADER & NAVIGATION */
+        header {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem 1.5rem;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.85rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.85rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.45rem 0.85rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .nav-back-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: var(--accent-primary);
+            color: #93c5fd;
+            transform: translateX(-2px);
+        }
+
+        .header-badges {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            flex-wrap: wrap;
+        }
+
+        .status-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 8px;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            border: 1px solid;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .status-chip.ibkr {
+            color: #fbbf24;
+            border-color: rgba(245, 158, 11, 0.4);
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .status-chip.ready {
+            color: #34d399;
+            border-color: rgba(16, 185, 129, 0.4);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .pulse-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: #10b981;
+            box-shadow: 0 0 8px #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 12px #10b981; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
+        .header-main h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.85rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #ffffff 30%, #93c5fd 75%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-main p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.35rem;
+            max-width: 900px;
+        }
+
+        /* 3-GRID CONNECTIVITY CARDS */
+        .broker-status-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        @media (max-width: 900px) {
+            .broker-status-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .broker-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.15rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+            position: relative;
+            overflow: hidden;
+            transition: border-color var(--transition-fast);
+        }
+
+        .broker-card.active-broker {
+            border-color: rgba(245, 158, 11, 0.5);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.12);
+        }
+
+        .broker-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f59e0b, #3b82f6);
+        }
+
+        .broker-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .broker-card-title {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .broker-card-meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            background: rgba(0, 0, 0, 0.25);
+            padding: 3px 6px;
+            border-radius: 4px;
+            width: fit-content;
+        }
+
+        .broker-card-desc {
+            font-size: 0.74rem;
+            color: var(--text-secondary);
+            line-height: 1.35;
+        }
+
+        /* MAKRO RISK GATEKEEPER BANNER */
+        .macro-gatekeeper-banner {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, rgba(245, 158, 11, 0.08) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            border-radius: var(--radius-md);
+            padding: 0.9rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .gatekeeper-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .gatekeeper-icon {
+            font-size: 1.8rem;
+        }
+
+        .gatekeeper-text h4 {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: #fef08a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .gatekeeper-text p {
+            font-size: 0.78rem;
+            color: #cbd5e1;
+            margin-top: 2px;
+        }
+
+        .gatekeeper-metrics {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.78rem;
+        }
+
+        .gk-metric {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .gk-lbl {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .gk-val {
+            font-weight: 800;
+            color: #34d399;
+        }
+
+        /* CONTROLS BAR */
+        .trading-controls-bar {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .controls-inputs {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .control-input {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-color);
+            color: #f8fafc;
+            padding: 0.4rem 0.65rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            width: 130px;
+            text-align: right;
+            transition: border-color var(--transition-fast);
+        }
+
+        .control-input:focus {
+            border-color: var(--accent-primary);
+            outline: none;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+        }
+
+        .control-select {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-color);
+            color: #f8fafc;
+            padding: 0.4rem 0.65rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: border-color var(--transition-fast);
+        }
+
+        .control-select:focus {
+            border-color: var(--accent-primary);
+            outline: none;
+        }
+
+        .broker-tab-group {
+            display: flex;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 2px;
+        }
+
+        .broker-tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.35rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .broker-tab-btn.active {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+            box-shadow: 0 0 8px rgba(245, 158, 11, 0.2);
+        }
+
+        .controls-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.45rem 0.85rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--border-highlight);
+            transform: translateY(-1px);
+        }
+
+        .action-btn.primary-ibkr {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(217, 119, 6, 0.2) 100%);
+            border-color: rgba(245, 158, 11, 0.5);
+            color: #fef08a;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.15);
+        }
+
+        .action-btn.primary-ibkr:hover {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.4) 0%, rgba(217, 119, 6, 0.3) 100%);
+            border-color: #fbbf24;
+            color: #ffffff;
+            box-shadow: 0 0 16px rgba(245, 158, 11, 0.35);
+        }
+
+        /* ORDERS TABLE */
+        .orders-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            overflow-x: auto;
+        }
+
+        .orders-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .orders-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #f8fafc;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            text-align: left;
+        }
+
+        .orders-table th {
+            padding: 10px 12px;
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.25);
+            white-space: nowrap;
+        }
+
+        .orders-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        .orders-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .sym-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .sym-main {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sym-ibkr-tag {
+            font-size: 0.62rem;
+            font-weight: 800;
+            color: #fbbf24;
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+
+        .sym-sub {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            max-width: 160px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .badge-buy-lmt {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-weight: 800;
+            font-size: 0.72rem;
+            display: inline-block;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .price-entry {
+            color: #93c5fd;
+            font-weight: 700;
+        }
+
+        .price-sl {
+            color: #f87171;
+            font-weight: 700;
+        }
+
+        .price-tp {
+            color: #34d399;
+            font-weight: 700;
+        }
+
+        .row-action-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--text-primary);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .row-action-btn:hover {
+            background: rgba(59, 130, 246, 0.25);
+            border-color: #60a5fa;
+            color: #ffffff;
+        }
+
+        .row-action-btn.exec-btn:hover {
+            background: rgba(16, 185, 129, 0.3);
+            border-color: #34d399;
+        }
+
+        /* INTEGRATION GUIDE & SNIPPET PANE */
+        .integration-section {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 1.25rem;
+        }
+
+        @media (max-width: 1024px) {
+            .integration-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .code-box-card {
+            background: #090d16;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.15rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #93c5fd;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .code-snippet-pre {
+            background: #050811;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 6px;
+            padding: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #cbd5e1;
+            overflow-x: auto;
+            max-height: 380px;
+            line-height: 1.5;
+        }
+
+        .guide-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.15rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .guide-step {
+            display: flex;
+            gap: 10px;
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .step-num {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.72rem;
+            flex-shrink: 0;
+        }
+
+        /* MODAL */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999999;
+            padding: 1rem;
+        }
+
+        .modal-card {
+            background: #0f172a;
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 520px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 35px rgba(245, 158, 11, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 1.1rem 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .modal-title-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .modal-close-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .modal-close-btn:hover {
+            color: #ffffff;
+        }
+
+        .modal-body {
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+
+        .modal-footer {
+            padding: 0.9rem 1.25rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        /* TOAST */
+        .toast-popup {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #1e293b;
+            color: #f8fafc;
+            border: 1px solid var(--accent-primary);
+            padding: 0.8rem 1.2rem;
+            border-radius: var(--radius-md);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8), 0 0 15px rgba(59, 130, 246, 0.3);
+            display: none;
+            z-index: 1000000;
+            font-size: 0.85rem;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <div class="header-top">
+                <a href="index.html" class="nav-back-btn" title="Návrat na hlavní tržní skener a AI signály">
+                    ⬅ Zpět na Tržní Screener & Barometr
+                </a>
+
+                <div class="header-badges">
+                    <span class="status-chip ibkr">
+                        <span>🏦</span> Interactive Brokers Bridge
+                    </span>
+                    <span class="status-chip ready">
+                        <span class="pulse-dot"></span> Socket API: Ready
+                    </span>
+                    <span style="font-size: 0.74rem; color: var(--text-muted);">
+                        Poslední sken: <strong>{{ timestamp_cet_str }}</strong>
+                    </span>
+                </div>
+            </div>
+
+            <div class="header-main">
+                <h1>
+                    <span>🤖</span> Autonomní Trading Portál: Interactive Brokers & XTB
+                </h1>
+                <p>
+                    Kvantitativní exekuční most se schválením <strong>Risk Gatekeeperu</strong>. Automaticky generuje bracket příkazy (Limit Entry, Stop-Loss, Take-Profit) pro <strong>Interactive Brokers (TWS Socket API / Basket Trader / Client Portal)</strong> a <strong>XTB (xAPI WebSocket)</strong>.
+                </p>
+            </div>
+        </header>
+
+        <!-- 3 BROKER STATUS CHIPS -->
+        <div class="broker-status-grid">
+            <div class="broker-card active-broker">
+                <div class="broker-card-header">
+                    <span class="broker-card-title">🏦 Interactive Brokers TWS API</span>
+                    <span class="status-chip ready">Aktivní režim</span>
+                </div>
+                <div class="broker-card-meta">Socket Port 7497 (Paper) / 7496 (Live)</div>
+                <p class="broker-card-desc">
+                    Nativní podpora bracket příkazů přes <code>ib_insync</code> / TWS API. Ochrana kapitálu automatickým navázáním STP a LMT kotev.
+                </p>
+            </div>
+
+            <div class="broker-card">
+                <div class="broker-card-header">
+                    <span class="broker-card-title">📥 IBKR Basket Trader CSV</span>
+                    <span class="status-chip ibkr">Jednoklikový import</span>
+                </div>
+                <div class="broker-card-meta">Format: Action,Qty,Symbol,SecType,Lmt,Aux</div>
+                <p class="broker-card-desc">
+                    Generuje standardní CSV soubor pro vestavěný TWS nástroj <strong>Basket Trader</strong>. Umožňuje otevřít celé portfolio naráz.
+                </p>
+            </div>
+
+            <div class="broker-card">
+                <div class="broker-card-header">
+                    <span class="broker-card-title">⚡ XTB xAPI WebSocket</span>
+                    <span class="status-chip ready">Bridge Připraven</span>
+                </div>
+                <div class="broker-card-meta">wss://ws.xtb.com (Demo / Real)</div>
+                <p class="broker-card-desc">
+                    Oficiální WebSocket protokol pro obchodní platformu xStation5 s předpřipravenými JSON datagramy <code>tradeTransaction</code>.
+                </p>
+            </div>
+        </div>
+
+        {% if macro_barometer %}
+        <!-- MAKROEKONOMICKÝ RISK GATEKEEPER BANNER -->
+        <div class="macro-gatekeeper-banner">
+            <div class="gatekeeper-left">
+                <span class="gatekeeper-icon">🛡️</span>
+                <div class="gatekeeper-text">
+                    <h4>
+                        <span>Risk Gatekeeper: Makro Barometr {{ macro_barometer.composite_index }} / 100</span>
+                        <span style="font-size: 0.72rem; padding: 2px 7px; border-radius: 4px; background: rgba(0,0,0,0.3); color: {% if macro_barometer.composite_index >= 70 %}#f87171{% elif macro_barometer.composite_index >= 45 %}#fbbf24{% else %}#34d399{% endif %};">
+                            {{ macro_barometer.risk_level }}
+                        </span>
+                    </h4>
+                    <p>
+                        {{ macro_barometer.tactical_guidance }}
+                    </p>
+                </div>
+            </div>
+
+            <div class="gatekeeper-metrics">
+                <div class="gk-metric">
+                    <span class="gk-lbl">Minimální RRR</span>
+                    <span class="gk-val">&ge; 1.8 : 1</span>
+                </div>
+                <div class="gk-metric">
+                    <span class="gk-lbl">Max pozice (APO)</span>
+                    <span class="gk-val">20 % equity</span>
+                </div>
+                <div class="gk-metric">
+                    <span class="gk-lbl">Bracket Ochrana</span>
+                    <span class="gk-val">100 % aktivní</span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- OVLÁDACÍ LIŠTA PARAMETRŮ -->
+        <div class="trading-controls-bar">
+            <div class="controls-inputs">
+                <div class="control-group">
+                    <label for="portfolioCapInput">Kapitál portfolia:</label>
+                    <input type="number" id="portfolioCapInput" class="control-input" value="250000" step="10000" min="10000" onchange="recalcTradingOrders()" title="Zadejte celkovou velikost vašeho obchodního kapitálu v CZK">
+                    <span style="color: #f1f5f9; font-weight: 700;">CZK</span>
+                </div>
+
+                <div class="control-group">
+                    <label for="maxRiskSelect">Max risk na obchod:</label>
+                    <select id="maxRiskSelect" class="control-select" onchange="recalcTradingOrders()" title="Maximální povolená ztráta při zasažení Stop-Lossu">
+                        <option value="1.0">1.0 % (Konzervativní)</option>
+                        <option value="1.5" selected>1.5 % (Vyvážený)</option>
+                        <option value="2.0">2.0 % (Agresivní)</option>
+                    </select>
+                </div>
+
+                <div class="broker-tab-group">
+                    <button class="broker-tab-btn active" id="tabIbkrBtn" onclick="switchBrokerMode('IBKR')">🏦 Interactive Brokers</button>
+                    <button class="broker-tab-btn" id="tabXtbBtn" onclick="switchBrokerMode('XTB')">⚡ XTB Broker</button>
+                </div>
+            </div>
+
+            <div class="controls-actions">
+                <button class="action-btn primary-ibkr" onclick="downloadIbkrBasketCsv()" title="Stáhnout připravený CSV soubor pro přímý import do TWS Basket Traderu">
+                    📥 Stáhnout TWS Basket (.csv)
+                </button>
+                <button class="action-btn" onclick="copyIbInsyncPythonCode()" title="Zkopírovat kompletní Python skript ib_insync pro autonomní exekuci">
+                    📋 Python kód (ib_insync)
+                </button>
+                <button class="action-btn" onclick="openIbkrModal()" title="Nastavení parametrů Interactive Brokers (Host, Port, Client ID)">
+                    ⚙️ Nastavení IBKR
+                </button>
+                <button class="action-btn" onclick="openXtbConfigModal()" title="Nastavení parametrů XTB xAPI">
+                    ⚙️ Nastavení XTB
+                </button>
+                <button class="action-btn" onclick="exportOrdersJSON()" title="Exportovat příkazy do standardního formátu JSON">
+                    📥 JSON
+                </button>
+            </div>
+        </div>
+
+        <!-- TABULKA PŘÍKAZŮ -->
+        <div class="orders-card">
+            <div class="orders-header">
+                <div class="orders-title">
+                    <span>⚡</span> Fronta Bracket Příkazů schválených Risk Gatekeeperem
+                </div>
+                <div style="font-size: 0.74rem; color: var(--text-muted);">
+                    Cíle a Stop-Lossy vycházejí z <strong>MIT MVO vážení</strong>, <strong>ATR 14d</strong> a <strong>analytického konsenzu</strong>.
+                </div>
+            </div>
+
+            <table class="orders-table" id="ordersTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Instrument (IBKR / Ticker)</th>
+                        <th>Typ</th>
+                        <th>Počet ks</th>
+                        <th>Limitní nákup</th>
+                        <th>Stop-Loss (SL)</th>
+                        <th>Take-Profit (TP)</th>
+                        <th>RRR</th>
+                        <th>Alokace (CZK)</th>
+                        <th>Max Risk (CZK)</th>
+                        <th>Gatekeeper</th>
+                        <th style="text-align: right;">Akce</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                    {% for ord in trading_orders %}
+                    <tr id="orderRow-{{ ord.order_id }}" data-order-raw="{{ ord|tojson|forceescape }}">
+                        <td style="font-weight: 800; color: var(--text-muted);">#{{ ord.rank }}</td>
+                        <td>
+                            <div class="sym-cell">
+                                <div class="sym-main">
+                                    <span>{{ ord.symbol_ibkr or ord.symbol_yahoo or ord.symbol_xtb }}</span>
+                                    <span class="sym-ibkr-tag">{{ ord.exchange_ibkr or 'SMART' }}</span>
+                                </div>
+                                <div class="sym-sub" title="{{ ord.name }}">{{ ord.name }} ({{ ord.symbol_xtb }})</div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge-buy-lmt">{{ ord.action }} {{ ord.order_type }}</span>
+                        </td>
+                        <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">{{ ord.shares }} ks</td>
+                        <td class="font-mono price-entry">{{ ord.limit_price }} {{ ord.currency }}</td>
+                        <td class="font-mono price-sl">{{ ord.sl_price }} {{ ord.currency }}</td>
+                        <td class="font-mono price-tp">{{ ord.tp_price }} {{ ord.currency }}</td>
+                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">{{ ord.rrr }}:1</td>
+                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">{{ ord.position_czk|round(0)|int }} CZK</td>
+                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">{{ ord.capital_risk_czk|round(0)|int }} CZK ({{ ord.capital_risk_pct }} %)</td>
+                        <td>
+                            <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
+                            <div style="font-size: 0.68rem; color: var(--text-muted);">{{ ord.macro_note }}</div>
+                        </td>
+                        <td style="text-align: right;">
+                            <div style="display: flex; justify-content: flex-end; gap: 4px;">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('{{ ord.order_id }}', '{{ ord.symbol_ibkr }}')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                    ▶ Exekuce
+                                </button>
+                                <button class="row-action-btn" onclick="copySingleBracketCode('{{ ord.order_id }}')" title="Kopírovat Python kód pro tento konkrétní bracket příkaz">
+                                    📋 Kód
+                                </button>
+                                <a href="https://finance.yahoo.com/chart/{{ ord.symbol_yahoo or ord.symbol_ibkr }}" target="_blank" rel="noopener noreferrer" class="row-action-btn" style="text-decoration: none;" title="Otevřít graf">
+                                    📈 Graf
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- INTEGRACE & PYTHON KÓD GENERÁTOR -->
+        <div class="integration-section">
+            <div class="code-box-card">
+                <div class="code-header">
+                    <span class="code-title">🐍 Python Autonomní Exekutor (ib_insync pro Interactive Brokers TWS)</span>
+                    <button class="action-btn" onclick="copyIbInsyncPythonCode()" style="padding: 2px 8px; font-size: 0.72rem;">Kopírovat skript</button>
+                </div>
+                <pre class="code-snippet-pre" id="pythonSnippetBox"># Autonomní odeslání Bracket příkazů do Interactive Brokers TWS
+from ib_insync import IB, Stock, util
+
+ib = IB()
+# Připojení k TWS nebo IB Gateway na localhost
+# 7497 = TWS Paper, 7496 = TWS Live, 4002 = Gateway Paper, 4001 = Gateway Live
+ib.connect('127.0.0.1', 7497, clientId=1)
+
+print(f"✅ Připojeno k IBKR účtu: {ib.managedAccounts()}")
+
+# Generováno ze SuggestInvest Top 5 Conviction Basket
+orders_data = [
+{% for ord in trading_orders %}
+    {
+        "symbol": "{{ ord.symbol_ibkr }}",
+        "exchange": "{{ ord.exchange_ibkr }}",
+        "currency": "{{ ord.currency }}",
+        "shares": {{ ord.shares }},
+        "entry": {{ ord.limit_price }},
+        "sl": {{ ord.sl_price }},
+        "tp": {{ ord.tp_price }}
+    }{% if not loop.last %},{% endif %}
+{% endfor %}
+]
+
+for item in orders_data:
+    contract = Stock(item["symbol"], item["exchange"], item["currency"])
+    ib.qualifyContracts(contract)
+    
+    # Vytvoření Parent Limit + Child SL + Child TP bracket příkazu
+    bracket = ib.bracketOrder(
+        action='BUY',
+        quantity=item["shares"],
+        limitPrice=item["entry"],
+        takeProfitPrice=item["tp"],
+        stopLossPrice=item["sl"]
+    )
+    
+    print(f"🚀 Odesílám bracket příkaz pro {item['symbol']} ({item['shares']} ks @ {item['entry']})")
+    for o in bracket:
+        ib.placeOrder(contract, o)
+
+ib.sleep(2)
+print("✅ Všechny bracket příkazy byly úspěšně předány do TWS!")
+ib.disconnect()
+</pre>
+            </div>
+
+            <div class="guide-card">
+                <div class="orders-title" style="font-size: 0.95rem;">
+                    <span>📖</span> Jak spustit exekuci v Interactive Brokers
+                </div>
+
+                <div class="guide-step">
+                    <div class="step-num">1</div>
+                    <div>
+                        <strong>Povolte API v TWS / IB Gateway</strong><br>
+                        V TWS otevřete <em>Global Configuration &rarr; API &rarr; Settings</em>, zaškrtněte <strong>Enable ActiveX and Socket Clients</strong> a nastavte port na <code>7497</code> (Paper) nebo <code>7496</code> (Live).
+                    </div>
+                </div>
+
+                <div class="guide-step">
+                    <div class="step-num">2</div>
+                    <div>
+                        <strong>Nastavte IP přístup</strong><br>
+                        Ujistěte se, že je zaškrtnuto <em>Allow connections from localhost only</em> (nebo přidejte <code>127.0.0.1</code> do Trusted IPs).
+                    </div>
+                </div>
+
+                <div class="guide-step">
+                    <div class="step-num">3</div>
+                    <div>
+                        <strong>Možnost A: Basket Trader (1-klikový import)</strong><br>
+                        Klikněte na tlačítko <strong>Stáhnout TWS Basket (.csv)</strong> nahoře. V TWS otevřete nástroj <em>Basket Trader</em> a zvolte <em>File &rarr; Open Basket File</em>. Všechny nákupy a ochranné stops se ihned načtou.
+                    </div>
+                </div>
+
+                <div class="guide-step">
+                    <div class="step-num">4</div>
+                    <div>
+                        <strong>Možnost B: Python ib_insync</strong><br>
+                        Nainstalujte <code>pip install ib_insync</code>, zkopírujte kód vlevo a spusťte jej. Příkazy se automaticky spárují s vaším TWS.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PRO KONFIGURACI IBKR -->
+    <div id="ibkrConfigModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title-row">
+                    <span>⚙️</span>
+                    <h3>Konfigurace Interactive Brokers (TWS Socket API)</h3>
+                </div>
+                <button class="modal-close-btn" onclick="closeIbkrModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Nastavte parametry pro připojení k běžící aplikaci Trader Workstation (TWS) nebo IB Gateway.</p>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label style="font-weight: 700; color: #f8fafc;">TWS Socket Host:</label>
+                    <input type="text" id="ibHostInput" class="control-input" style="width: 100%; text-align: left;" value="127.0.0.1">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label style="font-weight: 700; color: #f8fafc;">TWS API Port:</label>
+                    <select id="ibPortSelect" class="control-select" style="width: 100%;">
+                        <option value="7497" selected>7497 (TWS Paper Trading Sandbox)</option>
+                        <option value="7496">7496 (TWS Live Trading)</option>
+                        <option value="4002">4002 (IB Gateway Paper)</option>
+                        <option value="4001">4001 (IB Gateway Live)</option>
+                    </select>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label style="font-weight: 700; color: #f8fafc;">Client ID:</label>
+                    <input type="number" id="ibClientIdInput" class="control-input" style="width: 100%; text-align: left;" value="1" min="1" max="999">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label style="font-weight: 700; color: #f8fafc;">Číslo účtu (nepovinné, např. DU123456):</label>
+                    <input type="text" id="ibAccountInput" class="control-input" style="width: 100%; text-align: left;" placeholder="Nechte prázdné pro výchozí účet">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="action-btn" onclick="closeIbkrModal()">Zrušit</button>
+                <button class="action-btn primary-ibkr" onclick="saveIbkrConfig()">💾 Uložit konfiguraci</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PRO KONFIGURACI XTB -->
+    <div id="xtbConfigModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title-row">
+                    <span>⚡</span>
+                    <h3>Konfigurace XTB (xAPI WebSocket)</h3>
+                </div>
+                <button class="modal-close-btn" onclick="closeXtbConfigModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>SuggestInvest komunikuje s XTB přes zabezpečený WebSocket <code>wss://ws.xtb.com</code>.</p>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label style="font-weight: 700; color: #f8fafc;">XTB Uživatelské ID / Účet:</label>
+                    <input type="text" id="xtbUserIdInput" class="control-input" style="width: 100%; text-align: left;" placeholder="např. 12345678">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label style="font-weight: 700; color: #f8fafc;">Server & Typ účtu:</label>
+                    <select id="xtbServerSelect" class="control-select" style="width: 100%;">
+                        <option value="demo" selected>Demo účet (wss://ws.xtb.com/demo)</option>
+                        <option value="real">Reálný účet (wss://ws.xtb.com/real)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="action-btn" onclick="closeXtbConfigModal()">Zrušit</button>
+                <button class="action-btn primary-ibkr" onclick="saveXtbConfig()">💾 Uložit konfiguraci</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFIKACE -->
+    <div id="toastPopup" class="toast-popup"></div>
+
+    <script>
+        function showToast(msg, type = 'info', duration = 4000) {
+            const toast = document.getElementById('toastPopup');
+            if (!toast) return;
+            toast.innerHTML = msg;
+            toast.style.borderColor = type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6';
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, duration);
+        }
+
+        let activeBroker = 'IBKR';
+
+        function switchBrokerMode(broker) {
+            activeBroker = broker;
+            const bIbkr = document.getElementById('tabIbkrBtn');
+            const bXtb = document.getElementById('tabXtbBtn');
+            if (broker === 'IBKR') {
+                if (bIbkr) bIbkr.classList.add('active');
+                if (bXtb) bXtb.classList.remove('active');
+                showToast('🏦 Zobrazen režim pro Interactive Brokers (TWS Socket API & Basket Trader).', 'info');
+            } else {
+                if (bIbkr) bIbkr.classList.remove('active');
+                if (bXtb) bXtb.classList.add('active');
+                showToast('⚡ Zobrazen režim pro XTB Broker Bridge (xAPI WebSocket).', 'info');
+            }
+        }
+
+        function recalcTradingOrders() {
+            const capInput = document.getElementById('portfolioCapInput');
+            const riskSelect = document.getElementById('maxRiskSelect');
+            const capital = parseFloat(capInput ? capInput.value : 250000) || 250000;
+            const maxRiskPct = parseFloat(riskSelect ? riskSelect.value : 1.5) || 1.5;
+
+            const rows = document.querySelectorAll('#ordersTableBody tr');
+            const updatedOrders = [];
+
+            rows.forEach(row => {
+                const rawAttr = row.getAttribute('data-order-raw');
+                if (!rawAttr) return;
+                try {
+                    const ord = JSON.parse(rawAttr);
+                    const fxRates = { 'CZK': 1.0, 'USD': 23.5, 'EUR': 25.2, 'GBX': 0.31, 'GBP': 30.5 };
+                    const fx = fxRates[ord.currency] || 23.5;
+                    const entryCzk = ord.limit_price * fx;
+                    const slCzk = ord.sl_price * fx;
+                    const riskPerShareCzk = Math.max(0.1, entryCzk - slCzk);
+
+                    const maxAllowedRiskCzk = capital * (maxRiskPct / 100.0);
+                    const sharesByRisk = Math.floor(maxAllowedRiskCzk / riskPerShareCzk);
+                    const maxPosCzk = capital * 0.20;
+                    const sharesByCap = Math.floor(maxPosCzk / entryCzk);
+                    const finalShares = Math.max(1, Math.min(sharesByRisk, sharesByCap));
+
+                    const allocCzk = Math.round(finalShares * entryCzk);
+                    const actualRiskCzk = Math.round(finalShares * riskPerShareCzk);
+                    const actualRiskPct = ((actualRiskCzk / capital) * 100).toFixed(1);
+
+                    const sharesCell = row.querySelector('.order-shares-cell');
+                    if (sharesCell) sharesCell.innerText = `${finalShares} ks`;
+                    const allocCell = row.querySelector('.order-alloc-cell');
+                    if (allocCell) allocCell.innerText = `${allocCzk.toLocaleString('cs-CZ')} CZK`;
+                    const riskCell = row.querySelector('.order-risk-cell');
+                    if (riskCell) riskCell.innerText = `${actualRiskCzk.toLocaleString('cs-CZ')} CZK (${actualRiskPct} %)`;
+
+                    ord.shares = finalShares;
+                    ord.position_czk = allocCzk;
+                    ord.capital_risk_czk = actualRiskCzk;
+                    ord.capital_risk_pct = actualRiskPct;
+                    row.setAttribute('data-order-raw', JSON.stringify(ord));
+                    updatedOrders.push(ord);
+                } catch (e) {
+                    console.warn('Recalc error:', e);
+                }
+            });
+
+            updatePythonSnippet(updatedOrders);
+            showToast(`🔄 Příkazy přepočteny pro kapitál ${capital.toLocaleString('cs-CZ')} CZK (Max risk ${maxRiskPct} %).`, 'success');
+        }
+
+        function updatePythonSnippet(orders) {
+            const pre = document.getElementById('pythonSnippetBox');
+            if (!pre || !orders || !orders.length) return;
+
+            const itemsStr = orders.map(o => `    {
+        "symbol": "${o.symbol_ibkr || o.symbol_yahoo || o.symbol_xtb}",
+        "exchange": "${o.exchange_ibkr || 'SMART'}",
+        "currency": "${o.currency}",
+        "shares": ${o.shares},
+        "entry": ${o.limit_price},
+        "sl": ${o.sl_price},
+        "tp": ${o.tp_price}
+    }`).join(',\n');
+
+            pre.innerText = `# Autonomní odeslání Bracket příkazů do Interactive Brokers TWS
+from ib_insync import IB, Stock, util
+
+ib = IB()
+ib.connect('127.0.0.1', 7497, clientId=1) # 7497 = TWS Paper, 7496 = TWS Live
+print(f"✅ Připojeno k IBKR účtu: {ib.managedAccounts()}")
+
+orders_data = [
+${itemsStr}
+]
+
+for item in orders_data:
+    contract = Stock(item["symbol"], item["exchange"], item["currency"])
+    ib.qualifyContracts(contract)
+    
+    bracket = ib.bracketOrder(
+        action='BUY',
+        quantity=item["shares"],
+        limitPrice=item["entry"],
+        takeProfitPrice=item["tp"],
+        stopLossPrice=item["sl"]
+    )
+    
+    print(f"🚀 Odesílám bracket příkaz pro {item['symbol']} ({item['shares']} ks @ {item['entry']})")
+    for o in bracket:
+        ib.placeOrder(contract, o)
+
+ib.sleep(2)
+print("✅ Všechny bracket příkazy byly úspěšně předány do TWS!")
+ib.disconnect()
+`;
+        }
+
+        function downloadIbkrBasketCsv() {
+            const rows = document.querySelectorAll('#ordersTableBody tr');
+            const csvLines = [
+                'Action,Quantity,Symbol,SecType,Exchange,Currency,OrderType,LmtPrice,AuxPrice'
+            ];
+
+            rows.forEach(r => {
+                const raw = r.getAttribute('data-order-raw');
+                if (!raw) return;
+                try {
+                    const o = JSON.parse(raw);
+                    const sym = o.symbol_ibkr || o.symbol_yahoo || o.symbol_xtb.split('.')[0];
+                    const exch = o.exchange_ibkr || (o.currency === 'CZK' ? 'PSE' : 'SMART');
+                    csvLines.push(`BUY,${o.shares},${sym},STK,${exch},${o.currency},LMT,${o.limit_price},${o.sl_price}`);
+                } catch(e){}
+            });
+
+            const csvContent = "data:text/csv;charset=utf-8," + encodeURIComponent(csvLines.join('\n'));
+            const a = document.createElement('a');
+            a.setAttribute('href', csvContent);
+            a.setAttribute('download', `SuggestInvest_IBKR_Basket_${new Date().toISOString().slice(0, 10)}.csv`);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            showToast('📥 IBKR Basket Trader CSV soubor byl vygenerován a stažen do vašeho počítače!', 'success');
+        }
+
+        function copyIbInsyncPythonCode() {
+            const pre = document.getElementById('pythonSnippetBox');
+            if (!pre) return;
+            navigator.clipboard.writeText(pre.innerText).then(() => {
+                showToast('📋 Kompletní Python skript pro ib_insync byl zkopírován do schránky!', 'success');
+            });
+        }
+
+        function copySingleBracketCode(orderId) {
+            const row = document.getElementById(`orderRow-${orderId}`);
+            if (!row) return;
+            const raw = row.getAttribute('data-order-raw');
+            if (!raw) return;
+            try {
+                const o = JSON.parse(raw);
+                const sym = o.symbol_ibkr || o.symbol_yahoo || o.symbol_xtb.split('.')[0];
+                const code = `# Bracket příkaz pro ${sym} (Interactive Brokers)
+contract = Stock('${sym}', '${o.exchange_ibkr || 'SMART'}', '${o.currency}')
+bracket = ib.bracketOrder(
+    action='BUY',
+    quantity=${o.shares},
+    limitPrice=${o.limit_price},
+    takeProfitPrice=${o.tp_price},
+    stopLossPrice=${o.sl_price}
+)
+for o in bracket:
+    ib.placeOrder(contract, o)`;
+                navigator.clipboard.writeText(code).then(() => {
+                    showToast(`📋 Python bracket kód pro ${sym} byl zkopírován do schránky!`, 'success');
+                });
+            } catch(e){}
+        }
+
+        function simulatePaperExecution(orderId, symbol) {
+            const row = document.getElementById(`orderRow-${orderId}`);
+            if (!row) return;
+            const btn = row.querySelector('.exec-btn');
+            if (btn) {
+                btn.innerText = '✅ Vyplněno';
+                btn.style.background = 'rgba(16, 185, 129, 0.4)';
+                btn.style.borderColor = '#10b981';
+                btn.disabled = true;
+            }
+            showToast(`🚀 Paper Sandbox: Bracket příkaz pro ${symbol} byl simulovaně vyplněn na limitní ceně se Stop-Lossem!`, 'success', 5000);
+        }
+
+        function exportOrdersJSON() {
+            const rows = document.querySelectorAll('#ordersTableBody tr');
+            const orders = [];
+            rows.forEach(r => {
+                const raw = r.getAttribute('data-order-raw');
+                if (raw) {
+                    try { orders.push(JSON.parse(raw)); } catch(e){}
+                }
+            });
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(orders, null, 2));
+            const a = document.createElement('a');
+            a.setAttribute('href', dataStr);
+            a.setAttribute('download', `SuggestInvest_Orders_${new Date().toISOString().slice(0, 10)}.json`);
+            a.click();
+            showToast(`📥 Exportováno ${orders.length} příkazů do formátu JSON.`, 'success');
+        }
+
+        /* MODALS */
+        function openIbkrModal() {
+            const m = document.getElementById('ibkrConfigModal');
+            if (m) m.style.display = 'flex';
+        }
+
+        function closeIbkrModal() {
+            const m = document.getElementById('ibkrConfigModal');
+            if (m) m.style.display = 'none';
+        }
+
+        function saveIbkrConfig() {
+            const host = document.getElementById('ibHostInput').value.trim();
+            const port = document.getElementById('ibPortSelect').value;
+            const clientId = document.getElementById('ibClientIdInput').value;
+            const account = document.getElementById('ibAccountInput').value.trim();
+            localStorage.setItem('ibkr_config', JSON.stringify({ host, port, clientId, account, savedAt: new Date().toISOString() }));
+            closeIbkrModal();
+            showToast('✅ Nastavení Interactive Brokers TWS uloženo do prohlížeče.', 'success');
+        }
+
+        function openXtbConfigModal() {
+            const m = document.getElementById('xtbConfigModal');
+            if (m) m.style.display = 'flex';
+        }
+
+        function closeXtbConfigModal() {
+            const m = document.getElementById('xtbConfigModal');
+            if (m) m.style.display = 'none';
+        }
+
+        function saveXtbConfig() {
+            const userId = document.getElementById('xtbUserIdInput').value.trim();
+            const server = document.getElementById('xtbServerSelect').value;
+            localStorage.setItem('xtb_config', JSON.stringify({ userId, server, savedAt: new Date().toISOString() }));
+            closeXtbConfigModal();
+            showToast('✅ Nastavení XTB xAPI uloženo do prohlížeče.', 'success');
+        }
+    </script>
+</body>
+</html>

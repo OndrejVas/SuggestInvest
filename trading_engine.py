@@ -227,20 +227,33 @@ class BrokerExecutionEngine:
 
             order_id = f"ORD-{datetime.now(timezone.utc).strftime('%Y%m%d')}-{sym_xtb.split('.')[0]}-{uuid.uuid4().hex[:4].upper()}"
 
+            # Příprava tickeru a burzy pro Interactive Brokers (TWS / Client Portal)
+            sym_ibkr = item.get("yahoo_symbol", sym_xtb.split(".")[0]).split(".")[0].upper()
+            if "CEZ" in sym_xtb.upper():
+                sym_ibkr = "CEZ"
+            exchange_ibkr = "SMART" if curr != "CZK" else "PSE"
+            entry_p = risk_res.get("entry_price", round(limit_price, 2))
+            sl_p = risk_res.get("sl_price", round(inv_price, 2))
+            tp_p = risk_res.get("tp_price", round(tp_price, 2))
+            shares_qty = risk_res.get("shares", 1)
+
             order_payload = {
                 "order_id": order_id,
                 "created_at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"),
                 "symbol_xtb": sym_xtb,
                 "symbol_yahoo": item.get("yahoo_symbol", ""),
+                "symbol_ibkr": sym_ibkr,
+                "exchange_ibkr": exchange_ibkr,
+                "sectype_ibkr": "STK",
                 "name": item.get("name", sym_xtb),
                 "currency": curr,
                 "action": "BUY",
                 "order_type": "LIMIT",
                 "current_price": round(curr_price, 2),
-                "limit_price": risk_res.get("entry_price", round(limit_price, 2)),
-                "sl_price": risk_res.get("sl_price", round(inv_price, 2)),
-                "tp_price": risk_res.get("tp_price", round(tp_price, 2)),
-                "shares": risk_res.get("shares", 1),
+                "limit_price": entry_p,
+                "sl_price": sl_p,
+                "tp_price": tp_p,
+                "shares": shares_qty,
                 "rrr": risk_res.get("rrr", 2.0),
                 "position_czk": risk_res.get("position_val_czk", 0.0),
                 "capital_risk_czk": risk_res.get("actual_risk_czk", 0.0),
@@ -252,6 +265,21 @@ class BrokerExecutionEngine:
                 "status_reason": reason,
                 "macro_note": macro_warning,
                 "mode": self.mode,
+                # Formát specifický pro Interactive Brokers (TWS Basket Trader CSV row)
+                "ibkr_basket_row": f"BUY,{shares_qty},{sym_ibkr},STK,{exchange_ibkr},{curr},LMT,{entry_p},{sl_p}",
+                # Python ib_insync bracket snippet
+                "ibkr_bracket_py": (
+                    f"contract = Stock('{sym_ibkr}', '{exchange_ibkr}', '{curr}')\n"
+                    f"bracket = ib.bracketOrder(\n"
+                    f"    action='BUY',\n"
+                    f"    quantity={shares_qty},\n"
+                    f"    limitPrice={entry_p},\n"
+                    f"    takeProfitPrice={tp_p},\n"
+                    f"    stopLossPrice={sl_p}\n"
+                    f")\n"
+                    f"for o in bracket:\n"
+                    f"    ib.placeOrder(contract, o)"
+                ),
                 # Formát specifický pro XTB xAPI (JSON socket protocol)
                 "xtb_xapi_payload": {
                     "command": "tradeTransaction",
@@ -260,9 +288,9 @@ class BrokerExecutionEngine:
                             "cmd": 0,           # 0 = BUY
                             "type": 2,          # 2 = PENDING LIMIT
                             "symbol": sym_xtb,
-                            "price": risk_res.get("entry_price", round(limit_price, 2)),
-                            "sl": risk_res.get("sl_price", round(inv_price, 2)),
-                            "tp": risk_res.get("tp_price", round(tp_price, 2)),
+                            "price": entry_p,
+                            "sl": sl_p,
+                            "tp": tp_p,
                             "volume": 0.1,      # Lot size na XTB
                             "customComment": f"SI-AI-MVO-{item.get('rank', 1)}"
                         }

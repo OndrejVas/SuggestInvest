@@ -2113,14 +2113,23 @@
 
         .sector-radar-list {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 6px;
-            max-height: 250px;
-            overflow-y: auto;
-            padding-right: 2px;
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 1400px) {
+            .sector-radar-list {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sector-radar-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
             .sector-radar-list {
                 grid-template-columns: 1fr;
             }
@@ -2149,13 +2158,13 @@
         }
 
         .sector-item-name {
-            font-size: 0.74rem;
+            font-size: 0.72rem;
             font-weight: 700;
             color: #f1f5f9;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 110px;
+            max-width: 100%;
         }
 
         .sector-item-sym {
@@ -2183,233 +2192,6 @@
         .phase-hedge { background: rgba(147, 51, 234, 0.18); color: #c084fc; border: 1px solid rgba(147, 51, 234, 0.35); }
         .phase-stable { background: rgba(59, 130, 246, 0.18); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.35); }
         .phase-late { background: rgba(234, 179, 8, 0.18); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.35); }
-
-        /* 🤖 BROKER AUTONOMNÍ TRADING PORTÁL */
-        .broker-trading-section {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(8, 13, 26, 0.98) 100%);
-            border: 1px solid rgba(16, 185, 129, 0.35);
-            border-radius: var(--radius-lg);
-            padding: 1.35rem 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(16, 185, 129, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .broker-trading-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #10b981, #06b6d4, transparent);
-        }
-
-        .trading-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .trading-title-group {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .trading-title {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-size: 1.15rem;
-            font-weight: 800;
-            color: #f8fafc;
-        }
-
-        .trading-subtitle {
-            font-size: 0.82rem;
-            color: var(--text-secondary);
-            max-width: 850px;
-            line-height: 1.4;
-        }
-
-        .trading-header-actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .trading-controls-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: var(--radius-md);
-            padding: 0.65rem 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .trading-params-left {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .trading-param-group {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .trading-input {
-            background: rgba(15, 23, 42, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #f8fafc;
-            border-radius: 6px;
-            padding: 4px 8px;
-            font-size: 0.82rem;
-            font-weight: 700;
-            width: 110px;
-        }
-
-        .trading-select {
-            background: rgba(15, 23, 42, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #f8fafc;
-            border-radius: 6px;
-            padding: 4px 8px;
-            font-size: 0.82rem;
-            font-weight: 700;
-        }
-
-        .trading-mode-btn {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: var(--text-secondary);
-            border-radius: 6px;
-            padding: 5px 10px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-
-        .trading-mode-btn.active {
-            background: rgba(16, 185, 129, 0.2);
-            border-color: #10b981;
-            color: #34d399;
-        }
-
-        .trading-action-btn {
-            background: rgba(59, 130, 246, 0.15);
-            border: 1px solid rgba(59, 130, 246, 0.35);
-            color: #60a5fa;
-            border-radius: 6px;
-            padding: 5px 10px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .trading-action-btn:hover {
-            background: rgba(59, 130, 246, 0.25);
-            color: #93c5fd;
-        }
-
-        /* Orders Table */
-        .orders-table-wrapper {
-            overflow-x: auto;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: var(--radius-md);
-            background: rgba(11, 17, 33, 0.6);
-        }
-
-        .orders-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.8rem;
-            min-width: 920px;
-        }
-
-        .orders-table th {
-            background: rgba(255, 255, 255, 0.03);
-            color: var(--text-muted);
-            font-weight: 700;
-            text-align: left;
-            padding: 0.6rem 0.85rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            font-size: 0.72rem;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-
-        .orders-table td {
-            padding: 0.65rem 0.85rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            color: #f1f5f9;
-        }
-
-        .orders-table tr:hover td {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .order-badge-buy {
-            background: rgba(16, 185, 129, 0.15);
-            color: #34d399;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            font-size: 0.7rem;
-            font-weight: 800;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        .order-btn-exec {
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid rgba(16, 185, 129, 0.4);
-            color: #34d399;
-            padding: 3px 8px;
-            border-radius: 5px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-
-        .order-btn-exec:hover {
-            background: rgba(16, 185, 129, 0.35);
-            color: #ffffff;
-        }
-
-        .order-btn-copy {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: var(--text-secondary);
-            padding: 3px 7px;
-            border-radius: 5px;
-            font-size: 0.72rem;
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-
-        .order-btn-copy:hover {
-            background: rgba(255, 255, 255, 0.12);
-            color: #f8fafc;
-        }
 
         /* 🏆 MASUDA TOP 5 CONVICTION BASKET (MIT SHARPE ALLOCATION - SRC-9) */
         .top-conviction-section {
@@ -2539,26 +2321,29 @@
             border-radius: 4px;
         }
 
-        .conv-chart-link {
+        .nav-trading-btn {
             display: inline-flex;
             align-items: center;
-            gap: 3px;
-            color: #38bdf8;
-            text-decoration: none;
-            font-size: 0.68rem;
+            gap: 6px;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.22) 0%, rgba(59, 130, 246, 0.12) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.45);
+            color: #93c5fd;
+            padding: 0.45rem 0.85rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
             font-weight: 700;
-            padding: 1px 6px;
-            background: rgba(56, 189, 248, 0.12);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            border-radius: 4px;
-            transition: all 0.15s ease;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+            cursor: pointer;
+            box-shadow: 0 0 12px rgba(37, 99, 235, 0.18);
         }
 
-        .conv-chart-link:hover {
-            background: rgba(56, 189, 248, 0.25);
-            color: #7dd3fc;
-            border-color: rgba(56, 189, 248, 0.6);
-            text-decoration: none;
+        .nav-trading-btn:hover {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.4) 0%, rgba(59, 130, 246, 0.28) 100%);
+            border-color: #60a5fa;
+            color: #ffffff;
+            box-shadow: 0 0 18px rgba(59, 130, 246, 0.45);
+            transform: translateY(-1px);
         }
 
         .conv-symbol-row {
@@ -2568,11 +2353,46 @@
             margin-top: 2px;
         }
 
+        .conv-symbol-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+            color: #ffffff;
+            cursor: pointer;
+            transition: color 0.15s ease;
+        }
+
+        .conv-symbol-link:hover {
+            color: #60a5fa;
+        }
+
+        .conv-symbol-link:hover .conv-symbol {
+            color: #60a5fa;
+            text-decoration: underline;
+            text-decoration-color: rgba(96, 165, 250, 0.6);
+            text-underline-offset: 3px;
+        }
+
+        .conv-chart-ico {
+            font-size: 0.72rem;
+            color: #38bdf8;
+            opacity: 0.75;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+
+        .conv-symbol-link:hover .conv-chart-ico {
+            transform: translate(2px, -2px);
+            opacity: 1;
+            color: #93c5fd;
+        }
+
         .conv-symbol {
             font-size: 0.95rem;
             font-weight: 800;
             color: #ffffff;
             letter-spacing: 0.02em;
+            transition: color 0.15s ease;
         }
 
         .conv-curr {
@@ -2632,7 +2452,7 @@
             color: #fbbf24;
             font-size: 0.68rem;
             font-weight: 700;
-            padding: 2px 6px;
+            padding: 3px 6px;
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.15s ease;
@@ -2646,10 +2466,30 @@
             color: #fef08a;
         }
 
-        .conv-tooltip-wrapper:hover .conv-tooltip-popup,
-        .conv-tooltip-popup:hover {
-            visibility: visible;
-            opacity: 1;
+        .ai-tooltip-popup.is-open {
+            visibility: visible !important;
+            opacity: 1 !important;
+            display: block !important;
+            pointer-events: auto !important;
+        }
+
+        .tooltip-close-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #cbd5e1;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 1px 7px;
+            border-radius: 4px;
+            line-height: 1.2;
+            transition: all 0.15s ease;
+        }
+
+        .tooltip-close-btn:hover {
+            color: #ffffff;
+            background: rgba(239, 68, 68, 0.3);
+            border-color: rgba(239, 68, 68, 0.6);
         }
 
         .conv-tooltip-popup {
@@ -2786,12 +2626,14 @@
                         <span>📄 Metodika analýzy (.docx)</span>
                     </a>
 
-                    <button id="refreshBtn" class="refresh-btn" onclick="triggerManualScan()" title="Stáhnout nejnovější publikovaný report ze serveru (vyčistí mezipaměť prohlížeče)">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+                    <a href="trading.html" class="nav-trading-btn" title="Otevřít terminál pro Autonomní Trading (Interactive Brokers & XTB)">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
                         </svg>
-                        <span>Obnovit data</span>
-                    </button>
+                        <span>🤖 Autonomní Trading (IBKR & XTB)</span>
+                    </a>
 
                     <button id="triggerScanBtn" class="trigger-scan-btn" onclick="triggerCloudOrLocalScan()" title="Spustit kompletní nový sken 541 aktiv a Gemini AI analýzu přímo v cloudu na GitHub Actions">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -3024,10 +2866,12 @@
                         <div class="conv-card-top">
                             <span class="conv-rank">#{{ item.rank }}</span>
                             <span class="conv-weight">{{ item.portfolio_weight }}</span>
-                            <a href="{{ item.chart_url }}" target="_blank" rel="noopener noreferrer" class="conv-chart-link" onclick="event.stopPropagation();" title="Otevřít živý interaktivní graf na Yahoo Finance">📈 Graf ↗</a>
                         </div>
                         <div class="conv-symbol-row">
-                            <span class="conv-symbol">{{ item.xtb_symbol }}</span>
+                            <a href="{{ item.chart_url }}" target="_blank" rel="noopener noreferrer" class="conv-symbol-link" onclick="event.stopPropagation();" title="Otevřít živý interaktivní graf {{ item.xtb_symbol }} na Yahoo Finance (nové okno)">
+                                <span class="conv-symbol">{{ item.xtb_symbol }}</span>
+                                <span class="conv-chart-ico">↗</span>
+                            </a>
                             <span class="conv-curr">{{ item.currency }}</span>
                         </div>
                         <div class="conv-name" title="{{ item.name }}">{{ item.name }}</div>
@@ -3038,17 +2882,38 @@
                         </div>
                         <div class="conv-reason">„{{ item.tactical_note }}“</div>
 
-                        <!-- 💡 Rich Tooltip pro TOP 5 dlaždici -->
+                        <!-- 💡 Rich Tooltip pro TOP 5 dlaždici (Plná škála informací) -->
                         <div class="conv-tooltip-wrapper">
-                            <button type="button" class="conv-tooltip-trigger" onclick="event.stopPropagation();" aria-label="Zobrazit detailní analýzu alokace">
+                            <button type="button" class="conv-tooltip-trigger" onclick="handleTooltipClick(event, this)" aria-label="Zobrazit detailní analýzu alokace">
                                 <span>💡</span>
                                 <span>Detail alokace</span>
                             </button>
                             <div class="ai-tooltip-popup conv-tooltip-popup" role="tooltip" onclick="event.stopPropagation();">
                                 <div class="tooltip-header">
-                                    <span class="tooltip-title">🏆 Masuda Conviction Alokace #{{ item.rank }}</span>
-                                    <span class="tooltip-ticker">{{ item.yahoo_symbol }}</span>
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <span class="tooltip-title">🏆 Masuda Alokace #{{ item.rank }}</span>
+                                        <span class="tooltip-ticker">{{ item.yahoo_symbol }}</span>
+                                    </div>
+                                    <button type="button" class="tooltip-close-btn" onclick="closeAllTooltips(event)" title="Zavřít popup">✕</button>
                                 </div>
+
+                                {% if item.daily_change and item.daily_change.is_changed %}
+                                <div class="tooltip-delta-box {{ item.daily_change.badge_class }}">
+                                    <div class="delta-header">
+                                        <span class="delta-badge" style="color: {{ item.daily_change.change_color }};">{{ item.daily_change.change_badge }}</span>
+                                        <span class="delta-date">vs. {{ item.daily_change.prev_date_str }}</span>
+                                    </div>
+                                    <div class="delta-body">{{ item.daily_change.change_desc }}</div>
+                                    {% if item.daily_change.prev_signal and item.daily_change.prev_signal != item.signal %}
+                                    <div class="delta-shift-flow">
+                                        <span class="delta-from">{{ item.daily_change.prev_signal }} ({{ item.daily_change.prev_conf }} %)</span>
+                                        <span class="delta-arrow">➜</span>
+                                        <span class="delta-to">{{ item.signal }} ({{ item.confidence }} %)</span>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+
                                 <div class="tooltip-grid">
                                     <div class="tooltip-stat">
                                         <span class="stat-lbl">Titul / Instrument:</span>
@@ -3066,153 +2931,165 @@
                                         <span class="stat-lbl">Aktuální cena:</span>
                                         <span class="stat-val font-accent">{{ item.price }} {{ item.currency }}</span>
                                     </div>
+                                    {% if item.target_mean != '—' %}
                                     <div class="tooltip-stat">
-                                        <span class="stat-lbl">Cílová cena (Upside):</span>
-                                        <span class="stat-val {{ item.target_upside_class }}">{{ item.target_mean }} (<strong>{{ item.target_upside }}</strong>)</span>
+                                        <span class="stat-lbl">Cílová cena analytiků:</span>
+                                        <span class="stat-val font-accent">{{ item.target_mean }} (<strong class="{{ item.target_upside_class }}">{{ item.target_upside }}</strong>)</span>
                                     </div>
+                                    {% if item.target_low and item.target_high %}
                                     <div class="tooltip-stat">
-                                        <span class="stat-lbl">Realizovaná vol. (RV 21d):</span>
-                                        <span class="stat-val">{{ item.rv_21_str }}</span>
+                                        <span class="stat-lbl">Rozpětí konsenzu:</span>
+                                        <span class="stat-val">{{ item.target_low }} – {{ item.target_high }}</span>
                                     </div>
+                                    {% endif %}
+                                    {% if item.analysts_count %}
+                                    <div class="tooltip-stat">
+                                        <span class="stat-lbl">Počet analytiků:</span>
+                                        <span class="stat-val">{{ item.analysts_count }}</span>
+                                    </div>
+                                    {% endif %}
+                                    {% endif %}
+
+                                    {% if item.invalidation_price_str and item.invalidation_price_str != '—' %}
+                                    <div class="tooltip-stat">
+                                        <span class="stat-lbl">🛑 Stop-Loss (Invalidation):</span>
+                                        <span class="stat-val" style="color: #f87171; font-weight: 700;">{{ item.invalidation_price_str }} {% if item.invalidation_dist_pct is not none %}({{ item.invalidation_dist_pct }} %){% endif %}</span>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if item.dist_to_52w_high_pct is not none %}
+                                    <div class="tooltip-stat">
+                                        <span class="stat-lbl">Pozice v 52w pásmu:</span>
+                                        <span class="stat-val">{{ item.dist_to_52w_high_pct }} % z maxima</span>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if item.delta_target_30d_pct %}
+                                    <div class="tooltip-stat">
+                                        <span class="stat-lbl">Revize konsenzu (30d):</span>
+                                        <span class="stat-val font-accent">{{ item.delta_target_30d_pct }} %</span>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if item.next_earnings_date %}
+                                    <div class="tooltip-stat">
+                                        <span class="stat-lbl">Kvartální výsledky:</span>
+                                        <span class="stat-val font-warning">{{ item.next_earnings_date }} {% if item.days_to_earnings is not none %}(za {{ item.days_to_earnings }} d, {{ item.earnings_time or 'BMO' }}){% endif %}</span>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if item.ex_dividend_date %}
+                                    <div class="tooltip-stat">
+                                        <span class="stat-lbl">Ex-Dividenda:</span>
+                                        <span class="stat-val font-success">{{ item.ex_dividend_date }} {% if item.days_to_ex_dividend is not none %}(za {{ item.days_to_ex_dividend }} d){% endif %}</span>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if item.delta_1m_str != '—' or item.delta_3m_str != '—' %}
+                                    <div class="tooltip-stat">
+                                        <span class="stat-lbl">Časové delty (1M / 3M):</span>
+                                        <span class="stat-val">{{ item.delta_1m_str }} / {{ item.delta_3m_str }}</span>
+                                    </div>
+                                    {% endif %}
+
                                     <div class="tooltip-stat">
                                         <span class="stat-lbl">Režim sentimentu:</span>
                                         <span class="stat-val">{{ item.sentiment_regime }}</span>
                                     </div>
-                                    {% if item.limit_buy_range and item.limit_buy_range != '—' %}
-                                    <div class="tooltip-stat">
-                                        <span class="stat-lbl">Limitní nákupní pásmo:</span>
-                                        <span class="stat-val font-accent">{{ item.limit_buy_range }}</span>
-                                    </div>
-                                    {% endif %}
+
                                     {% if item.catalysts %}
                                     <div class="tooltip-stat">
                                         <span class="stat-lbl">Aktivní katalyzátory:</span>
                                         <span class="stat-val font-highlight">{{ item.catalysts|join(', ') }}</span>
                                     </div>
                                     {% endif %}
+
+                                    {% if item.history_minitrend and item.history_minitrend|length > 1 %}
+                                    <div class="tooltip-stat">
+                                        <span class="stat-lbl">Historie signálů:</span>
+                                        <span class="stat-val font-accent">
+                                            {% for h in item.history_minitrend %}
+                                            {{ h.date[5:] }}: {{ h.signal }} ({{ h.probability }}%){% if not loop.last %} ➡️ {% endif %}
+                                            {% endfor %}
+                                        </span>
+                                    </div>
+                                    {% endif %}
                                 </div>
+
+                                {% if item.limit_buy_range != '—' or item.rv_21_str != '—' %}
+                                <div class="tooltip-quant-box">
+                                    <div class="quant-box-header">
+                                        <span>⚡ Kvantitativní exekuce (OrderFusion+ & LiMT)</span>
+                                        <span style="color: #cbd5e1; font-size: 0.68rem;">VaR 99% SL</span>
+                                    </div>
+                                    <div class="quant-box-grid">
+                                        <div class="quant-box-stat">
+                                            <span class="stat-lbl">Limitní nákupní pásmo:</span>
+                                            <span class="stat-val font-accent" style="font-weight: 700;">{{ item.limit_buy_range }}</span>
+                                        </div>
+                                        <div class="quant-box-stat">
+                                            <span class="stat-lbl">Realizovaná vol. (RV 21d):</span>
+                                            <span class="stat-val">{{ item.rv_21_str }} {% if item.atr_pct_str %}(ATR: {{ item.atr_pct_str }}){% endif %}</span>
+                                        </div>
+                                        {% if item.volume_shock_z %}
+                                        <div class="quant-box-stat">
+                                            <span class="stat-lbl">Volume Shock (Z-Score):</span>
+                                            <span class="stat-val {% if item.volume_shock_z >= 2.0 %}font-warning{% endif %}" style="font-weight: 700;">{{ item.volume_shock_z }}σ</span>
+                                        </div>
+                                        {% endif %}
+                                        {% if item.max_position_cap_str and item.max_position_cap_str != '—' %}
+                                        <div class="quant-box-stat">
+                                            <span class="stat-lbl">Max. obratová alokace (2% APO):</span>
+                                            <span class="stat-val">{{ item.max_position_cap_str }}</span>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if item.dividend_analysis %}
+                                <div class="tooltip-div-box">
+                                    <div class="div-box-header">
+                                        <span class="div-box-title">💰 Ex-Div Taktika (Posledních {{ item.dividend_analysis.events_count }} výplat)</span>
+                                        <span class="div-badge-{{ item.dividend_analysis.recommendation_color }}">
+                                            {{ item.dividend_analysis.recommendation_badge }}
+                                        </span>
+                                    </div>
+                                    <div class="div-box-grid">
+                                        <div class="div-box-stat">
+                                            <span class="stat-lbl">Zotavení gapu (do 15 dní):</span>
+                                            <span class="stat-val font-accent">{{ item.dividend_analysis.recovery_rate_15d_pct }} % (medián: {{ item.dividend_analysis.median_recovery_days or '—' }} d)</span>
+                                        </div>
+                                        <div class="div-box-stat">
+                                            <span class="stat-lbl">Zotavení gapu do 30 dní:</span>
+                                            <span class="stat-val font-success">{{ item.dividend_analysis.recovery_rate_30d_pct }} %</span>
+                                        </div>
+                                        <div class="div-box-stat">
+                                            <span class="stat-lbl">Průměrný run-up před Ex-Date (20d):</span>
+                                            <span class="stat-val font-warning">{{ item.dividend_analysis.avg_pre_ex_runup_pct }} %</span>
+                                        </div>
+                                        <div class="div-box-stat">
+                                            <span class="stat-lbl">Průměrný drop v den Ex-Date (DDR):</span>
+                                            <span class="stat-val">{{ item.dividend_analysis.avg_drop_off_ratio }}x dividendy</span>
+                                        </div>
+                                    </div>
+                                    <p class="div-box-desc">{{ item.dividend_analysis.recommendation_summary }}</p>
+                                </div>
+                                {% endif %}
+
                                 <div class="tooltip-divider"></div>
-                                <p class="tooltip-reasoning">{{ item.tactical_note }}</p>
-                                <div class="tooltip-footer" style="margin-top: 8px;">
-                                    <a href="{{ item.chart_url }}" target="_blank" rel="noopener noreferrer" class="conv-chart-link" style="width: 100%; justify-content: center; padding: 4px 8px;">
-                                        📈 Otevřít interaktivní graf na Yahoo Finance ↗
+                                <p class="tooltip-reasoning">{{ item.reasoning or item.tactical_note }}</p>
+
+                                <div class="tooltip-footer">
+                                    <span>Signál: <strong>{{ item.signal }}</strong> ({{ item.confidence }} %)</span>
+                                    <a href="{{ item.chart_url }}" target="_blank" rel="noopener noreferrer" class="conv-symbol-link" style="color: #60a5fa; font-weight: 700;">
+                                        📈 Yahoo Graf ↗
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     {% endfor %}
-                </div>
-            </section>
-            {% endif %}
-
-            {% if trading_orders %}
-            <!-- 🤖 AUTONOMNÍ TRADING PORTÁL / BROKER EXECUTION BRIDGE -->
-            <section class="broker-trading-section">
-                <div class="trading-header">
-                    <div class="trading-title-group">
-                        <div class="trading-title">
-                            <span>🤖</span> Autonomní Trading Portál / Broker Execution Bridge
-                        </div>
-                        <div class="trading-subtitle">
-                            Generátor bracket příkazů (Limit Entry, Stop-Loss, Take-Profit) s kvantitativním Risk Gatekeeperem připravený pro přímé napojení na XTB xAPI WebSocket protokol a autonomní exekuci.
-                        </div>
-                    </div>
-                    <div class="trading-header-actions">
-                        <button class="trading-mode-btn active" id="modeBtnPaper" onclick="switchTradingMode('PAPER')" title="Aktivní režim bezrizikového paper tradingu v sandboxu">
-                            🛡️ Paper Sandbox
-                        </button>
-                        <button class="trading-mode-btn" id="modeBtnXtb" onclick="switchTradingMode('XTB_LIVE')" title="Připraveno k párování s XTB xStation účtem přes WebSocket">
-                            ⚡ XTB xAPI Bridge
-                        </button>
-                        <button class="trading-action-btn" onclick="openXtbConfigModal()" title="Konfigurace přístupových údajů k XTB xAPI">
-                            ⚙️ Nastavení XTB
-                        </button>
-                        <button class="trading-action-btn" onclick="exportTradingOrdersJSON()" title="Stáhnout připravenou dávku příkazů ve formátu JSON">
-                            📥 Stáhnout JSON
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Kontrolní lišta parametrů kapitálu a rizika -->
-                <div class="trading-controls-row">
-                    <div class="trading-params-left">
-                        <div class="trading-param-group">
-                            <label for="portfolioCapInput">Kapitál portfolia:</label>
-                            <input type="number" id="portfolioCapInput" class="trading-input" value="250000" step="10000" min="10000" onchange="recalcTradingOrders()" title="Zadejte velikost vašeho obchodního kapitálu v CZK">
-                            <span style="font-weight: 700; color: #f1f5f9;">CZK</span>
-                        </div>
-                        <div class="trading-param-group">
-                            <label for="maxRiskSelect">Max risk / obchod:</label>
-                            <select id="maxRiskSelect" class="trading-select" onchange="recalcTradingOrders()" title="Maximální povolená ztráta při zasažení Stop-Lossu">
-                                <option value="1.0">1.0 % (Konzervativní)</option>
-                                <option value="1.5" selected>1.5 % (Vyvážený)</option>
-                                <option value="2.0">2.0 % (Agresivní)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div style="font-size: 0.78rem; display: flex; align-items: center; gap: 8px;">
-                        <span style="color: #34d399; font-weight: 800;">🛡️ Risk Gatekeeper:</span>
-                        <span style="color: var(--text-secondary);">RRR &ge; 1.8 | Max limit pozice 20 % | Bracket SL & TP aktivní</span>
-                    </div>
-                </div>
-
-                <!-- Tabulka vygenerovaných příkazů -->
-                <div class="orders-table-wrapper">
-                    <table class="orders-table" id="ordersTable">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Ticker (XTB)</th>
-                                <th>Akce & Typ</th>
-                                <th>Počet ks</th>
-                                <th>Limitní nákup</th>
-                                <th>Stop-Loss (SL)</th>
-                                <th>Take-Profit (TP)</th>
-                                <th>RRR</th>
-                                <th>Alokace (CZK)</th>
-                                <th>Max Risk (CZK)</th>
-                                <th>Risk Gatekeeper</th>
-                                <th style="text-align: right;">Akce</th>
-                            </tr>
-                        </thead>
-                        <tbody id="ordersTableBody">
-                            {% for ord in trading_orders %}
-                            <tr id="orderRow-{{ ord.order_id }}" data-order-raw="{{ ord|tojson|forceescape }}">
-                                <td style="font-weight: 800; color: var(--text-muted);">#{{ ord.rank }}</td>
-                                <td>
-                                    <div style="font-weight: 800; color: #f8fafc;">{{ ord.symbol_xtb }}</div>
-                                    <div style="font-size: 0.72rem; color: var(--text-muted);">{{ ord.name }}</div>
-                                </td>
-                                <td>
-                                    <span class="order-badge-buy">{{ ord.action }} {{ ord.order_type }}</span>
-                                </td>
-                                <td style="font-weight: 800; color: #60a5fa;" class="order-shares-cell">{{ ord.shares }} ks</td>
-                                <td style="font-weight: 700;">{{ ord.limit_price }} {{ ord.currency }}</td>
-                                <td style="color: #f87171; font-weight: 700;">{{ ord.sl_price }} {{ ord.currency }}</td>
-                                <td style="color: #34d399; font-weight: 700;">{{ ord.tp_price }} {{ ord.currency }}</td>
-                                <td style="font-weight: 800; color: #fbbf24;">{{ ord.rrr }}:1</td>
-                                <td style="font-weight: 700;" class="order-alloc-cell">{{ ord.position_czk|round(0)|int }} CZK</td>
-                                <td style="color: #fca5a5;" class="order-risk-cell">{{ ord.capital_risk_czk|round(0)|int }} CZK ({{ ord.capital_risk_pct }} %)</td>
-                                <td>
-                                    <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
-                                    <div style="font-size: 0.68rem; color: var(--text-muted);">{{ ord.macro_note }}</div>
-                                </td>
-                                <td style="text-align: right;">
-                                    <div style="display: flex; justify-content: flex-end; gap: 5px;">
-                                        <button class="order-btn-exec" onclick="simulatePaperExecution('{{ ord.order_id }}', '{{ ord.symbol_xtb }}')" title="Simulovat exekuci příkazu v Paper Trading sandboxu">
-                                            ▶ Exekuce
-                                        </button>
-                                        <button class="order-btn-copy" onclick="copyOrderJson('{{ ord.order_id }}')" title="Kopírovat JSON příkaz pro XTB xAPI do schránky">
-                                            📋 JSON
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
                 </div>
             </section>
             {% endif %}
@@ -3452,14 +3329,17 @@
                         <!-- 9. AI Analýza & Kontext (Tooltip při najetí myši) -->
                         <div class="row-cell text-center">
                             <div class="ai-tooltip-wrapper">
-                                <button type="button" class="ai-tooltip-trigger" aria-label="Zobrazit AI analýzu">
+                                <button type="button" class="ai-tooltip-trigger" onclick="handleTooltipClick(event, this)" aria-label="Zobrazit AI analýzu">
                                     <span>💡</span>
                                     <span>Kontext</span>
                                 </button>
-                                <div class="ai-tooltip-popup" role="tooltip">
+                                <div class="ai-tooltip-popup" role="tooltip" onclick="event.stopPropagation();">
                                     <div class="tooltip-header">
-                                        <span class="tooltip-title">💡 Senior Quant & Risk Analýza</span>
-                                        <span class="tooltip-ticker">{{ item.yahoo_symbol }}</span>
+                                        <div style="display: flex; align-items: center; gap: 6px;">
+                                            <span class="tooltip-title">💡 Senior Quant & Risk Analýza</span>
+                                            <span class="tooltip-ticker">{{ item.yahoo_symbol }}</span>
+                                        </div>
+                                        <button type="button" class="tooltip-close-btn" onclick="closeAllTooltips(event)" title="Zavřít popup">✕</button>
                                     </div>
 
                                     {% if item.daily_change and item.daily_change.is_changed %}
@@ -3752,47 +3632,100 @@
             setTimeout(sanitizeSearchInput, 350);
         });
 
-        // ==================== CHYTRÉ ZOBRAZENÍ TOOLTIPŮ (100% VIDITELNÉ V OKNĚ) ====================
+        // ==================== CHYTRÉ ZOBRAZENÍ TOOLTIPŮ (KLIKNUTÍM U KURZORU MYŠI & 100% VIDITELNÉ) ====================
+        function closeAllTooltips(e) {
+            if (e && e.stopPropagation) e.stopPropagation();
+            document.querySelectorAll('.ai-tooltip-popup.is-open').forEach(p => {
+                p.classList.remove('is-open');
+                p.style.display = '';
+            });
+        }
+
+        function positionTooltipAtPoint(popup, x, y) {
+            const pad = 12;
+            const tooltipWidth = Math.min(420, window.innerWidth - (pad * 2));
+            popup.style.width = `${tooltipWidth}px`;
+            popup.style.maxWidth = `calc(100vw - ${pad * 2}px)`;
+            popup.style.maxHeight = `calc(100vh - ${pad * 2}px)`;
+            popup.style.overflowY = 'auto';
+
+            // 1. Horizontální výpočet vůči kurzoru
+            let left = x + 12;
+            if (left + tooltipWidth > window.innerWidth - pad) {
+                // Přepnout vlevo od kurzoru
+                left = x - tooltipWidth - 12;
+            }
+            // Záchranné oříznutí (clamp) do okna
+            if (left < pad) {
+                left = pad;
+            }
+            if (left + tooltipWidth > window.innerWidth - pad) {
+                left = window.innerWidth - tooltipWidth - pad;
+            }
+
+            // 2. Vertikální výpočet vůči kurzoru
+            const estHeight = Math.min(popup.offsetHeight || 520, window.innerHeight - (pad * 2));
+            let top = y - 20;
+            if (top + estHeight > window.innerHeight - pad) {
+                top = window.innerHeight - estHeight - pad;
+            }
+            if (top < pad) {
+                top = pad;
+            }
+
+            popup.style.left = `${Math.round(left)}px`;
+            popup.style.top = `${Math.round(top)}px`;
+            popup.style.right = 'auto';
+            popup.style.bottom = 'auto';
+        }
+
+        function handleTooltipClick(e, btn) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            const wrapper = btn.closest('.conv-tooltip-wrapper') || btn.closest('.ai-tooltip-wrapper');
+            if (!wrapper) return;
+            const popup = wrapper.querySelector('.ai-tooltip-popup');
+            if (!popup) return;
+
+            const wasOpen = popup.classList.contains('is-open');
+            closeAllTooltips();
+
+            if (!wasOpen) {
+                popup.classList.add('is-open');
+                const clientX = (e && typeof e.clientX === 'number') ? e.clientX : (btn.getBoundingClientRect().right - 200);
+                const clientY = (e && typeof e.clientY === 'number') ? e.clientY : btn.getBoundingClientRect().bottom;
+                positionTooltipAtPoint(popup, clientX, clientY);
+            }
+        }
+
         function initSmartTooltips() {
+            // Zavírání při kliknutí mimo aktivní tooltip
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.ai-tooltip-popup') && !e.target.closest('.conv-tooltip-trigger') && !e.target.closest('.ai-tooltip-trigger')) {
+                    closeAllTooltips();
+                }
+            });
+
+            // Zavírání klávesou Escape
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' || e.key === 'Esc') {
+                    closeAllTooltips();
+                }
+            });
+
+            // Podpora jemného náhledu myší, pokud není okno uzamčeno kliknutím
             document.addEventListener('mouseover', (e) => {
-                const trigger = e.target.closest('.ai-tooltip-trigger') || e.target.closest('.ai-tooltip-wrapper') || e.target.closest('.conv-tooltip-trigger') || e.target.closest('.conv-tooltip-wrapper');
+                const trigger = e.target.closest('.ai-tooltip-trigger') || e.target.closest('.conv-tooltip-trigger');
                 if (!trigger) return;
                 const wrapper = trigger.closest('.ai-tooltip-wrapper') || trigger.closest('.conv-tooltip-wrapper');
                 if (!wrapper) return;
                 const popup = wrapper.querySelector('.ai-tooltip-popup');
-                if (!popup) return;
+                if (!popup || popup.classList.contains('is-open')) return;
 
-                const triggerBtn = wrapper.querySelector('.ai-tooltip-trigger') || wrapper.querySelector('.conv-tooltip-trigger') || trigger;
-                const rect = triggerBtn.getBoundingClientRect();
-                const tooltipWidth = Math.min(390, window.innerWidth - 24);
-                const padding = 12;
-
-                // Horizontální pozice: zarovnáno k pravé hraně tlačítka, nepustí mimo obrazovku
-                let left = rect.right - tooltipWidth;
-                if (left < padding) left = padding;
-                if (left + tooltipWidth > window.innerWidth - padding) {
-                    left = window.innerWidth - tooltipWidth - padding;
-                }
-
-                popup.style.left = `${left}px`;
-                popup.style.right = 'auto';
-                popup.style.width = `${tooltipWidth}px`;
-
-                // Vertikální pozice: zjistíme volný prostor nad a pod tlačítkem
-                const spaceBelow = window.innerHeight - rect.bottom - 12;
-                const spaceAbove = rect.top - 12;
-
-                if (spaceBelow >= 340 || spaceBelow >= spaceAbove) {
-                    // Otevřít dolů pod tlačítko
-                    popup.style.top = `${rect.bottom + 6}px`;
-                    popup.style.bottom = 'auto';
-                    popup.style.maxHeight = `${Math.max(200, spaceBelow)}px`;
-                } else {
-                    // Otevřít nahoru nad tlačítko
-                    popup.style.bottom = `${window.innerHeight - rect.top + 6}px`;
-                    popup.style.top = 'auto';
-                    popup.style.maxHeight = `${Math.max(200, spaceAbove)}px`;
-                }
+                const rect = trigger.getBoundingClientRect();
+                positionTooltipAtPoint(popup, rect.right, rect.top);
             }, { passive: true });
         }
         initSmartTooltips();
@@ -4050,46 +3983,6 @@
             if (toast) toast.style.display = 'none';
         }
 
-        async function triggerManualScan() {
-            const btn = document.getElementById('refreshBtn');
-            const btnSpan = btn ? btn.querySelector('span') : null;
-            const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-
-            if (btn) {
-                btn.classList.add('loading');
-                btn.disabled = true;
-            }
-
-            if (isLocal) {
-                if (btnSpan) btnSpan.innerText = 'Skenuji XTB trhy...';
-                showScanToast('⏳ Stahuji data pro univerzum aktiv a spouštím Gemini AI...', 'info');
-
-                try {
-                    const response = await fetch('/api/scan', { method: 'POST' });
-                    if (response.ok) {
-                        showScanToast('✅ Analýza dokončena! Načítám nový report...', 'success');
-                        setTimeout(() => { window.location.reload(); }, 800);
-                    } else {
-                        showScanToast('🔄 Obnovuji zobrazení...', 'info');
-                        setTimeout(() => { window.location.reload(); }, 800);
-                    }
-                } catch (err) {
-                    showScanToast('🔄 Obnovuji zobrazení...', 'info');
-                    setTimeout(() => { window.location.reload(); }, 800);
-                }
-            } else {
-                if (btnSpan) btnSpan.innerText = 'Načítám...';
-                showScanToast('🔄 Stahuji nejnovější publikovaný report ze serveru (vyčištění mezipaměti)...', 'info');
-
-                try {
-                    await fetch('index.html?t=' + Date.now(), { cache: 'reload' });
-                } catch (e) {}
-
-                setTimeout(() => {
-                    window.location.href = window.location.pathname + '?t=' + Date.now();
-                }, 600);
-            }
-        }
 
         // TOKEN MODAL HANDLERS
         function openTokenModal(forceOpen = false, errorMsg = '') {
@@ -4329,152 +4222,6 @@
                 }
             }, 10000);
         }
-
-        /* ============================================================
-           🤖 AUTONOMNÍ TRADING PORTÁL & BROKER BRIDGE (XTB XAPI)
-        ============================================================ */
-        let currentTradingMode = 'PAPER';
-
-        function switchTradingMode(mode) {
-            currentTradingMode = mode;
-            const paperBtn = document.getElementById('modeBtnPaper');
-            const xtbBtn = document.getElementById('modeBtnXtb');
-            if (mode === 'PAPER') {
-                if (paperBtn) paperBtn.classList.add('active');
-                if (xtbBtn) xtbBtn.classList.remove('active');
-                showScanToast('🛡️ Režim Paper Sandbox aktivován. Exekuce budou simulovány bez reálného kapitálu.', 'info');
-            } else {
-                if (paperBtn) paperBtn.classList.remove('active');
-                if (xtbBtn) xtbBtn.classList.add('active');
-                const xtbCfg = localStorage.getItem('xtb_api_config');
-                if (!xtbCfg) {
-                    showScanToast('⚡ XTB xAPI Bridge: Pro živé/demo párování zadejte své API údaje v nastavení.', 'warning');
-                    openXtbConfigModal();
-                } else {
-                    showScanToast('⚡ XTB xAPI Bridge aktivován. Příkazy budou předávány přes WebSocket xapi.xtb.com.', 'success');
-                }
-            }
-        }
-
-        function recalcTradingOrders() {
-            const capInput = document.getElementById('portfolioCapInput');
-            const riskSelect = document.getElementById('maxRiskSelect');
-            const capital = parseFloat(capInput ? capInput.value : 250000) || 250000;
-            const maxRiskPct = parseFloat(riskSelect ? riskSelect.value : 1.5) || 1.5;
-
-            const rows = document.querySelectorAll('#ordersTableBody tr');
-            rows.forEach(row => {
-                const rawAttr = row.getAttribute('data-order-raw');
-                if (!rawAttr) return;
-                try {
-                    const ord = JSON.parse(rawAttr);
-                    const fxRates = { 'CZK': 1.0, 'USD': 23.5, 'EUR': 25.2, 'GBX': 0.31, 'GBP': 30.5 };
-                    const fx = fxRates[ord.currency] || 23.5;
-                    const entryCzk = ord.limit_price * fx;
-                    const slCzk = ord.sl_price * fx;
-                    const riskPerShareCzk = Math.max(0.1, entryCzk - slCzk);
-
-                    const maxAllowedRiskCzk = capital * (maxRiskPct / 100.0);
-                    const sharesByRisk = Math.floor(maxAllowedRiskCzk / riskPerShareCzk);
-                    const maxPosCzk = capital * 0.20;
-                    const sharesByCap = Math.floor(maxPosCzk / entryCzk);
-                    const finalShares = Math.max(1, Math.min(sharesByRisk, sharesByCap));
-
-                    const allocCzk = Math.round(finalShares * entryCzk);
-                    const actualRiskCzk = Math.round(finalShares * riskPerShareCzk);
-                    const actualRiskPct = ((actualRiskCzk / capital) * 100).toFixed(1);
-
-                    const sharesCell = row.querySelector('.order-shares-cell');
-                    if (sharesCell) sharesCell.innerText = `${finalShares} ks`;
-                    const allocCell = row.querySelector('.order-alloc-cell');
-                    if (allocCell) allocCell.innerText = `${allocCzk.toLocaleString('cs-CZ')} CZK`;
-                    const riskCell = row.querySelector('.order-risk-cell');
-                    if (riskCell) riskCell.innerText = `${actualRiskCzk.toLocaleString('cs-CZ')} CZK (${actualRiskPct} %)`;
-                } catch (e) {
-                    console.warn('Recalc error:', e);
-                }
-            });
-            showScanToast(`🔄 Příkazy přepočteny pro kapitál ${capital.toLocaleString('cs-CZ')} CZK (Max risk ${maxRiskPct} %).`, 'info', 3000);
-        }
-
-        function simulatePaperExecution(orderId, symbol) {
-            const row = document.getElementById(`orderRow-${orderId}`);
-            if (!row) return;
-            const btn = row.querySelector('.order-btn-exec');
-            if (btn) {
-                btn.innerText = '✅ Vyplněno';
-                btn.style.background = 'rgba(16, 185, 129, 0.4)';
-                btn.style.borderColor = '#10b981';
-                btn.disabled = true;
-            }
-            showScanToast(`🚀 Paper Trading: Příkaz ${symbol} byl simulovaně vyplněn na limitní ceně se Stop-Lossem a Take-Profitem!`, 'success', 5000);
-        }
-
-        function copyOrderJson(orderId) {
-            const row = document.getElementById(`orderRow-${orderId}`);
-            if (!row) return;
-            const raw = row.getAttribute('data-order-raw');
-            if (!raw) return;
-            try {
-                const ord = JSON.parse(raw);
-                const xapiPayload = ord.xtb_xapi_payload || ord;
-                navigator.clipboard.writeText(JSON.stringify(xapiPayload, null, 2)).then(() => {
-                    showScanToast(`📋 JSON příkaz pro XTB xAPI (${ord.symbol_xtb}) byl zkopírován do schránky!`, 'success', 4000);
-                });
-            } catch (e) {
-                console.error(e);
-            }
-        }
-
-        function exportTradingOrdersJSON() {
-            const rows = document.querySelectorAll('#ordersTableBody tr');
-            const orders = [];
-            rows.forEach(r => {
-                const raw = r.getAttribute('data-order-raw');
-                if (raw) {
-                    try { orders.push(JSON.parse(raw)); } catch(e){}
-                }
-            });
-            const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(orders, null, 2));
-            const dlAnchor = document.createElement('a');
-            dlAnchor.setAttribute('href', dataStr);
-            dlAnchor.setAttribute('download', `SuggestInvest_XTB_Orders_${new Date().toISOString().slice(0,10)}.json`);
-            dlAnchor.click();
-            showScanToast(`📥 Exportováno ${orders.length} příkazů do JSON souboru pro XTB.`, 'success');
-        }
-
-        /* XTB API CONFIG MODAL */
-        function openXtbConfigModal() {
-            const m = document.getElementById('xtbConfigModal');
-            if (m) {
-                const saved = localStorage.getItem('xtb_api_config');
-                if (saved) {
-                    try {
-                        const parsed = JSON.parse(saved);
-                        document.getElementById('xtbUserIdInput').value = parsed.userId || '';
-                        document.getElementById('xtbServerSelect').value = parsed.server || 'demo';
-                    } catch(e){}
-                }
-                m.style.display = 'flex';
-            }
-        }
-
-        function closeXtbConfigModal() {
-            const m = document.getElementById('xtbConfigModal');
-            if (m) m.style.display = 'none';
-        }
-
-        function saveXtbConfig() {
-            const userId = document.getElementById('xtbUserIdInput').value.trim();
-            const server = document.getElementById('xtbServerSelect').value;
-            if (!userId) {
-                alert('Zadejte prosím vaše XTB ID / číslo účtu.');
-                return;
-            }
-            localStorage.setItem('xtb_api_config', JSON.stringify({ userId, server, savedAt: new Date().toISOString() }));
-            closeXtbConfigModal();
-            showScanToast('✅ Nastavení XTB xAPI uloženo lokálně v prohlížeči.', 'success');
-        }
     </script>
 
     <!-- ⚙️ GITHUB ACTIONS TOKEN MODAL -->
@@ -4533,45 +4280,5 @@
         </div>
     </div>
 
-    <!-- 🤖 XTB XAPI CONFIG MODAL -->
-    <div id="xtbConfigModal" class="modal-backdrop" style="display: none;">
-        <div class="modal-card">
-            <div class="modal-header">
-                <div class="modal-title-row">
-                    <span class="modal-icon">🤖</span>
-                    <h3>Konfigurace brokera XTB (xAPI Bridge)</h3>
-                </div>
-                <button class="modal-close-btn" onclick="closeXtbConfigModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p class="modal-desc">
-                    SuggestInvest komunikuje s platformou XTB prostřednictvím oficiálního <strong>xAPI WebSocket protokolu</strong> (kompatibilního s <code>xapi-python</code> a xStation5).
-                </p>
-
-                <div class="modal-callout">
-                    <div class="callout-header">🔒 Lokální bezpečnostní šifrování</div>
-                    <p>Přístupové údaje zůstávají výhradně v paměti vašeho prohlížeče a používají se pouze k přímému navázání spojení na zabezpečený server <code>wss://ws.xtb.com</code>.</p>
-                </div>
-
-                <form class="pat-form" autocomplete="off" onsubmit="event.preventDefault(); saveXtbConfig();">
-                    <div class="form-group" style="margin-top: 1rem;">
-                        <label class="input-label" for="xtbUserIdInput">XTB Uživatelské ID / Číslo účtu</label>
-                        <input type="text" id="xtbUserIdInput" class="login-input" placeholder="např. 12345678" autocomplete="off">
-                    </div>
-                    <div class="form-group" style="margin-top: 0.75rem;">
-                        <label class="input-label" for="xtbServerSelect">Typ účtu & Server</label>
-                        <select id="xtbServerSelect" class="trading-select" style="width: 100%; height: 38px;">
-                            <option value="demo" selected>Demo účet (wss://ws.xtb.com/demo)</option>
-                            <option value="real">Reálný účet (wss://ws.xtb.com/real)</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-modal-cancel" onclick="closeXtbConfigModal()">Zavřít</button>
-                <button type="button" class="btn-modal-submit" onclick="saveXtbConfig()">💾 Uložit nastavení</button>
-            </div>
-        </div>
-    </div>
 </body>
 </html>

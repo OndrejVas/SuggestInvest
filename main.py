@@ -595,6 +595,35 @@ def build_html_report(
     return html_content
 
 
+def build_trading_page(
+    trading_orders: List[Dict[str, Any]],
+    macro_barometer: Optional[Dict[str, Any]] = None,
+    top_5_basket: Optional[List[Dict[str, Any]]] = None,
+    timestamp_cet_str: str = "",
+    timestamp_utc_str: str = ""
+) -> str:
+    """Zkompiluje specializovanou stránku trading.html pro Interactive Brokers & XTB."""
+    if not timestamp_cet_str:
+        now_utc = datetime.now(timezone.utc)
+        cet_offset = timedelta(hours=2)
+        now_cet = now_utc + cet_offset
+        timestamp_cet_str = now_cet.strftime("%d.%m.%Y %H:%M SELČ")
+        timestamp_utc_str = now_utc.strftime("%Y-%m-%d %H:%M:%S")
+
+    template_dir = os.path.dirname(os.path.abspath(__file__))
+    env = Environment(loader=FileSystemLoader(template_dir))
+    template = env.get_template("trading_template.html")
+
+    html_content = template.render(
+        trading_orders=trading_orders,
+        macro_barometer=macro_barometer,
+        top_5_basket=top_5_basket,
+        timestamp_cet_str=timestamp_cet_str,
+        timestamp_utc_str=timestamp_utc_str,
+    )
+    return html_content
+
+
 def run_scanner(tiers: List[str] = None, allow_mock_fallback: bool = True) -> str:
     """Kompletní cyklus: sestavení univerza, paralelní stažení dat, předstihové indikátory, dávková AI analýza a HTML export."""
     import time
@@ -881,8 +910,26 @@ def run_scanner(tiers: List[str] = None, allow_mock_fallback: bool = True) -> st
     output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "index.html")
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(html_output)
-
     logger.info(f"Report pro {len(final_cards)} aktiv byl úspěšně vygenerován do: {output_path}")
+
+    # 10. Vygenerování samostatné stránky Autonomního Tradingu pro Interactive Brokers & XTB
+    now_utc = datetime.now(timezone.utc)
+    cet_offset = timedelta(hours=2)
+    timestamp_cet_str = (now_utc + cet_offset).strftime("%d.%m.%Y %H:%M SELČ")
+    timestamp_utc_str = now_utc.strftime("%Y-%m-%d %H:%M:%S")
+
+    trading_html_output = build_trading_page(
+        trading_orders=trading_orders,
+        macro_barometer=macro_barometer,
+        top_5_basket=top_5_basket,
+        timestamp_cet_str=timestamp_cet_str,
+        timestamp_utc_str=timestamp_utc_str
+    )
+    trading_output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "trading.html")
+    with open(trading_output_path, "w", encoding="utf-8") as f:
+        f.write(trading_html_output)
+    logger.info(f"Autonomní Trading Portál pro Interactive Brokers & XTB vygenerován: {trading_output_path}")
+
     logger.info("=== Běh skeneru úspěšně dokončen ===")
     return output_path
 
