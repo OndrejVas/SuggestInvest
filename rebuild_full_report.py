@@ -15,7 +15,7 @@ from trigger_engine import compute_top_5_conviction_basket
 from macro_engine import get_macro_recession_barometer
 from trading_engine import BrokerExecutionEngine
 from history_manager import compute_daily_changes, get_all_ticker_signal_dots
-from main import build_html_report
+from main import build_html_report, build_trading_page
 
 print("=== REBUILDING SUGGESTINVEST FULL REPORT & HISTORICAL SIGNALS ===")
 
@@ -108,6 +108,17 @@ html_output = build_html_report(
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(html_output)
 print(f"8. Soubor index.html byl úspěšně zkompilován a uložen ({len(html_output)} znaků).")
+
+# 8.1. Render full trading.html pro Interactive Brokers
+trading_html_output = build_trading_page(
+    trading_orders=trading_orders,
+    macro_barometer=macro_barometer,
+    top_5_basket=top_5_basket,
+    timestamp_cet_str="29.09.2026 22:50 SELČ"
+)
+with open("trading.html", "w", encoding="utf-8") as f:
+    f.write(trading_html_output)
+print(f"8.1. Soubor trading.html pro Interactive Brokers byl úspěšně zkompilován a uložen ({len(trading_html_output)} znaků).")
 
 # 9. Verifikace index.html
 dots_in_html = re.findall(r'<div class="history-dots-row"[^>]*>(.*?)</div>', html_output, re.DOTALL)

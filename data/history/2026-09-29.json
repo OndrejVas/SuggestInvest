@@ -14357,7 +14357,7 @@
         "conf_diff": 1,
         "prev_conf": 77,
         "curr_conf": 78,
-        "change_desc": "Aktivován nový předstihový katalyzátor: 🧠 Sentiment Divergence, 💰 Ex-Div za 10 dní.",
+        "change_desc": "Aktivován nový předstihový katalyzátor: 💰 Ex-Div za 10 dní, 🧠 Sentiment Divergence.",
         "prev_date_str": "28. 09. 2026 v 19:01 SELČ"
       },
       "signal_history_dots": [
@@ -79651,7 +79651,7 @@
         "conf_diff": 0,
         "prev_conf": 55,
         "curr_conf": 55,
-        "change_desc": "Aktivován nový předstihový katalyzátor: 🧠 Sentiment Divergence, ⚖️ Sektorový diskont (Pairs).",
+        "change_desc": "Aktivován nový předstihový katalyzátor: ⚖️ Sektorový diskont (Pairs), 🧠 Sentiment Divergence.",
         "prev_date_str": "28. 09. 2026 v 19:01 SELČ"
       },
       "signal_history_dots": [
