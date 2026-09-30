@@ -3120,6 +3120,43 @@
                             if (nlvEl) nlvEl.textContent = `${Number(nlv).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ${curr}`;
                             if (cashEl) cashEl.textContent = `${Number(cash).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ${curr}`;
                             if (bpEl) bpEl.textContent = `${Number(bp).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ${curr}`;
+
+                            // Získat také reálné pozice z brokera
+                            try {
+                                const posRes = await fetch(`https://localhost:5000/v1/api/portfolio/${accId}/positions/0`);
+                                if (posRes.ok) {
+                                    const realPositions = await posRes.json();
+                                    const state = getDemoPortfolio();
+                                    if (realPositions && realPositions.length > 0) {
+                                        state.positions = realPositions.map(p => ({
+                                            symbol: p.ticker || p.symbol,
+                                            name: p.contractDesc || p.ticker || '',
+                                            exchange: p.exchange || 'SMART',
+                                            shares: p.position || 0,
+                                            currency: p.currency || 'USD',
+                                            entryPrice: `${p.avgPrice || 0} ${p.currency || 'USD'}`,
+                                            currentPrice: `${p.mktPrice || p.avgPrice || 0} ${p.currency || 'USD'}`,
+                                            posCzk: Math.round((p.mktValue || 0) * 23.5),
+                                            sl: 'Bracket aktivní',
+                                            tp: 'Bracket aktivní',
+                                            progressPct: 35,
+                                            pnlCzk: Math.round((p.unrealizedPnl || 0) * 23.5),
+                                            pnlPct: p.unrealizedPnlPct || '0.00'
+                                        }));
+                                        state.isExecuted = true;
+                                    } else {
+                                        // 0 pozic na reálném účtu
+                                        state.positions = [];
+                                        state.isExecuted = false;
+                                    }
+                                    state.cash = activeIbkrBalance;
+                                    state.totalEquity = Number(nlv) || 250000;
+                                    saveDemoPortfolio(state);
+                                    renderPortfolioUI();
+                                }
+                            } catch(e) {
+                                console.log('Error fetching positions from gateway:', e);
+                            }
                         }
 
                         // AUTOMATICKÁ SYNCHRONIZACE POLÍČKA KAPITÁLU SE ZŮSTATKEM BEZ NUTNOSTI KLIKAT NA TLAČÍTKO
@@ -3133,11 +3170,28 @@
                             showToast(`✅ Spojení s IBKR Gateway a účtem ${accId} úspěšně ověřeno v reálném čase!`, 'success');
                         }
                     }
+                } else if (res.status === 401) {
+                    handleIbkrOffline(timeStr, isManual, 401);
                 } else {
                     handleIbkrOffline(timeStr, isManual);
                 }
             } catch (e) {
                 console.log('IBKR Gateway query info:', e);
+                // Zkusit načíst data/live_portfolio.json
+                try {
+                    const localRes = await fetch('data/live_portfolio.json');
+                    if (localRes.ok) {
+                        const localData = await localRes.json();
+                        if (localData && localData.cash_czk) {
+                            activeIbkrBalance = localData.cash_czk;
+                            const capInput = document.getElementById('portfolioCapInput');
+                            if (capInput) {
+                                capInput.value = Math.round(activeIbkrBalance);
+                                recalcTradingOrders(false);
+                            }
+                        }
+                    }
+                } catch(err) {}
                 handleIbkrOffline(timeStr, isManual);
             } finally {
                 if (btn) btn.classList.remove('is-spinning');
@@ -3145,7 +3199,7 @@
             }
         }
 
-        function handleIbkrOffline(timeStr, isManual) {
+        function handleIbkrOffline(timeStr, isManual, statusCode = 0) {
             const timeEl = document.getElementById('lastVerifiedTime');
             if (timeEl) timeEl.textContent = timeStr;
             const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
@@ -3159,11 +3213,11 @@
                 recalcTradingOrders(false);
             }
 
-            if (isLocal) {
+            if (statusCode === 401 || isLocal) {
                 if (pillEl) pillEl.className = 'ibkr-conn-pill is-checking';
-                if (statusTextEl) statusTextEl.textContent = '🟡 IBKR Gateway: Lokální brána čeká na přihlášení (5000)';
+                if (statusTextEl) statusTextEl.textContent = '🟡 IBKR Gateway: Relace vypršela (HTTP 401) – přihlaste se na localhost:5000';
                 if (isManual) {
-                    showToast('⚠️ IBKR Gateway na portu 5000 zatím neodpovídá. Ujistěte se, že běží start_ib_gateway.bat.', 'info', 5000);
+                    showToast('⚠️ IBKR Gateway relace vypršela (HTTP 401). Klikněte výše na "Otevřít IBKR Login (localhost:5000)" a zadejte heslo.', 'info', 6000);
                 }
             } else {
                 if (pillEl) pillEl.className = 'ibkr-conn-pill';

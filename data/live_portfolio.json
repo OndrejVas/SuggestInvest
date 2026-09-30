@@ -1,0 +1,48 @@
+{
+  "timestamp_cet": "30.09.2026 21:30:00",
+  "account_id": "DUR222134",
+  "is_authenticated": false,
+  "cash_czk": 250000.0,
+  "equity_czk": 250000.0,
+  "buying_power_czk": 1666666.0,
+  "open_positions": [],
+  "open_positions_count": 0,
+  "trades_history": [],
+  "rotation_queue": [
+    {
+      "symbol": "SAP",
+      "exchange": "XETRA",
+      "cur": "EUR",
+      "price": 198.4,
+      "name": "SAP SE"
+    },
+    {
+      "symbol": "MSFT",
+      "exchange": "NASDAQ",
+      "cur": "USD",
+      "price": 428.1,
+      "name": "Microsoft Corp"
+    },
+    {
+      "symbol": "AMZN",
+      "exchange": "NASDAQ",
+      "cur": "USD",
+      "price": 188.5,
+      "name": "Amazon.com Inc"
+    },
+    {
+      "symbol": "ASML",
+      "exchange": "AEX",
+      "cur": "EUR",
+      "price": 785.0,
+      "name": "ASML Holding NV"
+    },
+    {
+      "symbol": "NVDA",
+      "exchange": "NASDAQ",
+      "cur": "USD",
+      "price": 121.5,
+      "name": "NVIDIA Corp"
+    }
+  ]
+}
