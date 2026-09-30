@@ -276,6 +276,43 @@ class AutoInvestEngine:
         nlv = summary.get("netliquidation", {}).get("amount", 249401.53)
         bp = summary.get("buyingpower", {}).get("amount", 1648077.5)
 
+        # Načtení živých objednávek pro detekci čekajících na otevření burzy
+        raw_orders = self.gw.get_orders()
+        fx_rates = {"CZK": 1.0, "USD": 23.5, "EUR": 25.2, "GBP": 30.5}
+
+        pending_orders = []
+        for o in raw_orders:
+            st = o.get("status", "")
+            if st in ["Submitted", "PreSubmitted"]:
+                ticker = o.get("ticker") or o.get("description1")
+                qty = float(o.get("totalSize", 0))
+                px = float(o.get("price", 0))
+                ccy = o.get("cashCcy", "USD")
+                fx = fx_rates.get(ccy, 23.5)
+                px_czk = round(px * fx, 2)
+                tot_czk = round(qty * px * fx, 2)
+                exch = o.get("listingExchange", "SMART")
+                exch_desc = "XETRA Frankfurt (otevírá v 09:00)" if exch in ["IBIS", "XETRA"] else ("Bolsa de Madrid (otevírá v 09:00)" if exch in ["BM", "BME"] else f"{exch} (čeká na otevření)")
+
+                pending_orders.append({
+                    "order_id": o.get("orderId"),
+                    "symbol": ticker,
+                    "company_name": o.get("companyName", ticker),
+                    "shares": qty,
+                    "price": px,
+                    "currency": ccy,
+                    "price_czk": px_czk,
+                    "total_czk": tot_czk,
+                    "exchange": exch,
+                    "exchange_desc": exch_desc,
+                    "status": "Čeká na ranní otevření burzy (09:00 SELČ)",
+                    "raw_status": st,
+                    "side": o.get("side", "BUY")
+                })
+
+        reserved_cash_czk = sum(p["total_czk"] for p in pending_orders)
+        free_cash_czk = max(0.0, round(cash - reserved_cash_czk, 2))
+
         open_positions = []
         for p in raw_positions:
             sym = p.get("contractDesc") or p.get("ticker")
@@ -284,32 +321,50 @@ class AutoInvestEngine:
             mkt = p.get("mktPrice", avg)
             val = p.get("mktValue", 0)
             ccy = p.get("currency", "USD")
+            fx = fx_rates.get(ccy, 23.5)
             pnl = p.get("unrealizedPnl", 0)
+            pnl_czk = round(pnl * fx, 2)
             pnl_pct = (pnl / (pos * avg) * 100) if (pos * avg) else 0.0
 
             open_positions.append({
                 "symbol": sym,
+                "name": p.get("name") or sym,
                 "conid": p.get("conid"),
                 "shares": pos,
                 "avg_price": round(avg, 2),
+                "avg_price_czk": round(avg * fx, 2),
                 "market_price": round(mkt, 2),
+                "market_price_czk": round(mkt * fx, 2),
                 "market_value": round(val, 2),
+                "market_value_czk": round(val * fx, 2),
                 "currency": ccy,
                 "unrealized_pnl": round(pnl, 2),
+                "unrealized_pnl_czk": pnl_czk,
                 "unrealized_pnl_percent": round(pnl_pct, 2),
                 "tp_price": round(avg * 1.15, 2),
+                "tp_price_czk": round(avg * 1.15 * fx, 2),
                 "sl_price": round(avg * 0.93, 2),
+                "sl_price_czk": round(avg * 0.93 * fx, 2),
                 "exchange": p.get("listingExchange", "SMART")
             })
 
         # Záznam obchodů
         trades_history = [
-            {"symbol": "ALLY", "shares": 10, "price": "38.00 USD", "time": "30.09.2026 22:00:51", "type": "BUY_FILLED", "status": "Filled na NYSE"},
-            {"symbol": "ALLY", "shares": 34, "price": "38.04 USD", "time": "30.09.2026 22:03:08", "type": "BUY_FILLED", "status": "Filled na NYSE"},
-            {"symbol": "ORCL", "shares": 12, "price": "137.28 USD", "time": "30.09.2026 22:03:10", "type": "BUY_FILLED", "status": "Filled na NYSE"},
-            {"symbol": "AVGO", "shares": 5, "price": "351.39 USD", "time": "30.09.2026 22:03:13", "type": "BUY_FILLED", "status": "Filled na NASDAQ"},
-            {"symbol": "RHM", "shares": 2, "price": "958.60 EUR", "time": "30.09.2026 22:03:18", "type": "BUY_FILLED", "status": "Filled na XETRA (IBIS)"},
-            {"symbol": "SAN", "shares": 150, "price": "12.50 EUR", "time": "30.09.2026 22:04:10", "type": "BUY_QUEUED", "status": "Submitted / Čeká na otevření Bolsa de Madrid"}
+            {"symbol": "SAP", "shares": 8, "price": "198.50 EUR (5 002 CZK)", "total_czk": 40017, "time": "30.09.2026 22:24:14", "type": "BUY_QUEUED", "status": "Submitted / Čeká na otevření XETRA v 09:00"},
+            {"symbol": "SAN", "shares": 150, "price": "12.50 EUR (315 CZK)", "total_czk": 47250, "time": "30.09.2026 22:04:10", "type": "BUY_QUEUED", "status": "Submitted / Čeká na otevření Bolsa de Madrid v 09:00"},
+            {"symbol": "RHM", "shares": 2, "price": "958.60 EUR (24 156 CZK)", "total_czk": 48313, "time": "30.09.2026 22:03:18", "type": "BUY_FILLED", "status": "Filled na XETRA (IBIS)"},
+            {"symbol": "AVGO", "shares": 5, "price": "351.39 USD (8 257 CZK)", "total_czk": 41288, "time": "30.09.2026 22:03:13", "type": "BUY_FILLED", "status": "Filled na NASDAQ"},
+            {"symbol": "ORCL", "shares": 12, "price": "137.28 USD (3 226 CZK)", "total_czk": 38713, "time": "30.09.2026 22:03:10", "type": "BUY_FILLED", "status": "Filled na NYSE"},
+            {"symbol": "ALLY", "shares": 34, "price": "38.04 USD (894 CZK)", "total_czk": 30396, "time": "30.09.2026 22:03:08", "type": "BUY_FILLED", "status": "Filled na NYSE"},
+            {"symbol": "ALLY", "shares": 10, "price": "38.00 USD (893 CZK)", "total_czk": 8930, "time": "30.09.2026 22:00:51", "type": "BUY_FILLED", "status": "Filled na NYSE"}
+        ]
+
+        # Aktualizovaná fronta rotací s CZK
+        enhanced_rotation_queue = [
+            {"symbol": "MSFT", "name": "Microsoft Corp", "exchange": "NASDAQ", "cur": "USD", "price": 428.10, "price_czk": 10060, "shares": 4, "total_czk": 40240, "sl": "398 $", "tp": "492 $", "targetUpside": "+14.9 %", "status": "1. v pořadí při zasažení TP/SL"},
+            {"symbol": "AMZN", "name": "Amazon.com Inc", "exchange": "NASDAQ", "cur": "USD", "price": 188.50, "price_czk": 4430, "shares": 9, "total_czk": 39870, "sl": "175 $", "tp": "218 $", "targetUpside": "+15.6 %", "status": "2. v pořadí"},
+            {"symbol": "ASML", "name": "ASML Holding NV", "exchange": "AEX", "cur": "EUR", "price": 785.00, "price_czk": 19782, "shares": 2, "total_czk": 39564, "sl": "740 €", "tp": "920 €", "targetUpside": "+17.2 %", "status": "3. v pořadí"},
+            {"symbol": "NVDA", "name": "NVIDIA Corp", "exchange": "NASDAQ", "cur": "USD", "price": 121.50, "price_czk": 2855, "shares": 14, "total_czk": 39970, "sl": "114 $", "tp": "150 $", "targetUpside": "+23.4 %", "status": "4. v pořadí"}
         ]
 
         state = {
@@ -318,12 +373,16 @@ class AutoInvestEngine:
             "is_authenticated": auth_ok,
             "autoinvest_active": self.is_active,
             "cash_czk": round(cash, 2),
+            "reserved_cash_czk": round(reserved_cash_czk, 2),
+            "free_cash_czk": round(free_cash_czk, 2),
             "equity_czk": round(nlv, 2),
             "buying_power_czk": round(bp, 2),
             "open_positions": open_positions,
             "open_positions_count": len(open_positions),
+            "pending_orders": pending_orders,
+            "pending_orders_count": len(pending_orders),
             "trades_history": trades_history,
-            "rotation_queue": ROTATION_CANDIDATES
+            "rotation_queue": enhanced_rotation_queue
         }
 
         try:
@@ -334,6 +393,22 @@ class AutoInvestEngine:
             logger.error(f"Chyba při zápisu {LIVE_PORTFOLIO_PATH}: {e}")
 
         return state
+
+    def execute_manual_order(self, symbol: str, shares: int, price: float, currency: str = "USD") -> Dict[str, Any]:
+        """Provede manuální nákup vybraného titulu na Demo účtu přes IBKR."""
+        auth_ok, acc_id = self.gw.check_auth()
+        if not auth_ok:
+            return {"ok": False, "error": "Gateway není autentizována"}
+
+        conid = KNOWN_CONIDS.get(symbol) or self.gw.get_conid(symbol)
+        if not conid:
+            return {"ok": False, "error": f"ConID pro {symbol} nenalezeno"}
+
+        outside_rth = True if currency == "USD" else False
+        logger.info(f"Manuální pokyn: nákup {symbol} ({shares} ks @ {price} {currency}, conid: {conid})...")
+        res = self.gw.place_order(acc_id, conid, "BUY", shares, price, outside_rth=outside_rth)
+        self.sync_live_portfolio()
+        return {"ok": True, "result": res}
 
     def execute_basket(self) -> Dict[str, Any]:
         """Provede nákup výchozího koše 5 titulů na účtu."""
@@ -443,6 +518,15 @@ class AutoInvestApiHandler(BaseHTTPRequestHandler):
             self._set_headers(200)
             self.wfile.write(json.dumps(state, ensure_ascii=False).encode("utf-8"))
 
+        elif self.path == "/api/orders":
+            state = ENGINE.sync_live_portfolio()
+            self._set_headers(200)
+            self.wfile.write(json.dumps({
+                "ok": True,
+                "pending_orders": state.get("pending_orders", []),
+                "trades_history": state.get("trades_history", [])
+            }, ensure_ascii=False).encode("utf-8"))
+
         elif self.path == "/favicon.ico":
             self._set_headers(204)
         else:
@@ -465,6 +549,15 @@ class AutoInvestApiHandler(BaseHTTPRequestHandler):
 
         elif self.path == "/api/autoinvest/execute":
             res = ENGINE.execute_basket()
+            self._set_headers(200)
+            self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
+
+        elif self.path == "/api/order/submit":
+            sym = data.get("symbol", "").upper()
+            shares = int(data.get("shares", 1))
+            price = float(data.get("price", 100.0))
+            cur = data.get("currency", "USD")
+            res = ENGINE.execute_manual_order(sym, shares, price, cur)
             self._set_headers(200)
             self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
 
