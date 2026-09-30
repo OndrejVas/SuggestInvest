@@ -1,48 +1,168 @@
 {
-  "timestamp_cet": "30.09.2026 21:30:00",
+  "timestamp_cet": "30.09.2026 22:09:53",
   "account_id": "DUR222134",
-  "is_authenticated": false,
-  "cash_czk": 250000.0,
-  "equity_czk": 250000.0,
-  "buying_power_czk": 1666666.0,
-  "open_positions": [],
-  "open_positions_count": 0,
-  "trades_history": [],
+  "is_authenticated": true,
+  "autoinvest_active": true,
+  "cash_czk": 93577.54,
+  "equity_czk": 249404.98,
+  "buying_power_czk": 1397513.38,
+  "open_positions": [
+    {
+      "symbol": "ALLY",
+      "conid": 148233980,
+      "shares": 44.0,
+      "avg_price": 38.05,
+      "market_price": 37.61,
+      "market_value": 1655.06,
+      "currency": "USD",
+      "unrealized_pnl": -18.94,
+      "unrealized_pnl_percent": -1.13,
+      "tp_price": 43.75,
+      "sl_price": 35.38,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "ORCL",
+      "conid": 272800,
+      "shares": 12.0,
+      "avg_price": 137.28,
+      "market_price": 137.12,
+      "market_value": 1645.44,
+      "currency": "USD",
+      "unrealized_pnl": -1.96,
+      "unrealized_pnl_percent": -0.12,
+      "tp_price": 157.88,
+      "sl_price": 127.67,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "RHM",
+      "conid": 15085,
+      "shares": 2.0,
+      "avg_price": 958.6,
+      "market_price": 955.6,
+      "market_value": 1911.2,
+      "currency": "EUR",
+      "unrealized_pnl": -6.0,
+      "unrealized_pnl_percent": -0.31,
+      "tp_price": 1102.39,
+      "sl_price": 891.5,
+      "exchange": "IBIS"
+    },
+    {
+      "symbol": "AVGO",
+      "conid": 313130367,
+      "shares": 5.0,
+      "avg_price": 351.39,
+      "market_price": 352.39,
+      "market_value": 1761.95,
+      "currency": "USD",
+      "unrealized_pnl": 5.0,
+      "unrealized_pnl_percent": 0.28,
+      "tp_price": 404.1,
+      "sl_price": 326.79,
+      "exchange": "NASDAQ"
+    }
+  ],
+  "open_positions_count": 4,
+  "trades_history": [
+    {
+      "symbol": "ALLY",
+      "shares": 10,
+      "price": "38.00 USD",
+      "time": "30.09.2026 22:00:51",
+      "type": "BUY_FILLED",
+      "status": "Filled na NYSE"
+    },
+    {
+      "symbol": "ALLY",
+      "shares": 34,
+      "price": "38.04 USD",
+      "time": "30.09.2026 22:03:08",
+      "type": "BUY_FILLED",
+      "status": "Filled na NYSE"
+    },
+    {
+      "symbol": "ORCL",
+      "shares": 12,
+      "price": "137.28 USD",
+      "time": "30.09.2026 22:03:10",
+      "type": "BUY_FILLED",
+      "status": "Filled na NYSE"
+    },
+    {
+      "symbol": "AVGO",
+      "shares": 5,
+      "price": "351.39 USD",
+      "time": "30.09.2026 22:03:13",
+      "type": "BUY_FILLED",
+      "status": "Filled na NASDAQ"
+    },
+    {
+      "symbol": "RHM",
+      "shares": 2,
+      "price": "958.60 EUR",
+      "time": "30.09.2026 22:03:18",
+      "type": "BUY_FILLED",
+      "status": "Filled na XETRA (IBIS)"
+    },
+    {
+      "symbol": "SAN",
+      "shares": 150,
+      "price": "12.50 EUR",
+      "time": "30.09.2026 22:04:10",
+      "type": "BUY_QUEUED",
+      "status": "Submitted / Čeká na otevření Bolsa de Madrid"
+    }
+  ],
   "rotation_queue": [
     {
+      "symbol": "SAN",
+      "name": "Banco Santander SA",
+      "exchange": "BM",
+      "cur": "EUR",
+      "price": 12.35,
+      "shares": 150
+    },
+    {
       "symbol": "SAP",
+      "name": "SAP SE",
       "exchange": "XETRA",
       "cur": "EUR",
       "price": 198.4,
-      "name": "SAP SE"
+      "shares": 8
     },
     {
       "symbol": "MSFT",
+      "name": "Microsoft Corp",
       "exchange": "NASDAQ",
       "cur": "USD",
       "price": 428.1,
-      "name": "Microsoft Corp"
+      "shares": 4
     },
     {
       "symbol": "AMZN",
+      "name": "Amazon.com Inc",
       "exchange": "NASDAQ",
       "cur": "USD",
       "price": 188.5,
-      "name": "Amazon.com Inc"
+      "shares": 9
     },
     {
       "symbol": "ASML",
+      "name": "ASML Holding NV",
       "exchange": "AEX",
       "cur": "EUR",
       "price": 785.0,
-      "name": "ASML Holding NV"
+      "shares": 2
     },
     {
       "symbol": "NVDA",
+      "name": "NVIDIA Corp",
       "exchange": "NASDAQ",
       "cur": "USD",
       "price": 121.5,
-      "name": "NVIDIA Corp"
+      "shares": 14
     }
   ]
 }
