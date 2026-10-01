@@ -654,18 +654,82 @@
         }
 
         .price-entry {
-            color: #93c5fd;
+            color: #60a5fa;
             font-weight: 700;
         }
 
         .price-sl {
-            color: #f87171;
+            color: #60a5fa;
             font-weight: 700;
         }
 
         .price-tp {
-            color: #34d399;
+            color: #60a5fa;
             font-weight: 700;
+        }
+
+        /* Fronta Bracket - všechny čísla sjednocena v modré barvě */
+        #ordersTable .price-entry,
+        #ordersTable .price-sl,
+        #ordersTable .price-tp,
+        #ordersTable .order-shares-cell,
+        #ordersTable .order-alloc-cell,
+        #ordersTable .order-risk-cell,
+        #ordersTable td.font-mono {
+            color: #60a5fa !important;
+            font-weight: 700;
+        }
+
+        .sym-ticker-link {
+            color: #60a5fa;
+            font-weight: 800;
+            text-decoration: none;
+            transition: color var(--transition-fast), text-decoration var(--transition-fast);
+        }
+
+        .sym-ticker-link:hover {
+            color: #93c5fd;
+            text-decoration: underline;
+        }
+
+        /* Otevřené pozice - profit zeleně, loss červeně, čísla modře */
+        .pnl-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+
+        .pnl-badge.pnl-profit {
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid #10b981;
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.25);
+        }
+
+        .pnl-badge.pnl-loss {
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #ef4444;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.25);
+        }
+
+        .badge-horizon {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #93c5fd;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.35);
+            padding: 2px 7px;
+            border-radius: 4px;
         }
 
         .row-action-btn {
@@ -1426,7 +1490,15 @@
             background: var(--accent-primary);
         }
 
-        .perf-kpi-card.kpi-success::before { background: #10b981; }
+        .perf-kpi-card.kpi-success::before,
+        .perf-kpi-card.kpi-profit::before { background: #10b981; }
+        .perf-kpi-card.kpi-profit { border-color: rgba(16, 185, 129, 0.45); }
+        .perf-kpi-card.kpi-loss::before { background: #ef4444; }
+        .perf-kpi-card.kpi-loss { border-color: rgba(239, 68, 68, 0.45); }
+        .perf-kpi-card.kpi-blue::before { background: #3b82f6; }
+        .perf-kpi-card.kpi-blue { border-color: rgba(59, 130, 246, 0.35); }
+        .perf-kpi-card.kpi-blue .perf-kpi-val { color: #60a5fa; }
+        .perf-kpi-card.kpi-blue .perf-kpi-sub { color: #93c5fd; }
         .perf-kpi-card.kpi-warning::before { background: #f59e0b; }
         .perf-kpi-card.kpi-purple::before { background: #a855f7; }
 
@@ -1845,25 +1917,6 @@
                 </div>
             </div>
 
-            <div class="ibkr-acc-balances-grid">
-                <div class="acc-stat-box">
-                    <span class="acc-stat-lbl">Čistá hodnota portfolia (NLV):</span>
-                    <span class="acc-stat-val font-success" id="ibkrNlvVal">250 000,00 CZK</span>
-                </div>
-                <div class="acc-stat-box">
-                    <span class="acc-stat-lbl">Dostupná hotovost (Cash):</span>
-                    <span class="acc-stat-val font-accent" id="ibkrCashVal">250 000,00 CZK</span>
-                </div>
-                <div class="acc-stat-box">
-                    <span class="acc-stat-lbl">Nákupní síla (Buying Power):</span>
-                    <span class="acc-stat-val" style="color: #fbbf24;" id="ibkrBpVal">1 666 666,62 CZK</span>
-                </div>
-                <div class="acc-stat-box">
-                    <span class="acc-stat-lbl">Otevřený P&L (Unrealized):</span>
-                    <span class="acc-stat-val font-success" id="ibkrPnlVal">+0,00 CZK (0.0 %)</span>
-                </div>
-            </div>
-
             <div class="ibkr-banner-actions">
                 <button type="button" class="btn-verify-refresh" id="btnVerifyBalance" onclick="checkLiveIbkrBalance(true)" title="Odeslat okamžitý dotaz na IBKR Client Portal Gateway na portu 5000 a zaktualizovat zůstatek i čas">
                     <span class="spin-icon">🔄</span>
@@ -1901,92 +1954,160 @@
             </div>
         </div>
 
-        <!-- 4 BROKER STATUS CHIPS -->
-        <div class="broker-status-grid">
-            <div class="broker-card active-broker">
-                <div class="broker-card-header">
-                    <span class="broker-card-title">🌐 IBKR Client Portal Gateway</span>
-                    <span class="status-chip ready">Port 5000</span>
-                </div>
-                <div class="broker-card-meta">https://localhost:5000 (Java 17 JRE)</div>
-                <p class="broker-card-desc">
-                    Zabezpečená lokální REST / WebSocket brána v adresáři <code>IB Gateway</code>. Umožňuje přímé webové přihlášení a autonomní exekuce.
-                </p>
-                <div style="margin-top: 6px;">
-                    <a href="https://localhost:5000/" target="_blank" rel="noopener noreferrer" class="action-btn primary-ibkr" style="text-decoration: none; display: inline-flex; align-items: center; gap: 5px; font-size: 0.74rem; padding: 4px 9px;">
-                        <span>🔐</span> Otevřít IBKR Login (localhost:5000) ↗
-                    </a>
-                </div>
-            </div>
-
-            <div class="broker-card">
-                <div class="broker-card-header">
-                    <span class="broker-card-title">🏦 IBKR TWS Socket API</span>
-                    <span class="status-chip ready">Předpřipraveno</span>
-                </div>
-                <div class="broker-card-meta">Socket Port 7497 (Paper) / 7496 (Live)</div>
-                <p class="broker-card-desc">
-                    Nativní podpora bracket příkazů přes <code>ib_insync</code> / TWS API. Ochrana kapitálu automatickým navázáním STP a LMT kotev.
-                </p>
-            </div>
-
-            <div class="broker-card">
-                <div class="broker-card-header">
-                    <span class="broker-card-title">📥 IBKR Basket Trader CSV</span>
-                    <span class="status-chip ibkr">Jednoklikový import</span>
-                </div>
-                <div class="broker-card-meta">Format: Action,Qty,Symbol,SecType,Lmt,Aux</div>
-                <p class="broker-card-desc">
-                    Generuje standardní CSV soubor pro vestavěný TWS nástroj <strong>Basket Trader</strong>. Umožňuje otevřít celé portfolio naráz.
-                </p>
-            </div>
-
-            <div class="broker-card">
-                <div class="broker-card-header">
-                    <span class="broker-card-title">🛡️ AutoInvest Rotation Engine</span>
-                    <span class="status-chip ready">Aktivní</span>
-                </div>
-                <div class="broker-card-meta">Dynamic TP/SL & Reinvestment Cycle</div>
-                <p class="broker-card-desc">
-                    Při zasažení Take-Profitu nebo Stop-Lossu se pozice uzavře a uvolněný kapitál se automaticky přesune do dalšího připraveného aktiva z modelu.
-                </p>
-            </div>
-        </div>
-
-        {% if macro_barometer %}
-        <!-- MAKROEKONOMICKÝ RISK GATEKEEPER BANNER -->
-        <div class="macro-gatekeeper-banner">
-            <div class="gatekeeper-left">
-                <span class="gatekeeper-icon">🛡️</span>
-                <div class="gatekeeper-text">
-                    <h4>
-                        <span>Risk Gatekeeper: Makro Barometr {{ macro_barometer.composite_index }} / 100</span>
-                        <span style="font-size: 0.72rem; padding: 2px 7px; border-radius: 4px; background: rgba(0,0,0,0.3); color: {% if macro_barometer.composite_index >= 70 %}#f87171{% elif macro_barometer.composite_index >= 45 %}#fbbf24{% else %}#34d399{% endif %};">
-                            {{ macro_barometer.risk_level }}
-                        </span>
-                    </h4>
+        <!-- ==================== 💼 REÁLNÉ PORTFOLIO NA DEMO ÚČTU (DUR222134) & HISTORIE NÁKUPŮ ==================== -->
+        <div class="portfolio-performance-section" id="portfolioPerformanceSection">
+            <div class="perf-header">
+                <div class="perf-title-group">
+                    <h2>
+                        <span>💼</span> Otevřené Pozice & Historie Obchodů (IBKR Demo DUR222134)
+                    </h2>
                     <p>
-                        {{ macro_barometer.tactical_guidance }}
+                        Sledování reálného stavu na účtu <strong>DUR222134</strong>, fronty nákupů a historie exekucí s automatickou reinvesticí při dosažení <strong>Take-Profitu</strong> (uzamčení zisku) nebo <strong>Stop-Lossu</strong> (ochrana kapitálu).
                     </p>
                 </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="status-chip ready" style="padding: 5px 12px; font-size: 0.78rem;">
+                        <span class="pulse-dot"></span> AutoInvest Engine: Připraven k exekuci
+                    </span>
+                </div>
             </div>
 
-            <div class="gatekeeper-metrics">
-                <div class="gk-metric">
-                    <span class="gk-lbl">Minimální RRR</span>
-                    <span class="gk-val">&ge; 1.8 : 1</span>
+            <!-- KPI METRIKY PORTFOLIA (REÁLNÝ STAV DEMO ÚČTU) -->
+            <div class="perf-kpi-grid">
+                <div class="perf-kpi-card kpi-success" id="perfKpiCardEquity">
+                    <span class="perf-kpi-lbl">Celková hodnota (NLV / Balance):</span>
+                    <span class="perf-kpi-val" id="perfEquityVal" style="color: #10b981;">250 000,00 CZK</span>
+                    <span class="perf-kpi-sub" id="perfEquitySub" style="color: #10b981; font-weight: 700;">+0,00 CZK (0.00 %) zisk</span>
                 </div>
-                <div class="gk-metric">
-                    <span class="gk-lbl">Max pozice (APO)</span>
-                    <span class="gk-val">20 % equity</span>
+                <div class="perf-kpi-card kpi-blue" id="perfKpiCardCash">
+                    <span class="perf-kpi-lbl">Dostupná hotovost (Cash):</span>
+                    <span class="perf-kpi-val" id="perfCashVal" style="color: #60a5fa;">250 000,00 CZK</span>
+                    <span class="perf-kpi-sub" id="perfCashSub" style="color: #93c5fd;">100 % volný kapitál</span>
                 </div>
-                <div class="gk-metric">
-                    <span class="gk-lbl">Bracket Ochrana</span>
-                    <span class="gk-val">100 % aktivní</span>
+                <div class="perf-kpi-card kpi-blue" id="perfKpiCardInvested">
+                    <span class="perf-kpi-lbl">Investováno v pozicích:</span>
+                    <span class="perf-kpi-val" id="perfInvestedVal" style="color: #60a5fa;">0,00 CZK</span>
+                    <span class="perf-kpi-sub" id="perfInvestedSub" style="color: #93c5fd;">0 aktivních pozic</span>
+                </div>
+                <div class="perf-kpi-card" id="perfKpiCardRealized">
+                    <span class="perf-kpi-lbl">Realizovaný zisk (TP Rotace):</span>
+                    <span class="perf-kpi-val" id="perfRealizedVal" style="color: #10b981;">+0,00 CZK</span>
+                    <span class="perf-kpi-sub" id="perfRealizedSub" style="color: #93c5fd;">0 uzavřených rotací</span>
+                </div>
+                <div class="perf-kpi-card" id="perfKpiCardUnrealized">
+                    <span class="perf-kpi-lbl">Nerealizovaný P&L:</span>
+                    <span class="perf-kpi-val" id="perfUnrealizedVal" style="color: #10b981;">+0,00 CZK</span>
+                    <span class="perf-kpi-sub" id="perfUnrealizedSub" style="font-weight: 700; color: #10b981;">0.00 % otevřený výnos</span>
+                </div>
+            </div>
+
+            <!-- TABULKA OBJEDNÁVEK ČEKAJÍCÍCH NA OTEVŘENÍ BURZY -->
+            <div class="positions-card" id="pendingOrdersCard" style="display: none; border-left: 4px solid #3b82f6; background: rgba(59, 130, 246, 0.03); margin-bottom: 1.25rem;">
+                <div class="positions-header">
+                    <div class="positions-title" style="color: #60a5fa;">
+                        <span>⏳</span> Objednávky čekající na otevření trhu (Pending na IBKR DUR222134)
+                    </div>
+                    <span style="font-size: 0.76rem; color: #93c5fd;" id="pendingOrdersSummaryText">
+                        Aktivní limitní nákupy zadané u brokera. Vyplní se v 09:00 SELČ při otevření evropských trhů.
+                    </span>
+                </div>
+                <table class="orders-table" id="pendingOrdersTable" style="margin-top: 0.5rem;">
+                    <thead>
+                        <tr>
+                            <th>Titul & Burza</th>
+                            <th>Směr & Typ</th>
+                            <th>Limitní cena (CZK)</th>
+                            <th>Množství</th>
+                            <th>Blokovaný kapitál (CZK)</th>
+                            <th>Stav na burze</th>
+                            <th style="text-align: right;">Čas otevření</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pendingOrdersTableBody">
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- TABULKA AKTUÁLNĚ OTEVŘENÝCH POZIC NA DEMO ÚČTU -->
+            <div class="positions-card">
+                <div class="positions-header">
+                    <div class="positions-title">
+                        <span>📈</span> Aktivní otevřené pozice v portfoliu (Účet DUR222134)
+                    </div>
+                    <span style="font-size: 0.76rem; color: var(--text-muted);" id="positionsSubtitle">
+                        Reálné pozice nakoupené na účtu s hlídáním Take-Profit a Stop-Loss bracket kotev a doporučeným horizontem držení.
+                    </span>
+                </div>
+
+                <!-- Placeholder když nejsou žádné otevřené pozice před spuštěním AutoInvestu -->
+                <div class="empty-positions-placeholder" id="emptyPositionsPlaceholder">
+                    <div class="empty-icon">🏦</div>
+                    <div class="empty-title">Aktuálně nejsou otevřeny žádné pozice</div>
+                    <div class="empty-desc">
+                        Demo účet <strong>DUR222134</strong> je 100% v hotovosti (250 000,00 CZK). Zapněte přepínač <strong>AutoInvest výše</strong> pro spuštění odpočítávání a okamžitou exekuci navrhovaného koše (3 - 2 - 1 - NYNÍ).
+                    </div>
+                </div>
+
+                <!-- Tabulka otevřených pozic (zobrazí se po exekuci) -->
+                <table class="orders-table" id="openPositionsTable" style="display: none; margin-top: 0.5rem;">
+                    <thead>
+                        <tr>
+                            <th>Titul & Burza</th>
+                            <th>Směr & Horizont</th>
+                            <th>Vstupní cena</th>
+                            <th>Aktuální tržní cena</th>
+                            <th>Držená pozice</th>
+                            <th>Nerealizovaný P&L (Balance)</th>
+                            <th style="min-width: 140px;">Trajektorie k Take-Profit (SL ➔ Vstup ➔ TP)</th>
+                            <th style="text-align: right;">Akce</th>
+                        </tr>
+                    </thead>
+                    <tbody id="openPositionsTableBody">
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- FRONTA NÁKUPŮ & HISTORIE REALIZOVANÝCH OBCHODŮ NA DEMO ÚČTU -->
+            <div class="rotations-log-card" id="realTradesCard">
+                <div class="positions-header" style="padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.08);">
+                    <div class="rotations-log-title" style="font-size: 0.95rem;">
+                        <span>📋</span> Fronta Nákupů & Historie Realizovaných Obchodů (DUR222134)
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 0.74rem; color: var(--text-muted); display: none; @media(min-width: 768px){display:inline;}">
+                            Auditní záznam všech nákupů a rotací k danému času.
+                        </span>
+                        <button class="action-btn" style="font-size: 0.72rem; padding: 3px 9px;" onclick="resetDemoPortfolioPrompt()" title="Resetovat Demo portfolio do výchozího stavu 100% Cash (250 000 CZK)">
+                            ↺ Resetovat Demo
+                        </button>
+                    </div>
+                </div>
+
+                <!-- FRONTA PŘIPRAVENÝCH TITULŮ (QUEUE) -->
+                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                    <div style="font-size: 0.76rem; font-weight: 800; text-transform: uppercase; color: #93c5fd; letter-spacing: 0.03em;">
+                        ⚡ Připravená fronta nákupů / následujících rotací:
+                    </div>
+                    <div id="orderQueueList" style="display: flex; flex-direction: column; gap: 0.45rem;">
+                        <!-- Naplněno dynamicky dle stavu -->
+                    </div>
+                </div>
+
+                <div style="height: 1px; background: rgba(255,255,255,0.08); margin: 0.5rem 0;"></div>
+
+                <!-- HISTORIE REALIZOVANÝCH NÁKUPŮ A ROTACÍ (FILLED ORDERS LOG) -->
+                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                    <div style="font-size: 0.76rem; font-weight: 800; text-transform: uppercase; color: #34d399; letter-spacing: 0.03em;">
+                        📜 Historie realizovaných nákupů na Demo účtu:
+                    </div>
+                    <div id="realTradesLogList" style="display: flex; flex-direction: column; gap: 0.55rem;">
+                        <div id="emptyTradesNotice" style="font-size: 0.78rem; color: var(--text-muted); font-style: italic; padding: 6px 0;">
+                            Zatím nebyly provedeny žádné nákupy. Po zapnutí AutoInvestu se zde objeví časová osa realizovaných obchodů.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        {% endif %}
 
         <!-- OVLÁDACÍ LIŠTA PARAMETRŮ -->
         <div class="trading-controls-bar">
@@ -2011,17 +2132,6 @@
                 </div>
             </div>
 
-            <div class="controls-actions">
-                <button class="action-btn primary-ibkr" onclick="downloadIbkrBasketCsv()" title="Stáhnout připravený CSV soubor pro přímý import do TWS Basket Traderu">
-                    📥 Stáhnout TWS Basket (.csv)
-                </button>
-                <button class="action-btn" onclick="openIbkrModal()" title="Nastavení parametrů Interactive Brokers (Host, Port, Client ID)">
-                    ⚙️ Nastavení IBKR
-                </button>
-                <button class="action-btn" onclick="exportOrdersJSON()" title="Exportovat příkazy do standardního formátu JSON">
-                    📥 JSON
-                </button>
-            </div>
         </div>
 
         <!-- TABULKA PŘÍKAZŮ -->
@@ -2059,7 +2169,7 @@
                         <td>
                             <div class="sym-cell">
                                 <div class="sym-main">
-                                    <span>{{ ord.symbol_ibkr or ord.symbol_yahoo }}</span>
+                                    <a href="https://finance.yahoo.com/chart/{{ ord.symbol_yahoo or ord.symbol_ibkr }}" target="_blank" rel="noopener noreferrer" class="sym-ticker-link" title="Zobrazit živý interaktivní graf na Yahoo Finance">{{ ord.symbol_ibkr or ord.symbol_yahoo }}</a>
                                     <span class="sym-ibkr-tag">{{ ord.exchange_ibkr or 'SMART' }}</span>
                                     <div class="ai-tooltip-wrapper" style="margin-left: 6px;">
                                         <button type="button" class="ai-tooltip-trigger" onclick="handleTooltipClick(event, this)" title="Zobrazit detailní investiční tezi, plán a doporučení">
@@ -2081,7 +2191,7 @@
                                             </div>
 
                                             {% if ord.tactical_note %}
-                                            <div class="tooltip-thesis-box" style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 6px; padding: 7px 9px; margin-bottom: 8px;">
+                                             <div class="tooltip-thesis-box" style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 6px; padding: 7px 9px; margin-bottom: 8px;">
                                                 <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #93c5fd; margin-bottom: 3px;">🎯 Investiční Důvod & Teze:</div>
                                                 <div style="font-size: 0.78rem; color: #f1f5f9; line-height: 1.4;">{{ ord.tactical_note }}</div>
                                             </div>
@@ -2143,9 +2253,9 @@
                         <td class="font-mono price-entry">{{ ord.limit_price }} {{ ord.currency }}</td>
                         <td class="font-mono price-sl">{{ ord.sl_price }} {{ ord.currency }}</td>
                         <td class="font-mono price-tp">{{ ord.tp_price }} {{ ord.currency }}</td>
-                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">{{ ord.rrr }}:1</td>
+                        <td class="font-mono" style="font-weight: 800; color: #60a5fa;">{{ ord.rrr }}:1</td>
                         <td class="font-mono order-alloc-cell" style="font-weight: 700;">{{ ord.position_czk|round(0)|int }} CZK</td>
-                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">{{ ord.capital_risk_czk|round(0)|int }} CZK ({{ ord.capital_risk_pct }} %)</td>
+                        <td class="font-mono order-risk-cell" style="color: #60a5fa;">{{ ord.capital_risk_czk|round(0)|int }} CZK ({{ ord.capital_risk_pct }} %)</td>
                         <td>
                             <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
                             <div style="font-size: 0.68rem; color: var(--text-muted);">{{ ord.macro_note }}</div>
@@ -2155,9 +2265,6 @@
                                 <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('{{ ord.order_id }}', '{{ ord.symbol_ibkr }}')" title="Simulovat exekuci v Paper Trading sandboxu">
                                     ▶ Exekuce
                                 </button>
-                                <a href="https://finance.yahoo.com/chart/{{ ord.symbol_yahoo or ord.symbol_ibkr }}" target="_blank" rel="noopener noreferrer" class="row-action-btn" style="text-decoration: none;" title="Otevřít graf">
-                                    📈 Graf
-                                </a>
                             </div>
                         </td>
                     </tr>
@@ -2165,134 +2272,7 @@
                 </tbody>
             </table>
         </div>
-
-        <!-- ==================== 💼 REÁLNÉ PORTFOLIO NA DEMO ÚČTU (DUR222134) & HISTORIE NÁKUPŮ ==================== -->
-        <div class="portfolio-performance-section" id="portfolioPerformanceSection">
-            <div class="perf-header">
-                <div class="perf-title-group">
-                    <h2>
-                        <span>💼</span> Otevřené Pozice & Historie Obchodů (IBKR Demo DUR222134)
-                    </h2>
-                    <p>
-                        Sledování reálného stavu na účtu <strong>DUR222134</strong>, fronty nákupů a historie exekucí s automatickou reinvesticí při dosažení <strong>Take-Profitu</strong> (uzamčení zisku) nebo <strong>Stop-Lossu</strong> (ochrana kapitálu).
-                    </p>
-                </div>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <span class="status-chip ready" style="padding: 5px 12px; font-size: 0.78rem;">
-                        <span class="pulse-dot"></span> AutoInvest Engine: Připraven k exekuci
-                    </span>
-                </div>
-            </div>
-
-            <!-- KPI METRIKY PORTFOLIA (REÁLNÝ STAV DEMO ÚČTU) -->
-            <div class="perf-kpi-grid">
-                <div class="perf-kpi-card kpi-success">
-                    <span class="perf-kpi-lbl">Celková hodnota (NLV):</span>
-                    <span class="perf-kpi-val" id="perfEquityVal" style="color: #34d399;">250 000,00 CZK</span>
-                    <span class="perf-kpi-sub" id="perfEquitySub" style="color: #34d399; font-weight: 700;">+0,00 CZK (0.00 %) zisk</span>
-                </div>
-                <div class="perf-kpi-card">
-                    <span class="perf-kpi-lbl">Dostupná hotovost (Cash):</span>
-                    <span class="perf-kpi-val" id="perfCashVal" style="color: #60a5fa;">250 000,00 CZK</span>
-                    <span class="perf-kpi-sub" id="perfCashSub">100 % volný kapitál</span>
-                </div>
-                <div class="perf-kpi-card kpi-purple">
-                    <span class="perf-kpi-lbl">Investováno v pozicích:</span>
-                    <span class="perf-kpi-val" id="perfInvestedVal" style="color: #c084fc;">0,00 CZK</span>
-                    <span class="perf-kpi-sub" id="perfInvestedSub">0 aktivních pozic</span>
-                </div>
-                <div class="perf-kpi-card kpi-warning">
-                    <span class="perf-kpi-lbl">Realizovaný zisk (TP Rotace):</span>
-                    <span class="perf-kpi-val" id="perfRealizedVal" style="color: #fbbf24;">+0,00 CZK</span>
-                    <span class="perf-kpi-sub" id="perfRealizedSub">0 uzavřených rotací</span>
-                </div>
-                <div class="perf-kpi-card">
-                    <span class="perf-kpi-lbl">Nerealizovaný P&L:</span>
-                    <span class="perf-kpi-val" id="perfUnrealizedVal" style="color: #94a3b8;">+0,00 CZK</span>
-                    <span class="perf-kpi-sub" id="perfUnrealizedSub">0.00 % otevřený výnos</span>
-                </div>
-            </div>
-
-            <!-- TABULKA AKTUÁLNĚ OTEVŘENÝCH POZIC NA DEMO ÚČTU -->
-            <div class="positions-card">
-                <div class="positions-header">
-                    <div class="positions-title">
-                        <span>📈</span> Aktivní otevřené pozice v portfoliu (Účet DUR222134)
-                    </div>
-                    <span style="font-size: 0.76rem; color: var(--text-muted);" id="positionsSubtitle">
-                        Reálné pozice nakoupené na účtu s hlídáním Take-Profit a Stop-Loss bracket kotev.
-                    </span>
-                </div>
-
-                <!-- Placeholder když nejsou žádné otevřené pozice před spuštěním AutoInvestu -->
-                <div class="empty-positions-placeholder" id="emptyPositionsPlaceholder">
-                    <div class="empty-icon">🏦</div>
-                    <div class="empty-title">Aktuálně nejsou otevřeny žádné pozice</div>
-                    <div class="empty-desc">
-                        Demo účet <strong>DUR222134</strong> je 100% v hotovosti (250 000,00 CZK). Zapněte přepínač <strong>AutoInvest výše</strong> pro spuštění odpočítávání a okamžitou exekuci navrhovaného koše (3 - 2 - 1 - NYNÍ).
-                    </div>
-                </div>
-
-                <!-- Tabulka otevřených pozic (zobrazí se po exekuci) -->
-                <table class="orders-table" id="openPositionsTable" style="display: none; margin-top: 0.5rem;">
-                    <thead>
-                        <tr>
-                            <th>Titul & Burza</th>
-                            <th>Směr</th>
-                            <th>Vstupní cena</th>
-                            <th>Aktuální tržní cena</th>
-                            <th>Držená pozice</th>
-                            <th>Nerealizovaný P&L</th>
-                            <th style="min-width: 140px;">Trajektorie k Take-Profit (SL ➔ Vstup ➔ TP)</th>
-                            <th style="text-align: right;">Akce</th>
-                        </tr>
-                    </thead>
-                    <tbody id="openPositionsTableBody">
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- FRONTA NÁKUPŮ & HISTORIE REALIZOVANÝCH OBCHODŮ NA DEMO ÚČTU -->
-            <div class="rotations-log-card" id="realTradesCard">
-                <div class="positions-header" style="padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.08);">
-                    <div class="rotations-log-title" style="font-size: 0.95rem;">
-                        <span>📋</span> Fronta Nákupů & Historie Realizovaných Obchodů (DUR222134)
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="font-size: 0.74rem; color: var(--text-muted); display: none; @media(min-width: 768px){display:inline;}">
-                            Auditní záznam všech nákupů a rotací k danému času.
-                        </span>
-                        <button class="action-btn" style="font-size: 0.72rem; padding: 3px 9px;" onclick="resetDemoPortfolioPrompt()" title="Resetovat Demo portfolio do výchozího stavu 100% Cash (250 000 CZK)">
-                            ↺ Resetovat Demo
-                        </button>
-                    </div>
-                </div>
-
-                <!-- FRONTA PŘIPRAVENÝCH TITULŮ (QUEUE) -->
-                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
-                    <div style="font-size: 0.76rem; font-weight: 800; text-transform: uppercase; color: #93c5fd; letter-spacing: 0.03em;">
-                        ⚡ Připravená fronta nákupů / následujících rotací:
-                    </div>
-                    <div id="orderQueueList" style="display: flex; flex-direction: column; gap: 0.45rem;">
-                        <!-- Naplněno dynamicky dle stavu -->
-                    </div>
-                </div>
-
-                <div style="height: 1px; background: rgba(255,255,255,0.08); margin: 0.5rem 0;"></div>
-
-                <!-- HISTORIE REALIZOVANÝCH NÁKUPŮ A ROTACÍ (FILLED ORDERS LOG) -->
-                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
-                    <div style="font-size: 0.76rem; font-weight: 800; text-transform: uppercase; color: #34d399; letter-spacing: 0.03em;">
-                        📜 Historie realizovaných nákupů na Demo účtu:
-                    </div>
-                    <div id="realTradesLogList" style="display: flex; flex-direction: column; gap: 0.55rem;">
-                        <div id="emptyTradesNotice" style="font-size: 0.78rem; color: var(--text-muted); font-style: italic; padding: 6px 0;">
-                            Zatím nebyly provedeny žádné nákupy. Po zapnutí AutoInvestu se zde objeví časová osa realizovaných obchodů.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    </div>
     </div>
 
     <!-- MODAL PRO KONFIGURACI IBKR -->
@@ -2596,11 +2576,71 @@
             showToast(`🚀 AutoInvest: Koš 5 titulů byl úspěšně nakoupen na účtu DUR222134! Fronta nákupů a otevřené pozice aktivovány.`, 'success', 6000);
         }
 
+        // ==================== ⏱️ DOPORUČENÍ DRŽENÍ, PLÁNY A HORIZONTY POZIC ====================
+        const POSITION_INSIGHTS = {
+            'ORCL': {
+                horizon: '⏳ 2–5 dní (Swing)',
+                thesis: 'Konsolidace po prolomení rezistence. Očekáváme rychlé otestování 142 USD (+3.5 %).',
+                recommendation: 'Držet do otestování hladiny 142 USD. Při nárůstu o +1.5 % uzamknout SL na Break-Even. Při dosažení cíle uvolnit kapitál a rotovat do dalšího titulu.',
+                targetGain: '+3.5 % (Swing TP)',
+                riskStop: '127.67 USD (-1.5 % max risk)',
+                status: 'Aktivní růstový kanál'
+            },
+            'AVGO': {
+                horizon: '⏳ 2–4 dny (Momentum)',
+                thesis: 'AI polovodičový růstový kanál, silný nákupní tlak na 50denním klouzavém průměru po pullbacku.',
+                recommendation: 'Rychlá momentum rotace. Cílíme na +3.0 % až +4.5 % rychlý odraz. Při zisku +2.0 % posunout stop na Break-Even a nechat běžet k TP.',
+                targetGain: '+4.0 % (Rychlý odraz)',
+                riskStop: '326.79 USD (-1.8 % SL)',
+                status: 'Odraz od supportu'
+            },
+            'ALLY': {
+                horizon: '⏳ 3–6 dní (Value Swing)',
+                thesis: 'Finanční sektor, expanze čistých úrokových marží (NIM) a blížící se kvartální výsledky.',
+                recommendation: 'Držet v horizontu 3–6 dní. Při dosažení zisku +2.8 % až +3.5 % realizovat Take-Profit a přesunout kapitál do technologického koše.',
+                targetGain: '+3.5 % (Cílový swing)',
+                riskStop: '35.38 USD (-1.4 % SL)',
+                status: 'Akumulační pásmo'
+            },
+            'SAP': {
+                horizon: '⏳ 3–5 dní (Cloud Breakout)',
+                thesis: 'Evropský cloudový lídr, silná podpora na 185 EUR. Přeprodané momentum indikuje bezprostřední obrat.',
+                recommendation: 'Držet pozici, stop-loss je pod klíčovým supportem 184.95 EUR. Očekávaný návrat na 198+ EUR (+5.5 %). Při prvním zisku +1.8 % posunout SL.',
+                targetGain: '+5.5 % (Návrat k průměru)',
+                riskStop: '184.95 EUR (-1.8 % SL)',
+                status: 'Obratová formace'
+            },
+            'RHM': {
+                horizon: '⏳ 2–5 dní (Defense Trend)',
+                thesis: 'Evropský obranný sektor s trvalým institucionálním přílivem kapitálu a NATO zakázkami.',
+                recommendation: 'Držet podél vzestupného trendu. Rychlá rotace při zisku +3.5 % nebo dosažení 980 EUR. Kapitál okamžitě reinvestovat.',
+                targetGain: '+3.8 % (Trend Follow)',
+                riskStop: '881.36 EUR (-1.5 % SL)',
+                status: 'Institucionální nákup'
+            },
+            'SAN': {
+                horizon: '⏳ 3–6 dní (Pharma Pairs)',
+                thesis: 'Defenzivní farmaceutický lídr, podhodnocené P/E vůči sektoru, silná dividenda.',
+                recommendation: 'Držet v horizontu 3–6 dní. Při dosažení +2.5 % rotovat kapitál do dynamičtějšího titulu.',
+                targetGain: '+3.0 % (Defenzivní rotace)',
+                riskStop: '66.47 EUR (-1.2 % SL)',
+                status: 'Stabilizační fáze'
+            }
+        };
+
+        function getYahooChartUrl(symbol) {
+            if (symbol === 'RHM' || symbol === 'RHM.DE') return 'https://finance.yahoo.com/chart/RHM.DE';
+            if (symbol === 'SAP' || symbol === 'SAP.DE') return 'https://finance.yahoo.com/chart/SAP.DE';
+            if (symbol === 'SAN' || symbol === 'SAN.PA' || symbol === 'SAN.FR') return 'https://finance.yahoo.com/chart/SAN.PA';
+            return `https://finance.yahoo.com/chart/${symbol}`;
+        }
+
         // ==================== 📊 RENDEROVÁNÍ REÁLNÉHO PORTFOLIA & HISTORIE ====================
         function renderPortfolioUI() {
             const state = getDemoPortfolio();
 
-            // KPI
+            // KPI CARD ELEMENTS
+            const eqCard = document.getElementById('perfKpiCardEquity');
             const eqEl = document.getElementById('perfEquityVal');
             const eqSub = document.getElementById('perfEquitySub');
             const cashEl = document.getElementById('perfCashVal');
@@ -2616,25 +2656,133 @@
             const totalGainPct = ((totalGainCzk / state.initialCapital) * 100).toFixed(2);
             const cashPct = state.totalEquity > 0 ? ((state.cash / state.totalEquity) * 100).toFixed(1) : 100;
 
-            if (eqEl) eqEl.textContent = `${Number(state.totalEquity).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} CZK`;
-            if (eqSub) {
-                eqSub.textContent = `${totalGainCzk >= 0 ? '+' : ''}${Number(totalGainCzk).toLocaleString('cs-CZ')} CZK (${totalGainPct} %) od spuštění`;
-                eqSub.style.color = totalGainCzk >= 0 ? '#34d399' : '#f87171';
+            // CELKOVÁ HODNOTA (BALANCE / NLV) - JASNOST PROFIT (ZELENĚ) VS LOSS (ČERVENĚ)
+            if (totalGainCzk >= 0) {
+                if (eqCard) {
+                    eqCard.className = 'perf-kpi-card kpi-profit';
+                }
+                if (eqEl) {
+                    eqEl.textContent = `${Number(state.totalEquity).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} CZK`;
+                    eqEl.style.color = '#10b981';
+                }
+                if (eqSub) {
+                    eqSub.innerHTML = `<span style="color: #10b981; font-weight: 800;">+${Number(totalGainCzk).toLocaleString('cs-CZ', {minimumFractionDigits: 2})} CZK (+${totalGainPct} %) ▲ CELKOVÝ ZISK</span>`;
+                }
+            } else {
+                if (eqCard) {
+                    eqCard.className = 'perf-kpi-card kpi-loss';
+                }
+                if (eqEl) {
+                    eqEl.textContent = `${Number(state.totalEquity).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} CZK`;
+                    eqEl.style.color = '#ef4444';
+                }
+                if (eqSub) {
+                    eqSub.innerHTML = `<span style="color: #ef4444; font-weight: 800;">${Number(totalGainCzk).toLocaleString('cs-CZ', {minimumFractionDigits: 2})} CZK (${totalGainPct} %) ▼ CELKOVÁ ZTRÁTA</span>`;
+                }
             }
-            if (cashEl) cashEl.textContent = `${Number(state.cash).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} CZK`;
-            if (cashSub) cashSub.textContent = `${cashPct} % volný kapitál`;
-            if (invEl) invEl.textContent = `${Number(state.invested).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} CZK`;
-            if (invSub) invSub.textContent = `${state.positions.length} aktivních pozic`;
+
+            // HOTOVOST (CASH) - SJEDNOCENO V MODRÉ
+            if (cashEl) {
+                cashEl.textContent = `${Number(state.cash).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} CZK`;
+                cashEl.style.color = '#60a5fa';
+            }
+            if (cashSub) {
+                const resCzk = state.reservedCash || 0;
+                const freeCzk = state.freeCash !== undefined ? state.freeCash : Math.max(0, state.cash - resCzk);
+                if (resCzk > 0) {
+                    cashSub.innerHTML = `<span style="color: #60a5fa; font-weight: 700;">${Number(resCzk).toLocaleString('cs-CZ')} CZK</span> v čekajících | <span style="color: #93c5fd; font-weight: 700;">${Number(freeCzk).toLocaleString('cs-CZ')} CZK</span> volná rezerva`;
+                } else {
+                    cashSub.innerHTML = `<span style="color: #93c5fd;">${cashPct} % volný kapitál</span>`;
+                }
+            }
+
+            // INVESTOVÁNO V POZICÍCH - MODŘE
+            if (invEl) {
+                invEl.textContent = `${Number(state.invested).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} CZK`;
+                invEl.style.color = '#60a5fa';
+            }
+            if (invSub) {
+                invSub.innerHTML = `<span style="color: #93c5fd;">${state.positions.length} aktivních pozic</span>`;
+            }
+
+            // REALIZOVANÝ ZISK
+            const closedRotationsCount = state.trades.filter(t => t.type && t.type.includes('SELL')).length;
             if (realEl) {
-                realEl.textContent = `${state.realizedProfit >= 0 ? '+' : ''}${Number(state.realizedProfit).toLocaleString('cs-CZ')} CZK`;
-                realEl.style.color = state.realizedProfit >= 0 ? '#fbbf24' : '#f87171';
+                const isRealizedGain = state.realizedProfit >= 0;
+                realEl.textContent = `${isRealizedGain ? '+' : ''}${Number(state.realizedProfit).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} CZK`;
+                realEl.style.color = isRealizedGain ? '#10b981' : '#ef4444';
             }
             if (realSub) {
-                const closedRotationsCount = state.trades.filter(t => t.type && t.type.includes('SELL')).length;
-                realSub.textContent = `${closedRotationsCount} uzavřených rotací`;
+                realSub.innerHTML = `<span style="color: #93c5fd;">${closedRotationsCount} uzavřených rotací</span>`;
             }
-            if (unEl) unEl.textContent = `+${Number(state.unrealizedProfit).toLocaleString('cs-CZ')} CZK`;
-            if (unSub) unSub.textContent = `0.00 % otevřený výnos`;
+
+            // NEREALIZOVANÝ P&L - PŘÍSNĚ ČERVENĚ PŘI ZTRÁTĚ / ZELENĚ PŘI ZISKU
+            const unVal = state.unrealizedProfit || 0;
+            const unPct = state.invested > 0 ? ((unVal / state.invested) * 100).toFixed(2) : '0.00';
+            if (unEl) {
+                if (unVal < 0) {
+                    unEl.textContent = `${Number(unVal).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} CZK`;
+                    unEl.style.color = '#ef4444';
+                } else {
+                    unEl.textContent = `+${Number(unVal).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} CZK`;
+                    unEl.style.color = '#10b981';
+                }
+            }
+            if (unSub) {
+                if (unVal < 0) {
+                    unSub.innerHTML = `<span style="color: #ef4444; font-weight: 800;">▼ Nerealizovaná ztráta (${unPct} %)</span>`;
+                } else {
+                    unSub.innerHTML = `<span style="color: #10b981; font-weight: 800;">▲ Nerealizovaný zisk (+${unPct} %)</span>`;
+                }
+            }
+
+            // ==================== ⏳ TABULKA ČEKAJÍCÍCH OBJEDNÁVEK NA BURZE ====================
+            const pendingCard = document.getElementById('pendingOrdersCard');
+            const pendingTbody = document.getElementById('pendingOrdersTableBody');
+            const pendingSummary = document.getElementById('pendingOrdersSummaryText');
+            const pOrders = state.pendingOrders || [];
+
+            if (pendingCard && pendingTbody) {
+                if (pOrders.length > 0) {
+                    pendingCard.style.display = 'block';
+                    const totReserved = pOrders.reduce((sum, o) => sum + (o.total_czk || 0), 0);
+                    if (pendingSummary) {
+                        pendingSummary.innerHTML = `<strong>${pOrders.length} aktivní objednávky na burze</strong> blokují <strong>${Number(totReserved).toLocaleString('cs-CZ')} CZK</strong>. Vyplní se v 09:00 SELČ při otevření evropských trhů.`;
+                    }
+                    pendingTbody.innerHTML = pOrders.map(o => `
+                        <tr>
+                            <td>
+                                <div class="sym-cell">
+                                    <div class="sym-main">
+                                        <a href="${getYahooChartUrl(o.symbol)}" target="_blank" rel="noopener noreferrer" class="sym-ticker-link">${o.symbol}</a>
+                                        <span class="sym-ibkr-tag" style="background: rgba(59, 130, 246, 0.2); color: #93c5fd; border-color: rgba(59, 130, 246, 0.4);">${o.exchange}</span>
+                                    </div>
+                                    <div class="sym-sub">${o.company_name || o.symbol}</div>
+                                </div>
+                            </td>
+                            <td><span class="badge-buy-lmt" style="background: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.4);">NÁKUP LIMIT GTC</span></td>
+                            <td class="font-mono" style="color: #60a5fa !important;">
+                                <strong>${o.price} ${o.currency}</strong>
+                                <div style="font-size: 0.72rem; color: #93c5fd;">(${Number(o.price_czk).toLocaleString('cs-CZ')} CZK)</div>
+                            </td>
+                            <td class="font-mono" style="color: #60a5fa !important;"><strong>${o.shares} ks</strong></td>
+                            <td class="font-mono" style="color: #60a5fa !important; font-weight: 800;">
+                                ${Number(o.total_czk).toLocaleString('cs-CZ')} CZK
+                            </td>
+                            <td>
+                                <span class="status-chip ready" style="background: rgba(59, 130, 246, 0.15); color: #93c5fd; border-color: rgba(59, 130, 246, 0.4); font-size: 0.72rem;">
+                                    🔵 ${o.status || 'Čeká na ranní otevření trhu'}
+                                </span>
+                            </td>
+                            <td style="text-align: right; font-size: 0.76rem; color: #93c5fd;">
+                                <span>${o.exchange_desc || '09:00 SELČ'}</span>
+                            </td>
+                        </tr>
+                    `).join('');
+                } else {
+                    pendingCard.style.display = 'none';
+                }
+            }
 
             // OTEVŘENÉ POZICE TABULKA vs EMPTY PLACEHOLDER
             const placeholder = document.getElementById('emptyPositionsPlaceholder');
@@ -2648,29 +2796,122 @@
                 if (placeholder) placeholder.style.display = 'none';
                 if (posTable) posTable.style.display = 'table';
                 if (posTbody) {
-                    posTbody.innerHTML = state.positions.map(p => `
+                    posTbody.innerHTML = state.positions.map(p => {
+                        const fx = p.currency === 'EUR' ? 25.2 : 23.5;
+                        const avgNum = parseFloat(p.entryPrice) || (p.avg_price || 0);
+                        const mktNum = parseFloat(p.currentPrice) || (p.market_price || avgNum);
+                        const avgCzk = p.entryPriceCzk || Math.round(avgNum * fx);
+                        const mktCzk = p.currentPriceCzk || Math.round(mktNum * fx);
+                        const pnlVal = p.pnlCzk !== undefined ? p.pnlCzk : Math.round((p.unrealized_pnl || 0) * fx);
+                        const isLoss = pnlVal < 0;
+                        const pnlClass = isLoss ? 'pnl-badge pnl-loss' : 'pnl-badge pnl-profit';
+                        const chartUrl = getYahooChartUrl(p.symbol);
+                        const insight = POSITION_INSIGHTS[p.symbol] || {
+                            horizon: '⏳ 2–5 dní (Swing)',
+                            thesis: 'Kvantitativní swing model s MVO optimální vahou a asymetrií výnosu.',
+                            recommendation: 'Držet do otestování první rezistence. Při nárůstu o +1.5 % posunout SL na Break-Even. Po dosažení cíle rotovat kapitál.',
+                            targetGain: '+3.5 % (Cílová rotace)',
+                            riskStop: '-1.5 % (Ochranný SL)',
+                            status: 'Aktivní držení'
+                        };
+
+                        return `
                         <tr id="posRow-${p.symbol}">
                             <td>
                                 <div class="sym-cell">
                                     <div class="sym-main">
-                                        ${p.symbol} <span class="sym-ibkr-tag">${p.exchange}</span>
+                                        <a href="${chartUrl}" target="_blank" rel="noopener noreferrer" class="sym-ticker-link" title="Zobrazit živý interaktivní graf ${p.symbol} na Yahoo Finance (nové okno)">
+                                            ${p.symbol}
+                                        </a>
+                                        <span class="sym-ibkr-tag">${p.exchange || 'SMART'}</span>
+                                        <div class="ai-tooltip-wrapper" style="margin-left: 6px;">
+                                            <button type="button" class="ai-tooltip-trigger" onclick="handleTooltipClick(event, this)" title="Zobrazit doporučení jak dlouho držet a plán rotace">
+                                                <span>💡</span>
+                                                <span>Plán & Horizont</span>
+                                            </button>
+                                            <div class="ai-tooltip-popup" role="tooltip" onclick="event.stopPropagation();">
+                                                <div class="tooltip-header">
+                                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                                        <span class="tooltip-title">💡 Doporučení & Plán Držení</span>
+                                                        <span class="tooltip-ticker">${p.symbol}</span>
+                                                    </div>
+                                                    <button type="button" class="tooltip-close-btn" onclick="closeAllTooltips(event)" title="Zavřít">✕</button>
+                                                </div>
+
+                                                <div class="tooltip-signal-row" style="margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+                                                    <span class="badge-horizon" style="font-size: 0.75rem;">${insight.horizon}</span>
+                                                    <span style="font-size: 0.74rem; font-weight: 700; color: #60a5fa;">Stav: ${insight.status}</span>
+                                                </div>
+
+                                                <div class="tooltip-thesis-box" style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 6px; padding: 7px 9px; margin-bottom: 8px;">
+                                                    <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #93c5fd; margin-bottom: 3px;">🎯 Investiční Teze:</div>
+                                                    <div style="font-size: 0.78rem; color: #f1f5f9; line-height: 1.4;">${insight.thesis}</div>
+                                                </div>
+
+                                                <div class="tooltip-thesis-box" style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 6px; padding: 7px 9px; margin-bottom: 8px;">
+                                                    <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #34d399; margin-bottom: 3px;">⏱️ Doporučení Jak Dlouho Držet:</div>
+                                                    <div style="font-size: 0.78rem; color: #f1f5f9; line-height: 1.4;">${insight.recommendation}</div>
+                                                </div>
+
+                                                <div class="tooltip-grid">
+                                                    <div class="tooltip-stat">
+                                                        <span class="stat-lbl">Doporučený horizont:</span>
+                                                        <span class="stat-val font-accent" style="color: #60a5fa;">${insight.horizon}</span>
+                                                    </div>
+                                                    <div class="tooltip-stat">
+                                                        <span class="stat-lbl">Cílový Take-Profit (TP):</span>
+                                                        <span class="stat-val" style="color: #10b981; font-weight: 800;">${p.tp} (${insight.targetGain})</span>
+                                                    </div>
+                                                    <div class="tooltip-stat">
+                                                        <span class="stat-lbl">Vstupní nákupní cena:</span>
+                                                        <span class="stat-val" style="color: #60a5fa;">${p.entryPrice}</span>
+                                                    </div>
+                                                    <div class="tooltip-stat">
+                                                        <span class="stat-lbl">Ochranný Stop-Loss (SL):</span>
+                                                        <span class="stat-val" style="color: #ef4444;">${p.sl}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="tooltip-divider"></div>
+                                                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; color: #94a3b8;">
+                                                    <span>Plán rotace: <strong style="color: #60a5fa;">Aktivní compounding</strong></span>
+                                                    <button type="button" class="action-btn" style="padding: 2px 7px; font-size: 0.7rem;" onclick="closeAllTooltips(event)">Zavřít</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="sym-sub">${p.name}</div>
+                                    <div class="sym-sub">${p.name || p.symbol}</div>
                                 </div>
                             </td>
-                            <td><span class="badge-buy-lmt">LONG</span></td>
-                            <td class="font-mono">${p.entryPrice}</td>
-                            <td class="font-mono price-entry" style="font-weight: 800;">${p.currentPrice}</td>
-                            <td class="font-mono"><strong>${p.shares} ks</strong> (~${Number(p.posCzk).toLocaleString('cs-CZ')} CZK)</td>
-                            <td class="font-mono price-tp" style="font-weight: 800;">+${p.pnlCzk} CZK (${p.pnlPct} %)</td>
                             <td>
-                                <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: #94a3b8;">
-                                    <span>SL: ${p.sl}</span>
-                                    <span style="color: #34d399; font-weight: 700;">${p.progressPct || 20}%</span>
-                                    <span>TP: ${p.tp}</span>
+                                <span class="badge-buy-lmt">LONG</span>
+                                <div style="margin-top: 3px;"><span class="badge-horizon">${insight.horizon}</span></div>
+                            </td>
+                            <td class="font-mono">
+                                <div style="font-weight: 700; color: #60a5fa;">${p.entryPrice}</div>
+                                <div style="font-size: 0.72rem; color: #93c5fd;">(${Number(avgCzk).toLocaleString('cs-CZ')} CZK)</div>
+                            </td>
+                            <td class="font-mono">
+                                <div style="font-weight: 800; color: #60a5fa;">${p.currentPrice}</div>
+                                <div style="font-size: 0.72rem; color: #93c5fd;">(${Number(mktCzk).toLocaleString('cs-CZ')} CZK)</div>
+                            </td>
+                            <td class="font-mono">
+                                <div style="font-weight: 700; color: #60a5fa;">${p.shares} ks</div>
+                                <div style="font-size: 0.74rem; color: #93c5fd; font-weight: 700;">~${Number(p.posCzk).toLocaleString('cs-CZ')} CZK</div>
+                            </td>
+                            <td class="font-mono">
+                                <span class="${pnlClass}">
+                                    ${pnlVal >= 0 ? '+' : ''}${Number(pnlVal).toLocaleString('cs-CZ')} CZK (${pnlVal >= 0 ? '+' : ''}${p.pnlPct} %) ${pnlVal >= 0 ? '▲ ZISK' : '▼ ZTRÁTA'}
+                                </span>
+                            </td>
+                            <td>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: #93c5fd;">
+                                    <span style="color: #60a5fa;">SL: ${p.sl}</span>
+                                    <span style="color: ${isLoss ? '#ef4444' : '#10b981'}; font-weight: 700;">${p.progressPct || 25}%</span>
+                                    <span style="color: #60a5fa;">TP: ${p.tp}</span>
                                 </div>
                                 <div class="trajectory-track" title="Trajektorie k Take-Profitu">
-                                    <div class="trajectory-fill" style="width: ${p.progressPct || 20}%;"></div>
+                                    <div class="trajectory-fill" style="width: ${p.progressPct || 25}%; background: ${isLoss ? '#ef4444' : '#10b981'};"></div>
                                 </div>
                             </td>
                             <td style="text-align: right;">
@@ -2684,7 +2925,8 @@
                                 </div>
                             </td>
                         </tr>
-                    `).join('');
+                        `;
+                    }).join('');
                 }
             }
 
