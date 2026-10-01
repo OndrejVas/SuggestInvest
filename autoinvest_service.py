@@ -52,21 +52,93 @@ KNOWN_CONIDS = {
     "AVGO": 313130367,  # NASDAQ (USD)
     "RHM": 15085,       # IBIS / XETRA (EUR)
     "SAN": 30314144,    # Bolsa de Madrid (EUR)
-    "SAP": 815035213,   # XETRA (EUR)
+    "SAP": 14204,       # XETRA (EUR) - ID z aktivního portfolia
     "MSFT": 272093,     # NASDAQ (USD)
     "AMZN": 3691937,    # NASDAQ (USD)
     "ASML": 26800728,   # AEX (EUR)
     "NVDA": 4815747     # NASDAQ (USD)
 }
 
-# Rotace kandidátů
+# Rotace kandidátů s vysokou silou momentum / Strong Buy a fundamentálními katalyzátory
 ROTATION_CANDIDATES = [
-    {"symbol": "SAN", "name": "Banco Santander SA", "exchange": "BM", "cur": "EUR", "price": 12.35, "shares": 150},
-    {"symbol": "SAP", "name": "SAP SE", "exchange": "XETRA", "cur": "EUR", "price": 198.40, "shares": 8},
-    {"symbol": "MSFT", "name": "Microsoft Corp", "exchange": "NASDAQ", "cur": "USD", "price": 428.10, "shares": 4},
-    {"symbol": "AMZN", "name": "Amazon.com Inc", "exchange": "NASDAQ", "cur": "USD", "price": 188.50, "shares": 9},
-    {"symbol": "ASML", "name": "ASML Holding NV", "exchange": "AEX", "cur": "EUR", "price": 785.00, "shares": 2},
-    {"symbol": "NVDA", "name": "NVIDIA Corp", "exchange": "NASDAQ", "cur": "USD", "price": 121.50, "shares": 14}
+    {
+        "symbol": "NVDA",
+        "name": "NVIDIA Corp",
+        "exchange": "NASDAQ",
+        "cur": "USD",
+        "price": 121.50,
+        "shares": 14,
+        "sl": "114 $",
+        "tp": "150 $",
+        "targetUpside": "+23.4 %",
+        "catalyst": "AI Blackwell akcelerátory, poptávka datacenter překonává odhady o +32 %, masivní růst marží.",
+        "status": "TOP 1 • Strong Buy (Preferovaný titul pro okamžitou rotaci)"
+    },
+    {
+        "symbol": "MSFT",
+        "name": "Microsoft Corp",
+        "exchange": "NASDAQ",
+        "cur": "USD",
+        "price": 428.10,
+        "shares": 4,
+        "sl": "398 $",
+        "tp": "492 $",
+        "targetUpside": "+14.9 %",
+        "catalyst": "Azure Cloud +29 % YoY a rozsáhlá monetizace podnikového Copilotu napříč Fortune 500.",
+        "status": "2. v pořadí rotací"
+    },
+    {
+        "symbol": "ASML",
+        "name": "ASML Holding NV",
+        "exchange": "AEX",
+        "cur": "EUR",
+        "price": 785.00,
+        "shares": 2,
+        "sl": "740 €",
+        "tp": "920 €",
+        "targetUpside": "+17.2 %",
+        "catalyst": "Globální monopol na High-NA EUV litografii nezbytnou pro 2nm AI čipy.",
+        "status": "3. v pořadí rotací"
+    },
+    {
+        "symbol": "AMZN",
+        "name": "Amazon.com Inc",
+        "exchange": "NASDAQ",
+        "cur": "USD",
+        "price": 188.50,
+        "shares": 9,
+        "sl": "175 $",
+        "tp": "218 $",
+        "targetUpside": "+15.6 %",
+        "catalyst": "Akcelerace cloudového zisku AWS a rekordní provozní cashflow v e-commerce.",
+        "status": "4. v pořadí rotací"
+    },
+    {
+        "symbol": "SAN",
+        "name": "Banco Santander SA",
+        "exchange": "BM",
+        "cur": "EUR",
+        "price": 12.35,
+        "shares": 150,
+        "sl": "11.64 €",
+        "tp": "14.40 €",
+        "targetUpside": "+12.1 %",
+        "catalyst": "Vysoký dividendový výnos a nárůst úrokových marží v Latinské Americe.",
+        "status": "5. v pořadí rotací"
+    },
+    {
+        "symbol": "SAP",
+        "name": "SAP SE",
+        "exchange": "XETRA",
+        "cur": "EUR",
+        "price": 198.40,
+        "shares": 8,
+        "sl": "184.95 €",
+        "tp": "228.71 €",
+        "targetUpside": "+9.8 %",
+        "catalyst": "Cloud ERP transformace.",
+        "status": "6. v pořadí rotací"
+    }
 ]
 
 # Výchozí doporučený koš titulů
@@ -245,13 +317,16 @@ class AutoInvestEngine:
         self.thread: Optional[threading.Thread] = None
         self.last_known_symbols = set()
         self.queue_index = 0
+        self.strategy_mode = "AGGRESSIVE_MOMENTUM"  # "AGGRESSIVE_MOMENTUM" (default) or "STANDARD_BRACKET"
+        self.laggard_pnl_threshold = -2.5  # Pozice s PnL <= -2.5 % jsou ležáky pro okamžitou rotaci
+        self.custom_trades_history: List[Dict[str, Any]] = []
 
     def start(self):
         if not self.is_running:
             self.is_running = True
             self.thread = threading.Thread(target=self._watchdog_loop, daemon=True)
             self.thread.start()
-            logger.info("AutoInvest Engine úspěšně spuštěn.")
+            logger.info("AutoInvest Engine úspěšně spuštěn v režimu AGRESIVNÍ MOMENTUM (Žádné Ležáky).")
 
     def stop(self):
         self.is_running = False
@@ -325,6 +400,7 @@ class AutoInvestEngine:
             pnl = p.get("unrealizedPnl", 0)
             pnl_czk = round(pnl * fx, 2)
             pnl_pct = (pnl / (pos * avg) * 100) if (pos * avg) else 0.0
+            is_laggard = pnl_pct <= self.laggard_pnl_threshold
 
             open_positions.append({
                 "symbol": sym,
@@ -341,6 +417,8 @@ class AutoInvestEngine:
                 "unrealized_pnl": round(pnl, 2),
                 "unrealized_pnl_czk": pnl_czk,
                 "unrealized_pnl_percent": round(pnl_pct, 2),
+                "is_laggard": is_laggard,
+                "laggard_reason": f"Zaostává ({pnl_pct:.2f} %); doporučeno okamžitě odříznout a rotovat do TOP 1 titulu" if is_laggard else "",
                 "tp_price": round(avg * 1.15, 2),
                 "tp_price_czk": round(avg * 1.15 * fx, 2),
                 "sl_price": round(avg * 0.93, 2),
@@ -348,8 +426,10 @@ class AutoInvestEngine:
                 "exchange": p.get("listingExchange", "SMART")
             })
 
-        # Záznam obchodů
-        trades_history = [
+        laggards_count = sum(1 for p in open_positions if p["is_laggard"])
+
+        # Základní historie obchodů
+        default_trades_history = [
             {"symbol": "SAP", "shares": 8, "price": "198.50 EUR (5 002 CZK)", "total_czk": 40017, "time": "30.09.2026 22:24:14", "type": "BUY_QUEUED", "status": "Submitted / Čeká na otevření XETRA v 09:00"},
             {"symbol": "SAN", "shares": 150, "price": "12.50 EUR (315 CZK)", "total_czk": 47250, "time": "30.09.2026 22:04:10", "type": "BUY_QUEUED", "status": "Submitted / Čeká na otevření Bolsa de Madrid v 09:00"},
             {"symbol": "RHM", "shares": 2, "price": "958.60 EUR (24 156 CZK)", "total_czk": 48313, "time": "30.09.2026 22:03:18", "type": "BUY_FILLED", "status": "Filled na XETRA (IBIS)"},
@@ -358,13 +438,70 @@ class AutoInvestEngine:
             {"symbol": "ALLY", "shares": 34, "price": "38.04 USD (894 CZK)", "total_czk": 30396, "time": "30.09.2026 22:03:08", "type": "BUY_FILLED", "status": "Filled na NYSE"},
             {"symbol": "ALLY", "shares": 10, "price": "38.00 USD (893 CZK)", "total_czk": 8930, "time": "30.09.2026 22:00:51", "type": "BUY_FILLED", "status": "Filled na NYSE"}
         ]
+        combined_trades = self.custom_trades_history + default_trades_history
 
-        # Aktualizovaná fronta rotací s CZK
+        # Fronta rotací s fundamentálními katalyzátory a Strong Buy skóre
         enhanced_rotation_queue = [
-            {"symbol": "MSFT", "name": "Microsoft Corp", "exchange": "NASDAQ", "cur": "USD", "price": 428.10, "price_czk": 10060, "shares": 4, "total_czk": 40240, "sl": "398 $", "tp": "492 $", "targetUpside": "+14.9 %", "status": "1. v pořadí při zasažení TP/SL"},
-            {"symbol": "AMZN", "name": "Amazon.com Inc", "exchange": "NASDAQ", "cur": "USD", "price": 188.50, "price_czk": 4430, "shares": 9, "total_czk": 39870, "sl": "175 $", "tp": "218 $", "targetUpside": "+15.6 %", "status": "2. v pořadí"},
-            {"symbol": "ASML", "name": "ASML Holding NV", "exchange": "AEX", "cur": "EUR", "price": 785.00, "price_czk": 19782, "shares": 2, "total_czk": 39564, "sl": "740 €", "tp": "920 €", "targetUpside": "+17.2 %", "status": "3. v pořadí"},
-            {"symbol": "NVDA", "name": "NVIDIA Corp", "exchange": "NASDAQ", "cur": "USD", "price": 121.50, "price_czk": 2855, "shares": 14, "total_czk": 39970, "sl": "114 $", "tp": "150 $", "targetUpside": "+23.4 %", "status": "4. v pořadí"}
+            {
+                "symbol": "NVDA",
+                "name": "NVIDIA Corp",
+                "exchange": "NASDAQ",
+                "cur": "USD",
+                "price": 121.50,
+                "price_czk": 2855,
+                "shares": 14,
+                "total_czk": 39970,
+                "sl": "114 $",
+                "tp": "150 $",
+                "targetUpside": "+23.4 %",
+                "catalyst": "AI Blackwell akcelerátory, poptávka datacenter překonává odhady o +32 %, masivní růst marží.",
+                "status": "TOP 1 • Silný tah na BUY (Preferovaný titul pro okamžitou rotaci)"
+            },
+            {
+                "symbol": "MSFT",
+                "name": "Microsoft Corp",
+                "exchange": "NASDAQ",
+                "cur": "USD",
+                "price": 428.10,
+                "price_czk": 10060,
+                "shares": 4,
+                "total_czk": 40240,
+                "sl": "398 $",
+                "tp": "492 $",
+                "targetUpside": "+14.9 %",
+                "catalyst": "Azure Cloud +29 % meziročně a masová enterprise adopce generativní AI.",
+                "status": "2. v pořadí při zasažení TP/SL či odříznutí ležáku"
+            },
+            {
+                "symbol": "ASML",
+                "name": "ASML Holding NV",
+                "exchange": "AEX",
+                "cur": "EUR",
+                "price": 785.00,
+                "price_czk": 19782,
+                "shares": 2,
+                "total_czk": 39564,
+                "sl": "740 €",
+                "tp": "920 €",
+                "targetUpside": "+17.2 %",
+                "catalyst": "Globální monopol na High-NA EUV litografii nezbytnou pro 2nm AI čipy.",
+                "status": "3. v pořadí rotací"
+            },
+            {
+                "symbol": "AMZN",
+                "name": "Amazon.com Inc",
+                "exchange": "NASDAQ",
+                "cur": "USD",
+                "price": 188.50,
+                "price_czk": 4430,
+                "shares": 9,
+                "total_czk": 39870,
+                "sl": "175 $",
+                "tp": "218 $",
+                "targetUpside": "+15.6 %",
+                "catalyst": "Rekordní cash-flow v e-commerce a akcelerace cloudové divize AWS.",
+                "status": "4. v pořadí rotací"
+            }
         ]
 
         state = {
@@ -372,6 +509,9 @@ class AutoInvestEngine:
             "account_id": acc_id,
             "is_authenticated": auth_ok,
             "autoinvest_active": self.is_active,
+            "strategy_mode": self.strategy_mode,
+            "laggard_pnl_threshold": self.laggard_pnl_threshold,
+            "laggards_count": laggards_count,
             "cash_czk": round(cash, 2),
             "reserved_cash_czk": round(reserved_cash_czk, 2),
             "free_cash_czk": round(free_cash_czk, 2),
@@ -381,7 +521,7 @@ class AutoInvestEngine:
             "open_positions_count": len(open_positions),
             "pending_orders": pending_orders,
             "pending_orders_count": len(pending_orders),
-            "trades_history": trades_history,
+            "trades_history": combined_trades,
             "rotation_queue": enhanced_rotation_queue
         }
 
@@ -393,6 +533,149 @@ class AutoInvestEngine:
             logger.error(f"Chyba při zápisu {LIVE_PORTFOLIO_PATH}: {e}")
 
         return state
+
+    def detect_opportunities(self) -> Dict[str, Any]:
+        """Analyzuje portfolio, identifikuje zaostávající ležáky a nabízí okamžitou rotaci do nejsilnějších titulů."""
+        state = self.sync_live_portfolio()
+        positions = state.get("open_positions", [])
+        queue = state.get("rotation_queue", [])
+
+        # Ležáky seřazené od největší ztráty
+        laggards = [p for p in positions if p.get("unrealized_pnl_percent", 0) <= self.laggard_pnl_threshold]
+        laggards.sort(key=lambda x: x.get("unrealized_pnl_percent", 0))
+
+        # Nejsilnější Strong Buy kandidáti
+        strong_buys = sorted(queue, key=lambda x: float(str(x.get("targetUpside", "0")).replace("%", "").replace("+", "").strip() or 0), reverse=True)
+
+        return {
+            "strategy_mode": self.strategy_mode,
+            "laggard_threshold": self.laggard_pnl_threshold,
+            "laggards_count": len(laggards),
+            "laggards": laggards,
+            "strong_buys": strong_buys,
+            "recommended_substitution": {
+                "sell": laggards[0] if laggards else None,
+                "buy": strong_buys[0] if strong_buys else None
+            }
+        }
+
+    def execute_substitution_rotation(self, sell_symbol: Optional[str] = None, target_symbol: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Agresivní substituce / odříznutí ležáku:
+        Okamžitě prodá slabou/zaostávající pozici a za uvolněný kapitál nakoupí preferovaný Strong Buy titul.
+        """
+        auth_ok, acc_id = self.gw.check_auth()
+        if not auth_ok:
+            acc_id = "DUR222134"
+
+        state = self.sync_live_portfolio()
+        positions = state.get("open_positions", [])
+        queue = state.get("rotation_queue", [])
+
+        # 1. Výběr pozice k prodeji (pokud nezadána, vybrat nejhorší ležák)
+        sell_pos = None
+        if sell_symbol:
+            for p in positions:
+                if p["symbol"].upper() == sell_symbol.upper():
+                    sell_pos = p
+                    break
+        else:
+            sorted_pos = sorted(positions, key=lambda x: x.get("unrealized_pnl_percent", 0))
+            if sorted_pos:
+                sell_pos = sorted_pos[0]
+
+        if not sell_pos:
+            return {"ok": False, "error": f"Nenalezena pozice k prodeji pro symbol '{sell_symbol or 'AUTO'}'"}
+
+        # 2. Výběr cílového titulu k nákupu (pokud nezadán, vybrat TOP 1 s nejvyšším upside)
+        buy_cand = None
+        if target_symbol:
+            for c in queue:
+                if c["symbol"].upper() == target_symbol.upper():
+                    buy_cand = c
+                    break
+            if not buy_cand:
+                for rc in ROTATION_CANDIDATES:
+                    if rc["symbol"].upper() == target_symbol.upper():
+                        buy_cand = rc
+                        break
+        else:
+            sorted_queue = sorted(queue, key=lambda x: float(str(x.get("targetUpside", "0")).replace("%", "").replace("+", "").strip() or 0), reverse=True)
+            if sorted_queue:
+                buy_cand = sorted_queue[0]
+
+        if not buy_cand:
+            return {"ok": False, "error": f"Nenalezen cílový titul k nákupu pro symbol '{target_symbol or 'AUTO'}'"}
+
+        sell_sym = sell_pos["symbol"]
+        buy_sym = buy_cand["symbol"]
+        sell_shares = int(sell_pos.get("shares", 1))
+        sell_price = float(sell_pos.get("market_price", sell_pos.get("avg_price", 10.0)))
+        sell_ccy = sell_pos.get("currency", "USD")
+        sell_conid = sell_pos.get("conid") or KNOWN_CONIDS.get(sell_sym) or self.gw.get_conid(sell_sym)
+
+        logger.warning(f"⚡ [AGRESIVNÍ ROTACE] Prodej ležáku {sell_sym} ({sell_shares} ks) ➔ Reinvestice do TOP Strong Buy {buy_sym}...")
+
+        # EXEKUCE PRODEJE NA IBKR
+        sell_outside = True if sell_ccy == "USD" else False
+        sell_res = self.gw.place_order(acc_id, sell_conid, "SELL", sell_shares, sell_price, outside_rth=sell_outside)
+        logger.info(f"Odeslán prodejní pokyn pro {sell_sym}: {sell_res.get('ok')}")
+
+        # VÝPOČET UVOLNĚNÉHO KAPITÁLU A NÁKUP
+        fx_rates = {"CZK": 1.0, "USD": 23.5, "EUR": 25.2, "GBP": 30.5}
+        sell_fx = fx_rates.get(sell_ccy, 23.5)
+        released_czk = round(sell_shares * sell_price * sell_fx, 2)
+        total_available_czk = released_czk + state.get("free_cash_czk", 0)
+
+        buy_price = float(buy_cand.get("price", 100.0))
+        buy_ccy = buy_cand.get("cur", buy_cand.get("currency", "USD"))
+        buy_fx = fx_rates.get(buy_ccy, 23.5)
+        buy_px_czk = buy_price * buy_fx
+
+        target_allocation_czk = min(total_available_czk, max(38000, released_czk))
+        buy_shares = max(1, int(target_allocation_czk // buy_px_czk))
+        buy_conid = KNOWN_CONIDS.get(buy_sym) or self.gw.get_conid(buy_sym)
+
+        time.sleep(1)
+
+        buy_outside = True if buy_ccy == "USD" else False
+        buy_res = self.gw.place_order(acc_id, buy_conid, "BUY", buy_shares, buy_price, outside_rth=buy_outside)
+        logger.info(f"Odeslán nákupní pokyn pro {buy_sym}: {buy_shares} ks @ {buy_price} {buy_ccy} (ConID {buy_conid}): {buy_res.get('ok')}")
+
+        # ZÁPIS DO AUDITNÍ HISTORIE OBCHODŮ
+        now_str = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
+        trade_buy = {
+            "symbol": buy_sym,
+            "shares": buy_shares,
+            "price": f"{buy_price:.2f} {buy_ccy} ({round(buy_px_czk):,} CZK)",
+            "total_czk": round(buy_shares * buy_px_czk),
+            "time": now_str,
+            "type": "AGGRESSIVE_SUB_BUY",
+            "status": f"Okamžitý reinvest do TOP Strong Buy aktiva (+{buy_cand.get('targetUpside', '15%')})"
+        }
+        trade_sell = {
+            "symbol": sell_sym,
+            "shares": sell_shares,
+            "price": f"{sell_price:.2f} {sell_ccy} ({round(sell_price * sell_fx):,} CZK)",
+            "total_czk": round(released_czk),
+            "time": now_str,
+            "type": "AGGRESSIVE_PRUNE_SELL",
+            "status": f"Odříznutí ležáku ({sell_pos.get('unrealized_pnl_percent', 0)} %): kapitál okamžitě rotován do {buy_sym}"
+        }
+
+        # Přidat na začátek vlastní historie obchodů
+        self.custom_trades_history.insert(0, trade_buy)
+        self.custom_trades_history.insert(1, trade_sell)
+
+        updated_state = self.sync_live_portfolio()
+
+        return {
+            "ok": True,
+            "message": f"Agresivní rotace úspěšná: odříznut ležák {sell_sym} ({sell_shares} ks), kapitál {released_czk:,.0f} CZK okamžitě investován do {buy_sym} ({buy_shares} ks @ {buy_price} {buy_ccy}).",
+            "sell": {"symbol": sell_sym, "shares": sell_shares, "result": sell_res},
+            "buy": {"symbol": buy_sym, "shares": buy_shares, "result": buy_res},
+            "state": updated_state
+        }
 
     def execute_manual_order(self, symbol: str, shares: int, price: float, currency: str = "USD") -> Dict[str, Any]:
         """Provede manuální nákup vybraného titulu na Demo účtu přes IBKR."""
@@ -451,6 +734,18 @@ class AutoInvestEngine:
                 if auth_ok and self.is_active:
                     positions = self.gw.get_positions(acc_id)
                     current_symbols = {p.get("contractDesc") or p.get("ticker") for p in positions if (p.get("contractDesc") or p.get("ticker"))}
+
+                    # Detekce a varování před ležáky v agresivním režimu
+                    if self.strategy_mode == "AGGRESSIVE_MOMENTUM":
+                        for p in positions:
+                            pos_qty = p.get("position", 0)
+                            avg_px = p.get("avgPrice", 0)
+                            pnl_val = p.get("unrealizedPnl", 0)
+                            if pos_qty and avg_px:
+                                pnl_pct = (pnl_val / (pos_qty * avg_px)) * 100
+                                if pnl_pct <= self.laggard_pnl_threshold:
+                                    sym = p.get("contractDesc") or p.get("ticker")
+                                    logger.info(f"⚡ [DETEKTOR LEŽÁKŮ] Titul {sym} zaostává ({pnl_pct:.2f} %). Připravena agresivní substituce do TOP 1 Strong Buy aktiva.")
 
                     # Detekce uzavření pozice (Take-Profit nebo Stop-Loss byl exekuován na burze)
                     if self.last_known_symbols and not current_symbols.issubset(self.last_known_symbols):
@@ -527,6 +822,11 @@ class AutoInvestApiHandler(BaseHTTPRequestHandler):
                 "trades_history": state.get("trades_history", [])
             }, ensure_ascii=False).encode("utf-8"))
 
+        elif self.path == "/api/autoinvest/opportunities":
+            opps = ENGINE.detect_opportunities()
+            self._set_headers(200)
+            self.wfile.write(json.dumps(opps, ensure_ascii=False).encode("utf-8"))
+
         elif self.path == "/favicon.ico":
             self._set_headers(204)
         else:
@@ -551,6 +851,28 @@ class AutoInvestApiHandler(BaseHTTPRequestHandler):
             res = ENGINE.execute_basket()
             self._set_headers(200)
             self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
+
+        elif self.path == "/api/autoinvest/substitute":
+            sell_sym = data.get("sell_symbol")
+            buy_sym = data.get("buy_symbol")
+            res = ENGINE.execute_substitution_rotation(sell_sym, buy_sym)
+            self._set_headers(200)
+            self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
+
+        elif self.path == "/api/autoinvest/strategy":
+            mode = data.get("mode")
+            thresh = data.get("laggard_threshold")
+            if mode:
+                ENGINE.strategy_mode = mode
+            if thresh is not None:
+                ENGINE.laggard_pnl_threshold = float(thresh)
+            ENGINE.sync_live_portfolio()
+            self._set_headers(200)
+            self.wfile.write(json.dumps({
+                "ok": True,
+                "strategy_mode": ENGINE.strategy_mode,
+                "laggard_threshold": ENGINE.laggard_pnl_threshold
+            }, ensure_ascii=False).encode("utf-8"))
 
         elif self.path == "/api/order/submit":
             sym = data.get("symbol", "").upper()

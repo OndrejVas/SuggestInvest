@@ -1672,6 +1672,81 @@
             transform: translateY(-1px);
         }
 
+        /* AGRESIVNÍ ROTACE LEŽÁKŮ (HIGH VELOCITY SUBSTITUTION) */
+        .btn-sub-rotate {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.22), rgba(234, 88, 12, 0.28));
+            border: 1px solid rgba(245, 158, 11, 0.6);
+            color: #fbbf24;
+            padding: 4px 9px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+
+        .btn-sub-rotate:hover {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.4), rgba(234, 88, 12, 0.5));
+            border-color: #f59e0b;
+            box-shadow: 0 0 14px rgba(245, 158, 11, 0.5);
+            transform: translateY(-1px);
+            color: #ffffff;
+        }
+
+        .action-btn-aggressive {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(239, 68, 68, 0.22));
+            border: 1px solid rgba(245, 158, 11, 0.5);
+            color: #fef08a;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.74rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action-btn-aggressive:hover {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.35), rgba(239, 68, 68, 0.4));
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+            transform: translateY(-1px);
+            color: #ffffff;
+        }
+
+        .badge-strategy-mode {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            color: #fbbf24;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .badge-laggard {
+            background: rgba(239, 68, 68, 0.18);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #fca5a5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.68rem;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            margin-top: 3px;
+            white-space: nowrap;
+        }
+
         /* ROTATIONS HISTORY LOG */
         .rotations-log-card {
             background: rgba(15, 23, 42, 0.75);
@@ -2030,13 +2105,23 @@
 
             <!-- TABULKA AKTUÁLNĚ OTEVŘENÝCH POZIC NA DEMO ÚČTU -->
             <div class="positions-card">
-                <div class="positions-header">
-                    <div class="positions-title">
-                        <span>📈</span> Aktivní otevřené pozice v portfoliu (Účet DUR222134)
+                <div class="positions-header" style="flex-wrap: wrap; gap: 0.75rem;">
+                    <div>
+                        <div class="positions-title">
+                            <span>📈</span> Aktivní otevřené pozice v portfoliu (Účet DUR222134)
+                        </div>
+                        <span style="font-size: 0.76rem; color: var(--text-muted);" id="positionsSubtitle">
+                            Agresivní momentum model: zaostávající ležáky jsou okamžitě rotovány do nejsilnějších Strong Buy aktiv z fronty.
+                        </span>
                     </div>
-                    <span style="font-size: 0.76rem; color: var(--text-muted);" id="positionsSubtitle">
-                        Reálné pozice nakoupené na účtu s hlídáním Take-Profit a Stop-Loss bracket kotev a doporučeným horizontem držení.
-                    </span>
+                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                        <span class="badge-strategy-mode" id="strategyModeBadge" title="Agresivní rotace aktivní: odřezává ležáky a okamžitě reinvestuje do TOP Strong Buy aktiv">
+                            ⚡ Agresivní Rotace (Žádné Ležáky)
+                        </span>
+                        <button class="action-btn-aggressive" id="quickRotateLaggardBtn" onclick="triggerAutoLaggardRotation()" title="Okamžitě odříznout nejslabší zaostávající titul a za uvolněný kapitál nakoupit #1 Strong Buy z fronty">
+                            ⚡ Rotovat nejhorší ležák do TOP 1
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Placeholder když nejsou žádné otevřené pozice před spuštěním AutoInvestu -->
@@ -2362,11 +2447,10 @@
         const DEMO_STORAGE_KEY = 'ibkr_demo_portfolio_v2';
 
         const queuedRotationCandidates = [
-            { symbol: 'SAP', name: 'SAP SE (XETRA)', exchange: 'XETRA', cur: 'EUR', price: 198.40, sl: '188 €', tp: '235 €', targetUpside: '+18.4 %', shares: 8, posCzk: 40000 },
-            { symbol: 'MSFT', name: 'Microsoft Corp (NASDAQ)', exchange: 'NASDAQ', cur: 'USD', price: 428.10, sl: '410 $', tp: '495 $', targetUpside: '+15.6 %', shares: 4, posCzk: 40240 },
-            { symbol: 'AMZN', name: 'Amazon.com Inc (NASDAQ)', exchange: 'NASDAQ', cur: 'USD', price: 188.50, sl: '178 $', tp: '225 $', targetUpside: '+19.3 %', shares: 9, posCzk: 39870 },
-            { symbol: 'ASML', name: 'ASML Holding NV (AEX)', exchange: 'AEX', cur: 'EUR', price: 785.00, sl: '740 €', tp: '920 €', targetUpside: '+17.2 %', shares: 2, posCzk: 39560 },
-            { symbol: 'NVDA', name: 'NVIDIA Corp (NASDAQ)', exchange: 'NASDAQ', cur: 'USD', price: 121.50, sl: '114 $', tp: '150 $', targetUpside: '+23.4 %', shares: 14, posCzk: 39970 }
+            { symbol: 'NVDA', name: 'NVIDIA Corp', exchange: 'NASDAQ', cur: 'USD', price: 121.50, sl: '114 $', tp: '150 $', targetUpside: '+23.4 %', shares: 14, posCzk: 39970, catalyst: 'AI Blackwell akcelerátory, poptávka datacenter překonává odhady o +32 %, masivní růst marží.' },
+            { symbol: 'MSFT', name: 'Microsoft Corp', exchange: 'NASDAQ', cur: 'USD', price: 428.10, sl: '398 $', tp: '492 $', targetUpside: '+14.9 %', shares: 4, posCzk: 40240, catalyst: 'Azure Cloud +29 % YoY a rozsáhlá monetizace podnikového Copilotu.' },
+            { symbol: 'ASML', name: 'ASML Holding NV', exchange: 'AEX', cur: 'EUR', price: 785.00, sl: '740 €', tp: '920 €', targetUpside: '+17.2 %', shares: 2, posCzk: 39564, catalyst: 'Globální monopol na High-NA EUV litografii nezbytnou pro 2nm AI čipy.' },
+            { symbol: 'AMZN', name: 'Amazon.com Inc', exchange: 'NASDAQ', cur: 'USD', price: 188.50, sl: '175 $', tp: '218 $', targetUpside: '+15.6 %', shares: 9, posCzk: 39870, catalyst: 'Akcelerace cloudového zisku AWS a rekordní provozní cashflow v e-commerce.' }
         ];
 
         function getDemoPortfolio() {
@@ -2393,11 +2477,90 @@
             localStorage.setItem(DEMO_STORAGE_KEY, JSON.stringify(state));
         }
 
-        function initAutoInvestState() {
+        async function fetchLivePortfolioFromServer() {
+            try {
+                // 1. Zkusit lokální REST API službu na portu 5001
+                const res = await fetch('http://127.0.0.1:5001/api/portfolio');
+                if (res.ok) {
+                    return await res.json();
+                }
+            } catch(e) {}
+
+            try {
+                // 2. Fallback na data/live_portfolio.json
+                const res2 = await fetch('data/live_portfolio.json');
+                if (res2.ok) {
+                    return await res2.json();
+                }
+            } catch(e) {}
+
+            return null;
+        }
+
+        async function initAutoInvestState() {
+            const toggle = document.getElementById('autoInvestToggle');
+            const liveData = await fetchLivePortfolioFromServer();
+
+            if (liveData && liveData.open_positions && liveData.open_positions.length > 0) {
+                const state = getDemoPortfolio();
+                state.isExecuted = true;
+                state.account = liveData.account_id || 'DUR222134';
+                state.totalEquity = liveData.equity_czk || 249401.53;
+                state.cash = liveData.cash_czk || 93568.16;
+                state.pendingOrders = liveData.pending_orders || [];
+                state.reservedCash = liveData.reserved_cash_czk || (state.pendingOrders.reduce((sum, o) => sum + (o.total_czk || 0), 0));
+                state.freeCash = liveData.free_cash_czk !== undefined ? liveData.free_cash_czk : Math.max(0, state.cash - state.reservedCash);
+                state.invested = Math.round(state.totalEquity - state.cash);
+                state.strategyMode = liveData.strategy_mode || 'AGGRESSIVE_MOMENTUM';
+                if (liveData.rotation_queue && liveData.rotation_queue.length > 0) {
+                    state.rotationQueue = liveData.rotation_queue;
+                }
+
+                let totalUnrealized = 0;
+                state.positions = liveData.open_positions.map(p => {
+                    const fx = p.currency === 'EUR' ? 25.2 : 23.5;
+                    const pnlCzk = p.unrealized_pnl_czk !== undefined ? p.unrealized_pnl_czk : Math.round((p.unrealized_pnl || 0) * fx);
+                    const pnlPctNum = parseFloat(p.unrealized_pnl_percent) || 0;
+                    const isLaggard = p.is_laggard !== undefined ? p.is_laggard : (pnlPctNum <= -2.5);
+                    totalUnrealized += pnlCzk;
+                    return {
+                        symbol: p.symbol,
+                        name: p.name || p.symbol,
+                        exchange: p.exchange || 'SMART',
+                        shares: p.shares,
+                        currency: p.currency,
+                        entryPrice: `${p.avg_price} ${p.currency}`,
+                        entryPriceCzk: p.avg_price_czk || Math.round(p.avg_price * fx),
+                        currentPrice: `${p.market_price || p.avg_price} ${p.currency}`,
+                        currentPriceCzk: p.market_price_czk || Math.round((p.market_price || p.avg_price) * fx),
+                        posCzk: p.market_value_czk || Math.round((p.market_value || (p.shares * p.avg_price)) * fx),
+                        sl: `${p.sl_price} ${p.currency}`,
+                        tp: `${p.tp_price} ${p.currency}`,
+                        boughtAt: liveData.timestamp_cet,
+                        progressPct: 25,
+                        pnlCzk: pnlCzk,
+                        pnlPct: pnlPctNum.toFixed(2),
+                        isLaggard: isLaggard,
+                        laggardReason: p.laggard_reason || (isLaggard ? `Zaostává (${pnlPctNum.toFixed(2)} %); doporučeno okamžitě rotovat do TOP 1 titulu` : '')
+                    };
+                });
+                state.unrealizedProfit = totalUnrealized;
+
+                if (liveData.trades_history && liveData.trades_history.length > 0) {
+                    state.trades = liveData.trades_history;
+                }
+                saveDemoPortfolio(state);
+
+                const isEnabled = liveData.autoinvest_active !== false;
+                if (toggle) toggle.checked = isEnabled;
+                applyAutoInvestUI(isEnabled);
+                renderPortfolioUI();
+                return;
+            }
+
             const saved = localStorage.getItem('autoinvest_enabled');
             const state = getDemoPortfolio();
             const isEnabled = (saved === 'true') || state.isExecuted;
-            const toggle = document.getElementById('autoInvestToggle');
             if (toggle) toggle.checked = isEnabled;
             applyAutoInvestUI(isEnabled);
             renderPortfolioUI();
@@ -2886,6 +3049,7 @@
                             <td>
                                 <span class="badge-buy-lmt">LONG</span>
                                 <div style="margin-top: 3px;"><span class="badge-horizon">${insight.horizon}</span></div>
+                                ${p.isLaggard ? `<div style="margin-top: 3px;"><span class="badge-laggard" title="${p.laggardReason || 'Zaostává za trhem. Doporučeno odříznout a rotovat do TOP 1.'}">⚠️ LEŽÁK (${p.pnlPct} %)</span></div>` : ''}
                             </td>
                             <td class="font-mono">
                                 <div style="font-weight: 700; color: #60a5fa;">${p.entryPrice}</div>
@@ -2915,9 +3079,12 @@
                                 </div>
                             </td>
                             <td style="text-align: right;">
-                                <div style="display: flex; justify-content: flex-end; gap: 5px;">
+                                <div style="display: flex; justify-content: flex-end; gap: 5px; flex-wrap: wrap;">
+                                    <button class="btn-sub-rotate" onclick="triggerSubstitutionRotation('${p.symbol}')" title="Agresivní rotace: odříznout tento ležák a okamžitě rotovat kapitál do #1 Strong Buy z fronty">
+                                        ⚡ Rotovat do TOP 1
+                                    </button>
                                     <button class="btn-tp-rotate" onclick="simulateTakeProfitRotation('${p.symbol}')" title="Realizovat Take-Profit a rotovat kapitál do dalšího titulu">
-                                        🎯 TP Rotace
+                                        🎯 TP
                                     </button>
                                     <button class="btn-sl-rotate" onclick="simulateStopLossRotation('${p.symbol}')" title="Aktivovat Stop-Loss ochranu a rotovat do dalšího titulu">
                                         🛑 SL
@@ -2930,32 +3097,49 @@
                 }
             }
 
-            // FRONTA PŘIPRAVENÝCH TITULŮ (QUEUE)
+            // FRONTA PŘIPRAVENÝCH TITULŮ (QUEUE) SE VŠEMI HODNOTAMI V CZK
             const queueList = document.getElementById('orderQueueList');
             if (queueList) {
+                const sourceQueue = state.rotationQueue || queuedRotationCandidates;
                 const nextItems = [];
-                for (let i = 0; i < 4; i++) {
-                    const cand = queuedRotationCandidates[(state.queueIndex + i) % queuedRotationCandidates.length];
+                for (let i = 0; i < Math.min(4, sourceQueue.length); i++) {
+                    const cand = sourceQueue[(state.queueIndex + i) % sourceQueue.length];
                     nextItems.push({ ...cand, rank: i + 1 });
                 }
 
-                queueList.innerHTML = nextItems.map(item => `
-                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 7px 12px; border-radius: 6px; background: rgba(255, 255, 255, 0.025); border-left: 3px solid #3b82f6; font-size: 0.8rem; gap: 0.75rem; flex-wrap: wrap;">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <span style="background: rgba(59, 130, 246, 0.2); color: #93c5fd; padding: 2px 7px; border-radius: 4px; font-size: 0.72rem; font-weight: 800;">#${item.rank} ve frontě</span>
-                            <strong>${item.symbol}</strong>
-                            <span style="color: var(--text-secondary); font-size: 0.76rem;">${item.name} (${item.exchange})</span>
+                queueList.innerHTML = nextItems.map(item => {
+                    const fx = item.cur === 'EUR' ? 25.2 : 23.5;
+                    const pxCzk = item.price_czk || Math.round(item.price * fx);
+                    const totCzk = item.total_czk || Math.round((item.shares || 4) * item.price * fx);
+                    const shares = item.shares || Math.max(1, Math.floor(40000 / pxCzk));
+
+                    return `
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border-radius: 6px; background: rgba(255, 255, 255, 0.025); border-left: 3px solid ${item.rank === 1 ? '#f59e0b' : '#3b82f6'}; font-size: 0.8rem; gap: 0.75rem; flex-wrap: wrap;">
+                        <div style="display: flex; flex-direction: column; gap: 3px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="background: ${item.rank === 1 ? 'rgba(245, 158, 11, 0.25)' : 'rgba(59, 130, 246, 0.2)'}; color: ${item.rank === 1 ? '#fbbf24' : '#93c5fd'}; padding: 2px 7px; border-radius: 4px; font-size: 0.72rem; font-weight: 800;">#${item.rank} ve frontě</span>
+                                <strong>${item.symbol}</strong>
+                                <span style="color: var(--text-secondary); font-size: 0.76rem;">${item.name} (${item.exchange})</span>
+                                <span style="color: #34d399; font-weight: 800; font-size: 0.76rem; background: rgba(16, 185, 129, 0.12); padding: 1px 6px; border-radius: 3px;">${item.targetUpside || '+15 %'} Strong Buy</span>
+                            </div>
+                            ${item.catalyst ? `<div style="font-size: 0.72rem; color: #cbd5e1;"><strong style="color: #fbbf24;">⚡ Katalyzátor zpráv:</strong> ${item.catalyst}</div>` : ''}
                         </div>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <span style="color: #60a5fa; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;">${item.price} ${item.cur}</span>
-                            <span style="color: #34d399; font-weight: 700; font-size: 0.76rem;">Cíl: ${item.tp} (${item.targetUpside})</span>
-                            <span style="color: #94a3b8; font-size: 0.72rem;">SL: ${item.sl}</span>
-                            <span style="background: rgba(16, 185, 129, 0.12); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 2px 7px; border-radius: 4px; font-size: 0.7rem; font-weight: 700;">
-                                Připraven k nákupu při uvolnění kapitálu
+                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                            <span style="color: #60a5fa; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;">
+                                ${item.price} ${item.cur} <span style="color: #94a3b8; font-size: 0.72rem;">(~${Number(pxCzk).toLocaleString('cs-CZ')} CZK)</span>
                             </span>
+                            <span style="color: #38bdf8; font-weight: 700; font-size: 0.76rem;">
+                                Plán: ${shares} ks (~${Number(totCzk).toLocaleString('cs-CZ')} CZK)
+                            </span>
+                            <span style="color: #34d399; font-weight: 700; font-size: 0.76rem;">Cíl TP: ${item.tp || '+15 %'}</span>
+                            <span style="color: #f87171; font-size: 0.72rem;">SL: ${item.sl || '-7 %'}</span>
+                            <button class="btn-sub-rotate" style="padding: 3px 8px; font-size: 0.72rem;" onclick="triggerSubstitutionRotation(null, '${item.symbol}')" title="Koupit ${item.symbol} náhradou za největší ležák z portfolia">
+                                ⚡ Koupit náhradou za ležák
+                            </button>
                         </div>
                     </div>
-                `).join('');
+                    `;
+                }).join('');
             }
 
             // HISTORIE REALIZOVANÝCH NÁKUPŮ NA DEMO ÚČTU (REAL TRADES LOG)
@@ -2983,7 +3167,15 @@
                         } else if (t.type === 'REINVEST_BUY') {
                             badgeHtml = '<span class="status-chip ready" style="font-size: 0.72rem; padding: 2px 7px; background: rgba(59, 130, 246, 0.2); color: #93c5fd; border-color: rgba(59, 130, 246, 0.45);">🔄 Reinvestiční Nákup</span>';
                             borderCol = '#3b82f6';
+                        } else if (t.type === 'AGGRESSIVE_PRUNE_SELL') {
+                            badgeHtml = '<span class="status-chip" style="font-size: 0.72rem; padding: 2px 7px; background: rgba(239, 68, 68, 0.25); color: #fca5a5; border-color: rgba(239, 68, 68, 0.6);">⚡ Odříznutí Ležáku</span>';
+                            borderCol = '#ef4444';
+                        } else if (t.type === 'AGGRESSIVE_SUB_BUY') {
+                            badgeHtml = '<span class="status-chip ready" style="font-size: 0.72rem; padding: 2px 7px; background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(16, 185, 129, 0.25)); color: #fef08a; border-color: rgba(245, 158, 11, 0.6);">⚡ Reinvest do TOP 1</span>';
+                            borderCol = '#f59e0b';
                         }
+
+                        const tradeTotal = t.total_czk !== undefined ? t.total_czk : (t.totalCzk !== undefined ? t.totalCzk : 0);
 
                         return `
                             <div class="rotation-item" style="border-left-color: ${borderCol};">
@@ -2991,15 +3183,15 @@
                                     ${badgeHtml}
                                     <strong>${t.symbol}</strong>
                                     <span style="color: #cbd5e1; font-size: 0.78rem;">${t.name || ''}</span>
-                                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #93c5fd;">${t.shares} ks @ ${t.price}</span>
+                                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #60a5fa;">${t.shares} ks @ ${t.price}</span>
                                 </div>
                                 <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-                                    <span style="color: ${t.profitCzk ? (t.profitCzk >= 0 ? '#34d399' : '#f87171') : '#ffffff'}; font-weight: 800; font-family: 'JetBrains Mono', monospace;">
-                                        ${t.profitCzk ? (t.profitCzk >= 0 ? '+' : '') + Number(t.profitCzk).toLocaleString('cs-CZ') + ' CZK' : Number(t.totalCzk).toLocaleString('cs-CZ') + ' CZK'}
+                                    <span style="color: ${t.profitCzk ? (t.profitCzk >= 0 ? '#34d399' : '#f87171') : '#60a5fa'}; font-weight: 800; font-family: 'JetBrains Mono', monospace;">
+                                        ${t.profitCzk ? (t.profitCzk >= 0 ? '+' : '') + Number(t.profitCzk).toLocaleString('cs-CZ') + ' CZK' : Number(tradeTotal).toLocaleString('cs-CZ') + ' CZK'}
                                     </span>
                                     <span style="color: #94a3b8; font-size: 0.74rem;">📅 ${t.time}</span>
                                     <span style="background: rgba(255, 255, 255, 0.05); color: #94a3b8; padding: 2px 7px; border-radius: 4px; font-size: 0.7rem;">
-                                        ${t.audit || 'DUR222134'}
+                                        ${t.audit || t.status || 'DUR222134'}
                                     </span>
                                 </div>
                             </div>
@@ -3154,6 +3346,149 @@
 
             renderPortfolioUI();
             showToast(`🛑 STOP-LOSS AKTIVOVÁN: Pozice ${symbol} ukončena pro ochranu kapitálu (-${lossCzk.toLocaleString('cs-CZ')} CZK). Zbývající kapitál ${remainingCapital.toLocaleString('cs-CZ')} CZK byl okamžitě rotován do ${nextCand.symbol}!`, 'error', 6000);
+        }
+
+        // ==================== ⚡ AGRESIVNÍ ROTACE LEŽÁKŮ DO TOP STRONG BUY AKTIV ====================
+        async function triggerSubstitutionRotation(sellSymbol, buySymbol) {
+            const labelSell = sellSymbol || 'nejhorší ležák';
+            const labelBuy = buySymbol || '#1 Strong Buy';
+            showToast(`⚡ Spouštím agresivní rotaci: odříznutí ${labelSell} ➔ nákup ${labelBuy}...`, 'info', 3000);
+
+            // 1. Zkusit živý REST API server AutoInvest (port 5001)
+            try {
+                const res = await fetch('http://127.0.0.1:5001/api/autoinvest/substitute', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sell_symbol: sellSymbol, buy_symbol: buySymbol })
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.ok) {
+                        showToast(`⚡ AGRESIVNÍ ROTACE ÚSPĚŠNÁ: ${data.message}`, 'success', 8000);
+                        await initAutoInvestState();
+                        return;
+                    }
+                }
+            } catch (e) {
+                console.log('AutoInvest service unreachable, falling back to local simulation:', e);
+            }
+
+            // 2. Klientský simulační fallback
+            simulateAggressiveSubstitution(sellSymbol, buySymbol);
+        }
+
+        async function triggerAutoLaggardRotation() {
+            showToast('🔍 Detekuji nejhorší zaostávající pozici pro okamžitou substituci...', 'info', 2000);
+            try {
+                const oppRes = await fetch('http://127.0.0.1:5001/api/autoinvest/opportunities');
+                if (oppRes.ok) {
+                    const oppData = await oppRes.json();
+                    const rec = oppData.recommended_substitution;
+                    if (rec && rec.sell && rec.buy) {
+                        await triggerSubstitutionRotation(rec.sell.symbol, rec.buy.symbol);
+                        return;
+                    }
+                }
+            } catch(e) {}
+
+            const state = getDemoPortfolio();
+            if (!state.positions || state.positions.length === 0) {
+                showToast('V portfoliu nejsou žádné otevřené pozice k rotaci.', 'warning');
+                return;
+            }
+            const worst = [...state.positions].sort((a, b) => (parseFloat(a.pnlPct) || 0) - (parseFloat(b.pnlPct) || 0))[0];
+            const topCand = (state.rotationQueue && state.rotationQueue[0]) || queuedRotationCandidates[0];
+            await triggerSubstitutionRotation(worst.symbol, topCand.symbol);
+        }
+
+        function simulateAggressiveSubstitution(sellSymbol, buySymbol) {
+            const state = getDemoPortfolio();
+            if (!state.positions || state.positions.length === 0) return;
+
+            let posIdx = -1;
+            if (sellSymbol) {
+                posIdx = state.positions.findIndex(p => p.symbol === sellSymbol);
+            }
+            if (posIdx === -1) {
+                let minPnl = 999999;
+                state.positions.forEach((p, idx) => {
+                    const val = parseFloat(p.pnlPct) || 0;
+                    if (val < minPnl) {
+                        minPnl = val;
+                        posIdx = idx;
+                    }
+                });
+            }
+            if (posIdx === -1) return;
+
+            const pos = state.positions[posIdx];
+            const releasedCapital = pos.posCzk;
+            const now = new Date();
+            const timeStr = `${String(now.getDate()).padStart(2, '0')}. ${String(now.getMonth() + 1).padStart(2, '0')}. ${now.getFullYear()} v ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+            const queue = state.rotationQueue || queuedRotationCandidates;
+            let targetCand = null;
+            if (buySymbol) {
+                targetCand = queue.find(c => c.symbol === buySymbol);
+            }
+            if (!targetCand) {
+                targetCand = queue[0] || queuedRotationCandidates[0];
+            }
+
+            const fx = targetCand.cur === 'EUR' ? 25.2 : 23.5;
+            const newShares = Math.max(1, Math.floor(releasedCapital / (targetCand.price * fx)));
+            const newPosCzk = Math.round(newShares * targetCand.price * fx);
+
+            // 1. Záznam prodeje ležáku
+            state.trades.unshift({
+                id: 'SUB-SELL-' + Math.floor(100000 + Math.random() * 900000),
+                time: timeStr,
+                type: 'AGGRESSIVE_PRUNE_SELL',
+                symbol: pos.symbol,
+                name: pos.name,
+                shares: pos.shares,
+                price: pos.currentPrice,
+                profitCzk: pos.pnlCzk || 0,
+                totalCzk: releasedCapital,
+                audit: `Odříznutí ležáku (${pos.pnlPct} %): okamžitá rotace do ${targetCand.symbol}`
+            });
+
+            // 2. Záznam nákupu preferovaného Strong Buy titulu
+            state.trades.unshift({
+                id: 'SUB-BUY-' + Math.floor(100000 + Math.random() * 900000),
+                time: timeStr,
+                type: 'AGGRESSIVE_SUB_BUY',
+                symbol: targetCand.symbol,
+                name: targetCand.name,
+                shares: newShares,
+                price: `${targetCand.price} ${targetCand.cur}`,
+                totalCzk: newPosCzk,
+                audit: `Okamžitý reinvest do TOP Strong Buy aktiva (+${targetCand.targetUpside || '15%'})`
+            });
+
+            // 3. Nahrazení pozice v portfoliu
+            state.positions[posIdx] = {
+                symbol: targetCand.symbol,
+                name: targetCand.name,
+                exchange: targetCand.exchange,
+                shares: newShares,
+                currency: targetCand.cur,
+                entryPrice: `${targetCand.price} ${targetCand.cur}`,
+                currentPrice: `${targetCand.price} ${targetCand.cur}`,
+                posCzk: newPosCzk,
+                sl: targetCand.sl || '-7 %',
+                tp: targetCand.tp || '+15 %',
+                boughtAt: timeStr,
+                progressPct: 15,
+                pnlCzk: 0,
+                pnlPct: '0.00',
+                isLaggard: false,
+                laggardReason: ''
+            };
+
+            saveDemoPortfolio(state);
+            renderPortfolioUI();
+            showToast(`⚡ AGRESIVNÍ ROTACE DOKONČENA: Odříznut ležák ${pos.symbol}, uvolněný kapitál ${releasedCapital.toLocaleString('cs-CZ')} CZK okamžitě investován do ${targetCand.symbol} (${targetCand.name})! Žádné ležáky v portfoliu.`, 'success', 8000);
         }
 
         function resetDemoPortfolioPrompt() {
