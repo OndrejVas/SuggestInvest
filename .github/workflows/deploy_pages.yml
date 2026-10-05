@@ -9,6 +9,7 @@ on:
       - 'template.html'
       - 'trading.html'
       - 'trading_template.html'
+      - 'scalping.html'
       - '*.docx'
   workflow_dispatch:
 
