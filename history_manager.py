@@ -639,7 +639,13 @@ def get_all_ticker_signal_dots(limit_per_ticker: int = 30) -> Dict[str, List[Dic
     """
     Vrátí pro všechny tickery chronologickou historii signálů (až limit_per_ticker skenů)
     optimalizovaným jediným SQL dotazem pomocí window funkce ROW_NUMBER().
-    Každý záznam obsahuje: date_str, signal, signal_class, probability, price, price_str, color.
+    Každý záznam obsahuje kompletní kontext pro interaktivní tooltip:
+    - Přesné datum a čas skenu (date, date_str, full_datetime)
+    - Čerpaná tržní data v daný den (cena, denní procentní změna, měna)
+    - Čerpané události a katalyzátory (catalysts, catalyst_text)
+    - Vyhodnocení dopadu a zdůvodnění AI modelu (impact_direction, reasoning)
+    - Přímý odkaz na data a graf daného aktiva na Yahoo Finance (chart_url)
+    - Předformátovaný vícerádkový text pro nativní title atribut (formatted_tooltip)
     """
     result: Dict[str, List[Dict[str, Any]]] = {}
     if not os.path.exists(DB_FILE):
@@ -648,9 +654,13 @@ def get_all_ticker_signal_dots(limit_per_ticker: int = 30) -> Dict[str, List[Dic
         with sqlite3.connect(DB_FILE) as conn:
             cursor = conn.cursor()
             cursor.execute("""
-            SELECT UPPER(sh.yahoo_symbol), sh.scan_date, sh.signal, sh.probability, sh.price, s.timestamp_cet
+            SELECT UPPER(sh.yahoo_symbol), sh.scan_date, sh.signal, sh.probability, sh.price,
+                   sh.change_pct, sh.currency, sh.impact_direction, sh.catalysts, sh.catalyst_event,
+                   sh.reasoning, sh.target_upside_pct, s.timestamp_cet
             FROM (
                 SELECT id, scan_id, yahoo_symbol, scan_date, signal, probability, price,
+                       change_pct, currency, impact_direction, catalysts, catalyst_event,
+                       reasoning, target_upside_pct,
                        ROW_NUMBER() OVER (PARTITION BY UPPER(yahoo_symbol) ORDER BY id DESC) as rn
                 FROM signal_history
             ) sh
@@ -660,7 +670,8 @@ def get_all_ticker_signal_dots(limit_per_ticker: int = 30) -> Dict[str, List[Dic
             """, (limit_per_ticker,))
 
             rows = cursor.fetchall()
-            for sym, sdate, sig, prob, price, ts_cet in rows:
+            for (sym, sdate, sig, prob, price, ch_pct, cur, impact_dir, cats_raw,
+                 cat_event, reasoning, upside, ts_cet) in rows:
                 if sym not in result:
                     result[sym] = []
 
@@ -681,12 +692,12 @@ def get_all_ticker_signal_dots(limit_per_ticker: int = 30) -> Dict[str, List[Dic
                     color = "#eab308"
                     sig_cls = "hold"
 
-                # Extrahujeme datum a čas pro kompaktní a přesný tooltip (např. '28.09. 19:01')
+                # Extrahujeme datum a čas pro kompaktní zobrazení a plné datum
                 label = sdate
+                full_datetime = ts_cet if ts_cet else sdate
                 if ts_cet and " v " in ts_cet:
                     try:
                         date_part, time_part = ts_cet.split(" v ")
-                        # '28. 09. 2026' -> '28.09.'
                         d_parts = [p.strip() for p in date_part.split(".") if p.strip()]
                         if len(d_parts) >= 2:
                             d_clean = f"{d_parts[0]}.{d_parts[1]}."
@@ -701,16 +712,66 @@ def get_all_ticker_signal_dots(limit_per_ticker: int = 30) -> Dict[str, List[Dic
                     label = f"{parts[2]}.{parts[1]}."
 
                 price_str = f"{price:.2f}" if price is not None else ""
+                cur_str = cur or "USD"
+                ch_pct_str = f"{ch_pct:+.2f} %" if ch_pct is not None else ""
+
+                # Zpracování katalyzátorů
+                cat_items = []
+                if cats_raw:
+                    try:
+                        parsed = json.loads(cats_raw) if cats_raw.strip().startswith("[") else [cats_raw]
+                        cat_items = [str(x).strip() for x in parsed if x]
+                    except Exception:
+                        cat_items = [cats_raw.strip()]
+                if not cat_items and cat_event:
+                    cat_items = [cat_event.strip()]
+
+                catalyst_text = ", ".join(cat_items) if cat_items else "Běžný monitoring tržního kontextu a sektorových toků"
+
+                # Směr dopadu
+                if not impact_dir:
+                    impact_dir = "▲ Růst" if "BUY" in sig_str else ("▼ Pokles" if "SELL" in sig_str else "— Neutrální")
+
+                # AI reasoning
+                clean_reasoning = (reasoning or "").strip()
+                if not clean_reasoning:
+                    clean_reasoning = f"AI model kvantifikoval signál {sig_str} s konfidencí {prob or 50}% na základě tržního momenta, fundamentů a ocenění."
+
+                chart_url = f"https://finance.yahoo.com/quote/{sym}/history"
+
+                # Formátovaný multi-line text pro nativní title tooltip
+                tooltip_lines = [
+                    f"📅 Sken: {full_datetime}",
+                    f"⚡ Signál: {sig_str} ({prob or 50} %)",
+                    f"💰 Cena: {price_str} {cur_str} ({ch_pct_str})",
+                    f"🎯 Dopad na titul: {impact_dir}",
+                    f"📡 Čerpaná data & katalyzátory: {catalyst_text}",
+                    f"🧠 Vyhodnocení kontextu: {clean_reasoning[:180]}{'...' if len(clean_reasoning) > 180 else ''}",
+                    f"🔗 Klikněte pro otevření dat na Yahoo Finance"
+                ]
+                formatted_tooltip = "\n".join(tooltip_lines)
 
                 result[sym].append({
                     "date": sdate,
                     "date_str": label,
+                    "full_datetime": full_datetime,
                     "signal": sig_str,
                     "signal_class": sig_cls,
                     "probability": prob or 50,
+                    "confidence": prob or 50,
                     "price": price,
                     "price_str": price_str,
-                    "color": color
+                    "currency": cur_str,
+                    "change_pct": ch_pct,
+                    "change_pct_str": ch_pct_str,
+                    "impact_direction": impact_dir,
+                    "catalysts": cat_items,
+                    "catalyst_text": catalyst_text,
+                    "reasoning": clean_reasoning,
+                    "target_upside_pct": upside,
+                    "chart_url": chart_url,
+                    "color": color,
+                    "formatted_tooltip": formatted_tooltip
                 })
     except Exception as e:
         logger.warning(f"Chyba při hromadném načítání historie teček v history_manager: {e}")

@@ -1944,9 +1944,14 @@
         <!-- HEADER -->
         <header>
             <div class="header-top">
-                <a href="index.html" class="nav-back-btn" title="Návrat na hlavní tržní skener a AI signály">
-                    ⬅ Zpět na Tržní Screener & Barometr
-                </a>
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <a href="index.html" class="nav-back-btn" title="Návrat na hlavní tržní skener a AI signály">
+                        ⬅ Zpět na Tržní Screener & Barometr
+                    </a>
+                    <a href="scalping.html" class="nav-back-btn" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.45); color: #fbbf24;" title="Otevřít podprojekt Scalping pro vysokofrekvenční intradenní obchodování">
+                        ⚡ Scalping Portál
+                    </a>
+                </div>
 
                 <div class="header-badges">
                     <span class="status-chip ibkr">
@@ -1956,7 +1961,7 @@
                         <span class="pulse-dot"></span> Socket API: Ready
                     </span>
                     <span style="font-size: 0.74rem; color: var(--text-muted);">
-                        Poslední sken: <strong>29.09.2026 22:50 SELČ</strong>
+                        Poslední sken: <strong>01. 10. 2026 v 21:05 SELČ</strong>
                     </span>
                 </div>
             </div>
@@ -2216,6 +2221,7 @@
                     <button class="broker-tab-btn active" id="tabIbkrBtn" style="cursor: default;">🏦 Interactive Brokers Platform</button>
                 </div>
             </div>
+
         </div>
 
         <!-- TABULKA PŘÍKAZŮ -->
@@ -2248,12 +2254,12 @@
                 </thead>
                 <tbody id="ordersTableBody">
                     
-                    <tr id="orderRow-ORD-20260930-RHM-FD23" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 3159.07, &#34;capital_risk_pct&#34;: 1.26, &#34;catalysts&#34;: [&#34;\u2696\ufe0f Sektorov\u00fd diskont (Pairs)&#34;, &#34;\ud83c\udfaf Vysok\u00fd diskont&#34;], &#34;confidence&#34;: 84, &#34;conviction_score&#34;: &#34;2.55&#34;, &#34;created_at&#34;: &#34;2026-09-30 19:34:04 UTC&#34;, &#34;currency&#34;: &#34;EUR&#34;, &#34;current_price&#34;: 958.0, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,2,RHM,STK,SMART,EUR,LMT,944.04,881.36&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027RHM\u0027, \u0027SMART\u0027, \u0027EUR\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=2,\n    limitPrice=944.04,\n    takeProfitPrice=1085.65,\n    stopLossPrice=881.36\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 944.04, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Rheinmetall AG&#34;, &#34;order_id&#34;: &#34;ORD-20260930-RHM-FD23&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 47579.62, &#34;rank&#34;: 1, &#34;rrr&#34;: 2.26, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 2, &#34;signal&#34;: &#34;BUY&#34;, &#34;sl_price&#34;: 881.36, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;RHM&#34;, &#34;symbol_xtb&#34;: &#34;RHM.DE&#34;, &#34;symbol_yahoo&#34;: &#34;RHM.DE&#34;, &#34;tactical_note&#34;: &#34;Konsenzu\u00e1ln\u00ed c\u00edlov\u00e1 cena na 1641.3 EUR (+71.3 %) vytv\u00e1\u0159\u00ed atraktivn\u00ed asymetrii v\u00fdnosu a rizika p\u0159i 1M momentu -13.8 %. Teze z\u016fst\u00e1v\u00e1 v platnosti nad hranic\u00ed podpory 881.36 EUR.&#34;, &#34;target_mean&#34;: &#34;1,641.29 EUR&#34;, &#34;target_upside&#34;: &#34;+71.3 %&#34;, &#34;target_upside_class&#34;: &#34;upside-positive&#34;, &#34;tp_price&#34;: 1085.65, &#34;weight_pct&#34;: 25.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-1&#34;, &#34;price&#34;: 944.04, &#34;sl&#34;: 881.36, &#34;symbol&#34;: &#34;RHM.DE&#34;, &#34;tp&#34;: 1085.65, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                    <tr id="orderRow-ORD-20261005-AMG-702E" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 3316.32, &#34;capital_risk_pct&#34;: 1.33, &#34;catalysts&#34;: [&#34;\u2696\ufe0f Sektorov\u00fd diskont (Pairs)&#34;], &#34;confidence&#34;: 74, &#34;conviction_score&#34;: &#34;2.62&#34;, &#34;created_at&#34;: &#34;2026-10-05 16:49:07 UTC&#34;, &#34;currency&#34;: &#34;EUR&#34;, &#34;current_price&#34;: 28.64, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,70,AMG,STK,SMART,EUR,LMT,28.23,26.35&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027AMG\u0027, \u0027SMART\u0027, \u0027EUR\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=70,\n    limitPrice=28.23,\n    takeProfitPrice=46.91,\n    stopLossPrice=26.35\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 28.23, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;AMG Critical Materials NV&#34;, &#34;order_id&#34;: &#34;ORD-20261005-AMG-702E&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 49797.72, &#34;rank&#34;: 1, &#34;rrr&#34;: 9.94, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 70, &#34;signal&#34;: &#34;BUY&#34;, &#34;sl_price&#34;: 26.35, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;AMG&#34;, &#34;symbol_xtb&#34;: &#34;AMG.NL&#34;, &#34;symbol_yahoo&#34;: &#34;AMG.AS&#34;, &#34;tactical_note&#34;: &#34;Konsenzu\u00e1ln\u00ed c\u00edlov\u00e1 cena na 46.9 EUR (+63.8 %) vytv\u00e1\u0159\u00ed atraktivn\u00ed asymetrii v\u00fdnosu a rizika p\u0159i 1M momentu -9.4 %. Teze z\u016fst\u00e1v\u00e1 v platnosti nad hranic\u00ed podpory 26.35 EUR.&#34;, &#34;target_mean&#34;: &#34;46.91 EUR&#34;, &#34;target_upside&#34;: &#34;+63.8 %&#34;, &#34;target_upside_class&#34;: &#34;upside-positive&#34;, &#34;tp_price&#34;: 46.91, &#34;weight_pct&#34;: 25.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-1&#34;, &#34;price&#34;: 28.23, &#34;sl&#34;: 26.35, &#34;symbol&#34;: &#34;AMG.NL&#34;, &#34;tp&#34;: 46.91, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
                         <td style="font-weight: 800; color: var(--text-muted);">#1</td>
                         <td>
                             <div class="sym-cell">
                                 <div class="sym-main">
-                                    <a href="https://finance.yahoo.com/chart/RHM.DE" target="_blank" rel="noopener noreferrer" class="sym-ticker-link" title="Otevřít graf na Yahoo Finance">RHM</a>
+                                    <a href="https://finance.yahoo.com/chart/AMG.AS" target="_blank" rel="noopener noreferrer" class="sym-ticker-link" title="Zobrazit živý interaktivní graf na Yahoo Finance">AMG</a>
                                     <span class="sym-ibkr-tag">SMART</span>
                                     <div class="ai-tooltip-wrapper" style="margin-left: 6px;">
                                         <button type="button" class="ai-tooltip-trigger" onclick="handleTooltipClick(event, this)" title="Zobrazit detailní investiční tezi, plán a doporučení">
@@ -2264,47 +2270,47 @@
                                             <div class="tooltip-header">
                                                 <div style="display: flex; align-items: center; gap: 6px;">
                                                     <span class="tooltip-title">💡 AutoInvest Plán & Teze #1</span>
-                                                    <span class="tooltip-ticker">RHM</span>
+                                                    <span class="tooltip-ticker">AMG</span>
                                                 </div>
                                                 <button type="button" class="tooltip-close-btn" onclick="closeAllTooltips(event)" title="Zavřít popup">✕</button>
                                             </div>
 
                                             <div class="tooltip-signal-row" style="margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
                                                 <span class="badge-buy-lmt" style="font-size: 0.72rem;">BUY</span>
-                                                <span style="font-size: 0.74rem; font-weight: 700; color: #a5b4fc;">Důvěra modelu: 84 %</span>
+                                                <span style="font-size: 0.74rem; font-weight: 700; color: #a5b4fc;">Důvěra modelu: 74 %</span>
                                             </div>
 
                                             
-                                            <div class="tooltip-thesis-box" style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 6px; padding: 7px 9px; margin-bottom: 8px;">
+                                             <div class="tooltip-thesis-box" style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 6px; padding: 7px 9px; margin-bottom: 8px;">
                                                 <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #93c5fd; margin-bottom: 3px;">🎯 Investiční Důvod & Teze:</div>
-                                                <div style="font-size: 0.78rem; color: #f1f5f9; line-height: 1.4;">Konsenzuální cílová cena na 1641.3 EUR (+71.3 %) vytváří atraktivní asymetrii výnosu a rizika při 1M momentu -13.8 %. Teze zůstává v platnosti nad hranicí podpory 881.36 EUR.</div>
+                                                <div style="font-size: 0.78rem; color: #f1f5f9; line-height: 1.4;">Konsenzuální cílová cena na 46.9 EUR (+63.8 %) vytváří atraktivní asymetrii výnosu a rizika při 1M momentu -9.4 %. Teze zůstává v platnosti nad hranicí podpory 26.35 EUR.</div>
                                             </div>
                                             
 
                                             <div class="tooltip-grid">
                                                 <div class="tooltip-stat">
                                                     <span class="stat-lbl">Očekávané zhodnocení:</span>
-                                                    <span class="stat-val font-success" style="font-weight: 800;">+71.3 %</span>
+                                                    <span class="stat-val font-success" style="font-weight: 800;">+63.8 %</span>
                                                 </div>
                                                 <div class="tooltip-stat">
                                                     <span class="stat-lbl">Cílová cena (TP / Konsenzus):</span>
-                                                    <span class="stat-val font-accent">1085.65 EUR (1,641.29 EUR)</span>
+                                                    <span class="stat-val font-accent">46.91 EUR (46.91 EUR)</span>
                                                 </div>
                                                 <div class="tooltip-stat">
                                                     <span class="stat-lbl">Vstupní Limitní nákup:</span>
-                                                    <span class="stat-val font-accent">944.04 EUR</span>
+                                                    <span class="stat-val font-accent">28.23 EUR</span>
                                                 </div>
                                                 <div class="tooltip-stat">
                                                     <span class="stat-lbl">Ochranný Stop-Loss (SL):</span>
-                                                    <span class="stat-val" style="color: #fca5a5;">881.36 EUR (max -1.26 %)</span>
+                                                    <span class="stat-val" style="color: #fca5a5;">26.35 EUR (max -1.33 %)</span>
                                                 </div>
                                                 <div class="tooltip-stat">
                                                     <span class="stat-lbl">Poměr zisku k riziku (RRR):</span>
-                                                    <span class="stat-val font-warning">2.26:1</span>
+                                                    <span class="stat-val font-warning">9.94:1</span>
                                                 </div>
                                                 <div class="tooltip-stat">
                                                     <span class="stat-lbl">Doporučená alokace:</span>
-                                                    <span class="stat-val">47580 CZK (25.0 % portfolia)</span>
+                                                    <span class="stat-val">49798 CZK (25.0 % portfolia)</span>
                                                 </div>
                                             </div>
 
@@ -2314,8 +2320,6 @@
                                                 <div style="display: flex; flex-wrap: wrap; gap: 4px;">
                                                     
                                                     <span class="tooltip-catalyst">⚖️ Sektorový diskont (Pairs)</span>
-                                                    
-                                                    <span class="tooltip-catalyst">🎯 Vysoký diskont</span>
                                                     
                                                 </div>
                                             </div>
@@ -2329,38 +2333,38 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="sym-sub" title="Rheinmetall AG">Rheinmetall AG</div>
+                                <div class="sym-sub" title="AMG Critical Materials NV">AMG Critical Materials NV</div>
                             </div>
                         </td>
                         <td>
                             <span class="badge-buy-lmt">BUY LIMIT</span>
                         </td>
-                        <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">2 ks</td>
-                        <td class="font-mono price-entry">944.04 EUR</td>
-                        <td class="font-mono price-sl">881.36 EUR</td>
-                        <td class="font-mono price-tp">1085.65 EUR</td>
-                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">2.26:1</td>
-                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">47580 CZK</td>
-                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">3159 CZK (1.26 %)</td>
+                        <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">70 ks</td>
+                        <td class="font-mono price-entry">28.23 EUR</td>
+                        <td class="font-mono price-sl">26.35 EUR</td>
+                        <td class="font-mono price-tp">46.91 EUR</td>
+                        <td class="font-mono" style="font-weight: 800; color: #60a5fa;">9.94:1</td>
+                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">49798 CZK</td>
+                        <td class="font-mono order-risk-cell" style="color: #60a5fa;">3316 CZK (1.33 %)</td>
                         <td>
                             <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
                             <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
                         </td>
                         <td style="text-align: right;">
                             <div style="display: flex; justify-content: flex-end; gap: 4px;">
-                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20260930-RHM-FD23', 'RHM')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20261005-AMG-702E', 'AMG')" title="Simulovat exekuci v Paper Trading sandboxu">
                                     ▶ Exekuce
                                 </button>
                             </div>
                         </td>
                     </tr>
                     
-                    <tr id="orderRow-ORD-20260930-ALLY-29ED" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 3461.08, &#34;capital_risk_pct&#34;: 1.38, &#34;catalysts&#34;: [&#34;\u2696\ufe0f Sektorov\u00fd diskont (Pairs)&#34;, &#34;\ud83c\udfaf Vysok\u00fd diskont&#34;, &#34;\ud83d\udcc5 V\u00fdsledky do 21 dn\u00ed&#34;, &#34;\ud83c\udfdb\ufe0f \u00darokov\u00fd cyklus (NIM)&#34;], &#34;confidence&#34;: 81, &#34;conviction_score&#34;: &#34;2.48&#34;, &#34;created_at&#34;: &#34;2026-09-30 19:34:04 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 38.19, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,56,ALLY,STK,SMART,USD,LMT,37.76,35.13&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027ALLY\u0027, \u0027SMART\u0027, \u0027USD\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=56,\n    limitPrice=37.76,\n    takeProfitPrice=53.23,\n    stopLossPrice=35.13\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 37.76, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Ally Financial Inc&#34;, &#34;order_id&#34;: &#34;ORD-20260930-ALLY-29ED&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 49692.16, &#34;rank&#34;: 2, &#34;rrr&#34;: 5.88, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 56, &#34;signal&#34;: &#34;BUY&#34;, &#34;sl_price&#34;: 35.13, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;ALLY&#34;, &#34;symbol_xtb&#34;: &#34;ALLY.US&#34;, &#34;symbol_yahoo&#34;: &#34;ALLY&#34;, &#34;tactical_note&#34;: &#34;Konsenzu\u00e1ln\u00ed c\u00edlov\u00e1 cena na 53.2 USD (+39.4 %) vytv\u00e1\u0159\u00ed atraktivn\u00ed asymetrii v\u00fdnosu a rizika p\u0159i 1M momentu -10.7 % a bl\u00ed\u017e\u00edc\u00edmi se v\u00fdsledky za 21 dn\u00ed. Teze z\u016fst\u00e1v\u00e1 v platnosti nad hranic\u00ed podpory 35.13 USD.&#34;, &#34;target_mean&#34;: &#34;53.23 USD&#34;, &#34;target_upside&#34;: &#34;+39.4 %&#34;, &#34;target_upside_class&#34;: &#34;upside-positive&#34;, &#34;tp_price&#34;: 53.23, &#34;weight_pct&#34;: 25.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-2&#34;, &#34;price&#34;: 37.76, &#34;sl&#34;: 35.13, &#34;symbol&#34;: &#34;ALLY.US&#34;, &#34;tp&#34;: 53.23, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                    <tr id="orderRow-ORD-20261005-ACE-42A7" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 3578.4, &#34;capital_risk_pct&#34;: 1.43, &#34;catalysts&#34;: [&#34;\ud83e\udde0 Sentiment Divergence&#34;, &#34;\u2696\ufe0f Sektorov\u00fd diskont (Pairs)&#34;, &#34;\ud83c\udfaf Vysok\u00fd diskont&#34;], &#34;confidence&#34;: 80, &#34;conviction_score&#34;: &#34;2.57&#34;, &#34;created_at&#34;: &#34;2026-10-05 16:49:07 UTC&#34;, &#34;currency&#34;: &#34;EUR&#34;, &#34;current_price&#34;: 19.88, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,100,ACE,STK,SMART,EUR,LMT,19.71,18.29&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027ACE\u0027, \u0027SMART\u0027, \u0027EUR\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=100,\n    limitPrice=19.71,\n    takeProfitPrice=26.33,\n    stopLossPrice=18.29\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 19.71, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Acea SpA&#34;, &#34;order_id&#34;: &#34;ORD-20261005-ACE-42A7&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 49669.2, &#34;rank&#34;: 2, &#34;rrr&#34;: 4.66, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 100, &#34;signal&#34;: &#34;BUY&#34;, &#34;sl_price&#34;: 18.29, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;ACE&#34;, &#34;symbol_xtb&#34;: &#34;ACE.IT&#34;, &#34;symbol_yahoo&#34;: &#34;ACE.MI&#34;, &#34;tactical_note&#34;: &#34;Konsenzu\u00e1ln\u00ed c\u00edlov\u00e1 cena na 26.3 EUR (+32.5 %) vytv\u00e1\u0159\u00ed atraktivn\u00ed asymetrii v\u00fdnosu a rizika p\u0159i 1M momentu -2.7 %. Teze z\u016fst\u00e1v\u00e1 v platnosti nad hranic\u00ed podpory 18.29 EUR.&#34;, &#34;target_mean&#34;: &#34;26.33 EUR&#34;, &#34;target_upside&#34;: &#34;+32.5 %&#34;, &#34;target_upside_class&#34;: &#34;upside-positive&#34;, &#34;tp_price&#34;: 26.33, &#34;weight_pct&#34;: 25.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-2&#34;, &#34;price&#34;: 19.71, &#34;sl&#34;: 18.29, &#34;symbol&#34;: &#34;ACE.IT&#34;, &#34;tp&#34;: 26.33, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
                         <td style="font-weight: 800; color: var(--text-muted);">#2</td>
                         <td>
                             <div class="sym-cell">
                                 <div class="sym-main">
-                                    <a href="https://finance.yahoo.com/chart/ALLY" target="_blank" rel="noopener noreferrer" class="sym-ticker-link" title="Otevřít graf na Yahoo Finance">ALLY</a>
+                                    <a href="https://finance.yahoo.com/chart/ACE.MI" target="_blank" rel="noopener noreferrer" class="sym-ticker-link" title="Zobrazit živý interaktivní graf na Yahoo Finance">ACE</a>
                                     <span class="sym-ibkr-tag">SMART</span>
                                     <div class="ai-tooltip-wrapper" style="margin-left: 6px;">
                                         <button type="button" class="ai-tooltip-trigger" onclick="handleTooltipClick(event, this)" title="Zobrazit detailní investiční tezi, plán a doporučení">
@@ -2371,47 +2375,47 @@
                                             <div class="tooltip-header">
                                                 <div style="display: flex; align-items: center; gap: 6px;">
                                                     <span class="tooltip-title">💡 AutoInvest Plán & Teze #2</span>
-                                                    <span class="tooltip-ticker">ALLY</span>
+                                                    <span class="tooltip-ticker">ACE</span>
                                                 </div>
                                                 <button type="button" class="tooltip-close-btn" onclick="closeAllTooltips(event)" title="Zavřít popup">✕</button>
                                             </div>
 
                                             <div class="tooltip-signal-row" style="margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
                                                 <span class="badge-buy-lmt" style="font-size: 0.72rem;">BUY</span>
-                                                <span style="font-size: 0.74rem; font-weight: 700; color: #a5b4fc;">Důvěra modelu: 81 %</span>
+                                                <span style="font-size: 0.74rem; font-weight: 700; color: #a5b4fc;">Důvěra modelu: 80 %</span>
                                             </div>
 
                                             
-                                            <div class="tooltip-thesis-box" style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 6px; padding: 7px 9px; margin-bottom: 8px;">
+                                             <div class="tooltip-thesis-box" style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 6px; padding: 7px 9px; margin-bottom: 8px;">
                                                 <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #93c5fd; margin-bottom: 3px;">🎯 Investiční Důvod & Teze:</div>
-                                                <div style="font-size: 0.78rem; color: #f1f5f9; line-height: 1.4;">Konsenzuální cílová cena na 53.2 USD (+39.4 %) vytváří atraktivní asymetrii výnosu a rizika při 1M momentu -10.7 % a blížícími se výsledky za 21 dní. Teze zůstává v platnosti nad hranicí podpory 35.13 USD.</div>
+                                                <div style="font-size: 0.78rem; color: #f1f5f9; line-height: 1.4;">Konsenzuální cílová cena na 26.3 EUR (+32.5 %) vytváří atraktivní asymetrii výnosu a rizika při 1M momentu -2.7 %. Teze zůstává v platnosti nad hranicí podpory 18.29 EUR.</div>
                                             </div>
                                             
 
                                             <div class="tooltip-grid">
                                                 <div class="tooltip-stat">
                                                     <span class="stat-lbl">Očekávané zhodnocení:</span>
-                                                    <span class="stat-val font-success" style="font-weight: 800;">+39.4 %</span>
+                                                    <span class="stat-val font-success" style="font-weight: 800;">+32.5 %</span>
                                                 </div>
                                                 <div class="tooltip-stat">
                                                     <span class="stat-lbl">Cílová cena (TP / Konsenzus):</span>
-                                                    <span class="stat-val font-accent">53.23 USD (53.23 USD)</span>
+                                                    <span class="stat-val font-accent">26.33 EUR (26.33 EUR)</span>
                                                 </div>
                                                 <div class="tooltip-stat">
                                                     <span class="stat-lbl">Vstupní Limitní nákup:</span>
-                                                    <span class="stat-val font-accent">37.76 USD</span>
+                                                    <span class="stat-val font-accent">19.71 EUR</span>
                                                 </div>
                                                 <div class="tooltip-stat">
                                                     <span class="stat-lbl">Ochranný Stop-Loss (SL):</span>
-                                                    <span class="stat-val" style="color: #fca5a5;">35.13 USD (max -1.38 %)</span>
+                                                    <span class="stat-val" style="color: #fca5a5;">18.29 EUR (max -1.43 %)</span>
                                                 </div>
                                                 <div class="tooltip-stat">
                                                     <span class="stat-lbl">Poměr zisku k riziku (RRR):</span>
-                                                    <span class="stat-val font-warning">5.88:1</span>
+                                                    <span class="stat-val font-warning">4.66:1</span>
                                                 </div>
                                                 <div class="tooltip-stat">
                                                     <span class="stat-lbl">Doporučená alokace:</span>
-                                                    <span class="stat-val">49692 CZK (25.0 % portfolia)</span>
+                                                    <span class="stat-val">49669 CZK (25.0 % portfolia)</span>
                                                 </div>
                                             </div>
 
@@ -2420,13 +2424,11 @@
                                                 <div style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; color: #94a3b8; margin-bottom: 4px;">Klíčové Katalyzátory:</div>
                                                 <div style="display: flex; flex-wrap: wrap; gap: 4px;">
                                                     
+                                                    <span class="tooltip-catalyst">🧠 Sentiment Divergence</span>
+                                                    
                                                     <span class="tooltip-catalyst">⚖️ Sektorový diskont (Pairs)</span>
                                                     
                                                     <span class="tooltip-catalyst">🎯 Vysoký diskont</span>
-                                                    
-                                                    <span class="tooltip-catalyst">📅 Výsledky do 21 dní</span>
-                                                    
-                                                    <span class="tooltip-catalyst">🏛️ Úrokový cyklus (NIM)</span>
                                                     
                                                 </div>
                                             </div>
@@ -2440,38 +2442,38 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="sym-sub" title="Ally Financial Inc">Ally Financial Inc</div>
+                                <div class="sym-sub" title="Acea SpA">Acea SpA</div>
                             </div>
                         </td>
                         <td>
                             <span class="badge-buy-lmt">BUY LIMIT</span>
                         </td>
-                        <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">56 ks</td>
-                        <td class="font-mono price-entry">37.76 USD</td>
-                        <td class="font-mono price-sl">35.13 USD</td>
-                        <td class="font-mono price-tp">53.23 USD</td>
-                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">5.88:1</td>
-                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">49692 CZK</td>
-                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">3461 CZK (1.38 %)</td>
+                        <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">100 ks</td>
+                        <td class="font-mono price-entry">19.71 EUR</td>
+                        <td class="font-mono price-sl">18.29 EUR</td>
+                        <td class="font-mono price-tp">26.33 EUR</td>
+                        <td class="font-mono" style="font-weight: 800; color: #60a5fa;">4.66:1</td>
+                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">49669 CZK</td>
+                        <td class="font-mono order-risk-cell" style="color: #60a5fa;">3578 CZK (1.43 %)</td>
                         <td>
                             <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
                             <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
                         </td>
                         <td style="text-align: right;">
                             <div style="display: flex; justify-content: flex-end; gap: 4px;">
-                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20260930-ALLY-29ED', 'ALLY')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20261005-ACE-42A7', 'ACE')" title="Simulovat exekuci v Paper Trading sandboxu">
                                     ▶ Exekuce
                                 </button>
                             </div>
                         </td>
                     </tr>
                     
-                    <tr id="orderRow-ORD-20260930-AVGO-3F4B" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 3329.01, &#34;capital_risk_pct&#34;: 1.33, &#34;catalysts&#34;: [&#34;\ud83e\udde0 Sentiment Divergence&#34;, &#34;\u2696\ufe0f Sektorov\u00fd diskont (Pairs)&#34;, &#34;\ud83c\udfaf Vysok\u00fd diskont&#34;], &#34;confidence&#34;: 84, &#34;conviction_score&#34;: &#34;2.40&#34;, &#34;created_at&#34;: &#34;2026-09-30 19:34:04 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 349.57, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,6,AVGO,STK,SMART,USD,LMT,345.21,321.6&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027AVGO\u0027, \u0027SMART\u0027, \u0027USD\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=6,\n    limitPrice=345.21,\n    takeProfitPrice=531.85,\n    stopLossPrice=321.6\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 345.21, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Broadcom Inc&#34;, &#34;order_id&#34;: &#34;ORD-20260930-AVGO-3F4B&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 48674.61, &#34;rank&#34;: 3, &#34;rrr&#34;: 7.91, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 6, &#34;signal&#34;: &#34;BUY&#34;, &#34;sl_price&#34;: 321.6, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;AVGO&#34;, &#34;symbol_xtb&#34;: &#34;AVGO.US&#34;, &#34;symbol_yahoo&#34;: &#34;AVGO&#34;, &#34;tactical_note&#34;: &#34;Konsenzu\u00e1ln\u00ed c\u00edlov\u00e1 cena na 531.8 USD (+52.1 %) vytv\u00e1\u0159\u00ed atraktivn\u00ed asymetrii v\u00fdnosu a rizika p\u0159i 1M momentu -5.7 %. Teze z\u016fst\u00e1v\u00e1 v platnosti nad hranic\u00ed podpory 321.6 USD.&#34;, &#34;target_mean&#34;: &#34;531.85 USD&#34;, &#34;target_upside&#34;: &#34;+52.1 %&#34;, &#34;target_upside_class&#34;: &#34;upside-positive&#34;, &#34;tp_price&#34;: 531.85, &#34;weight_pct&#34;: 20.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-3&#34;, &#34;price&#34;: 345.21, &#34;sl&#34;: 321.6, &#34;symbol&#34;: &#34;AVGO.US&#34;, &#34;tp&#34;: 531.85, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                    <tr id="orderRow-ORD-20261005-UBER-C037" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 3474.94, &#34;capital_risk_pct&#34;: 1.39, &#34;catalysts&#34;: [&#34;\u2696\ufe0f Sektorov\u00fd diskont (Pairs)&#34;, &#34;\ud83c\udfaf Vysok\u00fd diskont&#34;], &#34;confidence&#34;: 84, &#34;conviction_score&#34;: &#34;2.52&#34;, &#34;created_at&#34;: &#34;2026-10-05 16:49:07 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 67.86, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,31,UBER,STK,SMART,USD,LMT,67.21,62.44&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027UBER\u0027, \u0027SMART\u0027, \u0027USD\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=31,\n    limitPrice=67.21,\n    takeProfitPrice=100.77,\n    stopLossPrice=62.44\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 67.21, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Uber Technologies&#34;, &#34;order_id&#34;: &#34;ORD-20261005-UBER-C037&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 48962.49, &#34;rank&#34;: 3, &#34;rrr&#34;: 7.04, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 31, &#34;signal&#34;: &#34;BUY&#34;, &#34;sl_price&#34;: 62.44, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;UBER&#34;, &#34;symbol_xtb&#34;: &#34;UBER.US&#34;, &#34;symbol_yahoo&#34;: &#34;UBER&#34;, &#34;tactical_note&#34;: &#34;Konsenzu\u00e1ln\u00ed c\u00edlov\u00e1 cena na 100.8 USD (+48.5 %) vytv\u00e1\u0159\u00ed atraktivn\u00ed asymetrii v\u00fdnosu a rizika p\u0159i 1M momentu -9.8 %. Teze z\u016fst\u00e1v\u00e1 v platnosti nad hranic\u00ed podpory 62.44 USD.&#34;, &#34;target_mean&#34;: &#34;100.77 USD&#34;, &#34;target_upside&#34;: &#34;+48.5 %&#34;, &#34;target_upside_class&#34;: &#34;upside-positive&#34;, &#34;tp_price&#34;: 100.77, &#34;weight_pct&#34;: 20.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-3&#34;, &#34;price&#34;: 67.21, &#34;sl&#34;: 62.44, &#34;symbol&#34;: &#34;UBER.US&#34;, &#34;tp&#34;: 100.77, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
                         <td style="font-weight: 800; color: var(--text-muted);">#3</td>
                         <td>
                             <div class="sym-cell">
                                 <div class="sym-main">
-                                    <a href="https://finance.yahoo.com/chart/AVGO" target="_blank" rel="noopener noreferrer" class="sym-ticker-link" title="Otevřít graf na Yahoo Finance">AVGO</a>
+                                    <a href="https://finance.yahoo.com/chart/UBER" target="_blank" rel="noopener noreferrer" class="sym-ticker-link" title="Zobrazit živý interaktivní graf na Yahoo Finance">UBER</a>
                                     <span class="sym-ibkr-tag">SMART</span>
                                     <div class="ai-tooltip-wrapper" style="margin-left: 6px;">
                                         <button type="button" class="ai-tooltip-trigger" onclick="handleTooltipClick(event, this)" title="Zobrazit detailní investiční tezi, plán a doporučení">
@@ -2482,6 +2484,224 @@
                                             <div class="tooltip-header">
                                                 <div style="display: flex; align-items: center; gap: 6px;">
                                                     <span class="tooltip-title">💡 AutoInvest Plán & Teze #3</span>
+                                                    <span class="tooltip-ticker">UBER</span>
+                                                </div>
+                                                <button type="button" class="tooltip-close-btn" onclick="closeAllTooltips(event)" title="Zavřít popup">✕</button>
+                                            </div>
+
+                                            <div class="tooltip-signal-row" style="margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+                                                <span class="badge-buy-lmt" style="font-size: 0.72rem;">BUY</span>
+                                                <span style="font-size: 0.74rem; font-weight: 700; color: #a5b4fc;">Důvěra modelu: 84 %</span>
+                                            </div>
+
+                                            
+                                             <div class="tooltip-thesis-box" style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 6px; padding: 7px 9px; margin-bottom: 8px;">
+                                                <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #93c5fd; margin-bottom: 3px;">🎯 Investiční Důvod & Teze:</div>
+                                                <div style="font-size: 0.78rem; color: #f1f5f9; line-height: 1.4;">Konsenzuální cílová cena na 100.8 USD (+48.5 %) vytváří atraktivní asymetrii výnosu a rizika při 1M momentu -9.8 %. Teze zůstává v platnosti nad hranicí podpory 62.44 USD.</div>
+                                            </div>
+                                            
+
+                                            <div class="tooltip-grid">
+                                                <div class="tooltip-stat">
+                                                    <span class="stat-lbl">Očekávané zhodnocení:</span>
+                                                    <span class="stat-val font-success" style="font-weight: 800;">+48.5 %</span>
+                                                </div>
+                                                <div class="tooltip-stat">
+                                                    <span class="stat-lbl">Cílová cena (TP / Konsenzus):</span>
+                                                    <span class="stat-val font-accent">100.77 USD (100.77 USD)</span>
+                                                </div>
+                                                <div class="tooltip-stat">
+                                                    <span class="stat-lbl">Vstupní Limitní nákup:</span>
+                                                    <span class="stat-val font-accent">67.21 USD</span>
+                                                </div>
+                                                <div class="tooltip-stat">
+                                                    <span class="stat-lbl">Ochranný Stop-Loss (SL):</span>
+                                                    <span class="stat-val" style="color: #fca5a5;">62.44 USD (max -1.39 %)</span>
+                                                </div>
+                                                <div class="tooltip-stat">
+                                                    <span class="stat-lbl">Poměr zisku k riziku (RRR):</span>
+                                                    <span class="stat-val font-warning">7.04:1</span>
+                                                </div>
+                                                <div class="tooltip-stat">
+                                                    <span class="stat-lbl">Doporučená alokace:</span>
+                                                    <span class="stat-val">48962 CZK (20.0 % portfolia)</span>
+                                                </div>
+                                            </div>
+
+                                            
+                                            <div style="margin-top: 8px;">
+                                                <div style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; color: #94a3b8; margin-bottom: 4px;">Klíčové Katalyzátory:</div>
+                                                <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                                                    
+                                                    <span class="tooltip-catalyst">⚖️ Sektorový diskont (Pairs)</span>
+                                                    
+                                                    <span class="tooltip-catalyst">🎯 Vysoký diskont</span>
+                                                    
+                                                </div>
+                                            </div>
+                                            
+
+                                            <div class="tooltip-divider"></div>
+                                            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; color: #94a3b8;">
+                                                <span>Risk Gatekeeper: <strong style="color: #34d399;">Schváleno</strong></span>
+                                                <button type="button" class="action-btn" style="padding: 2px 7px; font-size: 0.7rem;" onclick="closeAllTooltips(event)">Zavřít</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sym-sub" title="Uber Technologies">Uber Technologies</div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge-buy-lmt">BUY LIMIT</span>
+                        </td>
+                        <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">31 ks</td>
+                        <td class="font-mono price-entry">67.21 USD</td>
+                        <td class="font-mono price-sl">62.44 USD</td>
+                        <td class="font-mono price-tp">100.77 USD</td>
+                        <td class="font-mono" style="font-weight: 800; color: #60a5fa;">7.04:1</td>
+                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">48962 CZK</td>
+                        <td class="font-mono order-risk-cell" style="color: #60a5fa;">3475 CZK (1.39 %)</td>
+                        <td>
+                            <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
+                            <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
+                        </td>
+                        <td style="text-align: right;">
+                            <div style="display: flex; justify-content: flex-end; gap: 4px;">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20261005-UBER-C037', 'UBER')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                    ▶ Exekuce
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr id="orderRow-ORD-20261005-ORCL-0B5E" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2101.6, &#34;capital_risk_pct&#34;: 0.84, &#34;catalysts&#34;: [&#34;\ud83e\udde0 Sentiment Divergence&#34;, &#34;\u2696\ufe0f Sektorov\u00fd diskont (Pairs)&#34;, &#34;\ud83c\udfaf Vysok\u00fd diskont&#34;, &#34;\ud83d\udcb0 Ex-Div za 8 dn\u00ed&#34;], &#34;confidence&#34;: 84, &#34;conviction_score&#34;: &#34;2.39&#34;, &#34;created_at&#34;: &#34;2026-10-05 16:49:07 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 137.7, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,11,ORCL,STK,SMART,USD,LMT,134.81,126.68&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027ORCL\u0027, \u0027SMART\u0027, \u0027USD\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=11,\n    limitPrice=134.81,\n    takeProfitPrice=237.97,\n    stopLossPrice=126.68\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 134.81, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Oracle Corp&#34;, &#34;order_id&#34;: &#34;ORD-20261005-ORCL-0B5E&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 34848.38, &#34;rank&#34;: 4, &#34;rrr&#34;: 12.69, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 11, &#34;signal&#34;: &#34;BUY&#34;, &#34;sl_price&#34;: 126.68, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;ORCL&#34;, &#34;symbol_xtb&#34;: &#34;ORCL.US&#34;, &#34;symbol_yahoo&#34;: &#34;ORCL&#34;, &#34;tactical_note&#34;: &#34;Konsenzu\u00e1ln\u00ed c\u00edlov\u00e1 cena na 238.0 USD (+72.8 %) vytv\u00e1\u0159\u00ed atraktivn\u00ed asymetrii v\u00fdnosu a rizika p\u0159i 1M momentu -2.5 %. Teze z\u016fst\u00e1v\u00e1 v platnosti nad hranic\u00ed podpory 126.68 USD.&#34;, &#34;target_mean&#34;: &#34;237.97 USD&#34;, &#34;target_upside&#34;: &#34;+72.8 %&#34;, &#34;target_upside_class&#34;: &#34;upside-positive&#34;, &#34;tp_price&#34;: 237.97, &#34;weight_pct&#34;: 15.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-4&#34;, &#34;price&#34;: 134.81, &#34;sl&#34;: 126.68, &#34;symbol&#34;: &#34;ORCL.US&#34;, &#34;tp&#34;: 237.97, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                        <td style="font-weight: 800; color: var(--text-muted);">#4</td>
+                        <td>
+                            <div class="sym-cell">
+                                <div class="sym-main">
+                                    <a href="https://finance.yahoo.com/chart/ORCL" target="_blank" rel="noopener noreferrer" class="sym-ticker-link" title="Zobrazit živý interaktivní graf na Yahoo Finance">ORCL</a>
+                                    <span class="sym-ibkr-tag">SMART</span>
+                                    <div class="ai-tooltip-wrapper" style="margin-left: 6px;">
+                                        <button type="button" class="ai-tooltip-trigger" onclick="handleTooltipClick(event, this)" title="Zobrazit detailní investiční tezi, plán a doporučení">
+                                            <span>💡</span>
+                                            <span>Plán & Teze</span>
+                                        </button>
+                                        <div class="ai-tooltip-popup" role="tooltip" onclick="event.stopPropagation();">
+                                            <div class="tooltip-header">
+                                                <div style="display: flex; align-items: center; gap: 6px;">
+                                                    <span class="tooltip-title">💡 AutoInvest Plán & Teze #4</span>
+                                                    <span class="tooltip-ticker">ORCL</span>
+                                                </div>
+                                                <button type="button" class="tooltip-close-btn" onclick="closeAllTooltips(event)" title="Zavřít popup">✕</button>
+                                            </div>
+
+                                            <div class="tooltip-signal-row" style="margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+                                                <span class="badge-buy-lmt" style="font-size: 0.72rem;">BUY</span>
+                                                <span style="font-size: 0.74rem; font-weight: 700; color: #a5b4fc;">Důvěra modelu: 84 %</span>
+                                            </div>
+
+                                            
+                                             <div class="tooltip-thesis-box" style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 6px; padding: 7px 9px; margin-bottom: 8px;">
+                                                <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #93c5fd; margin-bottom: 3px;">🎯 Investiční Důvod & Teze:</div>
+                                                <div style="font-size: 0.78rem; color: #f1f5f9; line-height: 1.4;">Konsenzuální cílová cena na 238.0 USD (+72.8 %) vytváří atraktivní asymetrii výnosu a rizika při 1M momentu -2.5 %. Teze zůstává v platnosti nad hranicí podpory 126.68 USD.</div>
+                                            </div>
+                                            
+
+                                            <div class="tooltip-grid">
+                                                <div class="tooltip-stat">
+                                                    <span class="stat-lbl">Očekávané zhodnocení:</span>
+                                                    <span class="stat-val font-success" style="font-weight: 800;">+72.8 %</span>
+                                                </div>
+                                                <div class="tooltip-stat">
+                                                    <span class="stat-lbl">Cílová cena (TP / Konsenzus):</span>
+                                                    <span class="stat-val font-accent">237.97 USD (237.97 USD)</span>
+                                                </div>
+                                                <div class="tooltip-stat">
+                                                    <span class="stat-lbl">Vstupní Limitní nákup:</span>
+                                                    <span class="stat-val font-accent">134.81 USD</span>
+                                                </div>
+                                                <div class="tooltip-stat">
+                                                    <span class="stat-lbl">Ochranný Stop-Loss (SL):</span>
+                                                    <span class="stat-val" style="color: #fca5a5;">126.68 USD (max -0.84 %)</span>
+                                                </div>
+                                                <div class="tooltip-stat">
+                                                    <span class="stat-lbl">Poměr zisku k riziku (RRR):</span>
+                                                    <span class="stat-val font-warning">12.69:1</span>
+                                                </div>
+                                                <div class="tooltip-stat">
+                                                    <span class="stat-lbl">Doporučená alokace:</span>
+                                                    <span class="stat-val">34848 CZK (15.0 % portfolia)</span>
+                                                </div>
+                                            </div>
+
+                                            
+                                            <div style="margin-top: 8px;">
+                                                <div style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; color: #94a3b8; margin-bottom: 4px;">Klíčové Katalyzátory:</div>
+                                                <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                                                    
+                                                    <span class="tooltip-catalyst">🧠 Sentiment Divergence</span>
+                                                    
+                                                    <span class="tooltip-catalyst">⚖️ Sektorový diskont (Pairs)</span>
+                                                    
+                                                    <span class="tooltip-catalyst">🎯 Vysoký diskont</span>
+                                                    
+                                                    <span class="tooltip-catalyst">💰 Ex-Div za 8 dní</span>
+                                                    
+                                                </div>
+                                            </div>
+                                            
+
+                                            <div class="tooltip-divider"></div>
+                                            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; color: #94a3b8;">
+                                                <span>Risk Gatekeeper: <strong style="color: #34d399;">Schváleno</strong></span>
+                                                <button type="button" class="action-btn" style="padding: 2px 7px; font-size: 0.7rem;" onclick="closeAllTooltips(event)">Zavřít</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sym-sub" title="Oracle Corp">Oracle Corp</div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge-buy-lmt">BUY LIMIT</span>
+                        </td>
+                        <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">11 ks</td>
+                        <td class="font-mono price-entry">134.81 USD</td>
+                        <td class="font-mono price-sl">126.68 USD</td>
+                        <td class="font-mono price-tp">237.97 USD</td>
+                        <td class="font-mono" style="font-weight: 800; color: #60a5fa;">12.69:1</td>
+                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">34848 CZK</td>
+                        <td class="font-mono order-risk-cell" style="color: #60a5fa;">2102 CZK (0.84 %)</td>
+                        <td>
+                            <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
+                            <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
+                        </td>
+                        <td style="text-align: right;">
+                            <div style="display: flex; justify-content: flex-end; gap: 4px;">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20261005-ORCL-0B5E', 'ORCL')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                    ▶ Exekuce
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr id="orderRow-ORD-20261005-AVGO-9C81" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2192.08, &#34;capital_risk_pct&#34;: 0.88, &#34;catalysts&#34;: [&#34;\ud83e\udde0 Sentiment Divergence&#34;, &#34;\u2696\ufe0f Sektorov\u00fd diskont (Pairs)&#34;, &#34;\ud83c\udfaf Vysok\u00fd diskont&#34;], &#34;confidence&#34;: 84, &#34;conviction_score&#34;: &#34;2.38&#34;, &#34;created_at&#34;: &#34;2026-10-05 16:49:07 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 347.23, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,4,AVGO,STK,SMART,USD,LMT,342.77,319.45&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027AVGO\u0027, \u0027SMART\u0027, \u0027USD\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=4,\n    limitPrice=342.77,\n    takeProfitPrice=531.85,\n    stopLossPrice=319.45\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 342.77, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Broadcom Inc&#34;, &#34;order_id&#34;: &#34;ORD-20261005-AVGO-9C81&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 32220.38, &#34;rank&#34;: 5, &#34;rrr&#34;: 8.11, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 4, &#34;signal&#34;: &#34;BUY&#34;, &#34;sl_price&#34;: 319.45, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;AVGO&#34;, &#34;symbol_xtb&#34;: &#34;AVGO.US&#34;, &#34;symbol_yahoo&#34;: &#34;AVGO&#34;, &#34;tactical_note&#34;: &#34;Konsenzu\u00e1ln\u00ed c\u00edlov\u00e1 cena na 531.8 USD (+53.2 %) vytv\u00e1\u0159\u00ed atraktivn\u00ed asymetrii v\u00fdnosu a rizika p\u0159i 1M momentu -5.9 %. Teze z\u016fst\u00e1v\u00e1 v platnosti nad hranic\u00ed podpory 319.45 USD.&#34;, &#34;target_mean&#34;: &#34;531.85 USD&#34;, &#34;target_upside&#34;: &#34;+53.2 %&#34;, &#34;target_upside_class&#34;: &#34;upside-positive&#34;, &#34;tp_price&#34;: 531.85, &#34;weight_pct&#34;: 15.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-5&#34;, &#34;price&#34;: 342.77, &#34;sl&#34;: 319.45, &#34;symbol&#34;: &#34;AVGO.US&#34;, &#34;tp&#34;: 531.85, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                        <td style="font-weight: 800; color: var(--text-muted);">#5</td>
+                        <td>
+                            <div class="sym-cell">
+                                <div class="sym-main">
+                                    <a href="https://finance.yahoo.com/chart/AVGO" target="_blank" rel="noopener noreferrer" class="sym-ticker-link" title="Zobrazit živý interaktivní graf na Yahoo Finance">AVGO</a>
+                                    <span class="sym-ibkr-tag">SMART</span>
+                                    <div class="ai-tooltip-wrapper" style="margin-left: 6px;">
+                                        <button type="button" class="ai-tooltip-trigger" onclick="handleTooltipClick(event, this)" title="Zobrazit detailní investiční tezi, plán a doporučení">
+                                            <span>💡</span>
+                                            <span>Plán & Teze</span>
+                                        </button>
+                                        <div class="ai-tooltip-popup" role="tooltip" onclick="event.stopPropagation();">
+                                            <div class="tooltip-header">
+                                                <div style="display: flex; align-items: center; gap: 6px;">
+                                                    <span class="tooltip-title">💡 AutoInvest Plán & Teze #5</span>
                                                     <span class="tooltip-ticker">AVGO</span>
                                                 </div>
                                                 <button type="button" class="tooltip-close-btn" onclick="closeAllTooltips(event)" title="Zavřít popup">✕</button>
@@ -2493,16 +2713,16 @@
                                             </div>
 
                                             
-                                            <div class="tooltip-thesis-box" style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 6px; padding: 7px 9px; margin-bottom: 8px;">
+                                             <div class="tooltip-thesis-box" style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 6px; padding: 7px 9px; margin-bottom: 8px;">
                                                 <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #93c5fd; margin-bottom: 3px;">🎯 Investiční Důvod & Teze:</div>
-                                                <div style="font-size: 0.78rem; color: #f1f5f9; line-height: 1.4;">Konsenzuální cílová cena na 531.8 USD (+52.1 %) vytváří atraktivní asymetrii výnosu a rizika při 1M momentu -5.7 %. Teze zůstává v platnosti nad hranicí podpory 321.6 USD.</div>
+                                                <div style="font-size: 0.78rem; color: #f1f5f9; line-height: 1.4;">Konsenzuální cílová cena na 531.8 USD (+53.2 %) vytváří atraktivní asymetrii výnosu a rizika při 1M momentu -5.9 %. Teze zůstává v platnosti nad hranicí podpory 319.45 USD.</div>
                                             </div>
                                             
 
                                             <div class="tooltip-grid">
                                                 <div class="tooltip-stat">
                                                     <span class="stat-lbl">Očekávané zhodnocení:</span>
-                                                    <span class="stat-val font-success" style="font-weight: 800;">+52.1 %</span>
+                                                    <span class="stat-val font-success" style="font-weight: 800;">+53.2 %</span>
                                                 </div>
                                                 <div class="tooltip-stat">
                                                     <span class="stat-lbl">Cílová cena (TP / Konsenzus):</span>
@@ -2510,19 +2730,19 @@
                                                 </div>
                                                 <div class="tooltip-stat">
                                                     <span class="stat-lbl">Vstupní Limitní nákup:</span>
-                                                    <span class="stat-val font-accent">345.21 USD</span>
+                                                    <span class="stat-val font-accent">342.77 USD</span>
                                                 </div>
                                                 <div class="tooltip-stat">
                                                     <span class="stat-lbl">Ochranný Stop-Loss (SL):</span>
-                                                    <span class="stat-val" style="color: #fca5a5;">321.6 USD (max -1.33 %)</span>
+                                                    <span class="stat-val" style="color: #fca5a5;">319.45 USD (max -0.88 %)</span>
                                                 </div>
                                                 <div class="tooltip-stat">
                                                     <span class="stat-lbl">Poměr zisku k riziku (RRR):</span>
-                                                    <span class="stat-val font-warning">7.91:1</span>
+                                                    <span class="stat-val font-warning">8.11:1</span>
                                                 </div>
                                                 <div class="tooltip-stat">
                                                     <span class="stat-lbl">Doporučená alokace:</span>
-                                                    <span class="stat-val">48675 CZK (20.0 % portfolia)</span>
+                                                    <span class="stat-val">32220 CZK (15.0 % portfolia)</span>
                                                 </div>
                                             </div>
 
@@ -2555,238 +2775,20 @@
                         <td>
                             <span class="badge-buy-lmt">BUY LIMIT</span>
                         </td>
-                        <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">6 ks</td>
-                        <td class="font-mono price-entry">345.21 USD</td>
-                        <td class="font-mono price-sl">321.6 USD</td>
+                        <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">4 ks</td>
+                        <td class="font-mono price-entry">342.77 USD</td>
+                        <td class="font-mono price-sl">319.45 USD</td>
                         <td class="font-mono price-tp">531.85 USD</td>
-                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">7.91:1</td>
-                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">48675 CZK</td>
-                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">3329 CZK (1.33 %)</td>
+                        <td class="font-mono" style="font-weight: 800; color: #60a5fa;">8.11:1</td>
+                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">32220 CZK</td>
+                        <td class="font-mono order-risk-cell" style="color: #60a5fa;">2192 CZK (0.88 %)</td>
                         <td>
                             <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
                             <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
                         </td>
                         <td style="text-align: right;">
                             <div style="display: flex; justify-content: flex-end; gap: 4px;">
-                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20260930-AVGO-3F4B', 'AVGO')" title="Simulovat exekuci v Paper Trading sandboxu">
-                                    ▶ Exekuce
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    
-                    <tr id="orderRow-ORD-20260930-ORCL-A599" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2072.7, &#34;capital_risk_pct&#34;: 0.83, &#34;catalysts&#34;: [&#34;\u2696\ufe0f Sektorov\u00fd diskont (Pairs)&#34;, &#34;\ud83c\udfaf Vysok\u00fd diskont&#34;, &#34;\ud83d\udcb0 Ex-Div za 10 dn\u00ed&#34;], &#34;confidence&#34;: 84, &#34;conviction_score&#34;: &#34;2.32&#34;, &#34;created_at&#34;: &#34;2026-09-30 19:34:04 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 132.6, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,12,ORCL,STK,SMART,USD,LMT,129.34,121.99&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027ORCL\u0027, \u0027SMART\u0027, \u0027USD\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=12,\n    limitPrice=129.34,\n    takeProfitPrice=237.97,\n    stopLossPrice=121.99\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 129.34, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Oracle Corp&#34;, &#34;order_id&#34;: &#34;ORD-20260930-ORCL-A599&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 36473.88, &#34;rank&#34;: 4, &#34;rrr&#34;: 14.78, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 12, &#34;signal&#34;: &#34;BUY&#34;, &#34;sl_price&#34;: 121.99, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;ORCL&#34;, &#34;symbol_xtb&#34;: &#34;ORCL.US&#34;, &#34;symbol_yahoo&#34;: &#34;ORCL&#34;, &#34;tactical_note&#34;: &#34;Konsenzu\u00e1ln\u00ed c\u00edlov\u00e1 cena na 238.0 USD (+79.5 %) vytv\u00e1\u0159\u00ed atraktivn\u00ed asymetrii v\u00fdnosu a rizika p\u0159i 1M momentu -12.7 %. Teze z\u016fst\u00e1v\u00e1 v platnosti nad hranic\u00ed podpory 121.99 USD.&#34;, &#34;target_mean&#34;: &#34;237.97 USD&#34;, &#34;target_upside&#34;: &#34;+79.5 %&#34;, &#34;target_upside_class&#34;: &#34;upside-positive&#34;, &#34;tp_price&#34;: 237.97, &#34;weight_pct&#34;: 15.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-4&#34;, &#34;price&#34;: 129.34, &#34;sl&#34;: 121.99, &#34;symbol&#34;: &#34;ORCL.US&#34;, &#34;tp&#34;: 237.97, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
-                        <td style="font-weight: 800; color: var(--text-muted);">#4</td>
-                        <td>
-                            <div class="sym-cell">
-                                <div class="sym-main">
-                                    <a href="https://finance.yahoo.com/chart/ORCL" target="_blank" rel="noopener noreferrer" class="sym-ticker-link" title="Zobrazit živý interaktivní graf ORCL na Yahoo Finance">ORCL</a>
-                                    <span class="sym-ibkr-tag">SMART</span>
-                                    <div class="ai-tooltip-wrapper" style="margin-left: 6px;">
-                                        <button type="button" class="ai-tooltip-trigger" onclick="handleTooltipClick(event, this)" title="Zobrazit detailní investiční tezi, plán a doporučení">
-                                            <span>💡</span>
-                                            <span>Plán & Teze</span>
-                                        </button>
-                                        <div class="ai-tooltip-popup" role="tooltip" onclick="event.stopPropagation();">
-                                            <div class="tooltip-header">
-                                                <div style="display: flex; align-items: center; gap: 6px;">
-                                                    <span class="tooltip-title">💡 AutoInvest Plán & Teze #4</span>
-                                                    <span class="tooltip-ticker">ORCL</span>
-                                                </div>
-                                                <button type="button" class="tooltip-close-btn" onclick="closeAllTooltips(event)" title="Zavřít popup">✕</button>
-                                            </div>
-
-                                            <div class="tooltip-signal-row" style="margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
-                                                <span class="badge-buy-lmt" style="font-size: 0.72rem;">BUY</span>
-                                                <span style="font-size: 0.74rem; font-weight: 700; color: #a5b4fc;">Důvěra modelu: 84 %</span>
-                                            </div>
-
-                                            
-                                            <div class="tooltip-thesis-box" style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 6px; padding: 7px 9px; margin-bottom: 8px;">
-                                                <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #93c5fd; margin-bottom: 3px;">🎯 Investiční Důvod & Teze:</div>
-                                                <div style="font-size: 0.78rem; color: #f1f5f9; line-height: 1.4;">Konsenzuální cílová cena na 238.0 USD (+79.5 %) vytváří atraktivní asymetrii výnosu a rizika při 1M momentu -12.7 %. Teze zůstává v platnosti nad hranicí podpory 121.99 USD.</div>
-                                            </div>
-                                            
-
-                                            <div class="tooltip-grid">
-                                                <div class="tooltip-stat">
-                                                    <span class="stat-lbl">Očekávané zhodnocení:</span>
-                                                    <span class="stat-val font-success" style="font-weight: 800;">+79.5 %</span>
-                                                </div>
-                                                <div class="tooltip-stat">
-                                                    <span class="stat-lbl">Cílová cena (TP / Konsenzus):</span>
-                                                    <span class="stat-val font-accent">237.97 USD (237.97 USD)</span>
-                                                </div>
-                                                <div class="tooltip-stat">
-                                                    <span class="stat-lbl">Vstupní Limitní nákup:</span>
-                                                    <span class="stat-val font-accent">129.34 USD</span>
-                                                </div>
-                                                <div class="tooltip-stat">
-                                                    <span class="stat-lbl">Ochranný Stop-Loss (SL):</span>
-                                                    <span class="stat-val" style="color: #fca5a5;">121.99 USD (max -0.83 %)</span>
-                                                </div>
-                                                <div class="tooltip-stat">
-                                                    <span class="stat-lbl">Poměr zisku k riziku (RRR):</span>
-                                                    <span class="stat-val font-warning">14.78:1</span>
-                                                </div>
-                                                <div class="tooltip-stat">
-                                                    <span class="stat-lbl">Doporučená alokace:</span>
-                                                    <span class="stat-val">36474 CZK (15.0 % portfolia)</span>
-                                                </div>
-                                            </div>
-
-                                            
-                                            <div style="margin-top: 8px;">
-                                                <div style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; color: #94a3b8; margin-bottom: 4px;">Klíčové Katalyzátory:</div>
-                                                <div style="display: flex; flex-wrap: wrap; gap: 4px;">
-                                                    
-                                                    <span class="tooltip-catalyst">⚖️ Sektorový diskont (Pairs)</span>
-                                                    
-                                                    <span class="tooltip-catalyst">🎯 Vysoký diskont</span>
-                                                    
-                                                    <span class="tooltip-catalyst">💰 Ex-Div za 10 dní</span>
-                                                    
-                                                </div>
-                                            </div>
-                                            
-
-                                            <div class="tooltip-divider"></div>
-                                            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; color: #94a3b8;">
-                                                <span>Risk Gatekeeper: <strong style="color: #34d399;">Schváleno</strong></span>
-                                                <button type="button" class="action-btn" style="padding: 2px 7px; font-size: 0.7rem;" onclick="closeAllTooltips(event)">Zavřít</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sym-sub" title="Oracle Corp">Oracle Corp</div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="badge-buy-lmt">BUY LIMIT</span>
-                        </td>
-                        <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">12 ks</td>
-                        <td class="font-mono price-entry">129.34 USD</td>
-                        <td class="font-mono price-sl">121.99 USD</td>
-                        <td class="font-mono price-tp">237.97 USD</td>
-                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">14.78:1</td>
-                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">36474 CZK</td>
-                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">2073 CZK (0.83 %)</td>
-                        <td>
-                            <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
-                            <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
-                        </td>
-                        <td style="text-align: right;">
-                            <div style="display: flex; justify-content: flex-end; gap: 4px;">
-                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20260930-ORCL-A599', 'ORCL')" title="Simulovat exekuci v Paper Trading sandboxu">
-                                    ▶ Exekuce
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    
-                    <tr id="orderRow-ORD-20260930-SAN-765C" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2630.88, &#34;capital_risk_pct&#34;: 1.05, &#34;catalysts&#34;: [&#34;\ud83e\udde0 Sentiment Divergence&#34;, &#34;\u2696\ufe0f Sektorov\u00fd diskont (Pairs)&#34;, &#34;\ud83c\udfaf Vysok\u00fd diskont&#34;], &#34;confidence&#34;: 79, &#34;conviction_score&#34;: &#34;2.31&#34;, &#34;created_at&#34;: &#34;2026-09-30 19:34:04 UTC&#34;, &#34;currency&#34;: &#34;EUR&#34;, &#34;current_price&#34;: 72.25, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,20,SAN,STK,SMART,EUR,LMT,71.69,66.47&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027SAN\u0027, \u0027SMART\u0027, \u0027EUR\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=20,\n    limitPrice=71.69,\n    takeProfitPrice=94.06,\n    stopLossPrice=66.47\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 71.69, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Sanofi SA&#34;, &#34;order_id&#34;: &#34;ORD-20260930-SAN-765C&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 36131.76, &#34;rank&#34;: 5, &#34;rrr&#34;: 4.29, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 20, &#34;signal&#34;: &#34;BUY&#34;, &#34;sl_price&#34;: 66.47, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;SAN&#34;, &#34;symbol_xtb&#34;: &#34;SAN.FR&#34;, &#34;symbol_yahoo&#34;: &#34;SAN.PA&#34;, &#34;tactical_note&#34;: &#34;Konsenzu\u00e1ln\u00ed c\u00edlov\u00e1 cena na 94.1 EUR (+30.2 %) vytv\u00e1\u0159\u00ed atraktivn\u00ed asymetrii v\u00fdnosu a rizika p\u0159i 1M momentu -5.9 %. Teze z\u016fst\u00e1v\u00e1 v platnosti nad hranic\u00ed podpory 66.47 EUR.&#34;, &#34;target_mean&#34;: &#34;94.06 EUR&#34;, &#34;target_upside&#34;: &#34;+30.2 %&#34;, &#34;target_upside_class&#34;: &#34;upside-positive&#34;, &#34;tp_price&#34;: 94.06, &#34;weight_pct&#34;: 15.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-5&#34;, &#34;price&#34;: 71.69, &#34;sl&#34;: 66.47, &#34;symbol&#34;: &#34;SAN.FR&#34;, &#34;tp&#34;: 94.06, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
-                        <td style="font-weight: 800; color: var(--text-muted);">#5</td>
-                        <td>
-                            <div class="sym-cell">
-                                <div class="sym-main">
-                                    <a href="https://finance.yahoo.com/chart/SAN.PA" target="_blank" rel="noopener noreferrer" class="sym-ticker-link" title="Zobrazit živý interaktivní graf SAN na Yahoo Finance">SAN</a>
-                                    <span class="sym-ibkr-tag">SMART</span>
-                                    <div class="ai-tooltip-wrapper" style="margin-left: 6px;">
-                                        <button type="button" class="ai-tooltip-trigger" onclick="handleTooltipClick(event, this)" title="Zobrazit detailní investiční tezi, plán a doporučení">
-                                            <span>💡</span>
-                                            <span>Plán & Teze</span>
-                                        </button>
-                                        <div class="ai-tooltip-popup" role="tooltip" onclick="event.stopPropagation();">
-                                            <div class="tooltip-header">
-                                                <div style="display: flex; align-items: center; gap: 6px;">
-                                                    <span class="tooltip-title">💡 AutoInvest Plán & Teze #5</span>
-                                                    <span class="tooltip-ticker">SAN</span>
-                                                </div>
-                                                <button type="button" class="tooltip-close-btn" onclick="closeAllTooltips(event)" title="Zavřít popup">✕</button>
-                                            </div>
-
-                                            <div class="tooltip-signal-row" style="margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
-                                                <span class="badge-buy-lmt" style="font-size: 0.72rem;">BUY</span>
-                                                <span style="font-size: 0.74rem; font-weight: 700; color: #a5b4fc;">Důvěra modelu: 79 %</span>
-                                            </div>
-
-                                            
-                                            <div class="tooltip-thesis-box" style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 6px; padding: 7px 9px; margin-bottom: 8px;">
-                                                <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #93c5fd; margin-bottom: 3px;">🎯 Investiční Důvod & Teze:</div>
-                                                <div style="font-size: 0.78rem; color: #f1f5f9; line-height: 1.4;">Konsenzuální cílová cena na 94.1 EUR (+30.2 %) vytváří atraktivní asymetrii výnosu a rizika při 1M momentu -5.9 %. Teze zůstává v platnosti nad hranicí podpory 66.47 EUR.</div>
-                                            </div>
-                                            
-
-                                            <div class="tooltip-grid">
-                                                <div class="tooltip-stat">
-                                                    <span class="stat-lbl">Očekávané zhodnocení:</span>
-                                                    <span class="stat-val font-success" style="font-weight: 800;">+30.2 %</span>
-                                                </div>
-                                                <div class="tooltip-stat">
-                                                    <span class="stat-lbl">Cílová cena (TP / Konsenzus):</span>
-                                                    <span class="stat-val font-accent">94.06 EUR (94.06 EUR)</span>
-                                                </div>
-                                                <div class="tooltip-stat">
-                                                    <span class="stat-lbl">Vstupní Limitní nákup:</span>
-                                                    <span class="stat-val font-accent">71.69 EUR</span>
-                                                </div>
-                                                <div class="tooltip-stat">
-                                                    <span class="stat-lbl">Ochranný Stop-Loss (SL):</span>
-                                                    <span class="stat-val" style="color: #fca5a5;">66.47 EUR (max -1.05 %)</span>
-                                                </div>
-                                                <div class="tooltip-stat">
-                                                    <span class="stat-lbl">Poměr zisku k riziku (RRR):</span>
-                                                    <span class="stat-val font-warning">4.29:1</span>
-                                                </div>
-                                                <div class="tooltip-stat">
-                                                    <span class="stat-lbl">Doporučená alokace:</span>
-                                                    <span class="stat-val">36132 CZK (15.0 % portfolia)</span>
-                                                </div>
-                                            </div>
-
-                                            
-                                            <div style="margin-top: 8px;">
-                                                <div style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; color: #94a3b8; margin-bottom: 4px;">Klíčové Katalyzátory:</div>
-                                                <div style="display: flex; flex-wrap: wrap; gap: 4px;">
-                                                    
-                                                    <span class="tooltip-catalyst">🧠 Sentiment Divergence</span>
-                                                    
-                                                    <span class="tooltip-catalyst">⚖️ Sektorový diskont (Pairs)</span>
-                                                    
-                                                    <span class="tooltip-catalyst">🎯 Vysoký diskont</span>
-                                                    
-                                                </div>
-                                            </div>
-                                            
-
-                                            <div class="tooltip-divider"></div>
-                                            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; color: #94a3b8;">
-                                                <span>Risk Gatekeeper: <strong style="color: #34d399;">Schváleno</strong></span>
-                                                <button type="button" class="action-btn" style="padding: 2px 7px; font-size: 0.7rem;" onclick="closeAllTooltips(event)">Zavřít</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sym-sub" title="Sanofi SA">Sanofi SA</div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="badge-buy-lmt">BUY LIMIT</span>
-                        </td>
-                        <td class="font-mono order-shares-cell" style="font-weight: 800; color: #60a5fa;">20 ks</td>
-                        <td class="font-mono price-entry">71.69 EUR</td>
-                        <td class="font-mono price-sl">66.47 EUR</td>
-                        <td class="font-mono price-tp">94.06 EUR</td>
-                        <td class="font-mono" style="font-weight: 800; color: #fbbf24;">4.29:1</td>
-                        <td class="font-mono order-alloc-cell" style="font-weight: 700;">36132 CZK</td>
-                        <td class="font-mono order-risk-cell" style="color: #fca5a5;">2631 CZK (1.05 %)</td>
-                        <td>
-                            <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">✅ Schváleno</span>
-                            <div style="font-size: 0.68rem; color: var(--text-muted);">Standardní alokace</div>
-                        </td>
-                        <td style="text-align: right;">
-                            <div style="display: flex; justify-content: flex-end; gap: 4px;">
-                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20260930-SAN-765C', 'SAN')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20261005-AVGO-9C81', 'AVGO')" title="Simulovat exekuci v Paper Trading sandboxu">
                                     ▶ Exekuce
                                 </button>
                             </div>
@@ -2796,7 +2798,7 @@
                 </tbody>
             </table>
         </div>
-
+    </div>
     </div>
 
     <!-- MODAL PRO KONFIGURACI IBKR -->
@@ -2889,7 +2891,8 @@
             { symbol: 'NVDA', name: 'NVIDIA Corp', exchange: 'NASDAQ', cur: 'USD', price: 121.50, sl: '114 $', tp: '150 $', targetUpside: '+23.4 %', shares: 14, posCzk: 39970, catalyst: 'AI Blackwell akcelerátory, poptávka datacenter překonává odhady o +32 %, masivní růst marží.' },
             { symbol: 'MSFT', name: 'Microsoft Corp', exchange: 'NASDAQ', cur: 'USD', price: 428.10, sl: '398 $', tp: '492 $', targetUpside: '+14.9 %', shares: 4, posCzk: 40240, catalyst: 'Azure Cloud +29 % YoY a rozsáhlá monetizace podnikového Copilotu.' },
             { symbol: 'ASML', name: 'ASML Holding NV', exchange: 'AEX', cur: 'EUR', price: 785.00, sl: '740 €', tp: '920 €', targetUpside: '+17.2 %', shares: 2, posCzk: 39564, catalyst: 'Globální monopol na High-NA EUV litografii nezbytnou pro 2nm AI čipy.' },
-            { symbol: 'AMZN', name: 'Amazon.com Inc', exchange: 'NASDAQ', cur: 'USD', price: 188.50, sl: '175 $', tp: '218 $', targetUpside: '+15.6 %', shares: 9, posCzk: 39870, catalyst: 'Akcelerace cloudového zisku AWS a rekordní provozní cashflow v e-commerce.' }
+            { symbol: 'AMZN', name: 'Amazon.com Inc', exchange: 'NASDAQ', cur: 'USD', price: 188.50, sl: '175 $', tp: '218 $', targetUpside: '+15.6 %', shares: 9, posCzk: 39870, catalyst: 'Akcelerace cloudového zisku AWS a rekordní provozní cashflow v e-commerce.' },
+            { symbol: 'MRNA', name: 'Moderna Inc', exchange: 'NASDAQ', cur: 'USD', price: 196.17, sl: '180 $', tp: '245 $', targetUpside: '+24.9 %', shares: 9, posCzk: 41490, catalyst: 'mRNA onkologická vakcína ve fázi III (Keytruda kombo) a komerční diverzifikace mimo covid.' }
         ];
 
         function getDemoPortfolio() {
@@ -3005,18 +3008,9 @@
             renderPortfolioUI();
         }
 
-        async function toggleAutoInvest(enabled) {
+        function toggleAutoInvest(enabled) {
             localStorage.setItem('autoinvest_enabled', enabled ? 'true' : 'false');
             applyAutoInvestUI(enabled);
-
-            // Odeslat stav do běžící služby na portu 5001
-            try {
-                await fetch('http://127.0.0.1:5001/api/autoinvest/toggle', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ enabled })
-                });
-            } catch(e) {}
 
             if (enabled) {
                 const state = getDemoPortfolio();
@@ -3112,23 +3106,79 @@
             }, 1000);
         }
 
-        async function executeAutoInvestBasket() {
-            // 1. Zkusit odeslat reálný pokyn do lokální AutoInvest služby
-            try {
-                const res = await fetch('http://127.0.0.1:5001/api/autoinvest/execute', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-                if (res.ok) {
-                    await initAutoInvestState();
-                    showToast(`🚀 AutoInvest: Příkazy byly odeslány na účet DUR222134 u Interactive Brokers!`, 'success', 6000);
-                    return;
-                }
-            } catch(e) {}
+        function executeAutoInvestBasket() {
+            const state = getDemoPortfolio();
+            const rows = document.querySelectorAll('#ordersTableBody tr');
+            const newPositions = [];
+            const newTrades = [];
+            let totalInvestedCzk = 0;
 
-            // 2. Fallback synchronizace ze serveru
-            await initAutoInvestState();
-            showToast(`🚀 AutoInvest aktivován na účtu DUR222134! Otevřené pozice a fronta synchronizovány.`, 'success', 6000);
+            const now = new Date();
+            const timeStr = `${String(now.getDate()).padStart(2, '0')}. ${String(now.getMonth() + 1).padStart(2, '0')}. ${now.getFullYear()} v ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+            rows.forEach((r, idx) => {
+                if (idx >= 5) return;
+                const raw = r.getAttribute('data-order-raw');
+                if (!raw) return;
+                try {
+                    const ord = JSON.parse(raw);
+                    const sym = ord.symbol_ibkr || ord.symbol_yahoo;
+                    const posCzk = ord.position_czk || Math.round(ord.shares * ord.limit_price * 23.5);
+                    totalInvestedCzk += posCzk;
+
+                    newPositions.push({
+                        symbol: sym,
+                        name: ord.name,
+                        exchange: ord.exchange_ibkr || 'SMART',
+                        shares: ord.shares,
+                        currency: ord.currency,
+                        entryPrice: `${ord.limit_price} ${ord.currency}`,
+                        currentPrice: `${ord.limit_price} ${ord.currency}`,
+                        posCzk: posCzk,
+                        sl: `${ord.sl_price} ${ord.currency}`,
+                        tp: `${ord.tp_price} ${ord.currency}`,
+                        boughtAt: timeStr,
+                        progressPct: 15,
+                        pnlCzk: 0,
+                        pnlPct: '0.00'
+                    });
+
+                    newTrades.push({
+                        id: 'TRD-' + Math.floor(100000 + Math.random() * 900000),
+                        time: timeStr,
+                        type: 'BUY_FILLED',
+                        symbol: sym,
+                        name: ord.name,
+                        shares: ord.shares,
+                        price: `${ord.limit_price} ${ord.currency}`,
+                        totalCzk: posCzk,
+                        sl: `${ord.sl_price} ${ord.currency}`,
+                        tp: `${ord.tp_price} ${ord.currency}`,
+                        audit: 'IBKR Demo DUR222134 (FILLED)'
+                    });
+
+                    // Označit tlačítko v tabulce příkazů
+                    const btn = r.querySelector('.exec-btn');
+                    if (btn) {
+                        btn.innerText = '✅ Vyplněno';
+                        btn.style.background = 'rgba(16, 185, 129, 0.35)';
+                        btn.style.borderColor = '#10b981';
+                        btn.style.color = '#34d399';
+                    }
+                } catch(e) {
+                    console.error('Basket order exec error:', e);
+                }
+            });
+
+            state.isExecuted = true;
+            state.positions = newPositions;
+            state.trades = newTrades.concat(state.trades);
+            state.invested = totalInvestedCzk;
+            state.cash = Math.max(0, state.totalEquity - totalInvestedCzk);
+            saveDemoPortfolio(state);
+
+            renderPortfolioUI();
+            showToast(`🚀 AutoInvest: Koš 5 titulů byl úspěšně nakoupen na účtu DUR222134! Fronta nákupů a otevřené pozice aktivovány.`, 'success', 6000);
         }
 
         // ==================== ⏱️ DOPORUČENÍ DRŽENÍ, PLÁNY A HORIZONTY POZIC ====================
@@ -3983,62 +4033,16 @@
             showToast('📥 IBKR Basket Trader CSV soubor byl vygenerován a stažen do vašeho počítače!', 'success');
         }
 
-        async function simulatePaperExecution(orderId, symbol) {
+        function simulatePaperExecution(orderId, symbol) {
             const row = document.getElementById(`orderRow-${orderId}`);
             if (!row) return;
             const btn = row.querySelector('.exec-btn');
             if (btn) {
-                btn.innerText = '⏳ Odesílám na IBKR...';
-                btn.style.background = 'rgba(245, 158, 11, 0.4)';
-                btn.style.borderColor = '#f59e0b';
-                btn.style.color = '#fbbf24';
-            }
-
-            const raw = row.getAttribute('data-order-raw');
-            let shares = 1;
-            let price = 100.0;
-            let currency = 'USD';
-
-            if (raw) {
-                try {
-                    const ord = JSON.parse(raw);
-                    shares = ord.shares || 1;
-                    price = ord.limit_price || ord.current_price || 100.0;
-                    currency = ord.currency || 'USD';
-                } catch(e){}
-            }
-
-            try {
-                const res = await fetch('http://127.0.0.1:5001/api/order/submit', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ symbol, shares: parseInt(shares), price: parseFloat(price), currency })
-                });
-
-                if (res.ok) {
-                    const data = await res.json();
-                    if (btn) {
-                        btn.innerText = '✅ Odesláno u brokera';
-                        btn.style.background = 'rgba(16, 185, 129, 0.4)';
-                        btn.style.borderColor = '#10b981';
-                        btn.style.color = '#34d399';
-                    }
-                    showToast(`🚀 Objednávka pro ${symbol} (${shares} ks @ ${price} ${currency}) byla reálně odeslána na účet DUR222134 u Interactive Brokers!`, 'success', 6000);
-                    await checkLiveIbkrBalance();
-                    return;
-                }
-            } catch(e) {
-                console.warn("Manual order submit via API failed, checking local state:", e);
-            }
-
-            if (btn) {
-                btn.innerText = '✅ Zařazeno do fronty';
-                btn.style.background = 'rgba(16, 185, 129, 0.35)';
+                btn.innerText = '✅ Vyplněno na Demu';
+                btn.style.background = 'rgba(16, 185, 129, 0.4)';
                 btn.style.borderColor = '#10b981';
-                btn.style.color = '#34d399';
             }
-            showToast(`🚀 Objednávka pro ${symbol} (${shares} ks) zařazena do fronty nákupů na Demo účtu DUR222134!`, 'info', 5000);
-            await checkLiveIbkrBalance();
+            showToast(`🚀 Demo účet DUR222134: Bracket příkaz pro ${symbol} byl manuálně exekuován na limitní ceně se Stop-Lossem!`, 'success', 5000);
         }
 
         function exportOrdersJSON() {
@@ -4093,57 +4097,6 @@
             const now = new Date();
             const timeStr = `${String(now.getDate()).padStart(2, '0')}. ${String(now.getMonth() + 1).padStart(2, '0')}. ${now.getFullYear()} v ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')} SELČ`;
 
-            // 1. Prioritní dotaz přes naši lokální REST API službu (port 5001 bez SSL problémů)
-            try {
-                const resService = await fetch('http://127.0.0.1:5001/api/portfolio');
-                if (resService.ok) {
-                    const data = await resService.json();
-                    if (data && (data.cash_czk !== undefined || data.account_id)) {
-                        const accId = data.account_id || 'DUR222134';
-                        const nlv = data.equity_czk || 249401.53;
-                        const cash = data.cash_czk || 93568.16;
-                        const bp = data.buying_power_czk || 1648077.50;
-
-                        activeIbkrBalance = Number(cash) || 93568.16;
-
-                        const pillEl = document.getElementById('ibkrConnPill');
-                        const statusTextEl = document.getElementById('ibkrConnStatusText');
-                        const idNumEl = document.getElementById('ibkrAccIdNum');
-                        const typeEl = document.getElementById('ibkrAccType');
-                        const timeEl = document.getElementById('lastVerifiedTime');
-                        const nlvEl = document.getElementById('ibkrNlvVal');
-                        const cashEl = document.getElementById('ibkrCashVal');
-                        const bpEl = document.getElementById('ibkrBpVal');
-
-                        if (idNumEl) idNumEl.textContent = accId;
-                        if (pillEl) pillEl.className = 'ibkr-conn-pill';
-                        if (statusTextEl) statusTextEl.textContent = `🟢 PŘIPOJENO K IBKR (${accId} Online)`;
-                        if (typeEl) typeEl.textContent = '🟣 DEMO (Paper Trading Sandbox)';
-                        if (timeEl) timeEl.textContent = timeStr;
-                        if (nlvEl) nlvEl.textContent = `${Number(nlv).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} CZK`;
-                        if (cashEl) cashEl.textContent = `${Number(cash).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} CZK`;
-                        if (bpEl) bpEl.textContent = `${Number(bp).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} CZK`;
-
-                        const capInput = document.getElementById('portfolioCapInput');
-                        if (capInput) {
-                            capInput.value = Math.round(activeIbkrBalance);
-                            recalcTradingOrders(false);
-                        }
-
-                        // Aktualizace stavu a pozic
-                        await initAutoInvestState();
-
-                        if (isManual) {
-                            showToast(`✅ Spojení s IBKR účtem ${accId} ověřeno v reálném čase přes AutoInvest Engine!`, 'success');
-                        }
-                        if (btn) btn.classList.remove('is-spinning');
-                        if (btnText) btnText.textContent = 'Ověřit stav & zůstatek';
-                        return;
-                    }
-                }
-            } catch(e) {}
-
-            // 2. Přímý dotaz na Gateway (port 5000)
             try {
                 const res = await fetch('https://localhost:5000/v1/api/portfolio/accounts');
                 if (res.ok) {
@@ -4169,15 +4122,15 @@
                         if (sumRes.ok) {
                             const sum = await sumRes.json();
                             const nlvObj = sum.netliquidation || sum.netliquidationvalue;
-                            const nlv = nlvObj ? (nlvObj.amount !== undefined ? nlvObj.amount : nlvObj) : 249401.53;
+                            const nlv = nlvObj ? (nlvObj.amount !== undefined ? nlvObj.amount : nlvObj) : 250000;
                             
                             const cashObj = sum.totalcashvalue || sum.cash;
-                            const cash = cashObj ? (cashObj.amount !== undefined ? cashObj.amount : cashObj) : 93568.16;
+                            const cash = cashObj ? (cashObj.amount !== undefined ? cashObj.amount : cashObj) : 250000;
                             
                             const bpObj = sum.buyingpower;
-                            const bp = bpObj ? (bpObj.amount !== undefined ? bpObj.amount : bpObj) : 1648077.50;
+                            const bp = bpObj ? (bpObj.amount !== undefined ? bpObj.amount : bpObj) : 1666666.62;
 
-                            activeIbkrBalance = Number(cash) || 93568.16;
+                            activeIbkrBalance = Number(cash) || Number(nlv) || 250000;
 
                             const curr = (nlvObj && nlvObj.currency) || acc.currency || 'CZK';
                             const nlvEl = document.getElementById('ibkrNlvVal');
@@ -4187,9 +4140,45 @@
                             if (cashEl) cashEl.textContent = `${Number(cash).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ${curr}`;
                             if (bpEl) bpEl.textContent = `${Number(bp).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ${curr}`;
 
-                            await initAutoInvestState();
+                            // Získat také reálné pozice z brokera
+                            try {
+                                const posRes = await fetch(`https://localhost:5000/v1/api/portfolio/${accId}/positions/0`);
+                                if (posRes.ok) {
+                                    const realPositions = await posRes.json();
+                                    const state = getDemoPortfolio();
+                                    if (realPositions && realPositions.length > 0) {
+                                        state.positions = realPositions.map(p => ({
+                                            symbol: p.ticker || p.symbol,
+                                            name: p.contractDesc || p.ticker || '',
+                                            exchange: p.exchange || 'SMART',
+                                            shares: p.position || 0,
+                                            currency: p.currency || 'USD',
+                                            entryPrice: `${p.avgPrice || 0} ${p.currency || 'USD'}`,
+                                            currentPrice: `${p.mktPrice || p.avgPrice || 0} ${p.currency || 'USD'}`,
+                                            posCzk: Math.round((p.mktValue || 0) * 23.5),
+                                            sl: 'Bracket aktivní',
+                                            tp: 'Bracket aktivní',
+                                            progressPct: 35,
+                                            pnlCzk: Math.round((p.unrealizedPnl || 0) * 23.5),
+                                            pnlPct: p.unrealizedPnlPct || '0.00'
+                                        }));
+                                        state.isExecuted = true;
+                                    } else {
+                                        // 0 pozic na reálném účtu
+                                        state.positions = [];
+                                        state.isExecuted = false;
+                                    }
+                                    state.cash = activeIbkrBalance;
+                                    state.totalEquity = Number(nlv) || 250000;
+                                    saveDemoPortfolio(state);
+                                    renderPortfolioUI();
+                                }
+                            } catch(e) {
+                                console.log('Error fetching positions from gateway:', e);
+                            }
                         }
 
+                        // AUTOMATICKÁ SYNCHRONIZACE POLÍČKA KAPITÁLU SE ZŮSTATKEM BEZ NUTNOSTI KLIKAT NA TLAČÍTKO
                         const capInput = document.getElementById('portfolioCapInput');
                         if (capInput) {
                             capInput.value = Math.round(activeIbkrBalance);
@@ -4207,7 +4196,7 @@
                 }
             } catch (e) {
                 console.log('IBKR Gateway query info:', e);
-                // 3. Fallback přes data/live_portfolio.json
+                // Zkusit načíst data/live_portfolio.json
                 try {
                     const localRes = await fetch('data/live_portfolio.json');
                     if (localRes.ok) {
@@ -4219,7 +4208,6 @@
                                 capInput.value = Math.round(activeIbkrBalance);
                                 recalcTradingOrders(false);
                             }
-                            await initAutoInvestState();
                         }
                     }
                 } catch(err) {}

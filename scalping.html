@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scalping • Vysokorychlostní Intraday Trading Modul | SuggestInvest</title>
+    <meta name="description" content="Autonomní intraday scalping modul na M1-M15 časových rámcích pro Interactive Brokers (Paper Trading DUR222134).">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #070b16;
+            --bg-secondary: #0d1527;
+            --bg-card: rgba(15, 23, 42, 0.85);
+            --bg-card-hover: rgba(26, 38, 64, 0.9);
+            --accent-gold: #f59e0b;
+            --accent-gold-glow: rgba(245, 158, 11, 0.35);
+            --accent-cyan: #06b6d4;
+            --accent-blue: #3b82f6;
+            --accent-purple: #a855f7;
+            --success: #10b981;
+            --danger: #ef4444;
+            --border-color: rgba(255, 255, 255, 0.09);
+            --border-highlight: rgba(255, 255, 255, 0.2);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --shadow-card: 0 15px 35px -5px rgba(0, 0, 0, 0.65), 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 1.5rem 1rem 3.5rem 1rem;
+            line-height: 1.5;
+            background-image: 
+                radial-gradient(circle at 10% 8%, rgba(245, 158, 11, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 15%, rgba(6, 182, 212, 0.07) 0%, transparent 45%),
+                radial-gradient(circle at 50% 95%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(13, 21, 39, 0.9) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.4rem 1.75rem;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: var(--shadow-card);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f59e0b, #06b6d4, #10b981, #f59e0b);
+            animation: gradientMove 8s infinite linear;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.1rem;
+            padding-bottom: 0.9rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-gold);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 10px #10b981;
+            animation: pulseDot 2s infinite;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.6; }
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-secondary);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .nav-btn.primary {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border-color: rgba(59, 130, 246, 0.35);
+        }
+
+        .nav-btn.primary:hover {
+            background: rgba(59, 130, 246, 0.28);
+            color: #ffffff;
+            border-color: #3b82f6;
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.35);
+        }
+
+        .header-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+        }
+
+        .title-block h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.1rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .title-block h1 span.gold {
+            color: var(--accent-gold);
+            text-shadow: 0 0 20px rgba(245, 158, 11, 0.35);
+        }
+
+        .title-block p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            max-width: 820px;
+            line-height: 1.45;
+        }
+
+        .account-badge-box {
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-md);
+            padding: 8px 14px;
+            text-align: right;
+            font-size: 0.74rem;
+        }
+
+        .account-badge-box .acc-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+            color: #38bdf8;
+            font-size: 0.88rem;
+        }
+
+        /* CARDS & SECTIONS */
+        .section-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.85rem;
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .section-subtitle {
+            font-size: 0.80rem;
+            color: var(--text-secondary);
+        }
+
+        /* 1. SECTION: INDICATORS GRID */
+        .indicators-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+        }
+
+        .indicator-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.15rem;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .indicator-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(245, 158, 11, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .ind-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .ind-icon {
+            font-size: 1.2rem;
+        }
+
+        .ind-name {
+            font-weight: 800;
+            font-size: 0.92rem;
+            color: #f1f5f9;
+        }
+
+        .ind-formula {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-bottom: 6px;
+            display: inline-block;
+        }
+
+        .ind-desc {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* 2. SECTION: GOLD MODEL EXAMPLE */
+        .model-gold-card {
+            background: linear-gradient(135deg, rgba(30, 27, 20, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .gold-badge {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(217, 119, 6, 0.35));
+            border: 1px solid rgba(245, 158, 11, 0.6);
+            color: #fcd34d;
+            font-weight: 800;
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .model-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 960px) {
+            .model-grid { grid-template-columns: 1fr; }
+        }
+
+        .chart-mock-box {
+            background: #080d1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            position: relative;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .chart-mock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.76rem;
+            color: var(--text-secondary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 6px;
+        }
+
+        .svg-chart-wrap {
+            width: 100%;
+            height: 180px;
+            margin: 0.5rem 0;
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 12px;
+            font-size: 0.72rem;
+            flex-wrap: wrap;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 6px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .legend-line {
+            width: 12px;
+            height: 3px;
+            border-radius: 2px;
+        }
+
+        .order-specs-box {
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-md);
+            padding: 1.15rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .spec-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 4px;
+        }
+
+        .spec-lbl { color: var(--text-secondary); }
+        .spec-val { font-weight: 700; color: #f8fafc; font-family: 'JetBrains Mono', monospace; }
+        .spec-val.green { color: #34d399; }
+        .spec-val.red { color: #f87171; }
+        .spec-val.gold { color: #fbbf24; }
+
+        .timeline-box {
+            margin-top: 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(245, 158, 11, 0.3);
+            border-radius: var(--radius-md);
+            padding: 0.85rem 1rem;
+            font-size: 0.76rem;
+            line-height: 1.5;
+            color: #cbd5e1;
+        }
+
+        /* 3. SECTION: CONFIGURATION MATRIX (CHECKBOXES) */
+        .config-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(6, 182, 212, 0.35);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.1);
+        }
+
+        .config-category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: var(--radius-md);
+            padding: 1.15rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+
+        .category-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #38bdf8;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 5px;
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.82rem;
+            color: #e2e8f0;
+            cursor: pointer;
+            user-select: none;
+            padding: 4px 6px;
+            border-radius: var(--radius-sm);
+            transition: background 0.15s ease;
+        }
+
+        .checkbox-label:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .checkbox-label input[type="checkbox"],
+        .checkbox-label input[type="radio"] {
+            margin-top: 3px;
+            accent-color: #06b6d4;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .check-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .check-main {
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+
+        .check-sub {
+            font-size: 0.70rem;
+            color: var(--text-muted);
+        }
+
+        .config-actions-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.25rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .summary-pills {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.78rem;
+            flex-wrap: wrap;
+        }
+
+        .sum-pill {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4px 10px;
+            border-radius: 999px;
+            color: #cbd5e1;
+        }
+
+        .sum-pill strong { color: #f59e0b; }
+
+        .btn-save-config {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #06b6d4 0%, #0284c7 100%);
+            color: #ffffff;
+            border: none;
+            padding: 0.65rem 1.4rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.88rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(6, 182, 212, 0.35);
+        }
+
+        .btn-save-config:hover {
+            background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
+        }
+
+        .btn-reset-config {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-secondary);
+            padding: 0.65rem 1rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn-reset-config:hover {
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* 4. SECTION: HISTORIE ZDROJŮ SUGGESTINVEST */
+        .history-guide-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(10, 15, 29, 0.98) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.35);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+        }
+
+        .guide-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        .guide-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: var(--radius-md);
+            padding: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .guide-icon-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: #a5b4fc;
+        }
+
+        .guide-box p {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        .guide-code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.70rem;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 5px 8px;
+            border-radius: 4px;
+            color: #38bdf8;
+            border-left: 2px solid #818cf8;
+        }
+
+        /* TOAST */
+        #toastNotice {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: rgba(15, 23, 42, 0.96);
+            border: 1px solid #06b6d4;
+            color: #f8fafc;
+            padding: 12px 18px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            font-size: 0.85rem;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            z-index: 10000;
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="toastNotice">
+        <span>⚡</span>
+        <span id="toastMsg">Konfigurace strategie byla úspěšně uložena!</span>
+    </div>
+
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <div class="header-top">
+                <div class="brand-badge">
+                    <span class="live-dot"></span>
+                    <span>Interactive Brokers Paper Trading</span>
+                </div>
+
+                <div class="nav-links">
+                    <a href="index.html" class="nav-btn primary" title="Návrat na hlavní tržní skener SuggestInvest">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        <span>SuggestInvest Hlavní Portál</span>
+                    </a>
+
+                    <a href="trading.html" class="nav-btn" title="Přejít do Autonomního Tradingu (Swingové bracket příkazy)">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                        <span>Trading Portál (Swing)</span>
+                    </a>
+
+                    <a href="scalping_engine/STRATEGY_PLAN.md" target="_blank" class="nav-btn" title="Otevřít technickou dokumentaci strategie STRATEGY_PLAN.md">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                        </svg>
+                        <span>Dokumentace STRATEGY_PLAN.md ↗</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="header-title-row">
+                <div class="title-block">
+                    <h1>⚡ <span class="gold">Scalping</span> • Intraday Engine</h1>
+                    <p>
+                        Vysokorychlostní intraday spekulace (M1–M15) na pákových nízkonákladových aktivech (Indexy, Zlato, Forex Majors, Páková ETF). Obousměrná exekuce (Long & Short) řízená adaptivními floating průměry (KAMA), Anchored VWAP pásmy a detekcí zlomů tržní struktury.
+                    </p>
+                </div>
+
+                <div class="account-badge-box">
+                    <div style="color: var(--text-muted); font-size: 0.68rem; text-transform: uppercase; font-weight: 700;">Aktivní Sandbox Účet</div>
+                    <div class="acc-num">IBKR: DUR222134</div>
+                    <div style="color: #34d399; font-size: 0.70rem; font-weight: 600;">● Paper Trading Ready</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- SEKTOR 1: KLÍČOVÉ UKAZATELE SCALPINGU -->
+        <section class="section-card">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title"><span>🔬</span> Klíčové kvantitativní ukazatele strategie</h2>
+                    <span class="section-subtitle">Algoritmická pravidla eliminující zpoždění a falešné průrazy na minutových grafech</span>
+                </div>
+                <span class="sum-pill">Filtrování šumu: <strong>Efficiency Ratio &gt; 0.40</strong></span>
+            </div>
+
+            <div class="indicators-grid">
+                <!-- 1. KAMA -->
+                <div class="indicator-item">
+                    <div class="ind-header">
+                        <span class="ind-icon">📈</span>
+                        <span class="ind-name">KAMA (Kaufman Adaptive MA)</span>
+                    </div>
+                    <div class="ind-formula">ER = |Price - Price_n| / Sum(PriceDiffs)</div>
+                    <p class="ind-desc">
+                        Floating klouzavý průměr, který měří tržní efektivitu. V dynamickém impulsu okamžitě zrychlí na EMA(2), v bočním šumu zpomalí na EMA(30+), čímž zamezí whipsaw ztrátám.
+                    </p>
+                </div>
+
+                <!-- 2. ANCHORED VWAP BANDS -->
+                <div class="indicator-item">
+                    <div class="ind-header">
+                        <span class="ind-icon">🎯</span>
+                        <span class="ind-name">Anchored VWAP &amp; Sigma Bands</span>
+                    </div>
+                    <div class="ind-formula">VWAP ± 1.5σ (Re-entry) &amp; ± 2.5σ (Reversal)</div>
+                    <p class="ind-desc">
+                        Objemově vážená férová cena dne kotvená od otevření seance. Slouží pro mean-reversion obchody z extrémních odchylek zpět ke středu, nebo jako magnet pro zisk.
+                    </p>
+                </div>
+
+                <!-- 3. SWING FRACTALS -->
+                <div class="indicator-item">
+                    <div class="ind-header">
+                        <span class="ind-icon">⛰️</span>
+                        <span class="ind-name">Fraktální vrcholy a dna (Swings)</span>
+                    </div>
+                    <div class="ind-formula">Higher High / Low | Lower High / Low</div>
+                    <p class="ind-desc">
+                        Detekce zlomů intraday struktury trhu. Zajišťuje logické a matematicky podložené umístění Stop-Lossu za poslední strukturální zlom (Invalidation Level).
+                    </p>
+                </div>
+
+                <!-- 4. ATR TRAILING STOP -->
+                <div class="indicator-item">
+                    <div class="ind-header">
+                        <span class="ind-icon">🛡️</span>
+                        <span class="ind-name">ATR Volatility Trailing Stop</span>
+                    </div>
+                    <div class="ind-formula">Trail = Max(Price) - (1.5 * M1_ATR)</div>
+                    <p class="ind-desc">
+                        Dynamická ochrana zisku uzamykající nerealizovaný profit v silných trendech. Při dosažení +1.0R zisku se Stop-Loss okamžitě posouvá na Break-Even.
+                    </p>
+                </div>
+
+                <!-- 5. PAIRS DIVERGENCE -->
+                <div class="indicator-item">
+                    <div class="ind-header">
+                        <span class="ind-icon">⚡</span>
+                        <span class="ind-name">Mezitržní Lead-Lag Divergence</span>
+                    </div>
+                    <div class="ind-formula">Corr(Gold, DXY) &lt; -0.80 | NQ vs ES</div>
+                    <p class="ind-desc">
+                        Detekce předstihových signálů mezi vysoce korelovanými aktivy. Např. náhlé oslabení DXY na minutě je okamžitým impulsem pro nákup zlata.
+                    </p>
+                </div>
+
+                <!-- 6. SPREAD / ATR RATIO -->
+                <div class="indicator-item">
+                    <div class="ind-header">
+                        <span class="ind-icon">💰</span>
+                        <span class="ind-name">Nákladový filtr (Spread / ATR)</span>
+                    </div>
+                    <div class="ind-formula">Cost Ratio = Spread / ATR(M5) &lt; 6.0 %</div>
+                    <p class="ind-desc">
+                        Filtruje instrumenty tak, aby transakční náklady brokera nikdy nesežraly více než 6 % průměrného 5minutového pohybu.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEKTOR 2: MODELOVÝ PŘÍKLAD NA ZLATU (XAU/USD) -->
+        <section class="model-gold-card">
+            <div class="section-header" style="border-color: rgba(245, 158, 11, 0.25);">
+                <div>
+                    <div class="gold-badge">🥇 Modelový Případ • Živý Tržní Scénář</div>
+                    <h2 class="section-title" style="margin-top: 6px; color: #fef08a;">
+                        Zlato (XAU/USD) • M5 Pullback Long Scalp
+                    </h2>
+                    <span class="section-subtitle">Čas: 16:15 CET (Overlap New York / Londýn) • Exekuce: Interactive Brokers Bracket Order</span>
+                </div>
+                <div style="text-align: right;">
+                    <span style="font-size: 0.72rem; color: #94a3b8;">Aktuální tržní spot:</span>
+                    <div style="font-size: 1.25rem; font-weight: 800; color: #fbbf24; font-family: 'JetBrains Mono', monospace;">2 654.80 USD</div>
+                </div>
+            </div>
+
+            <div class="model-grid">
+                <!-- SCHEMATICKÝ MINUTOVÝ GRAF -->
+                <div class="chart-mock-box">
+                    <div class="chart-mock-header">
+                        <span>XAU/USD (M5 / M1 Konfluence)</span>
+                        <span style="color: #34d399;">DXY Impuls: -0.22 % ▼</span>
+                    </div>
+
+                    <div class="svg-chart-wrap">
+                        <svg viewBox="0 0 540 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Pozadí mřížka -->
+                            <line x1="0" y1="45" x2="540" y2="45" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3,3" />
+                            <line x1="0" y1="90" x2="540" y2="90" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3,3" />
+                            <line x1="0" y1="135" x2="540" y2="135" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3,3" />
+
+                            <!-- Take-Profit 2 zóna -->
+                            <line x1="0" y1="20" x2="540" y2="20" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4,4" />
+                            <text x="440" y="16" fill="#34d399" font-size="10" font-family="monospace">TP2: 2667.80 $ (+12.8$)</text>
+
+                            <!-- Take-Profit 1 zóna -->
+                            <line x1="0" y1="50" x2="540" y2="50" stroke="#34d399" stroke-width="1.5" stroke-dasharray="4,4" />
+                            <text x="440" y="46" fill="#34d399" font-size="10" font-family="monospace">TP1: 2661.40 $ (+6.4$)</text>
+
+                            <!-- Vstupní cena (Entry) -->
+                            <line x1="0" y1="95" x2="540" y2="95" stroke="#f59e0b" stroke-width="2" />
+                            <text x="440" y="91" fill="#f59e0b" font-size="10" font-family="monospace" font-weight="bold">ENTRY: 2655.00 $</text>
+
+                            <!-- Stop-Loss -->
+                            <line x1="0" y1="145" x2="540" y2="145" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,4" />
+                            <text x="440" y="141" fill="#f87171" font-size="10" font-family="monospace">SL: 2651.80 $ (-3.2$)</text>
+
+                            <!-- Anchored VWAP křivka (modrá) -->
+                            <path d="M 10 130 Q 150 120, 270 115 T 530 100" fill="none" stroke="#38bdf8" stroke-width="2" />
+
+                            <!-- KAMA křivka (zlatá, adaptivní) -->
+                            <path d="M 10 140 Q 140 135, 250 118 T 380 95 T 530 40" fill="none" stroke="#f59e0b" stroke-width="2.5" />
+
+                            <!-- Cenové svíčky / vlna -->
+                            <polyline points="20,145 60,135 100,140 140,128 180,115 220,122 260,112 300,118 340,98 380,95 420,70 460,52 500,48 530,30" 
+                                      fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+
+                            <!-- Bod vstupu s pulzem -->
+                            <circle cx="380" cy="95" r="5" fill="#f59e0b" />
+                            <circle cx="380" cy="95" r="10" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.6">
+                                <animate attributeName="r" values="5;15;5" dur="2s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0.8;0;0.8" dur="2s" repeatCount="indefinite"/>
+                            </circle>
+                            <text x="320" y="80" fill="#fcd34d" font-size="10" font-family="sans-serif" font-weight="bold">TRIGGER LONG ▲</text>
+                        </svg>
+                    </div>
+
+                    <div class="chart-legend">
+                        <div class="legend-item"><span class="legend-line" style="background:#ffffff;"></span> <span>Cena XAU/USD</span></div>
+                        <div class="legend-item"><span class="legend-line" style="background:#f59e0b;"></span> <span>KAMA(10,2,30)</span></div>
+                        <div class="legend-item"><span class="legend-line" style="background:#38bdf8;"></span> <span>Anchored VWAP</span></div>
+                        <div class="legend-item"><span class="legend-line" style="background:#34d399;"></span> <span>TP1 &amp; TP2</span></div>
+                        <div class="legend-item"><span class="legend-line" style="background:#ef4444;"></span> <span>Stop-Loss</span></div>
+                    </div>
+                </div>
+
+                <!-- SPECIFIKACE A PARAMETRY BRACKET PŘÍKAZU -->
+                <div class="order-specs-box">
+                    <div style="font-size: 0.88rem; font-weight: 800; color: #fcd34d; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px;">
+                        📋 Parametry Bracket Příkazu (IBKR)
+                    </div>
+
+                    <div class="spec-row">
+                        <span class="spec-lbl">Podklad &amp; Instrument:</span>
+                        <span class="spec-val">XAU/USD (Gold Spot CFD / MGC)</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-lbl">Směr pozice:</span>
+                        <span class="spec-val green">BUY / LONG ▲</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-lbl">Vstupní limit (Entry):</span>
+                        <span class="spec-val gold">2 655.00 USD</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-lbl">Stop-Loss (SL pod swingem):</span>
+                        <span class="spec-val red">2 651.80 USD (-3.20 $)</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-lbl">Take-Profit 1 (RRR 1:2.0):</span>
+                        <span class="spec-val green">2 661.40 USD (+6.40 $)</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-lbl">Take-Profit 2 (VWAP +2.5σ):</span>
+                        <span class="spec-val green">2 667.80 USD (+12.80 $)</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-lbl">Poměr zisku k riziku (RRR):</span>
+                        <span class="spec-val" style="color: #38bdf8;">1 : 2.0 (TP1) / 1 : 4.0 (TP2)</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-lbl">Kalkulovaný spread:</span>
+                        <span class="spec-val">0.25 USD (5.2 % z M5 ATR)</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-lbl">Riziko kapitálu (při 100k CZK):</span>
+                        <span class="spec-val">750 CZK (0.75 % účtu)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FÁZOVÁ ČASOVÁ OSA EXEKUCE -->
+            <div class="timeline-box">
+                <strong style="color: #fcd34d;">⏱️ Algoritmický průběh obchodu minutu po minutě:</strong><br>
+                <strong>Minuta 0 (16:15):</strong> Dolarový index DXY prudce propadá pod M5 support. Zlato testuje KAMA a vytváří býčí svíčku s knotem zespodu nad VWAP. Odeslán limitní nákupní bracket pokyn na 2 655.00 USD.<br>
+                <strong>Minuta 4 (16:19):</strong> Zisk dosahuje <strong>+3.20 USD (+1.0R)</strong> na ceně 2 658.20 USD. Algoritmus <strong>automaticky posouvá Stop-Loss na Break-Even (2 655.25 USD)</strong>. Obchod je od této chvíle 100% bezrizikový.<br>
+                <strong>Minuta 11 (16:26):</strong> Dosažen cíl <strong>TP1 na 2 661.40 USD (+6.40 USD)</strong>. Uzavřeno 60 % pozice s realizovaným ziskem. Zbytek pozice trajlujeme pomocí M1 ATR až k TP2.
+            </div>
+        </section>
+
+        <!-- SEKTOR 3: INTERAKTIVNÍ KONFIGURÁTOR PRO INVESTORA -->
+        <section class="config-card">
+            <div class="section-header" style="border-color: rgba(6, 182, 212, 0.25);">
+                <div>
+                    <h2 class="section-title" style="color: #38bdf8;">
+                        <span>🎛️</span> Interaktivní konfigurátor strategie (Zaškrtněte vaše preference)
+                    </h2>
+                    <span class="section-subtitle">
+                        Zde si zvolte přesnou konfiguraci scalping enginu. Jaké trhy, časové rámce a risk limity máme aktivovat?
+                    </span>
+                </div>
+                <div class="summary-pills" id="configSummaryPills">
+                    <span class="sum-pill">Aktivních trhů: <strong id="sumMarkets">6</strong></span>
+                    <span class="sum-pill">Rámce: <strong id="sumTimeframes">M1, M5</strong></span>
+                    <span class="sum-pill">Riziko/obchod: <strong id="sumRisk">0.75 %</strong></span>
+                    <span class="sum-pill">Cílové RRR: <strong id="sumRrr">1:2.0</strong></span>
+                </div>
+            </div>
+
+            <form id="scalpingConfigForm" onsubmit="event.preventDefault(); saveUserConfiguration();">
+                <div class="config-category-grid">
+                    <!-- 1. KATEGORIE: NÍZKONÁKLADOVÉ INSTRUMENTY -->
+                    <div class="category-box">
+                        <div class="category-title">
+                            <span>🥇</span> 1. Povolené pákové instrumenty
+                        </div>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="market" value="GOLD" checked onchange="updateConfigSummary()">
+                            <div class="check-text">
+                                <span class="check-main">Zlato (XAU/USD CFD / MGC Futures)</span>
+                                <span class="check-sub">Spread 0.25 $, nejvyšší technická přesnost</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="market" value="USTEC" checked onchange="updateConfigSummary()">
+                            <div class="check-text">
+                                <span class="check-main">Nasdaq 100 (MNQ / US100)</span>
+                                <span class="check-sub">Spread 1.2 b., největší intraday dynamika</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="market" value="US500" checked onchange="updateConfigSummary()">
+                            <div class="check-text">
+                                <span class="check-main">S&P 500 (MES / US500)</span>
+                                <span class="check-sub">Spread 0.45 b., špičková hloubka trhu</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="market" value="DE40" checked onchange="updateConfigSummary()">
+                            <div class="check-text">
+                                <span class="check-main">DAX 40 (FDAX / DE40)</span>
+                                <span class="check-sub">Spread 1.1 b., dopolední evropský lídr</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="market" value="EURUSD" checked onchange="updateConfigSummary()">
+                            <div class="check-text">
+                                <span class="check-main">EUR/USD (Forex Major)</span>
+                                <span class="check-sub">Spread 0.3 pipu, nulová komise</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="market" value="GBPUSD" checked onchange="updateConfigSummary()">
+                            <div class="check-text">
+                                <span class="check-main">GBP/USD (Cable)</span>
+                                <span class="check-sub">Spread 0.8 pipu, vysoký swing rozkmit</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="market" value="USDJPY" onchange="updateConfigSummary()">
+                            <div class="check-text">
+                                <span class="check-main">USD/JPY (Dollar / Jen)</span>
+                                <span class="check-sub">Silná citlivost na dluhopisové výnosy</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="market" value="TQQQ_SQQQ" checked onchange="updateConfigSummary()">
+                            <div class="check-text">
+                                <span class="check-main">TQQQ / SQQQ (3x Páková Nasdaq ETF)</span>
+                                <span class="check-sub">0% komise u brokerů, bez swapu přes den</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- 2. KATEGORIE: ČASOVÉ RÁMCE -->
+                    <div class="category-box">
+                        <div class="category-title">
+                            <span>⏱️</span> 2. Časové rámce (Timeframes)
+                        </div>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="timeframe" value="M1" checked onchange="updateConfigSummary()">
+                            <div class="check-text">
+                                <span class="check-main">M1 (1 minuta) • Trigger vstupů</span>
+                                <span class="check-sub">Přesné časování vstupu na mikro-odrazu</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="timeframe" value="M3" onchange="updateConfigSummary()">
+                            <div class="check-text">
+                                <span class="check-main">M3 (3 minuty) • Mikro-momentum</span>
+                                <span class="check-sub">Vyhlazený mezistupeň pro klidnější exekuci</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="timeframe" value="M5" checked onchange="updateConfigSummary()">
+                            <div class="check-text">
+                                <span class="check-main">M5 (5 minut) • Hlavní signální rámec</span>
+                                <span class="check-sub">Základní výpočet KAMA a VWAP pásem</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="timeframe" value="M15" checked onchange="updateConfigSummary()">
+                            <div class="check-text">
+                                <span class="check-main">M15 (15 minut) • Makro trend seance</span>
+                                <span class="check-sub">Určení denního biasu a klíčových zón</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- 3. KATEGORIE: INDIKÁTORY & FILTRY -->
+                    <div class="category-box">
+                        <div class="category-title">
+                            <span>📊</span> 3. Aktivní indikátory &amp; filtry
+                        </div>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="indicator" value="KAMA" checked>
+                            <div class="check-text">
+                                <span class="check-main">KAMA (Kaufman Adaptive Moving Average)</span>
+                                <span class="check-sub">Filtruje falešné průrazy v konsolidaci</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="indicator" value="VWAP_BANDS" checked>
+                            <div class="check-text">
+                                <span class="check-main">Anchored VWAP s odchylkami (±1.5σ / ±2.5σ)</span>
+                                <span class="check-sub">Detekce institucionálních extrémů</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="indicator" value="SWING_FRACTALS" checked>
+                            <div class="check-text">
+                                <span class="check-main">Fraktální swingy (Zlom HH/HL/LH/LL)</span>
+                                <span class="check-sub">Přesné umístění Stop-Lossu za vrchol/dno</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="indicator" value="CORRELATION_DIVERGENCE" checked>
+                            <div class="check-text">
+                                <span class="check-main">Mezitržní korelace (Zlato vs DXY, NQ vs ES)</span>
+                                <span class="check-sub">Validace signálu předstihovým indexem</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="indicator" value="ORB_15M" checked>
+                            <div class="check-text">
+                                <span class="check-main">Opening Range Breakout (ORB 15 min)</span>
+                                <span class="check-sub">Průraz prvního pásma po otevření trhu</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="indicator" value="RSI_EXTREME">
+                            <div class="check-text">
+                                <span class="check-main">RSI(7) Extrémy (&lt;15 / &gt;85)</span>
+                                <span class="check-sub">Pouze pro mean-reversion obraty</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- 4. KATEGORIE: SMĚR A REŽIM OBCHODŮ -->
+                    <div class="category-box">
+                        <div class="category-title">
+                            <span>🧭</span> 4. Obchodní směry &amp; režim
+                        </div>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="direction" value="LONG" checked>
+                            <div class="check-text">
+                                <span class="check-main">Povolit LONG (Spekulace na růst)</span>
+                                <span class="check-sub">Nákup na odrazu z KAMA a VWAP supportu</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="direction" value="SHORT" checked>
+                            <div class="check-text">
+                                <span class="check-main">Povolit SHORT (Spekulace na pokles)</span>
+                                <span class="check-sub">Prodej při proražení pod KAMA / zónu rezistence</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="regime" value="TREND" checked>
+                            <div class="check-text">
+                                <span class="check-main">Trend-Following impulsy</span>
+                                <span class="check-sub">Vstupy ve směru silného minutového toku</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="regime" value="REVERSAL" checked>
+                            <div class="check-text">
+                                <span class="check-main">Mean-Reversion obraty</span>
+                                <span class="check-sub">Návrat z extrémního přepětí ±2.5σ VWAP</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- 5. KATEGORIE: RISK MANAGEMENT -->
+                    <div class="category-box">
+                        <div class="category-title">
+                            <span>🛡️</span> 5. Pravidla řízení rizik (Risk Governance)
+                        </div>
+                        <div style="font-size: 0.76rem; color: var(--text-secondary); margin-bottom: 4px;">Max. kapitálové riziko na 1 obchod:</div>
+                        <div style="display: flex; gap: 12px; margin-bottom: 6px;">
+                            <label class="checkbox-label">
+                                <input type="radio" name="risk_pct" value="0.5" onchange="updateConfigSummary()">
+                                <span>0.5 %</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="risk_pct" value="0.75" checked onchange="updateConfigSummary()">
+                                <span style="font-weight: 700; color: #38bdf8;">0.75 % (Doporučeno)</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="risk_pct" value="1.0" onchange="updateConfigSummary()">
+                                <span>1.0 %</span>
+                            </label>
+                        </div>
+
+                        <div style="font-size: 0.76rem; color: var(--text-secondary); margin-bottom: 4px;">Minimální poměr zisku k riziku (RRR):</div>
+                        <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+                            <label class="checkbox-label">
+                                <input type="radio" name="rrr_target" value="1:1.8" onchange="updateConfigSummary()">
+                                <span>1:1.8</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="rrr_target" value="1:2.0" checked onchange="updateConfigSummary()">
+                                <span style="font-weight: 700; color: #34d399;">1:2.0 (Doporučeno)</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="rrr_target" value="1:3.0" onchange="updateConfigSummary()">
+                                <span>1:3.0</span>
+                            </label>
+                        </div>
+
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="risk_rule" value="BE_AT_1R" checked>
+                            <div class="check-text">
+                                <span class="check-main">Posun na Break-Even při +1.0R</span>
+                                <span class="check-sub">Okamžité uzamčení bezrizikového stavu</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="risk_rule" value="DAILY_KILL_SWITCH" checked>
+                            <div class="check-text">
+                                <span class="check-main">Denní Kill-Switch při ztrátě -2.5 %</span>
+                                <span class="check-sub">Zastavení tradingu do konce seance</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="risk_rule" value="NEWS_FILTER" checked>
+                            <div class="check-text">
+                                <span class="check-main">Blokace ±3 minuty kolem US makra</span>
+                                <span class="check-sub">Ochrana před roztaženým spreadem (CPI, NFP)</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- 6. KATEGORIE: EXEKUCE & BROKER -->
+                    <div class="category-box">
+                        <div class="category-title">
+                            <span>🤖</span> 6. Exekuce &amp; Broker propojení
+                        </div>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="exec" value="IBKR_PAPER" checked disabled>
+                            <div class="check-text">
+                                <span class="check-main">Interactive Brokers (Paper Sandbox DUR222134)</span>
+                                <span class="check-sub">Plná simulace bez reálného finančního rizika</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="exec" value="BRACKET_ORDERS" checked disabled>
+                            <div class="check-text">
+                                <span class="check-main">Bracket Orders (Entry + SL + TP)</span>
+                                <span class="check-sub">Ochranné pokyny odesílány přímo s nákupem</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="exec" value="AUTOPRUNE">
+                            <div class="check-text">
+                                <span class="check-main">Time-Stop (Auto-Close po 45 minutách)</span>
+                                <span class="check-sub">Ukončení ležících pozic, pokud se trh nehýbe</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="config-actions-bar">
+                    <div style="font-size: 0.78rem; color: #94a3b8;">
+                        💡 Zvolená konfigurace se automaticky uloží do podprojektu <code style="color:#38bdf8;">scalping_engine/config.json</code>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <button type="button" class="btn-reset-config" onclick="resetDefaultConfig()">🔄 Obnovit doporučené</button>
+                        <button type="submit" class="btn-save-config">💾 Uložit moji konfiguraci strategie</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <!-- SEKTOR 4: KDE V SUGGESTINVEST NAJDETE KLÍČOVÉ UDÁLOSTI A HISTORII ZDROJŮ PO DNECH -->
+        <section class="history-guide-card">
+            <div class="section-header" style="border-color: rgba(99, 102, 241, 0.25);">
+                <div>
+                    <h2 class="section-title" style="color: #a5b4fc;">
+                        <span>📚</span> Kde v SuggestInvest přehledně najdete historii zdrojů a klíčové události po dnech?
+                    </h2>
+                    <span class="section-subtitle">
+                        Kompletní auditní stopa, databázové tabulky a interaktivní prvky, kterými se systém řídil den po dni
+                    </span>
+                </div>
+            </div>
+
+            <div class="guide-grid">
+                <!-- 1. VIZUÁLNÍ REPORT -->
+                <div class="guide-box">
+                    <div class="guide-icon-title">
+                        <span>🖥️</span> 1. Přímo v rozhraní SuggestInvest
+                    </div>
+                    <p>
+                        Ve sloupci <strong>Změna &amp; Historie</strong> u každého z 558 titulů najdete řadu až 30 teček. Každá tečka obsahuje po najetí i kliknutí:
+                    </p>
+                    <ul style="padding-left: 1.2rem; font-size: 0.74rem; color: #cbd5e1; line-height: 1.4;">
+                        <li><strong>Přesné datum a čas skenu</strong> (např. <em>01. 10. 2026 v 21:05 SELČ</em>)</li>
+                        <li><strong>Čerpaná tržní data</strong> (cena, denní změna v %)</li>
+                        <li><strong>Klíčové katalyzátory a události</strong> (např. <em>Výsledky do 7 dní, Objemový šok, 52w Maxima</em>)</li>
+                        <li><strong>Vyhodnocení kontextu modelem Gemini</strong> a odkaz na graf Yahoo Finance</li>
+                    </ul>
+                    <div class="guide-code">index.html ➔ Sloupec Změna &amp; Historie ➔ Interaktivní tečky</div>
+                </div>
+
+                <!-- 2. SQLITE DATABÁZE -->
+                <div class="guide-box">
+                    <div class="guide-icon-title">
+                        <span>🗄️</span> 2. Relační databáze SQLite
+                    </div>
+                    <p>
+                        V souboru <code>data/history/history.db</code> jsou uloženy 3 klíčové tabulky sledující denní vývoj:
+                    </p>
+                    <ul style="padding-left: 1.2rem; font-size: 0.74rem; color: #cbd5e1; line-height: 1.4;">
+                        <li><code>scans</code>: Záznam každého spuštění, čas CET, počet aktiv a signálů</li>
+                        <li><code>signal_history</code>: Každý titul x den včetně <code>catalysts</code>, <code>reasoning</code>, <code>price</code></li>
+                        <li><code>macro_snapshots</code>: Vývoj 5 makro faktorů (výnosová křivka, HYG/LQD, VIX, XLY/XLP) den po dni</li>
+                    </ul>
+                    <div class="guide-code">data/history/history.db ➔ SELECT * FROM signal_history ORDER BY scan_date DESC</div>
+                </div>
+
+                <!-- 3. DATA LAKE SNAPSHOTY -->
+                <div class="guide-box">
+                    <div class="guide-icon-title">
+                        <span>📁</span> 3. Neměnné denní JSON snapshoty
+                    </div>
+                    <p>
+                        V adresáři <code>data/history/</code> existuje pro každý jednotlivý den samostatný strukturovaný JSON soubor:
+                    </p>
+                    <ul style="padding-left: 1.2rem; font-size: 0.74rem; color: #cbd5e1; line-height: 1.4;">
+                        <li><code>2026-10-01.json</code> (nejnovější sken, 558 aktiv)</li>
+                        <li><code>2026-09-30.json</code>, <code>2026-09-29.json</code>, <code>2026-09-28.json</code> ...</li>
+                        <li>Obsahuje kompletní metadata, analytické komentáře i fundamentální vstupy</li>
+                    </ul>
+                    <div class="guide-code">data/history/YYYY-MM-DD.json ➔ cards[i].catalysts &amp; reasoning</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Synchronizace přehledových pilulek při změně checkboxů
+        function updateConfigSummary() {
+            const checkedMarkets = document.querySelectorAll('input[name="market"]:checked').length;
+            const checkedTfs = Array.from(document.querySelectorAll('input[name="timeframe"]:checked')).map(el => el.value).join(', ');
+            const riskSelected = document.querySelector('input[name="risk_pct"]:checked')?.value || '0.75';
+            const rrrSelected = document.querySelector('input[name="rrr_target"]:checked')?.value || '1:2.0';
+
+            const sumMarketsEl = document.getElementById('sumMarkets');
+            if (sumMarketsEl) sumMarketsEl.textContent = checkedMarkets;
+
+            const sumTfEl = document.getElementById('sumTimeframes');
+            if (sumTfEl) sumTfEl.textContent = checkedTfs || 'Žádný';
+
+            const sumRiskEl = document.getElementById('sumRisk');
+            if (sumRiskEl) sumRiskEl.textContent = riskSelected + ' %';
+
+            const sumRrrEl = document.getElementById('sumRrr');
+            if (sumRrrEl) sumRrrEl.textContent = rrrSelected;
+        }
+
+        // Uložení konfigurace do localStorage a stažení/zápis
+        function saveUserConfiguration() {
+            const formData = new FormData(document.getElementById('scalpingConfigForm'));
+            const configObj = {
+                timestamp: new Date().toISOString(),
+                account: "DUR222134",
+                markets: formData.getAll('market'),
+                timeframes: formData.getAll('timeframe'),
+                indicators: formData.getAll('indicator'),
+                directions: formData.getAll('direction'),
+                regimes: formData.getAll('regime'),
+                risk_pct: formData.get('risk_pct'),
+                rrr_target: formData.get('rrr_target'),
+                risk_rules: formData.getAll('risk_rule'),
+                execution: formData.getAll('exec')
+            };
+
+            localStorage.setItem('scalping_user_config', JSON.stringify(configObj));
+
+            // Zobrazení toastu
+            const toast = document.getElementById('toastNotice');
+            const toastMsg = document.getElementById('toastMsg');
+            if (toast && toastMsg) {
+                toastMsg.innerHTML = `✅ Konfigurace byla úspěšně uložena! Aktivováno <strong>${configObj.markets.length} trhů</strong>, rámce <strong>${configObj.timeframes.join(', ')}</strong>, max. riziko <strong>${configObj.risk_pct} %</strong>.`;
+                toast.style.display = 'flex';
+                setTimeout(() => { toast.style.display = 'none'; }, 5000);
+            }
+        }
+
+        function resetDefaultConfig() {
+            document.getElementById('scalpingConfigForm').reset();
+            updateConfigSummary();
+            const toast = document.getElementById('toastNotice');
+            const toastMsg = document.getElementById('toastMsg');
+            if (toast && toastMsg) {
+                toastMsg.innerHTML = '🔄 Obnoveno výchozí doporučené nastavení seniorního quant tradera.';
+                toast.style.display = 'flex';
+                setTimeout(() => { toast.style.display = 'none'; }, 3000);
+            }
+        }
+
+        // Načtení uložené konfigurace při startu stránky
+        window.addEventListener('load', () => {
+            const saved = localStorage.getItem('scalping_user_config');
+            if (saved) {
+                try {
+                    const cfg = JSON.parse(saved);
+                    // Nastavíme trhy
+                    if (cfg.markets) {
+                        document.querySelectorAll('input[name="market"]').forEach(cb => {
+                            cb.checked = cfg.markets.includes(cb.value);
+                        });
+                    }
+                    if (cfg.timeframes) {
+                        document.querySelectorAll('input[name="timeframe"]').forEach(cb => {
+                            cb.checked = cfg.timeframes.includes(cb.value);
+                        });
+                    }
+                    if (cfg.risk_pct) {
+                        const radio = document.querySelector(`input[name="risk_pct"][value="${cfg.risk_pct}"]`);
+                        if (radio) radio.checked = true;
+                    }
+                    if (cfg.rrr_target) {
+                        const radio = document.querySelector(`input[name="rrr_target"][value="${cfg.rrr_target}"]`);
+                        if (radio) radio.checked = true;
+                    }
+                } catch(e) {}
+            }
+            updateConfigSummary();
+        });
+    </script>
+</body>
+</html>

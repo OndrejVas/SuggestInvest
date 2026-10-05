@@ -1944,9 +1944,14 @@
         <!-- HEADER -->
         <header>
             <div class="header-top">
-                <a href="index.html" class="nav-back-btn" title="Návrat na hlavní tržní skener a AI signály">
-                    ⬅ Zpět na Tržní Screener & Barometr
-                </a>
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <a href="index.html" class="nav-back-btn" title="Návrat na hlavní tržní skener a AI signály">
+                        ⬅ Zpět na Tržní Screener & Barometr
+                    </a>
+                    <a href="scalping.html" class="nav-back-btn" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.45); color: #fbbf24;" title="Otevřít podprojekt Scalping pro vysokofrekvenční intradenní obchodování">
+                        ⚡ Scalping Portál
+                    </a>
+                </div>
 
                 <div class="header-badges">
                     <span class="status-chip ibkr">
@@ -2450,7 +2455,8 @@
             { symbol: 'NVDA', name: 'NVIDIA Corp', exchange: 'NASDAQ', cur: 'USD', price: 121.50, sl: '114 $', tp: '150 $', targetUpside: '+23.4 %', shares: 14, posCzk: 39970, catalyst: 'AI Blackwell akcelerátory, poptávka datacenter překonává odhady o +32 %, masivní růst marží.' },
             { symbol: 'MSFT', name: 'Microsoft Corp', exchange: 'NASDAQ', cur: 'USD', price: 428.10, sl: '398 $', tp: '492 $', targetUpside: '+14.9 %', shares: 4, posCzk: 40240, catalyst: 'Azure Cloud +29 % YoY a rozsáhlá monetizace podnikového Copilotu.' },
             { symbol: 'ASML', name: 'ASML Holding NV', exchange: 'AEX', cur: 'EUR', price: 785.00, sl: '740 €', tp: '920 €', targetUpside: '+17.2 %', shares: 2, posCzk: 39564, catalyst: 'Globální monopol na High-NA EUV litografii nezbytnou pro 2nm AI čipy.' },
-            { symbol: 'AMZN', name: 'Amazon.com Inc', exchange: 'NASDAQ', cur: 'USD', price: 188.50, sl: '175 $', tp: '218 $', targetUpside: '+15.6 %', shares: 9, posCzk: 39870, catalyst: 'Akcelerace cloudového zisku AWS a rekordní provozní cashflow v e-commerce.' }
+            { symbol: 'AMZN', name: 'Amazon.com Inc', exchange: 'NASDAQ', cur: 'USD', price: 188.50, sl: '175 $', tp: '218 $', targetUpside: '+15.6 %', shares: 9, posCzk: 39870, catalyst: 'Akcelerace cloudového zisku AWS a rekordní provozní cashflow v e-commerce.' },
+            { symbol: 'MRNA', name: 'Moderna Inc', exchange: 'NASDAQ', cur: 'USD', price: 196.17, sl: '180 $', tp: '245 $', targetUpside: '+24.9 %', shares: 9, posCzk: 41490, catalyst: 'mRNA onkologická vakcína ve fázi III (Keytruda kombo) a komerční diverzifikace mimo covid.' }
         ];
 
         function getDemoPortfolio() {

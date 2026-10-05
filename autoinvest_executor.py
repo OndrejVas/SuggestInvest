@@ -50,7 +50,8 @@ ROTATION_CANDIDATES = [
     {"symbol": "MSFT", "exchange": "NASDAQ", "cur": "USD", "price": 428.10, "name": "Microsoft Corp"},
     {"symbol": "AMZN", "exchange": "NASDAQ", "cur": "USD", "price": 188.50, "name": "Amazon.com Inc"},
     {"symbol": "ASML", "exchange": "AEX", "cur": "EUR", "price": 785.00, "name": "ASML Holding NV"},
-    {"symbol": "NVDA", "exchange": "NASDAQ", "cur": "USD", "price": 121.50, "name": "NVIDIA Corp"}
+    {"symbol": "NVDA", "exchange": "NASDAQ", "cur": "USD", "price": 121.50, "name": "NVIDIA Corp"},
+    {"symbol": "MRNA", "exchange": "NASDAQ", "cur": "USD", "price": 196.85, "name": "Moderna Inc"}
 ]
 
 

@@ -80,6 +80,9 @@ TIER_2_MID: List[Dict[str, str]] = [
     {"xtb_symbol": "CSCO.US", "yahoo_symbol": "CSCO", "name": "Cisco Systems", "asset_type": "AKCIE", "currency": "USD", "tier": "MID"},
     {"xtb_symbol": "IBM.US", "yahoo_symbol": "IBM", "name": "International Business Machines", "asset_type": "AKCIE", "currency": "USD", "tier": "MID"},
 
+    # US Biotech, Pharma & mRNA Technologie
+    {"xtb_symbol": "MRNA.US", "yahoo_symbol": "MRNA", "name": "Moderna Inc", "asset_type": "AKCIE", "currency": "USD", "tier": "MID"},
+
     # Jaderná energie, Uran a nová energetika
     {"xtb_symbol": "CCJ.US", "yahoo_symbol": "CCJ", "name": "Cameco Corp (Uranium)", "asset_type": "AKCIE", "currency": "USD", "tier": "MID"},
     {"xtb_symbol": "SMR.US", "yahoo_symbol": "SMR", "name": "NuScale Power (SMR Nuclear)", "asset_type": "AKCIE", "currency": "USD", "tier": "MID"},

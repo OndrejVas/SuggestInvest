@@ -12,3 +12,4 @@ cache_macro.json
 *.cache
 *.log
 IB Gateway/logs/
+scratch/

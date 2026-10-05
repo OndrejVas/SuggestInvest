@@ -138,6 +138,19 @@ ROTATION_CANDIDATES = [
         "targetUpside": "+9.8 %",
         "catalyst": "Cloud ERP transformace.",
         "status": "6. v pořadí rotací"
+    },
+    {
+        "symbol": "MRNA",
+        "name": "Moderna Inc",
+        "exchange": "NASDAQ",
+        "cur": "USD",
+        "price": 196.85,
+        "shares": 9,
+        "sl": "178 $",
+        "tp": "245 $",
+        "targetUpside": "+24.5 %",
+        "catalyst": "Pipeline mRNA onkologických vakcín (spolupráce s Merck) a stabilizace marží po Covid cyklu.",
+        "status": "7. v pořadí rotací (Biotech Leader)"
     }
 ]
 

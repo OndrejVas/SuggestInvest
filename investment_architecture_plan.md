@@ -20,10 +20,10 @@
 ### 1.2 Propojení s existující metodikou SuggestInvest (Operational Baseline & Extension Anchor)
 Architektonický plán nevzniká ve vzduchoprázdnu, ale přímo navazuje a systematicky rozšiřuje provozní metodiku produkčního systému **SuggestInvest**:
 
-1. **Strukturované investiční univerzum (541 aktiv ve 3 koších):**
+1. **Strukturované investiční univerzum (557 aktiv ve 3 koších):**
    - **Segmentace do 3 prioritních košů:**
-     - 🥇 *TIER 1 (TOP Leaders - 48 aktiv):* US Mega-Caps (AAPL, NVDA, MSFT), kompletní Pražská burza (BCPP v CZK: CEZ, KB, Moneta, Colt), evropské blue-chips (ASML, SAP) a hlavní indexová ETF (S&P 500, All-World). Maximální likvidita a minimální spread.
-     - 🥈 *TIER 2 (MID Growth - 472 aktiv):* Globální technologické, polovodičové, obranné, energetické a krypto-proxy tituly a sektorová UCITS ETF.
+     - 🥇 *TIER 1 (TOP Leaders - 51 aktiv):* US Mega-Caps (AAPL, NVDA, MSFT), kompletní Pražská burza (BCPP v CZK: CEZ, KB, Moneta, Colt), evropské blue-chips (ASML, SAP) a hlavní indexová ETF (S&P 500, All-World). Maximální likvidita a minimální spread.
+     - 🥈 *TIER 2 (MID Growth - 485 aktiv):* Globální technologické, polovodičové, obranné, energetické a krypto-proxy tituly a sektorová UCITS ETF.
      - 🥉 *TIER 3 (LOW Discovery - 21 aktiv):* Dynamické spekulace, turnaround situace a asymetrický rizikový profil.
    - **XTB katalog a hygienický trash filter:**
      - Křížová validace mezinárodních kódů ISIN proti oficiálnímu katalogu XTB (14 692 instrumentů).
@@ -49,7 +49,7 @@ Architektonický plán nevzniká ve vzduchoprázdnu, ale přímo navazuje a syst
 
 4. **Hybridní AI & Quant Engine a produkční pipeline:**
    - Paralelní zpracování trhu: Yahoo Finance feed (`yfinance`) s 24hodinovou souborovou mezipamětí (`cache_fundamentals.json`).
-   - Dvousložková inference: Google Gemini AI v 22 dávkách (~25 aktiv na dávku se strukturovaným JSON výstupem a systémovým nastavením *Head of Portfolio Risk*) s deterministickým kvantitativním fallback režimem při výpadku API.
+   - Dvousložková inference: Google Gemini 3.8 Flash v 23 dávkách (~25 aktiv na dávku se strukturovaným JSON výstupem a systémovým nastavením *Head of Portfolio Risk*) s deterministickým kvantitativním fallback režimem při výpadku API.
    - Serverless CI/CD exekuce: GitHub Actions workflow (`market_cron.yml`) běžící každé ráno v 8:00 CET s celkovou dobou běhu pod 3 minuty + manuální on-demand spouštění přes GitHub Workflow Dispatch a automatický deployment na GitHub Pages.
 
 5. **Architektonický princip rozšiřování (Extension Principle):**
@@ -81,7 +81,7 @@ Architektonický plán nevzniká ve vzduchoprázdnu, ale přímo navazuje a syst
     Klasická normalizace $\frac{x - \mu}{\sigma}$ selhává při tlustých chvostech finančních výnosů a extrémních skocích malých satelitních akcií. Zavádí se robustní normalizace:
     $$Z_{i,t}^{\text{robust}} = \frac{X_{i,t} - \text{Median}_t(X)}{\text{IQR}_t(X)}, \quad \text{kde } \text{IQR}_t = Q_{0.75, t} - Q_{0.25, t}$$
   - **Point-in-Time Universum a ochrana před zkreslením přežití (Survivorship Bias):**
-    Při historické evaluaci jsou sledována i delistovaná aktiva a nedochází k zpětné projekci současného seznamu 541 akcií do minulosti.
+    Při historické evaluaci jsou sledována i delistovaná aktiva a nedochází k zpětné projekci současného seznamu 557 akcií do minulosti.
 
 ### 2.2 Alternativní data & Textový Scraping (Alternative & NLP Stream)
 - **Struktura slotu:**
@@ -94,7 +94,7 @@ Architektonický plán nevzniká ve vzduchoprázdnu, ale přímo navazuje a syst
     Statický sentiment je perzistentní a často již oceněný v trhu. Prediktivní signál vzniká z mezidenní odchylky vůči klouzavému průměru:
     $$\Delta S_t = S_t - \text{EMA}_{14}(S)$$
   - **Dávkové zpracování (Batch Prompting v Google Gemini):**
-    Namísto náročného lokálního běhu stovek modelů FinBERT/TweetEval na CPU jsou zprávy pro 541 titulů agregovány do 22 dávek a ohodnoceny v rámci strukturované JSON odpovědi Gemini 2.5 Flash během ranního GitHub Actions cronu.
+    Namísto náročného lokálního běhu stovek modelů FinBERT/TweetEval na CPU jsou zprávy pro 557 titulů agregovány do 23 dávek a ohodnoceny v rámci strukturované JSON odpovědi Gemini 3.8 Flash během ranního GitHub Actions cronu.
 
 ### 2.3 Perzistence, caching a stavový management
 - **Struktura slotu:**

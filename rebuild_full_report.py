@@ -19,20 +19,25 @@ from main import build_html_report, build_trading_page
 
 print("=== REBUILDING SUGGESTINVEST FULL REPORT & HISTORICAL SIGNALS ===")
 
-# 1. Load cards from 2026-09-29.json
-snapshot_path = os.path.join("data", "history", "2026-09-29.json")
-if not os.path.exists(snapshot_path):
-    raise FileNotFoundError(f"Snapshot not found: {snapshot_path}")
+# 1. Dynamically locate the latest daily snapshot in data/history
+history_dir = os.path.join("data", "history")
+snapshot_files = sorted([f for f in os.listdir(history_dir) if re.match(r"^\d{4}-\d{2}-\d{2}\.json$", f)])
+if not snapshot_files:
+    raise FileNotFoundError("Žádný denní snapshot nebyl nalezen v data/history.")
+
+latest_snapshot_file = snapshot_files[-1]
+snapshot_path = os.path.join(history_dir, latest_snapshot_file)
+latest_scan_date = latest_snapshot_file.replace(".json", "")
 
 with open(snapshot_path, "r", encoding="utf-8") as f:
     data = json.load(f)
 
 metadata = data.get("metadata", {})
 cards = data.get("cards", []) if isinstance(data, dict) else data
-print(f"1. Načteno {len(cards)} karet ze snapshotu {snapshot_path}")
+print(f"1. Načteno {len(cards)} karet z nejnovějšího snapshotu {snapshot_path} (datum: {latest_scan_date})")
 
-# 2. Compute daily changes against previous scan (2026-09-28)
-cards, change_stats = compute_daily_changes(cards, current_scan_date="2026-09-29")
+# 2. Compute daily changes against previous scan
+cards, change_stats = compute_daily_changes(cards, current_scan_date=latest_scan_date)
 print(f"2. Vyhodnoceny změny doporučení:")
 print(f"   - Celkem změn: {change_stats.get('total_changed', 0)}")
 print(f"   - ⬆️ Upgrady: {change_stats.get('upgrades', 0)}")
@@ -49,14 +54,35 @@ for card in cards:
     if not dots:
         sig_upper = card.get("signal", "HOLD").upper()
         c_color = "#10b981" if "STRONG BUY" in sig_upper else ("#22c55e" if "BUY" in sig_upper else ("#ef4444" if "SELL" in sig_upper else "#eab308"))
+        p_str = f"{card.get('price_raw', 0):.2f}" if card.get("price_raw") else ""
+        cur_sym = card.get("currency", "USD")
+        ch_str = f"{card.get('change_pct_raw', 0):+.2f} %" if card.get("change_pct_raw") is not None else ""
+        imp_dir = card.get("impact_direction", "▲ Růst")
+        cat_txt = ", ".join(card.get("catalysts") or []) if card.get("catalysts") else (card.get("catalyst_event") or "Aktuální tržní data")
+        reas_txt = card.get("reasoning", "") or f"Signál {card.get('signal', 'HOLD')} stanoven na základě aktuálního ocenění."
+        chart_u = f"https://finance.yahoo.com/quote/{sym_key}/history"
+        f_tooltip = f"📅 Sken: {latest_scan_date}\n⚡ Signál: {card.get('signal', 'HOLD')} ({card.get('confidence', 50)} %)\n💰 Cena: {p_str} {cur_sym} ({ch_str})\n🎯 Dopad: {imp_dir}\n📡 Katalyzátory: {cat_txt}\n🧠 Kontext: {reas_txt[:180]}\n🔗 Klikněte pro otevření dat na Yahoo Finance"
         dots = [{
-            "date": "2026-09-29",
+            "date": latest_scan_date,
             "date_str": "Dnes",
+            "full_datetime": metadata.get("timestamp_cet") or latest_scan_date,
             "signal": card.get("signal", "HOLD"),
             "signal_class": card.get("signal_class", "signal-hold"),
             "probability": card.get("confidence", 50),
-            "price_str": f"{card.get('price_raw', 0):.2f}" if card.get("price_raw") else "",
-            "color": c_color
+            "confidence": card.get("confidence", 50),
+            "price": card.get("price_raw", 0),
+            "price_str": p_str,
+            "currency": cur_sym,
+            "change_pct": card.get("change_pct_raw", 0),
+            "change_pct_str": ch_str,
+            "impact_direction": imp_dir,
+            "catalysts": card.get("catalysts") or [],
+            "catalyst_text": cat_txt,
+            "reasoning": reas_txt,
+            "target_upside_pct": card.get("target_upside_raw"),
+            "chart_url": chart_u,
+            "color": c_color,
+            "formatted_tooltip": f_tooltip
         }]
     else:
         cards_with_dots += 1
@@ -67,7 +93,9 @@ print(f"3. Připojena historie doporučení (tečky):")
 print(f"   - Aktiv s historií: {cards_with_dots}/{len(cards)}")
 print(f"   - Celkem historických bodů: {total_dots} (průměr {total_dots/len(cards):.1f} skenů na aktivum)")
 
-# 4. Save enriched cards back to 2026-09-29.json
+# 4. Save enriched cards back to latest snapshot
+if "counts" not in metadata:
+    metadata["counts"] = {}
 metadata["counts"]["total_changed"] = change_stats.get("total_changed", 0)
 metadata["counts"]["upgrades"] = change_stats.get("upgrades", 0)
 metadata["counts"]["downgrades"] = change_stats.get("downgrades", 0)
@@ -79,9 +107,12 @@ print(f"4. Snapshot {snapshot_path} byl aktualizován o tečky historie a statis
 top_5_basket = compute_top_5_conviction_basket(cards)
 print(f"5. Sestaven Top 5 Conviction Basket: {[x['xtb_symbol'] for x in top_5_basket]}")
 
-# 6. Macro Barometer
-macro_barometer = get_macro_recession_barometer(cards, use_cache=True)
+# 6. Macro Barometer (fresh calculation with delta comparison)
+macro_barometer = get_macro_recession_barometer(cards, use_cache=False)
 print(f"6. Makro barometr: Index {macro_barometer['composite_index']}/100 ({macro_barometer['risk_level']})")
+if "delta" in macro_barometer:
+    print(f"   - Delta badge: {macro_barometer['delta']['delta_badge']}")
+    print(f"   - Předchozí hodnota: {macro_barometer['delta']['prev_score']} b. z {macro_barometer['delta']['prev_date']}")
 
 # 7. Trading orders
 trading_engine = BrokerExecutionEngine(
@@ -114,7 +145,7 @@ trading_html_output = build_trading_page(
     trading_orders=trading_orders,
     macro_barometer=macro_barometer,
     top_5_basket=top_5_basket,
-    timestamp_cet_str="29.09.2026 22:50 SELČ"
+    timestamp_cet_str=metadata.get("timestamp_cet") or "01.10.2026 21:05 SELČ"
 )
 with open("trading.html", "w", encoding="utf-8") as f:
     f.write(trading_html_output)

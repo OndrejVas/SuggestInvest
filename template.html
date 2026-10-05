@@ -2361,6 +2361,31 @@
             transform: translateY(-1px);
         }
 
+        .nav-scalping-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.22) 0%, rgba(217, 119, 6, 0.12) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.45);
+            color: #fbbf24;
+            padding: 0.45rem 0.85rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+            cursor: pointer;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.18);
+        }
+
+        .nav-scalping-btn:hover {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.4) 0%, rgba(217, 119, 6, 0.28) 100%);
+            border-color: #f59e0b;
+            color: #ffffff;
+            box-shadow: 0 0 18px rgba(245, 158, 11, 0.45);
+            transform: translateY(-1px);
+        }
+
         .conv-symbol-row {
             display: flex;
             align-items: baseline;
@@ -2571,6 +2596,236 @@
             z-index: 10;
         }
 
+        /* ==================== MAKRO BAROMETR: DELTA BADGE & POPOVER ==================== */
+        .barometer-delta-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            margin-left: 8px;
+        }
+
+        .barometer-delta-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 3px 9px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+            background: rgba(255, 255, 255, 0.08);
+            color: #e2e8f0;
+            user-select: none;
+        }
+
+        .barometer-delta-badge:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+            filter: brightness(1.2);
+        }
+
+        .barometer-delta-badge.delta-improving {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            border-color: rgba(52, 211, 153, 0.5);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+        }
+
+        .barometer-delta-badge.delta-worsening {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            border-color: rgba(248, 113, 113, 0.5);
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
+        }
+
+        .barometer-delta-badge.delta-steady {
+            background: rgba(245, 158, 11, 0.18);
+            color: #fbbf24;
+            border-color: rgba(251, 191, 36, 0.4);
+        }
+
+        .barometer-delta-popup {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            width: 390px;
+            max-width: calc(100vw - 32px);
+            background: #0f172a;
+            border: 1px solid rgba(59, 130, 246, 0.55);
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 20px 45px -5px rgba(0, 0, 0, 0.9), 0 0 25px rgba(59, 130, 246, 0.25);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 99999;
+            pointer-events: auto;
+            transition: opacity 0.15s ease, visibility 0.15s ease;
+            text-align: left;
+        }
+
+        .barometer-delta-wrapper:hover .barometer-delta-popup,
+        .barometer-delta-popup.is-open {
+            visibility: visible !important;
+            opacity: 1 !important;
+            pointer-events: auto !important;
+        }
+
+        .barometer-delta-popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 6px;
+            margin-bottom: 8px;
+        }
+
+        /* ==================== PLUJÍCÍ INTERAKTIVNÍ KARTA HISTORICKÝCH TEČEK ==================== */
+        .dht-floating-popup {
+            visibility: hidden;
+            opacity: 0;
+            position: fixed;
+            width: 380px;
+            max-width: calc(100vw - 24px);
+            background: #0f172a;
+            border: 1px solid rgba(59, 130, 246, 0.55);
+            border-radius: 12px;
+            padding: 0.95rem;
+            box-shadow: 0 20px 45px -5px rgba(0, 0, 0, 0.9), 0 0 25px rgba(59, 130, 246, 0.25);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 100000;
+            pointer-events: none;
+            transition: opacity 0.15s ease, visibility 0.15s ease;
+            text-align: left;
+        }
+
+        .dht-floating-popup.is-open {
+            visibility: visible !important;
+            opacity: 1 !important;
+            pointer-events: auto !important;
+        }
+
+        .dht-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 6px;
+            margin-bottom: 8px;
+            gap: 8px;
+        }
+
+        .dht-badge {
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .dht-ticker {
+            font-size: 0.76rem;
+            font-weight: 800;
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.12);
+            padding: 1px 6px;
+            border-radius: 4px;
+        }
+
+        .dht-date {
+            font-size: 0.70rem;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        .dht-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            cursor: pointer;
+            line-height: 1;
+            padding: 2px 5px;
+            border-radius: 4px;
+            transition: all 0.15s ease;
+        }
+
+        .dht-close-btn:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .dht-price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 6px;
+            padding: 6px 8px;
+            font-size: 0.73rem;
+            color: #cbd5e1;
+            margin-bottom: 8px;
+        }
+
+        .dht-section {
+            margin-bottom: 8px;
+        }
+
+        .dht-sec-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #94a3b8;
+            letter-spacing: 0.03em;
+            margin-bottom: 3px;
+        }
+
+        .dht-sec-content {
+            font-size: 0.73rem;
+            color: #e2e8f0;
+            line-height: 1.4;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 6px 8px;
+            border-radius: 6px;
+            border-left: 2px solid #38bdf8;
+        }
+
+        .dht-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 8px;
+            margin-top: 6px;
+        }
+
+        .dht-link-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(37, 99, 235, 0.35) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            color: #93c5fd;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.15s ease;
+            cursor: pointer;
+        }
+
+        .dht-link-btn:hover {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.45) 0%, rgba(37, 99, 235, 0.55) 100%);
+            color: #ffffff;
+            border-color: #60a5fa;
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+        }
+
         @media (max-width: 1200px) {
             .filter-groups { grid-template-columns: repeat(3, 1fr); }
         }
@@ -2660,6 +2915,13 @@
                         <span>🤖 Autonomní Trading (IBKR)</span>
                     </a>
 
+                    <a href="scalping.html" class="nav-scalping-btn" title="Otevřít podprojekt Scalping pro vysokofrekvenční intradenní obchodování (Interactive Brokers Paper DUR222134)">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                        </svg>
+                        <span>⚡ Scalping (IBKR)</span>
+                    </a>
+
                     <button id="triggerScanBtn" class="trigger-scan-btn" onclick="triggerCloudOrLocalScan()" title="Spustit kompletní nový sken 541 aktiv a Gemini AI analýzu přímo v cloudu na GitHub Actions">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
@@ -2743,6 +3005,34 @@
                                 <div class="digital-readout-box">
                                     <span class="digital-readout-val" style="color: {{ macro_barometer.risk_color }};">{{ macro_barometer.composite_index_int }}</span>
                                     <span class="digital-readout-max">/100</span>
+                                    {% if macro_barometer.delta %}
+                                    <div class="barometer-delta-wrapper">
+                                        <button type="button" class="barometer-delta-badge {{ macro_barometer.delta.delta_badge_class }}" 
+                                                title="{{ macro_barometer.delta.explanation }}"
+                                                onclick="toggleBarometerDeltaTooltip(event, this)">
+                                            <span>{{ macro_barometer.delta.delta_badge }}</span>
+                                            <span style="font-size: 0.72rem; opacity: 0.85;">ℹ️</span>
+                                        </button>
+                                        <div class="barometer-delta-popup" role="tooltip" onclick="event.stopPropagation();">
+                                            <div class="barometer-delta-popup-header">
+                                                <span class="tooltip-title">🔍 Proč se index rizika {% if macro_barometer.delta.delta_score == 0 %}nemění{% else %}změnil{% endif %}?</span>
+                                                <button type="button" class="tooltip-close-btn" onclick="closeBarometerDeltaTooltip(event)" title="Zavřít">✕</button>
+                                            </div>
+                                            <div class="barometer-delta-popup-body">
+                                                <div style="font-size: 0.78rem; color: #f1f5f9; font-weight: 700; margin-bottom: 6px;">
+                                                    Aktuální hodnocení: {{ macro_barometer.delta.delta_badge }}
+                                                </div>
+                                                <div class="barometer-delta-text" style="white-space: pre-line; font-size: 0.74rem; color: #cbd5e1; line-height: 1.45;">
+                                                    {{ macro_barometer.delta.explanation }}
+                                                </div>
+                                                <div style="margin-top: 8px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.70rem; color: #94a3b8; display: flex; justify-content: space-between;">
+                                                    <span>Předchozí sken: <strong>{{ macro_barometer.delta.prev_date }}</strong></span>
+                                                    <span>Předchozí skóre: <strong>{{ macro_barometer.delta.prev_score }} b.</strong></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
                                 </div>
                                 <div class="risk-level-badge" style="border-color: {{ macro_barometer.risk_color }}; color: {{ macro_barometer.risk_color }}; background: rgba(255,255,255,0.02);">
                                     {{ macro_barometer.risk_level }}
@@ -3227,7 +3517,7 @@
                     <div class="th-cell th-sortable text-right" onclick="sortTable('change')" title="Řadit podle denní změny">Denní změna <span id="sort-change" class="sort-icon">↕</span></div>
                     <div class="th-cell th-sortable text-right" onclick="sortTable('upside')" title="Řadit podle růstového potenciálu k cílové ceně analytiků">Cílová cena <span id="sort-upside" class="sort-icon">↕</span></div>
                     <div class="th-cell th-sortable text-center" onclick="sortTable('signal')" title="Řadit podle síly AI signálu">AI Signál <span id="sort-signal" class="sort-icon">↕</span></div>
-                    <div class="th-cell th-sortable" onclick="sortTable('delta')" title="Řadit podle posunu doporučení (Upgrady nahoře)">Změna & Historie <span id="sort-delta" class="sort-icon">↕</span></div>
+                    <div class="th-cell th-sortable" onclick="sortTable('delta')" title="Změna doporučení a časová řada až 30 skenů. Najetím myši na libovolnou tečku zobrazíte přesné datum, čerpaná data, vyhodnocení dopadu a odkaz na graf.">Změna & Historie <span id="sort-delta" class="sort-icon">↕</span></div>
                     <div class="th-cell th-sortable" onclick="sortTable('prob')" title="Řadit podle míry konfidence">Konfidence & Impuls <span id="sort-prob" class="sort-icon">↕</span></div>
                     <div class="th-cell text-center" title="AI analýza a fundamentální kontext při najetí myši">AI Kontext</div>
                 </div>
@@ -3330,12 +3620,27 @@
                             </span>
                             {% endif %}
 
-                            <!-- Řada barevných teček historie doporučení (až 30 skenů) -->
-                            <div class="history-dots-row" title="Historie doporučení za posledních až 30 skenů (najetím myši zobrazíte čas, signál a cenu)">
+                            <!-- Řada barevných teček historie doporučení (až 30 skenů s interaktivním tooltipem) -->
+                            <div class="history-dots-row">
                                 {% for dot in item.signal_history_dots %}
                                 <span class="sig-dot sig-dot-{{ dot.signal_class }}" 
                                       style="background-color: {{ dot.color }};" 
-                                      title="{{ dot.date_str }}: {{ dot.signal }}{% if dot.probability %} ({{ dot.probability }}%){% endif %}{% if dot.price_str %} - {{ dot.price_str }} {{ item.currency }}{% endif %}"></span>
+                                      data-sym="{{ item.yahoo_symbol }}"
+                                      data-date="{{ dot.full_datetime|default(dot.date_str) }}"
+                                      data-signal="{{ dot.signal }}"
+                                      data-sigclass="{{ dot.signal_class }}"
+                                      data-prob="{{ dot.probability }}"
+                                      data-price="{{ dot.price_str }} {{ dot.currency|default(item.currency) }}"
+                                      data-chpct="{{ dot.change_pct_str }}"
+                                      data-impact="{{ dot.impact_direction|default('—') }}"
+                                      data-catalyst="{{ dot.catalyst_text|e }}"
+                                      data-reasoning="{{ dot.reasoning|e }}"
+                                      data-charturl="{{ dot.chart_url }}"
+                                      data-color="{{ dot.color }}"
+                                      onmouseenter="showDotHistoryTooltip(event, this)"
+                                      onmouseleave="hideDotHistoryTooltip(event, this)"
+                                      onclick="openDotHistoryPopup(event, this)"
+                                      title="{{ dot.formatted_tooltip|default(dot.date_str + ': ' + dot.signal) }}"></span>
                                 {% endfor %}
                             </div>
                         </div>
@@ -4259,7 +4564,146 @@
                     console.warn('Poll error:', e);
                 }
             }, 10000);
+        // ==================== INTERAKTIVNÍ HISTORIE TEČEK (DOT POPUP) ====================
+        let dhtHideTimeout = null;
+        let dhtIsPinned = false;
+
+        function showDotHistoryTooltip(e, dotEl) {
+            if (dhtIsPinned) return;
+            clearTimeout(dhtHideTimeout);
+            populateAndPositionDotPopup(dotEl, e);
         }
+
+        function hideDotHistoryTooltip(e, dotEl) {
+            if (dhtIsPinned) return;
+            dhtHideTimeout = setTimeout(() => {
+                const popup = document.getElementById('dotHistoryFloatingPopup');
+                if (popup && !popup.matches(':hover')) {
+                    popup.classList.remove('is-open');
+                }
+            }, 180);
+        }
+
+        function openDotHistoryPopup(e, dotEl) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            clearTimeout(dhtHideTimeout);
+            dhtIsPinned = true;
+            populateAndPositionDotPopup(dotEl, e);
+        }
+
+        function hideDotHistoryPopupImmediate(e) {
+            if (e && e.stopPropagation) e.stopPropagation();
+            dhtIsPinned = false;
+            const popup = document.getElementById('dotHistoryFloatingPopup');
+            if (popup) popup.classList.remove('is-open');
+        }
+
+        function populateAndPositionDotPopup(dotEl, e) {
+            const popup = document.getElementById('dotHistoryFloatingPopup');
+            if (!popup || !dotEl) return;
+
+            const sym = dotEl.dataset.sym || "";
+            const date = dotEl.dataset.date || "";
+            const signal = dotEl.dataset.signal || "";
+            const prob = dotEl.dataset.prob || "50";
+            const price = dotEl.dataset.price || "";
+            const chpct = dotEl.dataset.chpct || "";
+            const impact = dotEl.dataset.impact || "";
+            const catalyst = dotEl.dataset.catalyst || "Běžný monitoring tržního kontextu";
+            const reasoning = dotEl.dataset.reasoning || "AI model kvantifikoval signál na základě fundamentů a technického ocenění.";
+            const charturl = dotEl.dataset.charturl || `https://finance.yahoo.com/quote/${sym}/history`;
+            const color = dotEl.dataset.color || "#10b981";
+
+            const tickerEl = document.getElementById('dhtTicker');
+            if (tickerEl) tickerEl.textContent = sym;
+            const dateEl = document.getElementById('dhtDate');
+            if (dateEl) dateEl.textContent = date.startsWith("📅") ? date : ("📅 " + date);
+            const badge = document.getElementById('dhtSignalBadge');
+            if (badge) {
+                badge.textContent = `${signal} (${prob} %)`;
+                badge.style.backgroundColor = color;
+                badge.style.color = (color === '#eab308' || color === '#fbbf24') ? '#1e293b' : '#ffffff';
+            }
+
+            const pEl = document.getElementById('dhtPrice');
+            if (pEl) pEl.textContent = price;
+            const chEl = document.getElementById('dhtChange');
+            if (chEl) chEl.textContent = chpct || "0.00 %";
+            const impEl = document.getElementById('dhtImpact');
+            if (impEl) impEl.textContent = impact;
+            const catEl = document.getElementById('dhtCatalysts');
+            if (catEl) catEl.textContent = catalyst;
+            const reasEl = document.getElementById('dhtReasoning');
+            if (reasEl) reasEl.textContent = reasoning;
+            const linkEl = document.getElementById('dhtLink');
+            if (linkEl) linkEl.href = charturl;
+
+            popup.classList.add('is-open');
+
+            // Umístění popupu
+            const rect = dotEl.getBoundingClientRect();
+            const pad = 12;
+            const popupWidth = Math.min(380, window.innerWidth - (pad * 2));
+            popup.style.width = `${popupWidth}px`;
+
+            let left = rect.left - (popupWidth / 2) + (rect.width / 2);
+            if (left + popupWidth > window.innerWidth - pad) {
+                left = window.innerWidth - popupWidth - pad;
+            }
+            if (left < pad) left = pad;
+
+            let top = rect.bottom + 8;
+            const estHeight = popup.offsetHeight || 280;
+            if (top + estHeight > window.innerHeight - pad) {
+                top = rect.top - estHeight - 8;
+            }
+            if (top < pad) top = pad;
+
+            popup.style.left = `${Math.round(left)}px`;
+            popup.style.top = `${Math.round(top)}px`;
+        }
+
+        // ==================== MAKRO BAROMETR: POPOVER HANDLERS ====================
+        function toggleBarometerDeltaTooltip(e, btn) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            const wrapper = btn.closest('.barometer-delta-wrapper');
+            if (!wrapper) return;
+            const popup = wrapper.querySelector('.barometer-delta-popup');
+            if (!popup) return;
+            const wasOpen = popup.classList.contains('is-open');
+            closeBarometerDeltaTooltip();
+            if (!wasOpen) {
+                popup.classList.add('is-open');
+            }
+        }
+
+        function closeBarometerDeltaTooltip(e) {
+            if (e && e.stopPropagation) e.stopPropagation();
+            document.querySelectorAll('.barometer-delta-popup').forEach(p => p.classList.remove('is-open'));
+        }
+
+        // Globální listenery pro zavírání plujících oken
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#dotHistoryFloatingPopup') && !e.target.closest('.sig-dot')) {
+                hideDotHistoryPopupImmediate();
+            }
+            if (!e.target.closest('.barometer-delta-wrapper')) {
+                closeBarometerDeltaTooltip();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' || e.key === 'Esc') {
+                hideDotHistoryPopupImmediate();
+                closeBarometerDeltaTooltip();
+            }
+        });
     </script>
 
     <!-- ⚙️ GITHUB ACTIONS TOKEN MODAL -->
@@ -4314,6 +4758,37 @@
                     <button type="button" class="btn-modal-cancel" onclick="closeTokenModal()">Zrušit</button>
                     <button type="button" class="btn-modal-submit" onclick="submitTokenAndRun()">🚀 Spustit sken</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERAKTIVNÍ POPUP PRO HISTORICKÉ TEČKY V TABULCE -->
+    <div id="dotHistoryFloatingPopup" class="dht-floating-popup" onclick="event.stopPropagation();">
+        <div class="dht-header">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span id="dhtSignalBadge" class="dht-badge">STRONG BUY 85%</span>
+                <span id="dhtTicker" class="dht-ticker">NVDA</span>
+            </div>
+            <span id="dhtDate" class="dht-date">📅 01.10.2026 21:05</span>
+            <button type="button" class="dht-close-btn" onclick="hideDotHistoryPopupImmediate(event)" title="Zavřít">✕</button>
+        </div>
+        <div class="dht-body">
+            <div class="dht-price-row">
+                <div>💰 Cena: <strong id="dhtPrice">231.84 USD</strong> (<span id="dhtChange">--</span>)</div>
+                <div>🎯 Dopad: <strong id="dhtImpact">▲ Růst</strong></div>
+            </div>
+            <div class="dht-section">
+                <div class="dht-sec-title">📡 Čerpaná data & události:</div>
+                <div id="dhtCatalysts" class="dht-sec-content">--</div>
+            </div>
+            <div class="dht-section">
+                <div class="dht-sec-title">🧠 Vyhodnocení kontextu dopadu:</div>
+                <div id="dhtReasoning" class="dht-sec-content">--</div>
+            </div>
+            <div class="dht-footer">
+                <a id="dhtLink" href="#" target="_blank" rel="noopener noreferrer" class="dht-link-btn" onclick="event.stopPropagation();">
+                    📈 Otevřít data a historii na Yahoo Finance ↗
+                </a>
             </div>
         </div>
     </div>

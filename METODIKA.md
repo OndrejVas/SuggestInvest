@@ -11,10 +11,10 @@
 
 ## Metodika a Analýza Tržních Dat
 
-Kompletní přehled datových zdrojů, analytických proměnných a principu vyhodnocování 541 akciových titulů a ETF
+Kompletní přehled datových zdrojů, analytických proměnných a principu vyhodnocování 557 akciových titulů a ETF
 
 
-| Rozsah univerza: 541 aktiv (US akcie, Evropa, BCPP v CZK, ETF, Krypto) | Analytický engine: Google Gemini AI + Yahoo Finance Feed |
+| Rozsah univerza: 557 aktiv (US akcie, Evropa, BCPP v CZK, ETF, Krypto) | Analytický engine: Google Gemini 3.8 Flash + Yahoo Finance Feed |
 | --- | --- |
 | Broker napojení: XTB katalog (14 692 instrumentů, ISIN validace) | Frekvence skenu: Denně v 8:00 CET + manuální vyžádání |
 
@@ -22,9 +22,9 @@ Kompletní přehled datových zdrojů, analytických proměnných a principu vyh
 
 ## 1. Manažerské shrnutí: Co systém dělá z pohledu investora
 
-Systém SuggestInvest slouží jako automatizovaný analytický aparát, který každé ráno před otevřením evropských burz syntetizuje data ze světových finančních trhů a převádí je do jednoznačných, racionálních investičních signálů. Cílem systému není generovat vteřinový intradenní šum, ale poskytovat investorovi strukturovaný, fundamentálně podložený pohled na 513 vybraných aktiv, a to včetně zohlednění likvidity u brokera XTB a českých specifik pražské burzy.
+Systém SuggestInvest slouží jako automatizovaný analytický aparát, který každé ráno před otevřením evropských burz syntetizuje data ze světových finančních trhů a převádí je do jednoznačných, racionálních investičních signálů. Cílem systému není generovat vteřinový intradenní šum, ale poskytovat investorovi strukturovaný, fundamentálně podložený pohled na 557 vybraných aktiv, a to včetně zohlednění likvidity u brokera XTB a českých specifik pražské burzy.
 
-Zatímco lidský analytik dokáže za ranní hodinu do detailu projít nanejvýš několik akciových zpráv, tento systém během 60 sekund paralelně zpracuje kurzotvorná data, vyhodnotí pozici každého aktiva vůči jeho ročním maximům a minimům, spojí tyto údaje s čerstvými makroekonomickými zprávami a prostřednictvím modelu Google Gemini AI vygeneruje pro každý titul odůvodněné doporučení (Strong Buy, Buy, Hold, Sell, Strong Sell) doplněné o míru pravděpodobnosti a tržní katalyzátory.
+Zatímco lidský analytik dokáže za ranní hodinu do detailu projít nanejvýš několik akciových zpráv, tento systém během 60 sekund paralelně zpracuje kurzotvorná data, vyhodnotí pozici každého aktiva vůči jeho ročním maximům a minimům, spojí tyto údaje s čerstvými makroekonomickými zprávami a prostřednictvím modelu Google Gemini 3.8 Flash vygeneruje pro každý titul odůvodněné doporučení (Strong Buy, Buy, Hold, Sell, Strong Sell) doplněné o míru pravděpodobnosti a tržní katalyzátory.
 
 
 ## 2. Prohledávané zdroje dat a vstupní informace
@@ -42,7 +42,7 @@ Základním stavebním kamenem univerza je oficiální katalog instrumentů brok
 
 ### 2.2 Reálné burzovní feedy (Yahoo Finance Engine)
 
-Pro každé z 513 aktiv systém v reálném čase stahuje klíčové kvantitativní parametry:
+Pro každé z 557 aktiv systém v reálném čase stahuje klíčové kvantitativní parametry:
 
 - Aktuální tržní kurz (Last Price): Poslední dosažená cena v primární obchodovací měně (USD, EUR, CZK, GBP, CHF, SEK).
 - Denní cenová změna (% change): Denní posun ceny v procentech i nominální hodnotě vůči závěru předchozího dne.
@@ -54,9 +54,9 @@ Pro každé z 513 aktiv systém v reálném čase stahuje klíčové kvantitativ
 Akcie nežijí odděleně od globálního dění. Před zahájením analýzy jednotlivých titulů systém stahuje živý proud nejdůležitějších globálních zpráv (např. rozhodování Fedu o sazbách, geopolitická rizika, inflační reporty CPI, výsledková sezóna). Tento souhrn je předán AI jako 'nálada a makro rámec dne', podle kterého se kalibruje celková ochota trhu podstupovat riziko.
 
 
-### 2.4 Hluboká znalostní báze modelu Google Gemini Pro
+### 2.4 Hluboká znalostní báze modelu Google Gemini 3.8 Flash
 
-Model Gemini není použit jako generátor náhodného textu, ale jako vysoce kvalifikovaný analytik, který má ve své bázi znalosti o obchodních modelech jednotlivých firem, jejich konkurenčních výhodách (economic moats), zadlužení a sektorové expozici. Spojením aktuálního kurzu s fundamentální podstatou firmy vzniká výsledné zhodnocení.
+Model Google Gemini 3.8 Flash je nejinteligentnější produkční Flash model optimalizovaný pro komplexní uvažování a dodržování striktního JSON kontraktu. Působí v roli Senior Quantitative Equity Analyst & Head of Portfolio Risk – syntetizuje kurzové chování, fundamentální diskonty k analytickým cílům, časové horizonty kvartálních výsledků a sektorové režimy do rigorózních doporučení bez halucinací.
 
 
 ## 3. Jaké informace jsou brány v potaz (Analytické proměnné)
@@ -370,8 +370,8 @@ Všech 557 aktiv je kategorizováno do 3 logických košů, které umožňují o
 
 | Koš (Tier) | Počet aktiv | Charakteristika a složení | Účel v portfoliu |
 | --- | --- | --- | --- |
-| 🥇 TIER 1 TOP Leaders | 48 aktiv | US Mega-Caps (Apple, Nvidia, Microsoft, Amazon), kompletní BCPP v CZK (ČEZ, banky, Colt), evropské stálice (ASML, SAP) a klíčová indexová ETF (S&P 500, All-World, Nasdaq). | Základní stavební kameny, nejvyšší likvidita, globální tržní kapitalizace a minimální spread. |
-| 🥈 TIER 2 MID Growth | 488 aktiv | Rozsáhlé spektrum světových blue-chips (A–Z), polovodičoví lídři, jaderná energetika, obranný sektor, kosmonautika, krypto-proxies a sektorová UCITS ETF na XTB. | Růstový potenciál, sektorové megatrendy a diverzifikace napříč kontinenty i měnami. |
+| 🥇 TIER 1 TOP Leaders | 51 aktiv | US Mega-Caps (Apple, Nvidia, Microsoft, Amazon), kompletní BCPP v CZK (ČEZ, banky, Colt), evropské stálice (ASML, SAP) a klíčová indexová ETF (S&P 500, All-World, Nasdaq). | Základní stavební kameny, nejvyšší likvidita, globální tržní kapitalizace a minimální spread. |
+| 🥈 TIER 2 MID Growth | 485 aktiv | Rozsáhlé spektrum světových blue-chips (A–Z), polovodičoví lídři, jaderná energetika, obranný sektor, kosmonautika, krypto-proxies a sektorová UCITS ETF na XTB. | Růstový potenciál, sektorové megatrendy a diverzifikace napříč kontinenty i měnami. |
 | 🥉 TIER 3 LOW Discovery | 21 aktiv | Vysoce volatilní tituly, obratové (turnaround) akcie, čínské tech akcie v US a průkopnická biotechnologie. | Asymetrický poměr rizika a výnosu pro dynamickou část kapitálu. |
 
 

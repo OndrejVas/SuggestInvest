@@ -48,7 +48,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger("MarketScanner")
 
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
 RSS_FEED_URL = "https://finance.yahoo.com/news/rssindex"
 
 
@@ -303,7 +303,7 @@ def analyze_universe_with_gemini(market_items: List[Dict[str, Any]], global_news
     client = genai.Client(api_key=api_key)
 
     models_to_try = [GEMINI_MODEL]
-    for m_cand in ["gemini-3.5-flash-lite", "gemini-3.8-flash", "gemini-flash-latest"]:
+    for m_cand in ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.5-flash-lite", "gemini-flash-latest"]:
         if m_cand not in models_to_try:
             models_to_try.append(m_cand)
 
@@ -846,14 +846,35 @@ def run_scanner(tiers: List[str] = None, allow_mock_fallback: bool = True) -> st
                 # Pokud ještě nemá historii v databázi, vložíme alespoň aktuální signál
                 sig_upper = card.get("signal", "HOLD").upper()
                 c_color = "#10b981" if "STRONG BUY" in sig_upper else ("#22c55e" if "BUY" in sig_upper else ("#ef4444" if "SELL" in sig_upper else "#eab308"))
+                p_str = f"{card.get('price_raw', 0):.2f}" if card.get("price_raw") else ""
+                cur_sym = card.get("currency", "USD")
+                ch_str = f"{card.get('change_pct_raw', 0):+.2f} %" if card.get("change_pct_raw") is not None else ""
+                imp_dir = card.get("impact_direction", "▲ Růst")
+                cat_txt = ", ".join(card.get("catalysts") or []) if card.get("catalysts") else (card.get("catalyst_event") or "Aktuální tržní data")
+                reas_txt = card.get("reasoning", "") or f"Signál {card.get('signal', 'HOLD')} stanoven na základě aktuálního tržního ocenění."
+                chart_u = f"https://finance.yahoo.com/quote/{sym_key}/history"
+                f_tooltip = f"📅 Sken: {current_date_str}\n⚡ Signál: {card.get('signal', 'HOLD')} ({card.get('confidence', 50)} %)\n💰 Cena: {p_str} {cur_sym} ({ch_str})\n🎯 Dopad: {imp_dir}\n📡 Katalyzátory: {cat_txt}\n🧠 Kontext: {reas_txt[:180]}\n🔗 Klikněte pro otevření dat na Yahoo Finance"
                 dots = [{
                     "date": current_date_str,
                     "date_str": "Dnes",
+                    "full_datetime": current_date_str,
                     "signal": card.get("signal", "HOLD"),
                     "signal_class": card.get("signal_class", "signal-hold"),
                     "probability": card.get("confidence", 50),
-                    "price_str": f"{card.get('price_raw', 0):.2f}" if card.get("price_raw") else "",
-                    "color": c_color
+                    "confidence": card.get("confidence", 50),
+                    "price": card.get("price_raw", 0),
+                    "price_str": p_str,
+                    "currency": cur_sym,
+                    "change_pct": card.get("change_pct_raw", 0),
+                    "change_pct_str": ch_str,
+                    "impact_direction": imp_dir,
+                    "catalysts": card.get("catalysts") or [],
+                    "catalyst_text": cat_txt,
+                    "reasoning": reas_txt,
+                    "target_upside_pct": card.get("target_upside_raw"),
+                    "chart_url": chart_u,
+                    "color": c_color,
+                    "formatted_tooltip": f_tooltip
                 }]
             card["signal_history_dots"] = dots
 

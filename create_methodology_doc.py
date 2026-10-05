@@ -62,7 +62,7 @@ def create_methodology_document(output_path: str):
     sub_p = doc.add_paragraph()
     sub_p.paragraph_format.space_before = Pt(0)
     sub_p.paragraph_format.space_after = Pt(20)
-    run_sub = sub_p.add_run("Kompletní přehled datových zdrojů, analytických proměnných a principu vyhodnocování 541 akciových titulů a ETF")
+    run_sub = sub_p.add_run("Kompletní přehled datových zdrojů, analytických proměnných a principu vyhodnocování 557 akciových titulů a ETF")
     run_sub.font.name = "Calibri"
     run_sub.font.size = Pt(13)
     run_sub.font.italic = True
@@ -74,7 +74,7 @@ def create_methodology_document(output_path: str):
     meta_table.autofit = False
 
     meta_data = [
-        ("Rozsah univerza:", "541 aktiv (US akcie, Evropa, BCPP v CZK, ETF, Krypto)", "Analytický engine:", "Google Gemini AI + Yahoo Finance Feed"),
+        ("Rozsah univerza:", "557 aktiv (US akcie, Evropa, BCPP v CZK, ETF, Krypto)", "Analytický engine:", "Google Gemini 3.8 Flash + Yahoo Finance Feed"),
         ("Broker napojení:", "XTB katalog (14 692 instrumentů, ISIN validace)", "Frekvence skenu:", "Denně v 8:00 CET + manuální vyžádání")
     ]
 
@@ -175,12 +175,12 @@ def create_methodology_document(output_path: str):
         "Systém SuggestInvest slouží jako automatizovaný analytický aparát, který každé ráno před otevřením evropských burz "
         "syntetizuje data ze světových finančních trhů a převádí je do jednoznačných, racionálních investičních signálů. "
         "Cílem systému není generovat vteřinový intradenní šum, ale poskytovat investorovi strukturovaný, fundamentálně podložený "
-        "pohled na 513 vybraných aktiv, a to včetně zohlednění likvidity u brokera XTB a českých specifik pražské burzy."
+        "pohled na 557 vybraných aktiv, a to včetně zohlednění likvidity u brokera XTB a českých specifik pražské burzy."
     )
     add_body_p(
         "Zatímco lidský analytik dokáže za ranní hodinu do detailu projít nanejvýš několik akciových zpráv, tento systém "
         "během 60 sekund paralelně zpracuje kurzotvorná data, vyhodnotí pozici každého aktiva vůči jeho ročním maximům a minimům, "
-        "spojí tyto údaje s čerstvými makroekonomickými zprávami a prostřednictvím modelu Google Gemini AI vygeneruje pro každý titul "
+        "spojí tyto údaje s čerstvými makroekonomickými zprávami a prostřednictvím modelu Google Gemini 3.8 Flash vygeneruje pro každý titul "
         "odůvodněné doporučení (Strong Buy, Buy, Hold, Sell, Strong Sell) doplněné o míru pravděpodobnosti a tržní katalyzátory."
     )
 
@@ -210,7 +210,7 @@ def create_methodology_document(output_path: str):
     )
 
     add_section_header("2.2 Reálné burzovní feedy (Yahoo Finance Engine)", level=2)
-    add_body_p("Pro každé z 513 aktiv systém v reálném čase stahuje klíčové kvantitativní parametry:")
+    add_body_p("Pro každé z 557 aktiv systém v reálném čase stahuje klíčové kvantitativní parametry:")
     add_bullet(" Poslední dosažená cena v primární obchodovací měně (USD, EUR, CZK, GBP, CHF, SEK).", "Aktuální tržní kurz (Last Price):")
     add_bullet(" Denní posun ceny v procentech i nominální hodnotě vůči závěru předchozího dne.", "Denní cenová změna (% change):")
     add_bullet(" Extrémně důležitý indikátor dlouhodobého trendu. Ukazuje, kde se aktivum nachází v rámci svého ročního cyklu.", "52týdenní pásmo (52-week High / Low):")
@@ -223,11 +223,13 @@ def create_methodology_document(output_path: str):
         "Tento souhrn je předán AI jako 'nálada a makro rámec dne', podle kterého se kalibruje celková ochota trhu podstupovat riziko."
     )
 
-    add_section_header("2.4 Hluboká znalostní báze modelu Google Gemini Pro", level=2)
+    add_section_header("2.4 Hluboká znalostní báze modelu Google Gemini 3.8 Flash", level=2)
     add_body_p(
-        "Model Gemini není použit jako generátor náhodného textu, ale jako vysoce kvalifikovaný analytik, který má ve své bázi znalosti "
-        "o obchodních modelech jednotlivých firem, jejich konkurenčních výhodách (economic moats), zadlužení a sektorové expozici. "
-        "Spojením aktuálního kurzu s fundamentální podstatou firmy vzniká výsledné zhodnocení."
+        "Jako hlavní analytický a kvantitativní engine využívá SuggestInvest špičkový produkční model Google Gemini 3.8 Flash. "
+        "Tento model byl zvolen pro svou mimořádnou úroveň logického uvažování (reasoning), bleskovou odezvu a striktní schopnost "
+        "dodržovat složitá strukturovaná Pydantic JSON schémata bez syntaktických chyb. "
+        "Model funguje v roli Senior Quantitative Equity Analyst & Head of Portfolio Risk – syntetizuje kurzové chování, "
+        "fundamentální diskonty k analytickým cílům, časové horizonty kvartálních výsledků a sektorové režimy do rigorózních doporučení."
     )
 
     # ==================== KAPITOLA 3: ANALYTICKÉ PROMĚNNÉ ====================
@@ -349,15 +351,24 @@ def create_methodology_document(output_path: str):
         "Bipolární vektor, který okamžitě indikuje, zda převažující tržní síly tlačí kurz nahoru nebo dolů."
     )
 
-    add_section_header("5.4 Automaticky přiřazené katalyzátory (Barevné štítky)", level=2)
+    add_section_header("5.4 Automaticky přiřazené katalyzátory (13 institucionálních štítků)", level=2)
     add_body_p(
-        "Systém kartám automaticky přiřazuje rychlé vizuální štítky na základě matematických filtrů:"
+        "Systém kartám přiřazuje až 4 relevantní štítky z přesně definované sady 13 institucionálních katalyzátorů "
+        "na základě kvantitativních filtrů, firemních kalendářů a výzkumných modelů:"
     )
-    add_bullet(" Denní skok ceny o více než +3 %.", "🚀 Silné momentum:")
-    add_bullet(" Titul se dotýká nebo blíží 52týdennímu maximu (býčí síla).", "🔥 Test 52w Maxima:")
-    add_bullet(" Denní pokles o více než -3 % (oblast pro sledování slev).", "📉 Přeprodáno / Korekce:")
-    add_bullet(" Titul z pražské burzy s vysokým dividendovým profilem.", "🇨🇿 BCPP Dividendy:")
-    add_bullet(" Fond sledující široký tržní index.", "📊 Pasivní ETF:")
+    add_bullet(" Z-skóre denního objemu z_v >= 2.0σ při růstu ceny; indikuje institucionální akumulaci a růst likvidity (výzkum LiMT).", "⚡ Objemový průraz (LiMT):")
+    add_bullet(" Tržní kurz konsoliduje (-6 % až +2 %), ale cíl analytiků roste a diskont >= 15 %; skrytá akumulace velkými hráči.", "🧠 Sentiment Divergence:")
+    add_bullet(" Statistická arbitráž v rámci odvětví; aktivum zaostává za sektorovým párem o > 1.5σ historického spreadu.", "⚖️ Sektorový diskont (Pairs):")
+    add_bullet(" Pozitivní vliv úrokového prostředí a čisté úrokové marže (NIM) na bankovní sektor (zpoždění 15–30 dní).", "🏛️ Úrokový cyklus (NIM):")
+    add_bullet(" Denní skok ceny o více než +3 % podpořený kladným 1M a 3M momentem.", "🚀 Silné momentum:")
+    add_bullet(" Denní pokles o více než -3 % do přeprodané oblasti (příležitost pro dip-buyers při stabilním fundamentu).", "📉 Přeprodáno / Korekce:")
+    add_bullet(" Titul se nachází do 3 % od 52týdenního maxima (cena >= 97 % z 52w High; býčí síla).", "🔥 Test 52w Maxima:")
+    add_bullet(" Očekávaný růst k průměrnému cíli analytiků > +25 % při alespoň 5 analytických pokrýtích.", "🎯 Vysoký diskont:")
+    add_bullet(" Aktuální tržní cena překročila konsenzus analytiků z Wall Street; vyčerpaný růstový potenciál.", "⚠️ Nad cílem analytiků:")
+    add_bullet(" Zveřejnění kvartálních výsledků v horizontu do 7 dnů; vysoká implikovaná volatilita a binární riziko (strop na konfidenci 65 %).", "⏳ Výsledky do 7 dní:")
+    add_bullet(" Kvartální výsledky za 8 až 21 dnů; fáze předvýsledkového run-up akumulačního momenta.", "📅 Výsledky do 21 dní:")
+    add_bullet(" Rozhodný den pro výplatu dividendy (Ex-Dividend) v horizontu 1 až 14 dnů.", "💰 Ex-Div za N dní:")
+    add_bullet(" Titul z pražské burzy v CZK s vysokým dividendovým výnosem a defenzivním profilem.", "🇨🇿 BCPP Dividendy:")
 
     add_section_header("5.5 Syntetické odůvodnění v češtině (Investment Reasoning)", level=2)
     add_body_p(
@@ -405,9 +416,9 @@ def create_methodology_document(output_path: str):
 
     add_section_header("6.5 Automatický pravidlový Trigger Engine a disková mezipaměť", level=2)
     add_body_p(
-        "Aby systém dokázal bleskově zpracovat 541 aktiv bez rizika rate-limitu od poskytovatelů dat, využívá inteligentní "
+        "Aby systém dokázal bleskově zpracovat 557 aktiv bez rizika rate-limitu od poskytovatelů dat, využívá inteligentní "
         "souborovou mezipaměť (cache_fundamentals.json) s 24hodinovou expirací. Kalendáře a analytické cíle se tak dotazují jednou denně, "
-        "zatímco kurzy běží v reálném čase. Všechny předstihové ukazatele jsou navíc přímo předávány do modelu Gemini, "
+        "zatímco kurzy běží v reálném čase. Všechny předstihové ukazatele jsou navíc přímo předávány do modelu Google Gemini 3.8 Flash, "
         "který je promítá do generovaného AI kontextu."
     )
 
@@ -415,7 +426,7 @@ def create_methodology_document(output_path: str):
     add_body_p(
         "Pro zajištění plné auditovatelnosti a měření reálné úspěšnosti AI modelů v čase systém ukládá každý proběhlý sken do dvouúrovňové persistence:"
     )
-    add_bullet(" Každý sken vygeneruje kompletní neměnný JSON soubor se všemi 541 kartami, tržními vstupy i AI zdůvodněními.", "1. Neměnný denní JSON Data Lake (data/history/):")
+    add_bullet(" Každý sken vygeneruje kompletní neměnný JSON soubor se všemi 557 kartami, tržními vstupy i AI zdůvodněními.", "1. Neměnný denní JSON Data Lake (data/history/):")
     add_bullet(" Každý vydaný signál, konfidence, cena i datum kvartálních výsledků se indexují do lokální relační databáze SQLite pro bleskové analytické dotazy.", "2. Relační časová řada SQLite (history.db):")
     add_bullet(" Možnost ex-post porovnat vydaná doporučení (Strong Buy / Buy) se skutečným zhodnocením podkladového aktiva po 7, 30 a 90 dnech.", "3. Automatizovaný Backtesting:")
     add_bullet(" V AI tooltipu se přímo zobrazuje trajektorie sentimentu za poslední měsíc (např. Hold 55 % ➡️ Buy 72 % ➡️ Strong Buy 88 %).", "4. Vývoj sentimentu v čase:")
@@ -482,7 +493,7 @@ def create_methodology_document(output_path: str):
     add_bullet(" Titul, který nebyl v předchozím skenu zahrnut (nové IPO, přidání do univerza). Modrý odznak: ✨ NOVÉ.", "Nové aktivum v univerzu (New Asset):")
 
     add_body_p("B. Využití v uživatelském rozhraní a ranní rutině:")
-    add_bullet(" V záhlaví aplikace i ve filtračním panelu je k dispozici dedikovaná sekce '⚡ Posuny od včerejška'. Investor jedním kliknutím odfiltruje pouze upgrady, downgrady či skoky konfidence a nemusí procházet všech 541 aktiv.", "Jednoklikový filtr změn:")
+    add_bullet(" V záhlaví aplikace i ve filtračním panelu je k dispozici dedikovaná sekce '⚡ Posuny od včerejška'. Investor jedním kliknutím odfiltruje pouze upgrady, downgrady či skoky konfidence a nemusí procházet všech 557 aktiv.", "Jednoklikový filtr změn:")
     add_bullet(" V tabulce aktiv je přímo pod signálem zobrazen výrazný barevný mikroodznak indikující přesný typ posunu.", "Vizuální označení v tabulce:")
     add_bullet(" V kontextovém AI tooltipu (tlačítko 💡 Kontext) se při najetí myši na první pozici zobrazí detailní srovnávací box obsahující textové vysvětlení důvodu změny, posun bodů konfidence a přehledný tok signálu (např. HOLD (65 %) ➜ BUY (82 %)).", "Detailní komparativní blok:")
 
@@ -540,7 +551,7 @@ def create_methodology_document(output_path: str):
         ("Universal Diffusion IVS", "Difúzní generativní modely pro nelineární dynamiku povrchů volatility.", "Mapování volatility regime (RV_21 a ATR%) pro kalibraci citlivosti AI skórování.", "Přesnější odlišení klidných růstových trendů od rizikových bublin."),
         ("AI & NLP Trading Models (SSRN)", "Kvantifikace informační asymetrie a sentimentové divergence mezi zprávami a cenou.", "Katalyzátor CAT_SENTIMENT_DIVERGENCE propojující RSS feed a momentum delty.", "Identifikace skryté akumulace (pozitivní zprávy bez okamžitého pohybu ceny)."),
         ("Pairs Trading in CEE Equity Markets", "Kointegrace a statistická arbitráž v regionálních středoevropských titulech.", "Katalyzátor CAT_PAIRS_DISCOUNT a sektorové komparativní relace pro BCPP a CEE.", "Využití zpoždění lokálních trhů za západoevropskými sektorovými lídry."),
-        ("Decoding the Quant Market", "Makro režimy, faktorové rotace a dynamické vážení modelových signálů.", "Syntéza v Head of Risk systémovém promptu Gemini 3.5 AI s prioritou událostí.", "Robustní eliminace protichůdných signálů a ochrana portfolia.")
+        ("Decoding the Quant Market", "Makro režimy, faktorové rotace a dynamické vážení modelových signálů.", "Syntéza v Head of Risk systémovém promptu Gemini 3.8 Flash AI s prioritou událostí.", "Robustní eliminace protichůdných signálů a ochrana portfolia.")
     ]
 
     col_widths = [Inches(1.8), Inches(1.8), Inches(1.9), Inches(1.5)]
@@ -604,7 +615,7 @@ def create_methodology_document(output_path: str):
     quant2_rows = [
         ("James Masuda\n(MIT EECS, 2024)", "Hybridní CNN-LSTM, BiLSTM-BO-LightGBM a Mean-Variance Portfolio Optimization.", "Modul TOP 5 Conviction Basket s MVO váhami 25-25-20-15-15 % a Sharpe proxy.", "Transformace izolovaných tipů na přímo investovatelné, diverzifikované minitportfolio."),
         ("Sheraz Ahmad\n(Brock University, 2025)", "Analýza vlivu sentimentu napříč modely, sektory a režimy tržní volatility.", "Režimové vážení sentimentu (HIGH_VOLATILITY vs. DEFENSIVE_FUNDAMENTAL).", "Eliminace falešných signálů u defenzivních titulů a zrychlení reakce u technologií."),
-        ("Juan Luis Ruiz-Tagle\n(UPM Madrid, 2023)", "Predikce krátkodobých trendů pomocí FinBERT a technických indikátorů.", "Pravidlo nepotvrzeného sentimentu v Gemini AI (sentiment vyžaduje technický impuls).", "Ochrana před nákupem do padajícího nože na pouhou 'pozitivní PR zprávu'."),
+        ("Juan Luis Ruiz-Tagle\n(UPM Madrid, 2023)", "Predikce krátkodobých trendů pomocí FinBERT a technických indikátorů.", "Pravidlo nepotvrzeného sentimentu v Gemini 3.8 Flash AI (sentiment vyžaduje technický impuls).", "Ochrana před nákupem do padajícího nože na pouhou 'pozitivní PR zprávu'."),
         ("Praveen Sadasivan\n(Victoria University, 2024/25)", "Predikce bankovních indexů pomocí optimalizovaných AI modelů a úrokových sazeb.", "Katalyzátor CAT_FINANCIAL_CYCLE se zpožděnou transmisí úrokových marží (NIM).", "Přesnější časování vstupů do evropských a českých bank (KB, Erste, Moneta).")
     ]
 
@@ -632,24 +643,76 @@ def create_methodology_document(output_path: str):
     add_body_p(
         "Na samotném začátku vizuálního rozhraní byl zaveden Kompozitní Makroekonomický Barometr (0 až 100) s vertikální stupnicí, "
         "který slouží jako předstihový systém včasného varování před hospodářskou recesí a systémovým krachem trhů. "
-        "Syntetizuje 5 klíčových institucionálních datových proudů: výnosovou křivku US Treasuries (10Y/3M, 10Y/5Y spread – váha 25 %), "
-        "úvěrové spready firemních dluhopisů (HYG vs LQD – váha 20 %), volatilitní režim CBOE VIX (váha 20 %), "
-        "spotřebitelskou poptávku a výrobní cyklus (poměr cyklického a defenzivního koše XLY/XLP a průmysl XLI – váha 20 %) "
-        "a vnitřní šíři trhu z 557 aktiv univerza SuggestInvest (váha 15 %). Součástí je Sektorový radar recese monitorující 9 odvětví."
+        "Engine nepřetržitě vyhodnocuje 5 klíčových institucionálních datových proudů:"
     )
 
-    # 6.13 Autonomní Trading Portál: Interactive Brokers & XTB
+    table_macro = doc.add_table(rows=6, cols=3)
+    table_macro.alignment = WD_TABLE_ALIGNMENT.CENTER
+    table_macro.autofit = False
+
+    m_headers = ["Sub-faktor makro barometru", "Váha", "Měřené metriky a indikace"]
+    for i, h in enumerate(m_headers):
+        cell = table_macro.cell(0, i)
+        set_cell_background(cell, "0f172a")
+        set_cell_margins(cell, top=100, bottom=100, left=100, right=100)
+        p = cell.paragraphs[0]
+        p.paragraph_format.space_after = Pt(2)
+        r = p.add_run(h)
+        r.font.bold = True
+        r.font.size = Pt(9.0)
+        r.font.color.rgb = RGBColor(255, 255, 255)
+
+    macro_rows = [
+        ("1. Výnosová křivka US Treasuries", "25 %", "Spready 10Y-3M (^TNX vs ^IRX) a 10Y-5Y (^TNX vs ^FVX). Inverze křivky a fáze un-inversion předpovídají recesi se 6–18měsíčním předstihem."),
+        ("2. Úvěrové spready firemního dluhu", "20 %", "Poměr high-yield dluhopisů (HYG) vůči kvalitním bonitním dluhopisům (LQD) a poloha vůči 50d SMA. Měří riziko korporátních bankrotů."),
+        ("3. Volatilitní režim CBOE VIX", "20 %", "Úroveň indexů ^VIX a ^VXN. Rozlišuje klidný trh (<16), zvýšené napětí (16–22), korekční paniku (23–28) a likviditní krizi (>28)."),
+        ("4. Poptávkový a výrobní cyklus", "20 %", "Poměr cyklického vs. defenzivního spotřebního koše (XLY/XLP) a relativní hybnost průmyslu (XLI vs SPY). Předstihový signál o chování spotřebitelů."),
+        ("5. Vnitřní šíře univerza (Market Breadth)", "15 %", "Procento aktiv nad 50d klouzavým průměrem a poměr prodejních vs nákupních doporučení napříč všemi 557 aktivy SuggestInvest.")
+    ]
+
+    for row_idx, (c0, c1, c2) in enumerate(macro_rows, 1):
+        bg = "f8fafc" if row_idx % 2 == 1 else "ffffff"
+        for col_idx, text in enumerate([c0, c1, c2]):
+            cell = table_macro.cell(row_idx, col_idx)
+            set_cell_background(cell, bg)
+            set_cell_margins(cell, top=70, bottom=70, left=90, right=90)
+            p = cell.paragraphs[0]
+            p.paragraph_format.space_after = Pt(2)
+            r = p.add_run(text)
+            r.font.size = Pt(8.5)
+            if col_idx == 0:
+                r.font.bold = True
+
+    doc.add_paragraph().paragraph_format.space_after = Pt(6)
+
+    add_body_p(
+        "Taktická alokace kapitálu je řízena třístupňovou zónou: Zelená zóna (0–35): Býčí expanze, 100 % alokace; "
+        "Žlutá zóna (36–65): Pozdní cyklus a varování, krácení nových pozic na 70 % a RRR ≥ 1.8; "
+        "Červená zóna (66–100): Akutní riziko recese / medvědí trh, maximální alokace 35 %, stop nákupům cyklických akcií a rotace do hotovosti a dividend."
+    )
+
+    # 6.13 Autonomní Trading Portál, IBKR & XTB Watchdog
     add_section_header("6.13 Samostatný Autonomní Trading Portál: Interactive Brokers (IBKR) & XTB", level=2)
     add_body_p(
         "Systém disponuje samostatnou dedikovanou stránkou pro autonomní trading (trading.html), přístupnou přímo z horní navigace terminálu. "
-        "Portál je primárně cílen na institucionálního brokera Interactive Brokers (IBKR) s plnou podporou TWS Socket API (port 7497 Paper / 7496 Live) "
-        "a jednoklikového exportu do TWS modulu Basket Trader (BasketTrader.csv). Zahrnuje také WebSocket most pro brokera XTB (xAPI). "
-        "Modul Broker Execution Bridge obsahuje kvantitativní Risk Gatekeeper, který z TOP 5 MVO koše a Strong Buy aktiv "
-        "automaticky generuje exekučně připravené bracket příkazy (Limit Entry, Stop-Loss, Take-Profit). "
-        "Pozicování vychází z pevného kapitálového risku (výchozí 1,5 % celkového portfolia na obchod), minimálního poměru zisku k riziku (RRR ≥ 1,8) "
-        "a makroekonomické ochrany kapitálu, která při zvýšeném riziku recese automaticky krátí alokaci na 50 % nebo blokuje nákupy cyklických titulů. "
-        "Systém umožňuje okamžité stažení CSV souboru pro TWS Basket Trader, kopírování Python kódu (ib_insync) i bezrizikový Paper Trading Sandbox."
+        "Portál je primárně cílen na institucionálního brokera Interactive Brokers (IBKR) s plnou podporou TWS Socket API (port 7497 Paper / 7496 Live), "
+        "IB Client Portal Gateway (port 5000), jednoklikového exportu do TWS modulu Basket Trader (BasketTrader.csv) "
+        "i WebSocket mostu pro brokera XTB (xAPI)."
     )
+
+    add_body_p("A. Autonomní mikroslužba a exekuční REST API (autoinvest_service.py):")
+    add_bullet(" Běží na lokálním portu 5001 a poskytuje REST koncové body pro spouštění nákupů, okamžitou kontrolu zůstatků hotovosti a stavu portfolia.", "Lokální REST API:")
+    add_bullet(" Automaticky transformuje TOP 5 MVO konvikční koš a Strong Buy tituly na brokerem akceptovatelné JSON příkazy s přesně stanovenou alokací.", "Generování Bracket objednávek:")
+    add_bullet(" Průběžný dohled nad otevřenými pozicemi. Při zasažení Take-Profitu nebo Stop-Lossu uvolněnou hotovost okamžitě reinvestuje do dalšího prioritního titulu z nákupní fronty.", "Autonomní kapitálová rotace (Watcher):")
+
+    add_body_p("B. Samoopravný dohledový démon (ib_watchdog.py):")
+    add_bullet(" Každých 60 sekund odesílá Keep-Alive heartbeat (/v1/api/tickle) na port 5000 Gateway, čímž prodlužuje autentizační relaci a brání odhlášení z nečinnosti.", "Heartbeat Keep-Alive:")
+    add_bullet(" Neustále monitoruje dostupnost Gateway. Při výpadku procesu provede automatický restart přes start_ib_gateway.bat.", "Hlídání procesu:")
+    add_bullet(" Při ranním odpojení session (např. pravidelná noční údržba IBKR) automaticky obnoví spojení s využitím přihlašovacích údajů z .env bez nutnosti ručního zadávání či 2FA.", "Automatický headless reconnect:")
+
+    add_body_p("C. Tichý běh bez oken na Windows:")
+    add_bullet(" Pomocí VBScriptů (Spustit_AutoInvest.vbs a Zastavit_AutoInvest.vbs) běží celá dohledová a exekuční infrastruktura zcela skrytě na pozadí operačního systému Windows bez rušivých černých oken příkazové řádky.", "Pozadí bez vyskakovacích oken:")
+    add_bullet(" Skript spustit_vse.bat umožňuje jedním kliknutím uvést do chodu kompletní ekosystém (HTTP webový server, ranní skener trhu i autonomní trading démon).", "Centrální spouštěč:")
 
     doc.add_paragraph().paragraph_format.space_after = Pt(12)
 
@@ -676,8 +739,8 @@ def create_methodology_document(output_path: str):
         r.font.color.rgb = RGBColor(255, 255, 255)
 
     tier_rows = [
-        ("🥇 TIER 1\nTOP Leaders", "48 aktiv", "US Mega-Caps (Apple, Nvidia, Microsoft, Amazon), kompletní BCPP v CZK (ČEZ, banky, Colt), evropské stálice (ASML, SAP) a klíčová indexová ETF (S&P 500, All-World, Nasdaq).", "Základní stavební kameny, nejvyšší likvidita, globální tržní kapitalizace a minimální spread."),
-        ("🥈 TIER 2\nMID Growth", "472 aktiv", "Rozsáhlé spektrum světových blue-chips (A–Z), polovodičoví lídři, jaderná energetika, obranný sektor, kosmonautika, krypto-proxies a sektorová UCITS ETF na XTB.", "Růstový potenciál, sektorové megatrendy a diverzifikace napříč kontinenty i měnami."),
+        ("🥇 TIER 1\nTOP Leaders", "51 aktiv", "US Mega-Caps (Apple, Nvidia, Microsoft, Amazon), kompletní BCPP v CZK (ČEZ, banky, Colt), evropské stálice (ASML, SAP) a klíčová indexová ETF (S&P 500, All-World, Nasdaq).", "Základní stavební kameny, nejvyšší likvidita, globální tržní kapitalizace a minimální spread."),
+        ("🥈 TIER 2\nMID Growth", "485 aktiv", "Rozsáhlé spektrum světových blue-chips (A–Z), polovodičoví lídři, jaderná energetika, obranný sektor, kosmonautika, krypto-proxies a sektorová UCITS ETF na XTB.", "Růstový potenciál, sektorové megatrendy a diverzifikace napříč kontinenty i měnami."),
         ("🥉 TIER 3\nLOW Discovery", "21 aktiv", "Vysoce volatilní tituly, obratové (turnaround) akcie, čínské tech akcie v US a průkopnická biotechnologie.", "Asymetrický poměr rizika a výnosu pro dynamickou část kapitálu.")
     ]
 
@@ -701,7 +764,8 @@ def create_methodology_document(output_path: str):
     add_body_p(
         "Systém SuggestInvest odstraňuje z investičního rozhodování dvě největší slabiny lidského investora: "
         "emoční zkreslení a informační zahlcení. Díky spojení reálných tržních dat z XTB, konsenzu analytiků, "
-        "firemních kalendářů a syntézy modelu Google Gemini dostává investor každé ráno ucelený "
+        "firemních kalendářů, makroekonomického barometru recese, autonomního IBKR & XTB execution enginu "
+        "a syntézy modelu Google Gemini 3.8 Flash dostává investor každé ráno ucelený "
         "a forward-looking screening trhu, který mu během několika vteřin ukáže, kde se dnes otevírají nejzajímavější příležitosti."
     )
 
