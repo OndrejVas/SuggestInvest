@@ -12,7 +12,162 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
 
+    <script>
+        (function() {
+            var isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
+            if (!isAuth) {
+                document.documentElement.classList.add("si-locked");
+            }
+        })();
+    </script>
+
     <style>
+        html.si-locked #appContainer { display: none !important; }
+        html.si-locked #loginOverlay { display: flex !important; }
+
+        /* 🔒 UNIFIED LOGIN OVERLAY */
+        #loginOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, #111827 0%, #030712 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999999;
+            padding: 1.5rem;
+        }
+
+        .login-card {
+            background: rgba(17, 24, 39, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            padding: 2.5rem 2rem;
+            max-width: 430px;
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            text-align: center;
+        }
+
+        .login-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            margin-bottom: 1.25rem;
+        }
+
+        .login-title {
+            font-size: 1.65rem;
+            font-weight: 800;
+            color: #f9fafb;
+            margin-bottom: 0.35rem;
+            letter-spacing: -0.01em;
+        }
+
+        .login-subtitle {
+            font-size: 0.88rem;
+            color: #9ca3af;
+            margin-bottom: 1.75rem;
+            line-height: 1.4;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+            text-align: left;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .input-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+
+        .login-input {
+            width: 100%;
+            background: #0b0f19;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #f8fafc;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            box-sizing: border-box;
+        }
+
+        .login-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .remember-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.82rem;
+            color: #9ca3af;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .login-submit-btn {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #ffffff;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+            margin-top: 0.4rem;
+        }
+
+        .login-submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.5);
+        }
+
+        .login-submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-error {
+            display: none;
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            color: #f87171;
+            padding: 0.65rem;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            text-align: center;
+        }
+
+        #appContainer {
+            display: none;
+        }
+
         :root {
             --bg-primary: #070b16;
             --bg-secondary: #0d1527;
@@ -654,38 +809,76 @@
     </style>
 </head>
 <body>
-
-    <div id="toastNotice">
-        <span>⚡</span>
-        <span id="toastMsg">Konfigurace strategie byla úspěšně uložena!</span>
-    </div>
-
-    <div class="container">
-        <!-- HEADER -->
-        <header>
-            <div class="header-top">
-                <div class="brand-badge">
-                    <span class="live-dot"></span>
-                    <span>Interactive Brokers Paper Trading</span>
+    <!-- 🔒 UNIFIED SECURITY GATE OVERLAY -->
+    <div id="loginOverlay" style="display: none;">
+        <div class="login-card">
+            <div class="login-badge">
+                <span>🔒 SuggestInvest • Security Gate</span>
+            </div>
+            <h2 class="login-title">Přihlášení</h2>
+            <p class="login-subtitle">Zadejte přihlašovací údaje pro přístup k vysokorychlostnímu Scalping Portálu.</p>
+            
+            <form class="login-form" onsubmit="handleLoginSubmit(event)">
+                <div class="form-group">
+                    <label class="input-label" for="loginUser">Uživatelské jméno</label>
+                    <input type="text" id="loginUser" class="login-input" placeholder="Zadejte uživatelské jméno" required autocomplete="username">
                 </div>
 
-                <div class="nav-links">
-                    <a href="index.html" class="nav-btn primary" title="Návrat na hlavní tržní skener SuggestInvest">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                        </svg>
-                        <span>SuggestInvest Hlavní Portál</span>
-                    </a>
+                <div class="form-group">
+                    <label class="input-label" for="loginPass">Heslo</label>
+                    <input type="password" id="loginPass" class="login-input" placeholder="Zadejte heslo" required autocomplete="current-password">
+                </div>
 
-                    <a href="trading.html" class="nav-btn" title="Přejít do Autonomního Tradingu (Swingové bracket příkazy)">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                            <line x1="8" y1="21" x2="16" y2="21"></line>
-                            <line x1="12" y1="17" x2="12" y2="21"></line>
-                        </svg>
-                        <span>Trading Portál (Swing)</span>
-                    </a>
+                <label class="remember-row">
+                    <input type="checkbox" id="rememberMe" checked>
+                    <span>Zapamatovat přihlášení na tomto zařízení</span>
+                </label>
+
+                <div id="loginError" class="login-error">
+                    Neplatné uživatelské jméno nebo heslo. Zkuste to znovu.
+                </div>
+
+                <button type="submit" class="login-submit-btn">Vstoupit do aplikace</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="appContainer">
+        <div id="toastNotice">
+            <span>⚡</span>
+            <span id="toastMsg">Konfigurace strategie byla úspěšně uložena!</span>
+        </div>
+
+        <div class="container">
+            <!-- HEADER -->
+            <header>
+                <div class="header-top">
+                    <div class="brand-badge">
+                        <span class="live-dot"></span>
+                        <span>Interactive Brokers Paper Trading</span>
+                    </div>
+
+                    <div class="nav-links">
+                        <a href="index.html" class="nav-btn primary" title="Návrat na hlavní tržní skener SuggestInvest">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                            <span>SuggestInvest Hlavní Portál</span>
+                        </a>
+
+                        <a href="trading.html" class="nav-btn" title="Přejít do Autonomního Tradingu (Swingové bracket příkazy)">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                <line x1="8" y1="21" x2="16" y2="21"></line>
+                                <line x1="12" y1="17" x2="12" y2="21"></line>
+                            </svg>
+                            <span>Trading Portál (Swing)</span>
+                        </a>
+
+                        <button onclick="logout()" class="nav-btn" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.35); color: #fca5a5; cursor: pointer;" title="Odhlásit se ze systému SuggestInvest">
+                            🚪 Odhlásit
+                        </button>
 
                     <a href="scalping_engine/STRATEGY_PLAN.md" target="_blank" class="nav-btn" title="Otevřít technickou dokumentaci strategie STRATEGY_PLAN.md">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -1391,7 +1584,164 @@
                 } catch(e) {}
             }
             updateConfigSummary();
+            checkAuthStatus();
         });
+
+        // 🔒 AUTH CONTROLLER FOR SCALPING PORTAL
+        const VALID_USER_HASHES = [
+            "5bff2c944e58c4b622bceab6c3794bdb49180603a080cb995acad9d136719d44", // SuggestInvest
+            "493f0daa919d6a985ddcc9185d7a08378104833630911da73bd660d2a4a11621", // suggestinvest
+            "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", // admin
+            "89903dfa383d1be0969942af5d088a81b1592c3b3dde153aa1dc5e2207d8835c"  // ondrej
+        ];
+
+        const VALID_PASS_HASHES = [
+            "cb68425cfebe32bacd9b3cb624a1b99a033037eb12f9dd57c59765db0f4cf262", // WeWillMakeMoney!
+            "f4bf4f16dc2d4536e70c93f6b249c24c1311792b3b2c1b79e642bba343ccbb8d", // WeWillMakeMoney
+            "4b6dc495eaaaba459d7e748c89b8ac22e1b5ad8874d66897813e8691abc0b169", // wewillmakemoney!
+            "ef962684145f39eecf6e8bd0ab37bbfebf5a5e89040c9c576538c96884a0509c"  // wewillmakemoney
+        ];
+
+        function pureJsSha256(ascii) {
+            function rightRotate(value, amount) { return (value>>>amount) | (value<<(32 - amount)); }
+            var mathPow = Math.pow;
+            var maxWord = mathPow(2, 32);
+            var lengthProperty = 'length';
+            var i, j;
+            var result = '';
+            var words = [];
+            var asciiBitLength = ascii[lengthProperty]*8;
+            var hash = [];
+            var k = [];
+            var primeCounter = 0;
+            var isComposite = {};
+            for (var candidate = 2; primeCounter < 64; candidate++) {
+                if (!isComposite[candidate]) {
+                    for (i = 0; i < 313; i += candidate) { isComposite[i] = candidate; }
+                    hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
+                    k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+                }
+            }
+            ascii += '\x80';
+            while (ascii[lengthProperty]%64 - 56) ascii += '\x00';
+            for (i = 0; i < ascii[lengthProperty]; i++) {
+                j = ascii.charCodeAt(i);
+                if (j>>8) return '';
+                words[i>>2] |= j << ((3 - i)%4)*8;
+            }
+            words[words[lengthProperty]] = ((asciiBitLength/maxWord)|0);
+            words[words[lengthProperty]] = (asciiBitLength);
+            for (j = 0; j < words[lengthProperty];) {
+                var w = words.slice(j, j += 16);
+                var oldHash = hash.slice(0);
+                for (i = 0; i < 64; i++) {
+                    var w15 = w[i - 15], w2 = w[i - 2];
+                    var a = hash[0], e = hash[4];
+                    var temp1 = hash[7]
+                        + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+                        + ((e & hash[5]) ^ ((~e) & hash[6]))
+                        + k[i]
+                        + (w[i] = (i < 16) ? w[i] : (
+                                w[i - 16]
+                                + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15>>>3))
+                                + w[i - 7]
+                                + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2>>>10))
+                            )|0
+                        );
+                    var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+                        + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+                    hash = [(temp1 + temp2)|0].concat(hash);
+                    hash[4] = (hash[4] + temp1)|0;
+                }
+                for (i = 0; i < 8; i++) { hash[i] = (hash[i] + oldHash[i])|0; }
+            }
+            for (i = 0; i < 8; i++) {
+                for (j = 3; j + 1; j--) {
+                    var b = (hash[i]>>(j*8))&255;
+                    result += ((b < 16) ? 0 : '') + b.toString(16);
+                }
+            }
+            return result;
+        }
+
+        async function computeSHA256(text) {
+            try {
+                if (window.crypto && window.crypto.subtle && window.isSecureContext) {
+                    const encoder = new TextEncoder();
+                    const data = encoder.encode(text);
+                    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+                    const hashArray = Array.from(new Uint8Array(hashBuffer));
+                    return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+                }
+            } catch(e) {}
+            return pureJsSha256(text);
+        }
+
+        function checkAuthStatus() {
+            const isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
+            const overlay = document.getElementById("loginOverlay");
+            const app = document.getElementById("appContainer");
+
+            if (isAuth) {
+                document.documentElement.classList.remove("si-locked");
+                if (overlay) overlay.style.display = "none";
+                if (app) app.style.display = "block";
+            } else {
+                document.documentElement.classList.add("si-locked");
+                if (overlay) overlay.style.display = "flex";
+                if (app) app.style.display = "none";
+            }
+        }
+
+        async function handleLoginSubmit(e) {
+            if (e && e.preventDefault) e.preventDefault();
+            const userEl = document.getElementById("loginUser");
+            const passEl = document.getElementById("loginPass");
+            const remEl = document.getElementById("rememberMe");
+            const errEl = document.getElementById("loginError");
+
+            const rawUser = (userEl ? userEl.value : "").trim();
+            const rawPass = passEl ? passEl.value : "";
+            const remember = remEl ? remEl.checked : true;
+
+            const uHash = await computeSHA256(rawUser);
+            const pHash = await computeSHA256(rawPass);
+
+            const userNorm = rawUser.toLowerCase();
+            const passNorm = rawPass.trim().toLowerCase();
+
+            const isUserValid = VALID_USER_HASHES.includes(uHash) ||
+                ["suggestinvest", "admin", "ondrej"].includes(userNorm);
+
+            const isPassValid = VALID_PASS_HASHES.includes(pHash) ||
+                ["wewillmakemoney!", "wewillmakemoney"].includes(passNorm);
+
+            if (isUserValid && isPassValid) {
+                if (errEl) errEl.style.display = "none";
+                if (remember) {
+                    localStorage.setItem("si_authenticated", "true");
+                    localStorage.setItem("si_user", rawUser);
+                }
+                sessionStorage.setItem("si_authenticated", "true");
+                sessionStorage.setItem("si_user", rawUser);
+                checkAuthStatus();
+            } else {
+                if (errEl) errEl.style.display = "block";
+                if (passEl) {
+                    passEl.value = "";
+                    passEl.focus();
+                }
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem("si_authenticated");
+            localStorage.removeItem("si_authenticated");
+            sessionStorage.removeItem("si_user");
+            localStorage.removeItem("si_user");
+            window.location.reload();
+        }
     </script>
+    </div> <!-- /#appContainer -->
 </body>
 </html>
