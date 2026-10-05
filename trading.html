@@ -2095,7 +2095,7 @@
     </style>
 <body>
     <!-- 🔒 UNIFIED SECURITY GATE OVERLAY -->
-    <div id="loginOverlay" style="display: none;">
+    <div id="loginOverlay">
         <div class="login-card">
             <div class="login-badge">
                 <span>🔒 SuggestInvest • Security Gate</span>
@@ -2127,6 +2127,165 @@
             </form>
         </div>
     </div>
+
+    <script>
+        // 🔒 AUTH CONTROLLER FOR AUTONOMOUS TRADING
+        const VALID_USER_HASHES = [
+            "5bff2c944e58c4b622bceab6c3794bdb49180603a080cb995acad9d136719d44", // SuggestInvest
+            "493f0daa919d6a985ddcc9185d7a08378104833630911da73bd660d2a4a11621", // suggestinvest
+            "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", // admin
+            "89903dfa383d1be0969942af5d088a81b1592c3b3dde153aa1dc5e2207d8835c"  // ondrej
+        ];
+
+        const VALID_PASS_HASHES = [
+            "cb68425cfebe32bacd9b3cb624a1b99a033037eb12f9dd57c59765db0f4cf262", // WeWillMakeMoney!
+            "f4bf4f16dc2d4536e70c93f6b249c24c1311792b3b2c1b79e642bba343ccbb8d", // WeWillMakeMoney
+            "4b6dc495eaaaba459d7e748c89b8ac22e1b5ad8874d66897813e8691abc0b169", // wewillmakemoney!
+            "ef962684145f39eecf6e8bd0ab37bbfebf5a5e89040c9c576538c96884a0509c"  // wewillmakemoney
+        ];
+
+        function pureJsSha256(ascii) {
+            function rightRotate(value, amount) { return (value>>>amount) | (value<<(32 - amount)); }
+            var mathPow = Math.pow;
+            var maxWord = mathPow(2, 32);
+            var lengthProperty = 'length';
+            var i, j;
+            var result = '';
+            var words = [];
+            var asciiBitLength = ascii[lengthProperty]*8;
+            var hash = [];
+            var k = [];
+            var primeCounter = 0;
+            var isComposite = {};
+            for (var candidate = 2; primeCounter < 64; candidate++) {
+                if (!isComposite[candidate]) {
+                    for (i = 0; i < 313; i += candidate) { isComposite[i] = candidate; }
+                    hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
+                    k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+                }
+            }
+            ascii += '\x80';
+            while (ascii[lengthProperty]%64 - 56) ascii += '\x00';
+            for (i = 0; i < ascii[lengthProperty]; i++) {
+                j = ascii.charCodeAt(i);
+                if (j>>8) return '';
+                words[i>>2] |= j << ((3 - i)%4)*8;
+            }
+            words[words[lengthProperty]] = ((asciiBitLength/maxWord)|0);
+            words[words[lengthProperty]] = (asciiBitLength);
+            for (j = 0; j < words[lengthProperty];) {
+                var w = words.slice(j, j += 16);
+                var oldHash = hash.slice(0);
+                for (i = 0; i < 64; i++) {
+                    var w15 = w[i - 15], w2 = w[i - 2];
+                    var a = hash[0], e = hash[4];
+                    var temp1 = hash[7]
+                        + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+                        + ((e & hash[5]) ^ ((~e) & hash[6]))
+                        + k[i]
+                        + (w[i] = (i < 16) ? w[i] : (
+                                w[i - 16]
+                                + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15>>>3))
+                                + w[i - 7]
+                                + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2>>>10))
+                            )|0
+                        );
+                    var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+                        + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+                    hash = [(temp1 + temp2)|0].concat(hash);
+                    hash[4] = (hash[4] + temp1)|0;
+                }
+                for (i = 0; i < 8; i++) { hash[i] = (hash[i] + oldHash[i])|0; }
+            }
+            for (i = 0; i < 8; i++) {
+                for (j = 3; j + 1; j--) {
+                    var b = (hash[i]>>(j*8))&255;
+                    result += ((b < 16) ? 0 : '') + b.toString(16);
+                }
+            }
+            return result;
+        }
+
+        async function computeSHA256(text) {
+            try {
+                if (window.crypto && window.crypto.subtle && window.isSecureContext) {
+                    const encoder = new TextEncoder();
+                    const data = encoder.encode(text);
+                    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+                    const hashArray = Array.from(new Uint8Array(hashBuffer));
+                    return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+                }
+            } catch(e) {}
+            return pureJsSha256(text);
+        }
+
+        function checkAuthStatus() {
+            const isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
+            const overlay = document.getElementById("loginOverlay");
+            const app = document.getElementById("appContainer");
+
+            if (isAuth) {
+                document.documentElement.classList.remove("si-locked");
+                if (overlay) overlay.style.display = "none";
+                if (app) app.style.display = "block";
+            } else {
+                document.documentElement.classList.add("si-locked");
+                if (overlay) overlay.style.display = "flex";
+                if (app) app.style.display = "none";
+            }
+        }
+
+        async function handleLoginSubmit(e) {
+            if (e && e.preventDefault) e.preventDefault();
+            const userEl = document.getElementById("loginUser");
+            const passEl = document.getElementById("loginPass");
+            const remEl = document.getElementById("rememberMe");
+            const errEl = document.getElementById("loginError");
+
+            const rawUser = (userEl ? userEl.value : "").trim();
+            const rawPass = passEl ? passEl.value : "";
+            const remember = remEl ? remEl.checked : true;
+
+            const uHash = await computeSHA256(rawUser);
+            const pHash = await computeSHA256(rawPass);
+
+            const userNorm = rawUser.toLowerCase();
+            const passNorm = rawPass.trim().toLowerCase();
+
+            const isUserValid = VALID_USER_HASHES.includes(uHash) ||
+                ["suggestinvest", "admin", "ondrej"].includes(userNorm);
+
+            const isPassValid = VALID_PASS_HASHES.includes(pHash) ||
+                ["wewillmakemoney!", "wewillmakemoney"].includes(passNorm);
+
+            if (isUserValid && isPassValid) {
+                if (errEl) errEl.style.display = "none";
+                if (remember) {
+                    localStorage.setItem("si_authenticated", "true");
+                    localStorage.setItem("si_user", rawUser);
+                }
+                sessionStorage.setItem("si_authenticated", "true");
+                sessionStorage.setItem("si_user", rawUser);
+                checkAuthStatus();
+            } else {
+                if (errEl) errEl.style.display = "block";
+                if (passEl) {
+                    passEl.value = "";
+                    passEl.focus();
+                }
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem("si_authenticated");
+            localStorage.removeItem("si_authenticated");
+            sessionStorage.removeItem("si_user");
+            localStorage.removeItem("si_user");
+            window.location.reload();
+        }
+
+        checkAuthStatus();
+    </script>
 
     <div id="appContainer">
         <div class="container">
@@ -2446,7 +2605,7 @@
                 </thead>
                 <tbody id="ordersTableBody">
                     
-                    <tr id="orderRow-ORD-20261005-DG-7E2D" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 3415.61, &#34;capital_risk_pct&#34;: 1.37, &#34;catalysts&#34;: [&#34;\u2696\ufe0f Sektorov\u00fd diskont (Pairs)&#34;, &#34;\ud83c\udfaf Vysok\u00fd diskont&#34;, &#34;\ud83d\udcb0 Ex-Div za 8 dn\u00ed&#34;], &#34;confidence&#34;: 80, &#34;conviction_score&#34;: &#34;2.75&#34;, &#34;created_at&#34;: &#34;2026-10-05 17:17:08 UTC&#34;, &#34;currency&#34;: &#34;EUR&#34;, &#34;current_price&#34;: 106.05, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,18,DG,STK,SMART,EUR,LMT,105.1,97.57&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027DG\u0027, \u0027SMART\u0027, \u0027EUR\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=18,\n    limitPrice=105.1,\n    takeProfitPrice=142.95,\n    stopLossPrice=97.57\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 105.1, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Vinci SA&#34;, &#34;order_id&#34;: &#34;ORD-20261005-DG-7E2D&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 47673.36, &#34;rank&#34;: 1, &#34;rrr&#34;: 5.03, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 18, &#34;signal&#34;: &#34;BUY&#34;, &#34;sl_price&#34;: 97.57, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;DG&#34;, &#34;symbol_xtb&#34;: &#34;DG.FR&#34;, &#34;symbol_yahoo&#34;: &#34;DG.PA&#34;, &#34;tactical_note&#34;: &#34;Konsenzu\u00e1ln\u00ed c\u00edlov\u00e1 cena na 142.9 EUR (+34.8 %) vytv\u00e1\u0159\u00ed atraktivn\u00ed asymetrii v\u00fdnosu a rizika p\u0159i 1M momentu -6.9 %. Teze z\u016fst\u00e1v\u00e1 v platnosti nad hranic\u00ed podpory 97.57 EUR.&#34;, &#34;target_mean&#34;: &#34;142.95 EUR&#34;, &#34;target_upside&#34;: &#34;+34.8 %&#34;, &#34;target_upside_class&#34;: &#34;upside-positive&#34;, &#34;tp_price&#34;: 142.95, &#34;weight_pct&#34;: 25.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-1&#34;, &#34;price&#34;: 105.1, &#34;sl&#34;: 97.57, &#34;symbol&#34;: &#34;DG.FR&#34;, &#34;tp&#34;: 142.95, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                    <tr id="orderRow-ORD-20261005-DG-4FED" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 3415.61, &#34;capital_risk_pct&#34;: 1.37, &#34;catalysts&#34;: [&#34;\u2696\ufe0f Sektorov\u00fd diskont (Pairs)&#34;, &#34;\ud83c\udfaf Vysok\u00fd diskont&#34;, &#34;\ud83d\udcb0 Ex-Div za 8 dn\u00ed&#34;], &#34;confidence&#34;: 80, &#34;conviction_score&#34;: &#34;2.75&#34;, &#34;created_at&#34;: &#34;2026-10-05 18:21:16 UTC&#34;, &#34;currency&#34;: &#34;EUR&#34;, &#34;current_price&#34;: 106.05, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,18,DG,STK,SMART,EUR,LMT,105.1,97.57&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027DG\u0027, \u0027SMART\u0027, \u0027EUR\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=18,\n    limitPrice=105.1,\n    takeProfitPrice=142.95,\n    stopLossPrice=97.57\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 105.1, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Vinci SA&#34;, &#34;order_id&#34;: &#34;ORD-20261005-DG-4FED&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 47673.36, &#34;rank&#34;: 1, &#34;rrr&#34;: 5.03, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 18, &#34;signal&#34;: &#34;BUY&#34;, &#34;sl_price&#34;: 97.57, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;DG&#34;, &#34;symbol_xtb&#34;: &#34;DG.FR&#34;, &#34;symbol_yahoo&#34;: &#34;DG.PA&#34;, &#34;tactical_note&#34;: &#34;Konsenzu\u00e1ln\u00ed c\u00edlov\u00e1 cena na 142.9 EUR (+34.8 %) vytv\u00e1\u0159\u00ed atraktivn\u00ed asymetrii v\u00fdnosu a rizika p\u0159i 1M momentu -6.9 %. Teze z\u016fst\u00e1v\u00e1 v platnosti nad hranic\u00ed podpory 97.57 EUR.&#34;, &#34;target_mean&#34;: &#34;142.95 EUR&#34;, &#34;target_upside&#34;: &#34;+34.8 %&#34;, &#34;target_upside_class&#34;: &#34;upside-positive&#34;, &#34;tp_price&#34;: 142.95, &#34;weight_pct&#34;: 25.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-1&#34;, &#34;price&#34;: 105.1, &#34;sl&#34;: 97.57, &#34;symbol&#34;: &#34;DG.FR&#34;, &#34;tp&#34;: 142.95, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
                         <td style="font-weight: 800; color: var(--text-muted);">#1</td>
                         <td>
                             <div class="sym-cell">
@@ -2548,14 +2707,14 @@
                         </td>
                         <td style="text-align: right;">
                             <div style="display: flex; justify-content: flex-end; gap: 4px;">
-                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20261005-DG-7E2D', 'DG')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20261005-DG-4FED', 'DG')" title="Simulovat exekuci v Paper Trading sandboxu">
                                     ▶ Exekuce
                                 </button>
                             </div>
                         </td>
                     </tr>
                     
-                    <tr id="orderRow-ORD-20261005-CHDN-DB9A" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 3164.98, &#34;capital_risk_pct&#34;: 1.27, &#34;catalysts&#34;: [&#34;\u2696\ufe0f Sektorov\u00fd diskont (Pairs)&#34;, &#34;\ud83c\udfaf Vysok\u00fd diskont&#34;], &#34;confidence&#34;: 84, &#34;conviction_score&#34;: &#34;2.72&#34;, &#34;created_at&#34;: &#34;2026-10-05 17:17:08 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 76.05, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,28,CHDN,STK,SMART,USD,LMT,74.78,69.97&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027CHDN\u0027, \u0027SMART\u0027, \u0027USD\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=28,\n    limitPrice=74.78,\n    takeProfitPrice=130.83,\n    stopLossPrice=69.97\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 74.78, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Churchill Downs Inc&#34;, &#34;order_id&#34;: &#34;ORD-20261005-CHDN-DB9A&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 49205.24, &#34;rank&#34;: 2, &#34;rrr&#34;: 11.65, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 28, &#34;signal&#34;: &#34;BUY&#34;, &#34;sl_price&#34;: 69.97, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;CHDN&#34;, &#34;symbol_xtb&#34;: &#34;CHDN.US&#34;, &#34;symbol_yahoo&#34;: &#34;CHDN&#34;, &#34;tactical_note&#34;: &#34;Konsenzu\u00e1ln\u00ed c\u00edlov\u00e1 cena na 130.8 USD (+72.0 %) vytv\u00e1\u0159\u00ed atraktivn\u00ed asymetrii v\u00fdnosu a rizika p\u0159i 1M momentu -14.7 %. Teze z\u016fst\u00e1v\u00e1 v platnosti nad hranic\u00ed podpory 69.97 USD.&#34;, &#34;target_mean&#34;: &#34;130.83 USD&#34;, &#34;target_upside&#34;: &#34;+72.0 %&#34;, &#34;target_upside_class&#34;: &#34;upside-positive&#34;, &#34;tp_price&#34;: 130.83, &#34;weight_pct&#34;: 25.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-2&#34;, &#34;price&#34;: 74.78, &#34;sl&#34;: 69.97, &#34;symbol&#34;: &#34;CHDN.US&#34;, &#34;tp&#34;: 130.83, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                    <tr id="orderRow-ORD-20261005-CHDN-0A1D" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 3164.98, &#34;capital_risk_pct&#34;: 1.27, &#34;catalysts&#34;: [&#34;\u2696\ufe0f Sektorov\u00fd diskont (Pairs)&#34;, &#34;\ud83c\udfaf Vysok\u00fd diskont&#34;], &#34;confidence&#34;: 84, &#34;conviction_score&#34;: &#34;2.72&#34;, &#34;created_at&#34;: &#34;2026-10-05 18:21:16 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 76.05, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,28,CHDN,STK,SMART,USD,LMT,74.78,69.97&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027CHDN\u0027, \u0027SMART\u0027, \u0027USD\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=28,\n    limitPrice=74.78,\n    takeProfitPrice=130.83,\n    stopLossPrice=69.97\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 74.78, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Churchill Downs Inc&#34;, &#34;order_id&#34;: &#34;ORD-20261005-CHDN-0A1D&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 49205.24, &#34;rank&#34;: 2, &#34;rrr&#34;: 11.65, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 28, &#34;signal&#34;: &#34;BUY&#34;, &#34;sl_price&#34;: 69.97, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;CHDN&#34;, &#34;symbol_xtb&#34;: &#34;CHDN.US&#34;, &#34;symbol_yahoo&#34;: &#34;CHDN&#34;, &#34;tactical_note&#34;: &#34;Konsenzu\u00e1ln\u00ed c\u00edlov\u00e1 cena na 130.8 USD (+72.0 %) vytv\u00e1\u0159\u00ed atraktivn\u00ed asymetrii v\u00fdnosu a rizika p\u0159i 1M momentu -14.7 %. Teze z\u016fst\u00e1v\u00e1 v platnosti nad hranic\u00ed podpory 69.97 USD.&#34;, &#34;target_mean&#34;: &#34;130.83 USD&#34;, &#34;target_upside&#34;: &#34;+72.0 %&#34;, &#34;target_upside_class&#34;: &#34;upside-positive&#34;, &#34;tp_price&#34;: 130.83, &#34;weight_pct&#34;: 25.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-2&#34;, &#34;price&#34;: 74.78, &#34;sl&#34;: 69.97, &#34;symbol&#34;: &#34;CHDN.US&#34;, &#34;tp&#34;: 130.83, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
                         <td style="font-weight: 800; color: var(--text-muted);">#2</td>
                         <td>
                             <div class="sym-cell">
@@ -2655,14 +2814,14 @@
                         </td>
                         <td style="text-align: right;">
                             <div style="display: flex; justify-content: flex-end; gap: 4px;">
-                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20261005-CHDN-DB9A', 'CHDN')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20261005-CHDN-0A1D', 'CHDN')" title="Simulovat exekuci v Paper Trading sandboxu">
                                     ▶ Exekuce
                                 </button>
                             </div>
                         </td>
                     </tr>
                     
-                    <tr id="orderRow-ORD-20261005-RHM-DDD9" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 3261.89, &#34;capital_risk_pct&#34;: 1.3, &#34;catalysts&#34;: [&#34;\u2696\ufe0f Sektorov\u00fd diskont (Pairs)&#34;, &#34;\ud83c\udfaf Vysok\u00fd diskont&#34;], &#34;confidence&#34;: 84, &#34;conviction_score&#34;: &#34;2.68&#34;, &#34;created_at&#34;: &#34;2026-10-05 17:17:08 UTC&#34;, &#34;currency&#34;: &#34;EUR&#34;, &#34;current_price&#34;: 965.1, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,2,RHM,STK,SMART,EUR,LMT,952.61,887.89&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027RHM\u0027, \u0027SMART\u0027, \u0027EUR\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=2,\n    limitPrice=952.61,\n    takeProfitPrice=1095.5,\n    stopLossPrice=887.89\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 952.61, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Rheinmetall AG&#34;, &#34;order_id&#34;: &#34;ORD-20261005-RHM-DDD9&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 48011.54, &#34;rank&#34;: 3, &#34;rrr&#34;: 2.21, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 2, &#34;signal&#34;: &#34;BUY&#34;, &#34;sl_price&#34;: 887.89, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;RHM&#34;, &#34;symbol_xtb&#34;: &#34;RHM.DE&#34;, &#34;symbol_yahoo&#34;: &#34;RHM.DE&#34;, &#34;tactical_note&#34;: &#34;Konsenzu\u00e1ln\u00ed c\u00edlov\u00e1 cena na 1608.0 EUR (+66.6 %) vytv\u00e1\u0159\u00ed atraktivn\u00ed asymetrii v\u00fdnosu a rizika p\u0159i 1M momentu -6.7 %. Teze z\u016fst\u00e1v\u00e1 v platnosti nad hranic\u00ed podpory 887.89 EUR.&#34;, &#34;target_mean&#34;: &#34;1,607.95 EUR&#34;, &#34;target_upside&#34;: &#34;+66.6 %&#34;, &#34;target_upside_class&#34;: &#34;upside-positive&#34;, &#34;tp_price&#34;: 1095.5, &#34;weight_pct&#34;: 20.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-3&#34;, &#34;price&#34;: 952.61, &#34;sl&#34;: 887.89, &#34;symbol&#34;: &#34;RHM.DE&#34;, &#34;tp&#34;: 1095.5, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                    <tr id="orderRow-ORD-20261005-RHM-F4D9" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 3261.89, &#34;capital_risk_pct&#34;: 1.3, &#34;catalysts&#34;: [&#34;\u2696\ufe0f Sektorov\u00fd diskont (Pairs)&#34;, &#34;\ud83c\udfaf Vysok\u00fd diskont&#34;], &#34;confidence&#34;: 84, &#34;conviction_score&#34;: &#34;2.68&#34;, &#34;created_at&#34;: &#34;2026-10-05 18:21:16 UTC&#34;, &#34;currency&#34;: &#34;EUR&#34;, &#34;current_price&#34;: 965.1, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,2,RHM,STK,SMART,EUR,LMT,952.61,887.89&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027RHM\u0027, \u0027SMART\u0027, \u0027EUR\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=2,\n    limitPrice=952.61,\n    takeProfitPrice=1095.5,\n    stopLossPrice=887.89\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 952.61, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Rheinmetall AG&#34;, &#34;order_id&#34;: &#34;ORD-20261005-RHM-F4D9&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 48011.54, &#34;rank&#34;: 3, &#34;rrr&#34;: 2.21, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 2, &#34;signal&#34;: &#34;BUY&#34;, &#34;sl_price&#34;: 887.89, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;RHM&#34;, &#34;symbol_xtb&#34;: &#34;RHM.DE&#34;, &#34;symbol_yahoo&#34;: &#34;RHM.DE&#34;, &#34;tactical_note&#34;: &#34;Konsenzu\u00e1ln\u00ed c\u00edlov\u00e1 cena na 1608.0 EUR (+66.6 %) vytv\u00e1\u0159\u00ed atraktivn\u00ed asymetrii v\u00fdnosu a rizika p\u0159i 1M momentu -6.7 %. Teze z\u016fst\u00e1v\u00e1 v platnosti nad hranic\u00ed podpory 887.89 EUR.&#34;, &#34;target_mean&#34;: &#34;1,607.95 EUR&#34;, &#34;target_upside&#34;: &#34;+66.6 %&#34;, &#34;target_upside_class&#34;: &#34;upside-positive&#34;, &#34;tp_price&#34;: 1095.5, &#34;weight_pct&#34;: 20.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-3&#34;, &#34;price&#34;: 952.61, &#34;sl&#34;: 887.89, &#34;symbol&#34;: &#34;RHM.DE&#34;, &#34;tp&#34;: 1095.5, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
                         <td style="font-weight: 800; color: var(--text-muted);">#3</td>
                         <td>
                             <div class="sym-cell">
@@ -2762,14 +2921,14 @@
                         </td>
                         <td style="text-align: right;">
                             <div style="display: flex; justify-content: flex-end; gap: 4px;">
-                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20261005-RHM-DDD9', 'RHM')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20261005-RHM-F4D9', 'RHM')" title="Simulovat exekuci v Paper Trading sandboxu">
                                     ▶ Exekuce
                                 </button>
                             </div>
                         </td>
                     </tr>
                     
-                    <tr id="orderRow-ORD-20261005-RTX-4DA7" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2475.96, &#34;capital_risk_pct&#34;: 0.99, &#34;catalysts&#34;: [&#34;\u2696\ufe0f Sektorov\u00fd diskont (Pairs)&#34;, &#34;\ud83c\udfaf Vysok\u00fd diskont&#34;, &#34;\ud83d\udcc5 V\u00fdsledky do 21 dn\u00ed&#34;], &#34;confidence&#34;: 78, &#34;conviction_score&#34;: &#34;2.64&#34;, &#34;created_at&#34;: &#34;2026-10-05 17:17:08 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 184.68, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,8,RTX,STK,SMART,USD,LMT,183.08,169.91&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027RTX\u0027, \u0027SMART\u0027, \u0027USD\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=8,\n    limitPrice=183.08,\n    takeProfitPrice=234.14,\n    stopLossPrice=169.91\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 183.08, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;RTX Corp (Raytheon)&#34;, &#34;order_id&#34;: &#34;ORD-20261005-RTX-4DA7&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 34419.04, &#34;rank&#34;: 4, &#34;rrr&#34;: 3.88, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 8, &#34;signal&#34;: &#34;BUY&#34;, &#34;sl_price&#34;: 169.91, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;RTX&#34;, &#34;symbol_xtb&#34;: &#34;RTX.US&#34;, &#34;symbol_yahoo&#34;: &#34;RTX&#34;, &#34;tactical_note&#34;: &#34;Konsenzu\u00e1ln\u00ed c\u00edlov\u00e1 cena na 234.1 USD (+26.8 %) vytv\u00e1\u0159\u00ed atraktivn\u00ed asymetrii v\u00fdnosu a rizika p\u0159i 1M momentu -8.0 % a bl\u00ed\u017e\u00edc\u00edmi se v\u00fdsledky za 15 dn\u00ed. Teze z\u016fst\u00e1v\u00e1 v platnosti nad hranic\u00ed podpory 169.91 USD.&#34;, &#34;target_mean&#34;: &#34;234.14 USD&#34;, &#34;target_upside&#34;: &#34;+26.8 %&#34;, &#34;target_upside_class&#34;: &#34;upside-positive&#34;, &#34;tp_price&#34;: 234.14, &#34;weight_pct&#34;: 15.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-4&#34;, &#34;price&#34;: 183.08, &#34;sl&#34;: 169.91, &#34;symbol&#34;: &#34;RTX.US&#34;, &#34;tp&#34;: 234.14, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                    <tr id="orderRow-ORD-20261005-RTX-A9B6" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2475.96, &#34;capital_risk_pct&#34;: 0.99, &#34;catalysts&#34;: [&#34;\u2696\ufe0f Sektorov\u00fd diskont (Pairs)&#34;, &#34;\ud83c\udfaf Vysok\u00fd diskont&#34;, &#34;\ud83d\udcc5 V\u00fdsledky do 21 dn\u00ed&#34;], &#34;confidence&#34;: 78, &#34;conviction_score&#34;: &#34;2.64&#34;, &#34;created_at&#34;: &#34;2026-10-05 18:21:16 UTC&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;current_price&#34;: 184.68, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,8,RTX,STK,SMART,USD,LMT,183.08,169.91&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027RTX\u0027, \u0027SMART\u0027, \u0027USD\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=8,\n    limitPrice=183.08,\n    takeProfitPrice=234.14,\n    stopLossPrice=169.91\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 183.08, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;RTX Corp (Raytheon)&#34;, &#34;order_id&#34;: &#34;ORD-20261005-RTX-A9B6&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 34419.04, &#34;rank&#34;: 4, &#34;rrr&#34;: 3.88, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 8, &#34;signal&#34;: &#34;BUY&#34;, &#34;sl_price&#34;: 169.91, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;RTX&#34;, &#34;symbol_xtb&#34;: &#34;RTX.US&#34;, &#34;symbol_yahoo&#34;: &#34;RTX&#34;, &#34;tactical_note&#34;: &#34;Konsenzu\u00e1ln\u00ed c\u00edlov\u00e1 cena na 234.1 USD (+26.8 %) vytv\u00e1\u0159\u00ed atraktivn\u00ed asymetrii v\u00fdnosu a rizika p\u0159i 1M momentu -8.0 % a bl\u00ed\u017e\u00edc\u00edmi se v\u00fdsledky za 15 dn\u00ed. Teze z\u016fst\u00e1v\u00e1 v platnosti nad hranic\u00ed podpory 169.91 USD.&#34;, &#34;target_mean&#34;: &#34;234.14 USD&#34;, &#34;target_upside&#34;: &#34;+26.8 %&#34;, &#34;target_upside_class&#34;: &#34;upside-positive&#34;, &#34;tp_price&#34;: 234.14, &#34;weight_pct&#34;: 15.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-4&#34;, &#34;price&#34;: 183.08, &#34;sl&#34;: 169.91, &#34;symbol&#34;: &#34;RTX.US&#34;, &#34;tp&#34;: 234.14, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
                         <td style="font-weight: 800; color: var(--text-muted);">#4</td>
                         <td>
                             <div class="sym-cell">
@@ -2871,14 +3030,14 @@
                         </td>
                         <td style="text-align: right;">
                             <div style="display: flex; justify-content: flex-end; gap: 4px;">
-                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20261005-RTX-4DA7', 'RTX')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20261005-RTX-A9B6', 'RTX')" title="Simulovat exekuci v Paper Trading sandboxu">
                                     ▶ Exekuce
                                 </button>
                             </div>
                         </td>
                     </tr>
                     
-                    <tr id="orderRow-ORD-20261005-ACE-8EE0" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2702.7, &#34;capital_risk_pct&#34;: 1.08, &#34;catalysts&#34;: [&#34;\ud83e\udde0 Sentiment Divergence&#34;, &#34;\u2696\ufe0f Sektorov\u00fd diskont (Pairs)&#34;, &#34;\ud83c\udfaf Vysok\u00fd diskont&#34;], &#34;confidence&#34;: 80, &#34;conviction_score&#34;: &#34;2.60&#34;, &#34;created_at&#34;: &#34;2026-10-05 17:17:08 UTC&#34;, &#34;currency&#34;: &#34;EUR&#34;, &#34;current_price&#34;: 19.94, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,75,ACE,STK,SMART,EUR,LMT,19.77,18.34&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027ACE\u0027, \u0027SMART\u0027, \u0027EUR\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=75,\n    limitPrice=19.77,\n    takeProfitPrice=26.33,\n    stopLossPrice=18.34\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 19.77, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Acea SpA&#34;, &#34;order_id&#34;: &#34;ORD-20261005-ACE-8EE0&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 37365.3, &#34;rank&#34;: 5, &#34;rrr&#34;: 4.59, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 75, &#34;signal&#34;: &#34;BUY&#34;, &#34;sl_price&#34;: 18.34, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;ACE&#34;, &#34;symbol_xtb&#34;: &#34;ACE.IT&#34;, &#34;symbol_yahoo&#34;: &#34;ACE.MI&#34;, &#34;tactical_note&#34;: &#34;Konsenzu\u00e1ln\u00ed c\u00edlov\u00e1 cena na 26.3 EUR (+32.1 %) vytv\u00e1\u0159\u00ed atraktivn\u00ed asymetrii v\u00fdnosu a rizika p\u0159i 1M momentu -3.3 %. Teze z\u016fst\u00e1v\u00e1 v platnosti nad hranic\u00ed podpory 18.34 EUR.&#34;, &#34;target_mean&#34;: &#34;26.33 EUR&#34;, &#34;target_upside&#34;: &#34;+32.1 %&#34;, &#34;target_upside_class&#34;: &#34;upside-positive&#34;, &#34;tp_price&#34;: 26.33, &#34;weight_pct&#34;: 15.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-5&#34;, &#34;price&#34;: 19.77, &#34;sl&#34;: 18.34, &#34;symbol&#34;: &#34;ACE.IT&#34;, &#34;tp&#34;: 26.33, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
+                    <tr id="orderRow-ORD-20261005-ACE-8D23" data-order-raw="{&#34;action&#34;: &#34;BUY&#34;, &#34;capital_risk_czk&#34;: 2702.7, &#34;capital_risk_pct&#34;: 1.08, &#34;catalysts&#34;: [&#34;\ud83e\udde0 Sentiment Divergence&#34;, &#34;\u2696\ufe0f Sektorov\u00fd diskont (Pairs)&#34;, &#34;\ud83c\udfaf Vysok\u00fd diskont&#34;], &#34;confidence&#34;: 80, &#34;conviction_score&#34;: &#34;2.60&#34;, &#34;created_at&#34;: &#34;2026-10-05 18:21:16 UTC&#34;, &#34;currency&#34;: &#34;EUR&#34;, &#34;current_price&#34;: 19.94, &#34;exchange_ibkr&#34;: &#34;SMART&#34;, &#34;ibkr_basket_row&#34;: &#34;BUY,75,ACE,STK,SMART,EUR,LMT,19.77,18.34&#34;, &#34;ibkr_bracket_py&#34;: &#34;contract = Stock(\u0027ACE\u0027, \u0027SMART\u0027, \u0027EUR\u0027)\nbracket = ib.bracketOrder(\n    action=\u0027BUY\u0027,\n    quantity=75,\n    limitPrice=19.77,\n    takeProfitPrice=26.33,\n    stopLossPrice=18.34\n)\nfor o in bracket:\n    ib.placeOrder(contract, o)&#34;, &#34;limit_price&#34;: 19.77, &#34;macro_note&#34;: &#34;Standardn\u00ed alokace&#34;, &#34;mode&#34;: &#34;PAPER&#34;, &#34;name&#34;: &#34;Acea SpA&#34;, &#34;order_id&#34;: &#34;ORD-20261005-ACE-8D23&#34;, &#34;order_type&#34;: &#34;LIMIT&#34;, &#34;position_czk&#34;: 37365.3, &#34;rank&#34;: 5, &#34;rrr&#34;: 4.59, &#34;sectype_ibkr&#34;: &#34;STK&#34;, &#34;shares&#34;: 75, &#34;signal&#34;: &#34;BUY&#34;, &#34;sl_price&#34;: 18.34, &#34;status&#34;: &#34;READY_FOR_EXECUTION&#34;, &#34;status_reason&#34;: &#34;Schv\u00e1leno Risk Gatekeeperem&#34;, &#34;symbol_ibkr&#34;: &#34;ACE&#34;, &#34;symbol_xtb&#34;: &#34;ACE.IT&#34;, &#34;symbol_yahoo&#34;: &#34;ACE.MI&#34;, &#34;tactical_note&#34;: &#34;Konsenzu\u00e1ln\u00ed c\u00edlov\u00e1 cena na 26.3 EUR (+32.1 %) vytv\u00e1\u0159\u00ed atraktivn\u00ed asymetrii v\u00fdnosu a rizika p\u0159i 1M momentu -3.3 %. Teze z\u016fst\u00e1v\u00e1 v platnosti nad hranic\u00ed podpory 18.34 EUR.&#34;, &#34;target_mean&#34;: &#34;26.33 EUR&#34;, &#34;target_upside&#34;: &#34;+32.1 %&#34;, &#34;target_upside_class&#34;: &#34;upside-positive&#34;, &#34;tp_price&#34;: 26.33, &#34;weight_pct&#34;: 15.0, &#34;xtb_xapi_payload&#34;: {&#34;arguments&#34;: {&#34;tradeTransInfo&#34;: {&#34;cmd&#34;: 0, &#34;customComment&#34;: &#34;SI-AI-MVO-5&#34;, &#34;price&#34;: 19.77, &#34;sl&#34;: 18.34, &#34;symbol&#34;: &#34;ACE.IT&#34;, &#34;tp&#34;: 26.33, &#34;type&#34;: 2, &#34;volume&#34;: 0.1}}, &#34;command&#34;: &#34;tradeTransaction&#34;}}">
                         <td style="font-weight: 800; color: var(--text-muted);">#5</td>
                         <td>
                             <div class="sym-cell">
@@ -2980,7 +3139,7 @@
                         </td>
                         <td style="text-align: right;">
                             <div style="display: flex; justify-content: flex-end; gap: 4px;">
-                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20261005-ACE-8EE0', 'ACE')" title="Simulovat exekuci v Paper Trading sandboxu">
+                                <button class="row-action-btn exec-btn" onclick="simulatePaperExecution('ORD-20261005-ACE-8D23', 'ACE')" title="Simulovat exekuci v Paper Trading sandboxu">
                                     ▶ Exekuce
                                 </button>
                             </div>
@@ -4525,161 +4684,6 @@
                     }
                 });
             });
-        }
-
-        // 🔒 AUTH CONTROLLER FOR AUTONOMOUS TRADING
-        const VALID_USER_HASHES = [
-            "5bff2c944e58c4b622bceab6c3794bdb49180603a080cb995acad9d136719d44", // SuggestInvest
-            "493f0daa919d6a985ddcc9185d7a08378104833630911da73bd660d2a4a11621", // suggestinvest
-            "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", // admin
-            "89903dfa383d1be0969942af5d088a81b1592c3b3dde153aa1dc5e2207d8835c"  // ondrej
-        ];
-
-        const VALID_PASS_HASHES = [
-            "cb68425cfebe32bacd9b3cb624a1b99a033037eb12f9dd57c59765db0f4cf262", // WeWillMakeMoney!
-            "f4bf4f16dc2d4536e70c93f6b249c24c1311792b3b2c1b79e642bba343ccbb8d", // WeWillMakeMoney
-            "4b6dc495eaaaba459d7e748c89b8ac22e1b5ad8874d66897813e8691abc0b169", // wewillmakemoney!
-            "ef962684145f39eecf6e8bd0ab37bbfebf5a5e89040c9c576538c96884a0509c"  // wewillmakemoney
-        ];
-
-        function pureJsSha256(ascii) {
-            function rightRotate(value, amount) { return (value>>>amount) | (value<<(32 - amount)); }
-            var mathPow = Math.pow;
-            var maxWord = mathPow(2, 32);
-            var lengthProperty = 'length';
-            var i, j;
-            var result = '';
-            var words = [];
-            var asciiBitLength = ascii[lengthProperty]*8;
-            var hash = [];
-            var k = [];
-            var primeCounter = 0;
-            var isComposite = {};
-            for (var candidate = 2; primeCounter < 64; candidate++) {
-                if (!isComposite[candidate]) {
-                    for (i = 0; i < 313; i += candidate) { isComposite[i] = candidate; }
-                    hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
-                    k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
-                }
-            }
-            ascii += '\x80';
-            while (ascii[lengthProperty]%64 - 56) ascii += '\x00';
-            for (i = 0; i < ascii[lengthProperty]; i++) {
-                j = ascii.charCodeAt(i);
-                if (j>>8) return '';
-                words[i>>2] |= j << ((3 - i)%4)*8;
-            }
-            words[words[lengthProperty]] = ((asciiBitLength/maxWord)|0);
-            words[words[lengthProperty]] = (asciiBitLength);
-            for (j = 0; j < words[lengthProperty];) {
-                var w = words.slice(j, j += 16);
-                var oldHash = hash.slice(0);
-                for (i = 0; i < 64; i++) {
-                    var w15 = w[i - 15], w2 = w[i - 2];
-                    var a = hash[0], e = hash[4];
-                    var temp1 = hash[7]
-                        + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
-                        + ((e & hash[5]) ^ ((~e) & hash[6]))
-                        + k[i]
-                        + (w[i] = (i < 16) ? w[i] : (
-                                w[i - 16]
-                                + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15>>>3))
-                                + w[i - 7]
-                                + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2>>>10))
-                            )|0
-                        );
-                    var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
-                        + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
-                    hash = [(temp1 + temp2)|0].concat(hash);
-                    hash[4] = (hash[4] + temp1)|0;
-                }
-                for (i = 0; i < 8; i++) { hash[i] = (hash[i] + oldHash[i])|0; }
-            }
-            for (i = 0; i < 8; i++) {
-                for (j = 3; j + 1; j--) {
-                    var b = (hash[i]>>(j*8))&255;
-                    result += ((b < 16) ? 0 : '') + b.toString(16);
-                }
-            }
-            return result;
-        }
-
-        async function computeSHA256(text) {
-            try {
-                if (window.crypto && window.crypto.subtle && window.isSecureContext) {
-                    const encoder = new TextEncoder();
-                    const data = encoder.encode(text);
-                    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-                    const hashArray = Array.from(new Uint8Array(hashBuffer));
-                    return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-                }
-            } catch(e) {}
-            return pureJsSha256(text);
-        }
-
-        function checkAuthStatus() {
-            const isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
-            const overlay = document.getElementById("loginOverlay");
-            const app = document.getElementById("appContainer");
-
-            if (isAuth) {
-                document.documentElement.classList.remove("si-locked");
-                if (overlay) overlay.style.display = "none";
-                if (app) app.style.display = "block";
-            } else {
-                document.documentElement.classList.add("si-locked");
-                if (overlay) overlay.style.display = "flex";
-                if (app) app.style.display = "none";
-            }
-        }
-
-        async function handleLoginSubmit(e) {
-            if (e && e.preventDefault) e.preventDefault();
-            const userEl = document.getElementById("loginUser");
-            const passEl = document.getElementById("loginPass");
-            const remEl = document.getElementById("rememberMe");
-            const errEl = document.getElementById("loginError");
-
-            const rawUser = (userEl ? userEl.value : "").trim();
-            const rawPass = passEl ? passEl.value : "";
-            const remember = remEl ? remEl.checked : true;
-
-            const uHash = await computeSHA256(rawUser);
-            const pHash = await computeSHA256(rawPass);
-
-            const userNorm = rawUser.toLowerCase();
-            const passNorm = rawPass.trim().toLowerCase();
-
-            const isUserValid = VALID_USER_HASHES.includes(uHash) ||
-                ["suggestinvest", "admin", "ondrej"].includes(userNorm);
-
-            const isPassValid = VALID_PASS_HASHES.includes(pHash) ||
-                ["wewillmakemoney!", "wewillmakemoney"].includes(passNorm);
-
-            if (isUserValid && isPassValid) {
-                if (errEl) errEl.style.display = "none";
-                if (remember) {
-                    localStorage.setItem("si_authenticated", "true");
-                    localStorage.setItem("si_user", rawUser);
-                }
-                sessionStorage.setItem("si_authenticated", "true");
-                sessionStorage.setItem("si_user", rawUser);
-                checkAuthStatus();
-            } else {
-                if (errEl) errEl.style.display = "block";
-                if (passEl) {
-                    passEl.value = "";
-                    passEl.focus();
-                }
-            }
-        }
-
-        function logout() {
-            sessionStorage.removeItem("si_authenticated");
-            localStorage.removeItem("si_authenticated");
-            sessionStorage.removeItem("si_user");
-            localStorage.removeItem("si_user");
-            window.location.reload();
         }
 
         document.addEventListener('DOMContentLoaded', () => {

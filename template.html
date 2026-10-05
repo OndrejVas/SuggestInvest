@@ -2892,6 +2892,165 @@
         </div>
     </div>
 
+    <script>
+        // 🔒 IMMEDIATE TOP-OF-DOCUMENT AUTH CONTROLLER
+        const VALID_USER_HASHES = [
+            "5bff2c944e58c4b622bceab6c3794bdb49180603a080cb995acad9d136719d44", // SuggestInvest
+            "493f0daa919d6a985ddcc9185d7a08378104833630911da73bd660d2a4a11621", // suggestinvest
+            "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", // admin
+            "89903dfa383d1be0969942af5d088a81b1592c3b3dde153aa1dc5e2207d8835c"  // ondrej
+        ];
+
+        const VALID_PASS_HASHES = [
+            "cb68425cfebe32bacd9b3cb624a1b99a033037eb12f9dd57c59765db0f4cf262", // WeWillMakeMoney!
+            "f4bf4f16dc2d4536e70c93f6b249c24c1311792b3b2c1b79e642bba343ccbb8d", // WeWillMakeMoney
+            "4b6dc495eaaaba459d7e748c89b8ac22e1b5ad8874d66897813e8691abc0b169", // wewillmakemoney!
+            "ef962684145f39eecf6e8bd0ab37bbfebf5a5e89040c9c576538c96884a0509c"  // wewillmakemoney
+        ];
+
+        function pureJsSha256(ascii) {
+            function rightRotate(value, amount) { return (value>>>amount) | (value<<(32 - amount)); }
+            var mathPow = Math.pow;
+            var maxWord = mathPow(2, 32);
+            var lengthProperty = 'length';
+            var i, j;
+            var result = '';
+            var words = [];
+            var asciiBitLength = ascii[lengthProperty]*8;
+            var hash = [];
+            var k = [];
+            var primeCounter = 0;
+            var isComposite = {};
+            for (var candidate = 2; primeCounter < 64; candidate++) {
+                if (!isComposite[candidate]) {
+                    for (i = 0; i < 313; i += candidate) { isComposite[i] = candidate; }
+                    hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
+                    k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+                }
+            }
+            ascii += '\x80';
+            while (ascii[lengthProperty]%64 - 56) ascii += '\x00';
+            for (i = 0; i < ascii[lengthProperty]; i++) {
+                j = ascii.charCodeAt(i);
+                if (j>>8) return '';
+                words[i>>2] |= j << ((3 - i)%4)*8;
+            }
+            words[words[lengthProperty]] = ((asciiBitLength/maxWord)|0);
+            words[words[lengthProperty]] = (asciiBitLength);
+            for (j = 0; j < words[lengthProperty];) {
+                var w = words.slice(j, j += 16);
+                var oldHash = hash.slice(0);
+                for (i = 0; i < 64; i++) {
+                    var w15 = w[i - 15], w2 = w[i - 2];
+                    var a = hash[0], e = hash[4];
+                    var temp1 = hash[7]
+                        + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+                        + ((e & hash[5]) ^ ((~e) & hash[6]))
+                        + k[i]
+                        + (w[i] = (i < 16) ? w[i] : (
+                                w[i - 16]
+                                + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15>>>3))
+                                + w[i - 7]
+                                + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2>>>10))
+                            )|0
+                        );
+                    var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+                        + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+                    hash = [(temp1 + temp2)|0].concat(hash);
+                    hash[4] = (hash[4] + temp1)|0;
+                }
+                for (i = 0; i < 8; i++) { hash[i] = (hash[i] + oldHash[i])|0; }
+            }
+            for (i = 0; i < 8; i++) {
+                for (j = 3; j + 1; j--) {
+                    var b = (hash[i]>>(j*8))&255;
+                    result += ((b < 16) ? 0 : '') + b.toString(16);
+                }
+            }
+            return result;
+        }
+
+        async function computeSHA256(text) {
+            try {
+                if (window.crypto && window.crypto.subtle && window.isSecureContext) {
+                    const encoder = new TextEncoder();
+                    const data = encoder.encode(text);
+                    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+                    const hashArray = Array.from(new Uint8Array(hashBuffer));
+                    return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+                }
+            } catch(e) {}
+            return pureJsSha256(text);
+        }
+
+        function checkAuthStatus() {
+            const isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
+            const overlay = document.getElementById("loginOverlay");
+            const app = document.getElementById("appContainer");
+
+            if (isAuth) {
+                document.documentElement.classList.remove("si-locked");
+                if (overlay) overlay.style.display = "none";
+                if (app) app.style.display = "block";
+            } else {
+                document.documentElement.classList.add("si-locked");
+                if (overlay) overlay.style.display = "flex";
+                if (app) app.style.display = "none";
+            }
+        }
+
+        async function handleLoginSubmit(e) {
+            if (e && e.preventDefault) e.preventDefault();
+            const userEl = document.getElementById("loginUser");
+            const passEl = document.getElementById("loginPass");
+            const remEl = document.getElementById("rememberMe");
+            const errEl = document.getElementById("loginError");
+
+            const rawUser = (userEl ? userEl.value : "").trim();
+            const rawPass = passEl ? passEl.value : "";
+            const remember = remEl ? remEl.checked : true;
+
+            const uHash = await computeSHA256(rawUser);
+            const pHash = await computeSHA256(rawPass);
+
+            const userNorm = rawUser.toLowerCase();
+            const passNorm = rawPass.trim().toLowerCase();
+
+            const isUserValid = VALID_USER_HASHES.includes(uHash) ||
+                ["suggestinvest", "admin", "ondrej"].includes(userNorm);
+
+            const isPassValid = VALID_PASS_HASHES.includes(pHash) ||
+                ["wewillmakemoney!", "wewillmakemoney"].includes(passNorm);
+
+            if (isUserValid && isPassValid) {
+                if (errEl) errEl.style.display = "none";
+                if (remember) {
+                    localStorage.setItem("si_authenticated", "true");
+                    localStorage.setItem("si_user", rawUser);
+                }
+                sessionStorage.setItem("si_authenticated", "true");
+                sessionStorage.setItem("si_user", rawUser);
+                checkAuthStatus();
+            } else {
+                if (errEl) errEl.style.display = "block";
+                if (passEl) {
+                    passEl.value = "";
+                    passEl.focus();
+                }
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem("si_authenticated");
+            localStorage.removeItem("si_authenticated");
+            sessionStorage.removeItem("si_user");
+            localStorage.removeItem("si_user");
+            window.location.reload();
+        }
+
+        checkAuthStatus();
+    </script>
+
     <!-- 📊 HLAVNÍ APLIKACE (Odemkne se po přihlášení) -->
     <div id="appContainer">
         <div class="container">
@@ -3873,100 +4032,8 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT: AUTHENTICATION + FILTER LOGIC -->
+    <!-- JAVASCRIPT: TABLE & UI INTERACTION LOGIC -->
     <script>
-        // SHA-256 Hashe pro bezpečné ověření bez uložení čistého hesla v kódu
-        // Povolené loginy: SuggestInvest, suggestinvest, admin, ondrej
-        const VALID_USER_HASHES = [
-            "5bff2c944e58c4b622bceab6c3794bdb49180603a080cb995acad9d136719d44", // SuggestInvest
-            "493f0daa919d6a985ddcc9185d7a08378104833630911da73bd660d2a4a11621", // suggestinvest
-            "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", // admin
-            "89903dfa383d1be0969942af5d088a81b1592c3b3dde153aa1dc5e2207d8835c"  // ondrej
-        ];
-
-        // Povolená hesla: WeWillMakeMoney!, WeWillMakeMoney, wewillmakemoney!, wewillmakemoney
-        const VALID_PASS_HASHES = [
-            "cb68425cfebe32bacd9b3cb624a1b99a033037eb12f9dd57c59765db0f4cf262", // WeWillMakeMoney!
-            "f4bf4f16dc2d4536e70c93f6b249c24c1311792b3b2c1b79e642bba343ccbb8d", // WeWillMakeMoney
-            "4b6dc495eaaaba459d7e748c89b8ac22e1b5ad8874d66897813e8691abc0b169", // wewillmakemoney!
-            "ef962684145f39eecf6e8bd0ab37bbfebf5a5e89040c9c576538c96884a0509c"  // wewillmakemoney
-        ];
-
-        function pureJsSha256(ascii) {
-            function rightRotate(value, amount) { return (value>>>amount) | (value<<(32 - amount)); }
-            var mathPow = Math.pow;
-            var maxWord = mathPow(2, 32);
-            var lengthProperty = 'length';
-            var i, j;
-            var result = '';
-            var words = [];
-            var asciiBitLength = ascii[lengthProperty]*8;
-            var hash = [];
-            var k = [];
-            var primeCounter = 0;
-            var isComposite = {};
-            for (var candidate = 2; primeCounter < 64; candidate++) {
-                if (!isComposite[candidate]) {
-                    for (i = 0; i < 313; i += candidate) { isComposite[i] = candidate; }
-                    hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
-                    k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
-                }
-            }
-            ascii += '\x80';
-            while (ascii[lengthProperty]%64 - 56) ascii += '\x00';
-            for (i = 0; i < ascii[lengthProperty]; i++) {
-                j = ascii.charCodeAt(i);
-                if (j>>8) return '';
-                words[i>>2] |= j << ((3 - i)%4)*8;
-            }
-            words[words[lengthProperty]] = ((asciiBitLength/maxWord)|0);
-            words[words[lengthProperty]] = (asciiBitLength);
-            for (j = 0; j < words[lengthProperty];) {
-                var w = words.slice(j, j += 16);
-                var oldHash = hash.slice(0);
-                for (i = 0; i < 64; i++) {
-                    var w15 = w[i - 15], w2 = w[i - 2];
-                    var a = hash[0], e = hash[4];
-                    var temp1 = hash[7]
-                        + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
-                        + ((e & hash[5]) ^ ((~e) & hash[6]))
-                        + k[i]
-                        + (w[i] = (i < 16) ? w[i] : (
-                                w[i - 16]
-                                + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15>>>3))
-                                + w[i - 7]
-                                + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2>>>10))
-                            )|0
-                        );
-                    var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
-                        + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
-                    hash = [(temp1 + temp2)|0].concat(hash);
-                    hash[4] = (hash[4] + temp1)|0;
-                }
-                for (i = 0; i < 8; i++) { hash[i] = (hash[i] + oldHash[i])|0; }
-            }
-            for (i = 0; i < 8; i++) {
-                for (j = 3; j + 1; j--) {
-                    var b = (hash[i]>>(j*8))&255;
-                    result += ((b < 16) ? 0 : '') + b.toString(16);
-                }
-            }
-            return result;
-        }
-
-        async function computeSHA256(text) {
-            try {
-                if (window.crypto && window.crypto.subtle && window.isSecureContext) {
-                    const encoder = new TextEncoder();
-                    const data = encoder.encode(text);
-                    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-                    const hashArray = Array.from(new Uint8Array(hashBuffer));
-                    return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-                }
-            } catch(e) {}
-            return pureJsSha256(text);
-        }
-
         function sanitizeSearchInput() {
             const si = document.getElementById("searchInput");
             if (!si) return;
@@ -3976,75 +4043,6 @@
                     applyFilters();
                 }
             }
-        }
-
-        function checkAuthStatus() {
-            const isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
-            const overlay = document.getElementById("loginOverlay");
-            const app = document.getElementById("appContainer");
-
-            if (isAuth) {
-                document.documentElement.classList.remove("si-locked");
-                if (overlay) overlay.style.display = "none";
-                if (app) app.style.display = "block";
-                sanitizeSearchInput();
-                setTimeout(sanitizeSearchInput, 50);
-                setTimeout(sanitizeSearchInput, 200);
-                setTimeout(sanitizeSearchInput, 500);
-            } else {
-                document.documentElement.classList.add("si-locked");
-                if (overlay) overlay.style.display = "flex";
-                if (app) app.style.display = "none";
-            }
-        }
-
-        async function handleLoginSubmit(e) {
-            if (e && e.preventDefault) e.preventDefault();
-            const userEl = document.getElementById("loginUser");
-            const passEl = document.getElementById("loginPass");
-            const remEl = document.getElementById("rememberMe");
-            const errEl = document.getElementById("loginError");
-
-            const rawUser = (userEl ? userEl.value : "").trim();
-            const rawPass = passEl ? passEl.value : "";
-            const remember = remEl ? remEl.checked : true;
-
-            const uHash = await computeSHA256(rawUser);
-            const pHash = await computeSHA256(rawPass);
-
-            const userNorm = rawUser.toLowerCase();
-            const passNorm = rawPass.trim().toLowerCase();
-
-            const isUserValid = VALID_USER_HASHES.includes(uHash) ||
-                ["suggestinvest", "admin", "ondrej"].includes(userNorm);
-
-            const isPassValid = VALID_PASS_HASHES.includes(pHash) ||
-                ["wewillmakemoney!", "wewillmakemoney"].includes(passNorm);
-
-            if (isUserValid && isPassValid) {
-                if (errEl) errEl.style.display = "none";
-                if (remember) {
-                    localStorage.setItem("si_authenticated", "true");
-                    localStorage.setItem("si_user", rawUser);
-                }
-                sessionStorage.setItem("si_authenticated", "true");
-                sessionStorage.setItem("si_user", rawUser);
-                checkAuthStatus();
-            } else {
-                if (errEl) errEl.style.display = "block";
-                if (passEl) {
-                    passEl.value = "";
-                    passEl.focus();
-                }
-            }
-        }
-
-        function logout() {
-            sessionStorage.removeItem("si_authenticated");
-            localStorage.removeItem("si_authenticated");
-            sessionStorage.removeItem("si_user");
-            localStorage.removeItem("si_user");
-            window.location.reload();
         }
 
         // Běžné spuštění kontroly při načtení stránky
@@ -4062,6 +4060,7 @@
                 });
             }
         });
+
 
         window.addEventListener("load", () => {
             sanitizeSearchInput();
@@ -4669,6 +4668,8 @@
                     console.warn('Poll error:', e);
                 }
             }, 10000);
+        }
+
         // ==================== INTERAKTIVNÍ HISTORIE TEČEK (DOT POPUP) ====================
         let dhtHideTimeout = null;
         let dhtIsPinned = false;
