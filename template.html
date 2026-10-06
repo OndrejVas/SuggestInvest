@@ -10,15 +10,22 @@
     <meta http-equiv="Expires" content="0">
     <script>
         (function() {
-            var isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
-            if (!isAuth) {
-                document.documentElement.classList.add("si-locked");
-            }
+            try {
+                var isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
+                if (isAuth) {
+                    document.documentElement.classList.add("si-authenticated");
+                } else {
+                    document.documentElement.classList.add("si-locked");
+                }
+            } catch(e) {}
         })();
     </script>
     <style>
+        /* 🔒 SECURITY GATE */
         html.si-locked #appContainer { display: none !important; }
         html.si-locked #loginOverlay { display: flex !important; }
+        html.si-authenticated #loginOverlay { display: none !important; }
+        html.si-authenticated #appContainer { display: block !important; }
         :root {
             --bg-body: #080d1a;
             --bg-card: #111827;
@@ -2909,6 +2916,7 @@
         ];
 
         function pureJsSha256(ascii) {
+            if (!ascii) ascii = "";
             function rightRotate(value, amount) { return (value>>>amount) | (value<<(32 - amount)); }
             var mathPow = Math.pow;
             var maxWord = mathPow(2, 32);
@@ -2984,15 +2992,21 @@
         }
 
         function checkAuthStatus() {
-            const isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
-            const overlay = document.getElementById("loginOverlay");
-            const app = document.getElementById("appContainer");
+            var isAuth = false;
+            try {
+                isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
+            } catch(e) {}
+
+            var overlay = document.getElementById("loginOverlay");
+            var app = document.getElementById("appContainer");
 
             if (isAuth) {
+                document.documentElement.classList.add("si-authenticated");
                 document.documentElement.classList.remove("si-locked");
                 if (overlay) overlay.style.display = "none";
                 if (app) app.style.display = "block";
             } else {
+                document.documentElement.classList.remove("si-authenticated");
                 document.documentElement.classList.add("si-locked");
                 if (overlay) overlay.style.display = "flex";
                 if (app) app.style.display = "none";
@@ -3001,35 +3015,45 @@
 
         async function handleLoginSubmit(e) {
             if (e && e.preventDefault) e.preventDefault();
-            const userEl = document.getElementById("loginUser");
-            const passEl = document.getElementById("loginPass");
-            const remEl = document.getElementById("rememberMe");
-            const errEl = document.getElementById("loginError");
+            var userEl = document.getElementById("loginUser");
+            var passEl = document.getElementById("loginPass");
+            var remEl = document.getElementById("rememberMe");
+            var errEl = document.getElementById("loginError");
 
-            const rawUser = (userEl ? userEl.value : "").trim();
-            const rawPass = passEl ? passEl.value : "";
-            const remember = remEl ? remEl.checked : true;
+            var rawUser = (userEl ? userEl.value : "").trim();
+            var rawPass = passEl ? passEl.value : "";
+            var remember = remEl ? remEl.checked : true;
 
-            const uHash = await computeSHA256(rawUser);
-            const pHash = await computeSHA256(rawPass);
+            var userNorm = rawUser.toLowerCase();
+            var passNorm = rawPass.trim().toLowerCase();
 
-            const userNorm = rawUser.toLowerCase();
-            const passNorm = rawPass.trim().toLowerCase();
+            // 1. Přímé porovnání (bleskové, stoprocentně spolehlivé)
+            var isUserValid = ["suggestinvest", "admin", "ondrej"].includes(userNorm);
+            var isPassValid = (
+                rawPass === "WeWillMakeMoney!" ||
+                rawPass === "WeWillMakeMoney" ||
+                passNorm === "wewillmakemoney!" ||
+                passNorm === "wewillmakemoney"
+            );
 
-            const isUserValid = VALID_USER_HASHES.includes(uHash) ||
-                ["suggestinvest", "admin", "ondrej"].includes(userNorm);
-
-            const isPassValid = VALID_PASS_HASHES.includes(pHash) ||
-                ["wewillmakemoney!", "wewillmakemoney"].includes(passNorm);
+            // 2. Hash ověření fallback
+            if (!isUserValid || !isPassValid) {
+                var uHash = await computeSHA256(rawUser);
+                var pHash = await computeSHA256(rawPass);
+                if (VALID_USER_HASHES.includes(uHash)) isUserValid = true;
+                if (VALID_PASS_HASHES.includes(pHash)) isPassValid = true;
+            }
 
             if (isUserValid && isPassValid) {
                 if (errEl) errEl.style.display = "none";
-                if (remember) {
-                    localStorage.setItem("si_authenticated", "true");
-                    localStorage.setItem("si_user", rawUser);
-                }
-                sessionStorage.setItem("si_authenticated", "true");
-                sessionStorage.setItem("si_user", rawUser);
+                try {
+                    if (remember) {
+                        localStorage.setItem("si_authenticated", "true");
+                        localStorage.setItem("si_user", rawUser);
+                    }
+                    sessionStorage.setItem("si_authenticated", "true");
+                    sessionStorage.setItem("si_user", rawUser);
+                } catch(e) {}
                 checkAuthStatus();
             } else {
                 if (errEl) errEl.style.display = "block";
@@ -3038,17 +3062,24 @@
                     passEl.focus();
                 }
             }
+            return false;
         }
 
         function logout() {
-            sessionStorage.removeItem("si_authenticated");
-            localStorage.removeItem("si_authenticated");
-            sessionStorage.removeItem("si_user");
-            localStorage.removeItem("si_user");
+            try {
+                sessionStorage.removeItem("si_authenticated");
+                localStorage.removeItem("si_authenticated");
+                sessionStorage.removeItem("si_user");
+                localStorage.removeItem("si_user");
+            } catch(e) {}
+            document.documentElement.classList.remove("si-authenticated");
+            document.documentElement.classList.add("si-locked");
             window.location.reload();
         }
 
         checkAuthStatus();
+        document.addEventListener("DOMContentLoaded", checkAuthStatus);
+        window.addEventListener("load", checkAuthStatus);
     </script>
 
     <!-- 📊 HLAVNÍ APLIKACE (Odemkne se po přihlášení) -->
