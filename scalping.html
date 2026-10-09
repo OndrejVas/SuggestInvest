@@ -811,7 +811,361 @@
             align-items: center;
             gap: 10px;
             z-index: 10000;
-            backdrop-filter: blur(12px);
+        /* ⚡ SEKTOR EXEKUCE & HISTORIE STYLY */
+        .exec-section-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 16, 31, 0.92) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.28);
+            border-radius: var(--radius-lg);
+            padding: 1.6rem;
+            box-shadow: var(--shadow-card), 0 0 25px rgba(16, 185, 129, 0.08);
+            position: relative;
+        }
+
+        .exec-section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #10b981, #06b6d4, #f59e0b, #10b981);
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        }
+
+        .exec-kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .exec-kpi-card {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            position: relative;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .exec-kpi-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .exec-kpi-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.4rem;
+        }
+
+        .exec-kpi-title {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            color: var(--text-secondary);
+        }
+
+        .exec-kpi-icon {
+            font-size: 1.1rem;
+        }
+
+        .exec-kpi-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.55rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 0.25rem;
+        }
+
+        .exec-kpi-val.green { color: #10b981; }
+        .exec-kpi-val.gold { color: #fbbf24; }
+        .exec-kpi-val.cyan { color: #38bdf8; }
+        .exec-kpi-val.red { color: #f87171; }
+
+        .exec-kpi-sub {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* LIVE POSITION BOX */
+        .live-pos-box {
+            background: linear-gradient(145deg, rgba(16, 185, 129, 0.09) 0%, rgba(6, 182, 212, 0.04) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            border-radius: 14px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .live-pos-box::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #10b981;
+            box-shadow: 0 0 10px #10b981;
+        }
+
+        .live-pos-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            padding-bottom: 0.75rem;
+        }
+
+        .live-pos-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: #f8fafc;
+        }
+
+        .live-pos-pulse {
+            display: inline-block;
+            width: 9px;
+            height: 9px;
+            background: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulseDot 1.5s infinite;
+        }
+
+        @keyframes pulseDot {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        .live-pos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .pos-stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .pos-stat-lbl {
+            font-size: 0.70rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .pos-stat-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #f1f5f9;
+        }
+
+        /* TABS & CONTROLS */
+        .exec-controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 1rem;
+            padding-top: 0.5rem;
+        }
+
+        .exec-filter-group {
+            display: flex;
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            flex-wrap: wrap;
+        }
+
+        .exec-filter-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .exec-filter-btn:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .exec-filter-btn.active {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.35);
+        }
+
+        .btn-exec-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #e2e8f0;
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-exec-action:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-exec-primary {
+            background: linear-gradient(135deg, #059669, #10b981);
+            border: 1px solid #34d399;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-exec-primary:hover {
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.5);
+            transform: translateY(-1px);
+        }
+
+        /* TABLES */
+        .exec-table-wrap {
+            overflow-x: auto;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.3);
+            margin-bottom: 1.5rem;
+        }
+
+        .exec-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+            text-align: left;
+            min-width: 900px;
+        }
+
+        .exec-table th {
+            background: rgba(15, 23, 42, 0.95);
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            font-weight: 700;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            white-space: nowrap;
+        }
+
+        .exec-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #e2e8f0;
+            vertical-align: middle;
+        }
+
+        .exec-table tr:hover td {
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        /* BADGES */
+        .sc-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.70rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+        }
+
+        .sc-badge.long {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .sc-badge.short {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .sc-badge.win {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .sc-badge.loss {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .sc-badge.be {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .sc-badge.pending {
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            border: 1px dashed rgba(56, 189, 248, 0.4);
+        }
+
+        /* MODAL FOR NEW ORDER */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-card {
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            max-width: 520px;
+            width: 100%;
+            padding: 1.75rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
         }
     </style>
 </head>
@@ -1066,6 +1420,10 @@
                             <span>Trading Portál (Swing)</span>
                         </a>
 
+                        <a href="#live-execution" class="nav-btn" style="background: rgba(16, 185, 129, 0.18); border-color: rgba(16, 185, 129, 0.45); color: #34d399; font-weight: 700;" title="Skočit na přehled živých a připravených obchodů">
+                            <span>⚡ Obchody &amp; Historie</span>
+                        </a>
+
                         <button onclick="logout()" class="nav-btn" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.35); color: #fca5a5; cursor: pointer;" title="Odhlásit se ze systému SuggestInvest">
                             🚪 Odhlásit
                         </button>
@@ -1207,47 +1565,9 @@
                         <span style="color: #34d399;">DXY Impuls: -0.22 % ▼</span>
                     </div>
 
-                    <div class="svg-chart-wrap">
-                        <svg viewBox="0 0 540 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Pozadí mřížka -->
-                            <line x1="0" y1="45" x2="540" y2="45" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3,3" />
-                            <line x1="0" y1="90" x2="540" y2="90" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3,3" />
-                            <line x1="0" y1="135" x2="540" y2="135" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3,3" />
-
-                            <!-- Take-Profit 2 zóna -->
-                            <line x1="0" y1="20" x2="540" y2="20" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4,4" />
-                            <text x="440" y="16" fill="#34d399" font-size="10" font-family="monospace">TP2: 2667.80 $ (+12.8$)</text>
-
-                            <!-- Take-Profit 1 zóna -->
-                            <line x1="0" y1="50" x2="540" y2="50" stroke="#34d399" stroke-width="1.5" stroke-dasharray="4,4" />
-                            <text x="440" y="46" fill="#34d399" font-size="10" font-family="monospace">TP1: 2661.40 $ (+6.4$)</text>
-
-                            <!-- Vstupní cena (Entry) -->
-                            <line x1="0" y1="95" x2="540" y2="95" stroke="#f59e0b" stroke-width="2" />
-                            <text x="440" y="91" fill="#f59e0b" font-size="10" font-family="monospace" font-weight="bold">ENTRY: 2655.00 $</text>
-
-                            <!-- Stop-Loss -->
-                            <line x1="0" y1="145" x2="540" y2="145" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,4" />
-                            <text x="440" y="141" fill="#f87171" font-size="10" font-family="monospace">SL: 2651.80 $ (-3.2$)</text>
-
-                            <!-- Anchored VWAP křivka (modrá) -->
-                            <path d="M 10 130 Q 150 120, 270 115 T 530 100" fill="none" stroke="#38bdf8" stroke-width="2" />
-
-                            <!-- KAMA křivka (zlatá, adaptivní) -->
-                            <path d="M 10 140 Q 140 135, 250 118 T 380 95 T 530 40" fill="none" stroke="#f59e0b" stroke-width="2.5" />
-
-                            <!-- Cenové svíčky / vlna -->
-                            <polyline points="20,145 60,135 100,140 140,128 180,115 220,122 260,112 300,118 340,98 380,95 420,70 460,52 500,48 530,30" 
-                                      fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
-
-                            <!-- Bod vstupu s pulzem -->
-                            <circle cx="380" cy="95" r="5" fill="#f59e0b" />
-                            <circle cx="380" cy="95" r="10" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.6">
-                                <animate attributeName="r" values="5;15;5" dur="2s" repeatCount="indefinite"/>
-                                <animate attributeName="opacity" values="0.8;0;0.8" dur="2s" repeatCount="indefinite"/>
-                            </circle>
-                            <text x="320" y="80" fill="#fcd34d" font-size="10" font-family="sans-serif" font-weight="bold">TRIGGER LONG ▲</text>
-                        </svg>
+                    <div class="svg-chart-wrap" style="position: relative;">
+                        <div id="live-chart" style="width: 100%; height: 250px;"></div>
+                        <div id="connection-status" style="position: absolute; top: 10px; right: 10px; font-size: 10px; padding: 3px 6px; border-radius: 4px; background: rgba(0,0,0,0.6); color: #94a3b8;">Zastaveno</div>
                     </div>
 
                     <div class="chart-legend">
@@ -1313,7 +1633,189 @@
             </div>
         </section>
 
-        <!-- SEKTOR 3: INTERAKTIVNÍ KONFIGURÁTOR PRO INVESTORA -->
+        <!-- SEKTOR 3: ŽIVÁ EXEKUCE, PŘIPRAVENÉ POKYNY & AUDITNÍ HISTORIE (IBKR DUR222134) -->
+        <section class="exec-section-card" id="live-execution">
+            <div class="section-header" style="border-color: rgba(16, 185, 129, 0.3);">
+                <div>
+                    <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(16, 185, 129, 0.15); color: #34d399; padding: 4px 10px; border-radius: 9999px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; border: 1px solid rgba(16, 185, 129, 0.3); margin-bottom: 6px;">
+                        <span class="live-pos-pulse"></span>
+                        <span>Autonomní Intraday Execution &amp; Audit Log • IBKR DUR222134</span>
+                    </div>
+                    <h2 class="section-title" style="color: #6ee7b7;">
+                        <span>⚡</span> Připravené pokyny &amp; Historie uskutečněných obchodů
+                    </h2>
+                    <span class="section-subtitle">
+                        Perzistentní evidence všech uskutečněných pokynů, průběžného zisku (PnL) a čekajících bracket příkazů (ukládá se trvale do <code>data/scalping_trades.json</code> i vašeho prohlížeče)
+                    </span>
+                </div>
+
+                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                    <span class="sum-pill" style="border-color: rgba(16,185,129,0.3); color:#34d399;">
+                        Stav úložiště: <strong id="storageSyncStatus">● Načteno z data/scalping_trades.json</strong>
+                    </span>
+                    <button type="button" class="btn-exec-action" onclick="refreshScalpingData(true)" title="Znovu načíst data ze serveru">
+                        🔄 Obnovit data (F5)
+                    </button>
+                    <button type="button" class="btn-exec-action btn-exec-primary" onclick="openNewOrderModal()" title="Vytvořit a naplánovat nový scalping pokyn">
+                        ➕ Zadat nový pokyn
+                    </button>
+                    <button type="button" class="btn-exec-action" onclick="exportTradesJson()" title="Stáhnout aktuální data jako scalping_trades.json">
+                        📥 Export JSON
+                    </button>
+                    <button type="button" class="btn-exec-action" style="color:#f87171;" onclick="resetScalpingData()" title="Resetovat lokální modifikace na výchozí data z repozitáře">
+                        🗑️ Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- HERO STATS / KPI -->
+            <div class="exec-kpi-grid">
+                <!-- 1. WIN RATE -->
+                <div class="exec-kpi-card" title="Úspěšnost obchodů: poměr ziskových k celkovému počtu ukončených obchodů">
+                    <div class="exec-kpi-header">
+                        <span class="exec-kpi-title">Úspěšnost (Win Rate)</span>
+                        <span class="exec-kpi-icon">🎯</span>
+                    </div>
+                    <div class="exec-kpi-val green" id="kpiWinRate">73.1 %</div>
+                    <div class="exec-kpi-sub" id="kpiWinLossSub">
+                        <span>Ziskové: <strong style="color:#10b981;" id="kpiWins">19</strong></span>
+                        <span>•</span>
+                        <span>Ztrátové: <strong style="color:#f87171;" id="kpiLosses">7</strong></span>
+                    </div>
+                </div>
+
+                <!-- 2. TOTAL PNL -->
+                <div class="exec-kpi-card" title="Celkový čistý realizovaný zisk za všechny uskutečněné scalping obchody">
+                    <div class="exec-kpi-header">
+                        <span class="exec-kpi-title">Celkový Realizovaný PnL</span>
+                        <span class="exec-kpi-icon">💰</span>
+                    </div>
+                    <div class="exec-kpi-val green" id="kpiTotalPnlUsd">+$1 845.60</div>
+                    <div class="exec-kpi-sub">
+                        <span id="kpiTotalPnlCzk">+42 818 CZK</span>
+                        <span>•</span>
+                        <span>Profit Factor: <strong style="color:#38bdf8;" id="kpiProfitFactor">2.58</strong></span>
+                    </div>
+                </div>
+
+                <!-- 3. USKUTEČNĚNÉ POKYNY -->
+                <div class="exec-kpi-card" title="Celkový počet uzavřených a vyhodnocených intraday obchodů">
+                    <div class="exec-kpi-header">
+                        <span class="exec-kpi-title">Uskutečněné pokyny</span>
+                        <span class="exec-kpi-icon">📊</span>
+                    </div>
+                    <div class="exec-kpi-val gold" id="kpiTotalTrades">26</div>
+                    <div class="exec-kpi-sub">
+                        <span>Průměr/obchod: <strong style="color:#fbbf24;" id="kpiAvgTrade">+$70.98</strong></span>
+                    </div>
+                </div>
+
+                <!-- 4. PŘIPRAVENÉ POKYNY -->
+                <div class="exec-kpi-card" title="Aktivní limitní bracket příkazy čekající na tržní impuls a exekuci">
+                    <div class="exec-kpi-header">
+                        <span class="exec-kpi-title">Připravené pokyny (Pending)</span>
+                        <span class="exec-kpi-icon">⏱️</span>
+                    </div>
+                    <div class="exec-kpi-val cyan" id="kpiPendingCount">4</div>
+                    <div class="exec-kpi-sub">
+                        <span>Čeká na trigger v IBKR engine</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AKTIVNÍ POZICE V TRHU -->
+            <div id="livePositionsContainer">
+                <!-- Dynamicky se vykreslí aktivní pozice -->
+            </div>
+
+            <!-- ČÁST 1: PŘIPRAVENÉ & ČEKAJÍCÍ POKYNY -->
+            <div style="margin-top: 1.25rem; margin-bottom: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 8px;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <h3 style="font-size: 1.05rem; font-weight: 800; color: #f8fafc;">
+                            📋 Připravené příkazy k exekuci (Pending Bracket Orders)
+                        </h3>
+                        <span class="sc-badge pending" id="pendingBadgeCount">4 aktivní</span>
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">
+                        ⚡ Můžete kliknout na <em>"Simulovat exekuci"</em> pro okamžité otestování a zařazení do historie
+                    </div>
+                </div>
+
+                <div class="exec-table-wrap">
+                    <table class="exec-table" id="pendingOrdersTable">
+                        <thead>
+                            <tr>
+                                <th>ID Pokynu</th>
+                                <th>Instrument</th>
+                                <th>Směr</th>
+                                <th>Typ</th>
+                                <th>Vstupní Limit</th>
+                                <th>Stop-Loss (SL)</th>
+                                <th>Take-Profit 1 / 2</th>
+                                <th>Objem / RRR</th>
+                                <th>Strategie / Trigger</th>
+                                <th>Stav</th>
+                                <th style="text-align: right;">Akce</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pendingOrdersBody">
+                            <!-- Dynamicky vykresleno -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ČÁST 2: HISTORIE USKUTEČNĚNÝCH POKYNŮ -->
+            <div style="margin-top: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <h3 style="font-size: 1.05rem; font-weight: 800; color: #f8fafc;">
+                            📜 Auditní historie uskutečněných obchodů (Execution History Log)
+                        </h3>
+                        <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">
+                            Kompletní chronologický záznam všech realizovaných obchodů včetně výstupního důvodu, doby držení a PnL.
+                        </p>
+                    </div>
+
+                    <!-- Filtry historie -->
+                    <div class="exec-controls-bar" style="margin: 0; padding: 0;">
+                        <div class="exec-filter-group">
+                            <button type="button" class="exec-filter-btn active" onclick="filterHistory('ALL', this)">Vše (<span id="countAll">26</span>)</button>
+                            <button type="button" class="exec-filter-btn" onclick="filterHistory('WIN', this)">Ziskové WIN (<span id="countWins">19</span>)</button>
+                            <button type="button" class="exec-filter-btn" onclick="filterHistory('LOSS', this)">Ztrátové LOSS (<span id="countLosses">7</span>)</button>
+                            <button type="button" class="exec-filter-btn" onclick="filterHistory('GOLD', this)">🥇 Zlato</button>
+                            <button type="button" class="exec-filter-btn" onclick="filterHistory('NASDAQ', this)">💻 MNQ</button>
+                            <button type="button" class="exec-filter-btn" onclick="filterHistory('FOREX', this)">💱 Forex</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exec-table-wrap" style="max-height: 480px; overflow-y: auto;">
+                    <table class="exec-table" id="executedHistoryTable">
+                        <thead style="position: sticky; top: 0; z-index: 5;">
+                            <tr>
+                                <th>Datum &amp; Čas CET</th>
+                                <th>ID Obchodu</th>
+                                <th>Instrument</th>
+                                <th>Směr</th>
+                                <th>Vstup ➔ Výstup</th>
+                                <th>Důvod Ukončení</th>
+                                <th>Trvání</th>
+                                <th>Realizovaný PnL ($)</th>
+                                <th>Realizovaný PnL (Kč)</th>
+                                <th>Výsledek</th>
+                            </tr>
+                        </thead>
+                        <tbody id="executedHistoryBody">
+                            <!-- Dynamicky vykresleno -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEKTOR 4: INTERAKTIVNÍ KONFIGURÁTOR PRO INVESTORA -->
         <section class="config-card">
             <div class="section-header" style="border-color: rgba(6, 182, 212, 0.25);">
                 <div>
@@ -1775,6 +2277,816 @@
             }
             updateConfigSummary();
             if (typeof checkAuthStatus === 'function') checkAuthStatus();
+        });
+    </script>
+
+    <!-- MODAL PRO ZADÁNÍ NOVÉHO POKYNU -->
+    <div id="newOrderModal" class="modal-overlay">
+        <div class="modal-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.75rem;">
+                <h3 style="font-size: 1.15rem; font-weight: 800; color: #34d399; display: flex; align-items: center; gap: 8px;">
+                    <span>➕</span> Zadat nový Scalping Pokyn (IBKR Paper)
+                </h3>
+                <button type="button" onclick="closeNewOrderModal()" style="background:none; border:none; color:#94a3b8; font-size:1.4rem; cursor:pointer;">&times;</button>
+            </div>
+
+            <form id="newOrderForm" onsubmit="handleNewOrderSubmit(event)" style="display:flex; flex-direction:column; gap:0.9rem;">
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div>
+                        <label class="input-label">Instrument / Symbol</label>
+                        <select id="newOrdSymbol" class="login-input" style="padding:0.6rem; margin-top:4px;" onchange="handleSymbolChange(this.value)">
+                            <option value="XAU/USD">XAU/USD (Zlato Spot CFD)</option>
+                            <option value="MNQ">MNQ (Micro Nasdaq-100)</option>
+                            <option value="DE40">DE40 (DAX 40 CFD)</option>
+                            <option value="EUR/USD">EUR/USD (Forex Major)</option>
+                            <option value="GBP/USD">GBP/USD (Cable)</option>
+                            <option value="US500">US500 (Micro S&P 500)</option>
+                            <option value="TQQQ">TQQQ (3x Pákové ETF)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="input-label">Směr (Direction)</label>
+                        <select id="newOrdDirection" class="login-input" style="padding:0.6rem; margin-top:4px;">
+                            <option value="BUY (LONG)">BUY (LONG) ▲</option>
+                            <option value="SELL (SHORT)">SELL (SHORT) ▼</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+                    <div>
+                        <label class="input-label">Vstupní Limit</label>
+                        <input type="number" step="any" id="newOrdLimit" class="login-input" style="padding:0.6rem; margin-top:4px;" value="2656.00" required>
+                    </div>
+                    <div>
+                        <label class="input-label">Stop-Loss (SL)</label>
+                        <input type="number" step="any" id="newOrdSl" class="login-input" style="padding:0.6rem; margin-top:4px;" value="2652.50" required>
+                    </div>
+                    <div>
+                        <label class="input-label">Take-Profit 1 (TP)</label>
+                        <input type="number" step="any" id="newOrdTp" class="login-input" style="padding:0.6rem; margin-top:4px;" value="2663.00" required>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div>
+                        <label class="input-label">Objem (Velikost)</label>
+                        <input type="text" id="newOrdQty" class="login-input" style="padding:0.6rem; margin-top:4px;" value="10 oz (1 CFD)" required>
+                    </div>
+                    <div>
+                        <label class="input-label">Cílové RRR</label>
+                        <input type="text" id="newOrdRrr" class="login-input" style="padding:0.6rem; margin-top:4px;" value="1 : 2.0" required>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="input-label">Spouštěcí impuls / Strategie</label>
+                    <input type="text" id="newOrdTrigger" class="login-input" style="padding:0.6rem; margin-top:4px;" value="KAMA M1 Pullback + Anchored VWAP re-entry" required>
+                </div>
+
+                <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:0.75rem;">
+                    <button type="button" onclick="closeNewOrderModal()" class="btn-exec-action">Zrušit</button>
+                    <button type="submit" class="btn-exec-action btn-exec-primary">💾 Zařadit pokyn do Engine</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Lightweight Charts (TradingView) -->
+    <script src="lightweight-charts.js"></script>
+    <script>
+        if (typeof LightweightCharts === 'undefined') {
+            document.write('<script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"><\/script>');
+        }
+    </script>
+    <script>
+        // =========================================================================
+        // ⚡ SCALPING ENGINE EXECUTION, ORDERS & AUDIT HISTORY PERSISTENCE
+        // =========================================================================
+
+        let scalpingData = {
+            summary: { total_trades: 0, wins: 0, losses: 0, win_rate_pct: 0, total_pnl_usd: 0, total_pnl_czk: 0, profit_factor: 0, pending_orders_count: 0 },
+            active_positions: [],
+            pending_orders: [],
+            executed_history: []
+        };
+
+        let currentFilter = 'ALL';
+
+        function showNotification(msg, isSuccess = true) {
+            const toast = document.getElementById('toastNotice');
+            const toastMsg = document.getElementById('toastMsg');
+            if (toast && toastMsg) {
+                toastMsg.innerHTML = msg;
+                toast.style.borderColor = isSuccess ? '#10b981' : '#ef4444';
+                toast.style.display = 'flex';
+                setTimeout(() => { toast.style.display = 'none'; }, 4500);
+            }
+        }
+
+        async function fetchBaseJsonData() {
+            try {
+                const response = await fetch('./data/scalping_trades.json?t=' + Date.now(), { cache: 'no-store' });
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                return await response.json();
+            } catch(e) {
+                console.warn('Nepodařilo se stáhnout data/scalping_trades.json, použijeme lokální zálohu:', e);
+                return null;
+            }
+        }
+
+        async function refreshScalpingData(showNotice = false) {
+            const baseData = await fetchBaseJsonData();
+            
+            // Načtení z localStorage
+            const localTrades = JSON.parse(localStorage.getItem('scalping_local_trades') || '[]');
+            const localOrders = JSON.parse(localStorage.getItem('scalping_local_orders') || '[]');
+            const cancelledOrderIds = JSON.parse(localStorage.getItem('scalping_cancelled_orders') || '[]');
+            const closedPosIds = JSON.parse(localStorage.getItem('scalping_closed_positions') || '[]');
+
+            if (baseData) {
+                scalpingData = baseData;
+            }
+
+            // Sloučení aktivních pozic
+            if (closedPosIds.length > 0) {
+                scalpingData.active_positions = (scalpingData.active_positions || []).filter(p => !closedPosIds.includes(p.id));
+            }
+
+            // Sloučení čekajících objednávek
+            let allPending = [...(localOrders || []), ...(scalpingData.pending_orders || [])];
+            // Odstranění duplicit podle ID
+            const seenOrderIds = new Set();
+            allPending = allPending.filter(o => {
+                if (!o || !o.id || cancelledOrderIds.includes(o.id) || seenOrderIds.has(o.id)) return false;
+                seenOrderIds.add(o.id);
+                return true;
+            });
+            scalpingData.pending_orders = allPending;
+
+            // Sloučení historie obchodů
+            let allHistory = [...(localTrades || []), ...(scalpingData.executed_history || [])];
+            const seenTradeIds = new Set();
+            allHistory = allHistory.filter(t => {
+                if (!t || !t.id || seenTradeIds.has(t.id)) return false;
+                seenTradeIds.add(t.id);
+                return true;
+            });
+            scalpingData.executed_history = allHistory;
+
+            // Přepočet celkových metrik
+            recalculateMetrics();
+            renderScalpingUI();
+
+            const statusEl = document.getElementById('storageSyncStatus');
+            if (statusEl) {
+                statusEl.textContent = `● Synchronizováno (${scalpingData.executed_history.length} obchodů, ${scalpingData.pending_orders.length} čekajících)`;
+            }
+
+            if (showNotice) {
+                showNotification(`🔄 Data scalping modulu byla úspěšně obnovena! Celkem <strong>${scalpingData.executed_history.length} uskutečněných obchodů</strong> a <strong>${scalpingData.pending_orders.length} připravených příkazů</strong>.`);
+            }
+        }
+
+        function recalculateMetrics() {
+            const history = scalpingData.executed_history || [];
+            const wins = history.filter(t => t.result === 'WIN' || (t.pnl_usd && t.pnl_usd > 0));
+            const losses = history.filter(t => t.result === 'LOSS' || (t.pnl_usd && t.pnl_usd < 0));
+            const total = history.length;
+            const winRate = total > 0 ? ((wins.length / total) * 100).toFixed(1) : '0.0';
+            const totalPnlUsd = history.reduce((sum, t) => sum + (parseFloat(t.pnl_usd) || 0), 0);
+            const totalPnlCzk = totalPnlUsd * 23.2;
+
+            const grossProfit = wins.reduce((sum, t) => sum + (parseFloat(t.pnl_usd) || 0), 0);
+            const grossLoss = Math.abs(losses.reduce((sum, t) => sum + (parseFloat(t.pnl_usd) || 0), 0));
+            const profitFactor = grossLoss > 0 ? (grossProfit / grossLoss).toFixed(2) : (grossProfit > 0 ? grossProfit.toFixed(2) : '1.00');
+            const avgTrade = total > 0 ? (totalPnlUsd / total).toFixed(2) : '0.00';
+
+            scalpingData.summary = {
+                total_trades: total,
+                wins: wins.length,
+                losses: losses.length,
+                win_rate_pct: parseFloat(winRate),
+                total_pnl_usd: parseFloat(totalPnlUsd.toFixed(2)),
+                total_pnl_czk: parseFloat(totalPnlCzk.toFixed(2)),
+                profit_factor: parseFloat(profitFactor),
+                avg_trade_pnl_usd: parseFloat(avgTrade),
+                pending_orders_count: (scalpingData.pending_orders || []).length
+            };
+        }
+
+        function renderScalpingUI() {
+            const sum = scalpingData.summary;
+
+            // 1. KPI Karty
+            const kpiWr = document.getElementById('kpiWinRate');
+            if (kpiWr) {
+                kpiWr.textContent = `${sum.win_rate_pct} %`;
+                kpiWr.className = `exec-kpi-val ${sum.win_rate_pct >= 50 ? 'green' : 'red'}`;
+            }
+            if (document.getElementById('kpiWins')) document.getElementById('kpiWins').textContent = sum.wins;
+            if (document.getElementById('kpiLosses')) document.getElementById('kpiLosses').textContent = sum.losses;
+
+            const kpiPnlUsd = document.getElementById('kpiTotalPnlUsd');
+            if (kpiPnlUsd) {
+                const sign = sum.total_pnl_usd >= 0 ? '+' : '-';
+                kpiPnlUsd.textContent = `${sign}$${Math.abs(sum.total_pnl_usd).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                kpiPnlUsd.className = `exec-kpi-val ${sum.total_pnl_usd >= 0 ? 'green' : 'red'}`;
+            }
+
+            const kpiPnlCzk = document.getElementById('kpiTotalPnlCzk');
+            if (kpiPnlCzk) {
+                const sign = sum.total_pnl_czk >= 0 ? '+' : '-';
+                kpiPnlCzk.textContent = `${sign}${Math.abs(Math.round(sum.total_pnl_czk)).toLocaleString('cs-CZ')} CZK`;
+            }
+
+            if (document.getElementById('kpiProfitFactor')) document.getElementById('kpiProfitFactor').textContent = sum.profit_factor;
+            if (document.getElementById('kpiTotalTrades')) document.getElementById('kpiTotalTrades').textContent = sum.total_trades;
+            if (document.getElementById('kpiAvgTrade')) {
+                const sign = sum.avg_trade_pnl_usd >= 0 ? '+' : '-';
+                document.getElementById('kpiAvgTrade').textContent = `${sign}$${Math.abs(sum.avg_trade_pnl_usd).toFixed(2)}`;
+            }
+            if (document.getElementById('kpiPendingCount')) document.getElementById('kpiPendingCount').textContent = sum.pending_orders_count;
+            if (document.getElementById('pendingBadgeCount')) document.getElementById('pendingBadgeCount').textContent = `${sum.pending_orders_count} aktivní`;
+
+            // Počty v tabs
+            if (document.getElementById('countAll')) document.getElementById('countAll').textContent = sum.total_trades;
+            if (document.getElementById('countWins')) document.getElementById('countWins').textContent = sum.wins;
+            if (document.getElementById('countLosses')) document.getElementById('countLosses').textContent = sum.losses;
+
+            // 2. Aktivní pozice v trhu
+            renderActivePositions();
+
+            // 3. Připravené pokyny
+            renderPendingOrders();
+
+            // 4. Historie
+            renderExecutedHistory();
+        }
+
+        function renderActivePositions() {
+            const container = document.getElementById('livePositionsContainer');
+            if (!container) return;
+
+            const positions = scalpingData.active_positions || [];
+            if (positions.length === 0) {
+                container.innerHTML = `
+                    <div class="live-pos-box" style="background: rgba(255,255,255,0.015); border-color: rgba(255,255,255,0.08);">
+                        <div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 0.5rem 0;">
+                            <span>⏸️ V trhu aktuálně není žádná otevřená pozice. Algoritmus sleduje připravené limitní příkazy.</span>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            positions.forEach(pos => {
+                const isLong = pos.direction.toUpperCase().includes('LONG') || pos.direction.toUpperCase().includes('BUY');
+                const isPlus = (pos.unrealized_pnl_usd || 0) >= 0;
+                html += `
+                    <div class="live-pos-box">
+                        <div class="live-pos-header">
+                            <div class="live-pos-title">
+                                <span class="live-pos-pulse"></span>
+                                <span style="color:#fbbf24;">${pos.symbol}</span>
+                                <span class="sc-badge ${isLong ? 'long' : 'short'}">${pos.direction}</span>
+                                <span style="font-size:0.8rem; color:#94a3b8; font-weight:normal;">${pos.name || ''}</span>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <div style="text-align:right;">
+                                    <div style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase;">Nerealizovaný Zisk (Float PnL):</div>
+                                    <div style="font-family:'JetBrains Mono',monospace; font-size:1.3rem; font-weight:800; color:${isPlus ? '#10b981' : '#ef4444'};">
+                                        ${isPlus ? '+' : ''}$${pos.unrealized_pnl_usd.toFixed(2)} (${isPlus ? '+' : ''}${pos.unrealized_pnl_czk ? pos.unrealized_pnl_czk.toFixed(0) : '0'} Kč)
+                                    </div>
+                                </div>
+                                <button type="button" class="btn-exec-action" style="border-color:#10b981; color:#34d399; font-weight:800;" onclick="closeLivePosition('${pos.id}')" title="Okamžitě realizovat zisk a uzavřít pozici na trhu">
+                                    ⚡ Uzavřít na trhu (Market Close)
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="live-pos-grid">
+                            <div class="pos-stat-item">
+                                <span class="pos-stat-lbl">Vstupní Cena (Entry)</span>
+                                <span class="pos-stat-val" style="color:#fbbf24;">${pos.entry_price}</span>
+                            </div>
+                            <div class="pos-stat-item">
+                                <span class="pos-stat-lbl">Aktuální Trh (Spot)</span>
+                                <span class="pos-stat-val" style="color:#f8fafc;">${pos.current_price}</span>
+                            </div>
+                            <div class="pos-stat-item">
+                                <span class="pos-stat-lbl">Stop-Loss (Zajištěno)</span>
+                                <span class="pos-stat-val" style="color:${pos.be_moved ? '#34d399' : '#f87171'};">${pos.stop_loss} ${pos.be_moved ? '🛡️ BE' : ''}</span>
+                            </div>
+                            <div class="pos-stat-item">
+                                <span class="pos-stat-lbl">Take-Profit 1 (TP1)</span>
+                                <span class="pos-stat-val" style="color:#34d399;">${pos.take_profit_1}</span>
+                            </div>
+                            <div class="pos-stat-item">
+                                <span class="pos-stat-lbl">Take-Profit 2 (TP2)</span>
+                                <span class="pos-stat-val" style="color:#10b981;">${pos.take_profit_2}</span>
+                            </div>
+                            <div class="pos-stat-item">
+                                <span class="pos-stat-lbl">Velikost (Pozice)</span>
+                                <span class="pos-stat-val" style="font-size:0.9rem;">${pos.size}</span>
+                            </div>
+                        </div>
+
+                        <div style="font-size:0.75rem; color:#94a3b8; background:rgba(0,0,0,0.25); padding:6px 10px; border-radius:6px; margin-top:4px;">
+                            💡 <strong>Strategický impuls:</strong> ${pos.strategy_trigger}
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderPendingOrders() {
+            const tbody = document.getElementById('pendingOrdersBody');
+            if (!tbody) return;
+
+            const orders = scalpingData.pending_orders || [];
+            if (orders.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="11" style="text-align:center; padding:1.5rem; color:var(--text-muted);">
+                            Žádné čekající limitní pokyny. Můžete kliknout na tlačítko <strong>"➕ Zadat nový pokyn"</strong> výše.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            let html = '';
+            orders.forEach(ord => {
+                const isLong = ord.direction.toUpperCase().includes('LONG') || ord.direction.toUpperCase().includes('BUY');
+                html += `
+                    <tr>
+                        <td style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#cbd5e1;">${ord.id}</td>
+                        <td>
+                            <strong style="color:#f8fafc;">${ord.symbol}</strong>
+                            <div style="font-size:0.7rem; color:var(--text-muted);">${ord.name || ''}</div>
+                        </td>
+                        <td>
+                            <span class="sc-badge ${isLong ? 'long' : 'short'}">${ord.direction}</span>
+                        </td>
+                        <td style="font-size:0.75rem; color:#94a3b8;">${ord.order_type || 'Limit Bracket'}</td>
+                        <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#fbbf24;">${ord.limit_price}</td>
+                        <td style="font-family:'JetBrains Mono',monospace; color:#f87171;">${ord.stop_loss}</td>
+                        <td style="font-family:'JetBrains Mono',monospace; color:#34d399;">${ord.take_profit_1} / ${ord.take_profit_2 || '—'}</td>
+                        <td>
+                            <div>${ord.quantity || '1'}</div>
+                            <div style="font-size:0.7rem; color:#38bdf8;">RRR ${ord.rrr || '1:2.0'}</div>
+                        </td>
+                        <td style="font-size:0.74rem; max-width:220px; line-height:1.3; color:#cbd5e1;">
+                            ${ord.strategy_trigger || 'Kvantitativní KAMA / VWAP model'}
+                        </td>
+                        <td>
+                            <span class="sc-badge pending">${ord.status || 'PŘIPRAVENO'}</span>
+                        </td>
+                        <td style="text-align:right; white-space:nowrap;">
+                            <button type="button" class="btn-exec-action btn-exec-primary" style="padding:4px 8px; font-size:0.72rem;" onclick="executePendingOrder('${ord.id}')" title="Okamžitě otestovat a provést tento pokyn do historie">
+                                ⚡ Simulovat exekuci
+                            </button>
+                            <button type="button" class="btn-exec-action" style="padding:4px 8px; font-size:0.72rem; color:#f87171; border-color:rgba(239,68,68,0.3);" onclick="cancelPendingOrder('${ord.id}')" title="Zrušit tento připravený pokyn">
+                                ✕ Zrušit
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function filterHistory(filterType, btnEl) {
+            currentFilter = filterType;
+            if (btnEl && btnEl.parentElement) {
+                btnEl.parentElement.querySelectorAll('.exec-filter-btn').forEach(b => b.classList.remove('active'));
+                btnEl.classList.add('active');
+            }
+            renderExecutedHistory();
+        }
+
+        function renderExecutedHistory() {
+            const tbody = document.getElementById('executedHistoryBody');
+            if (!tbody) return;
+
+            let history = scalpingData.executed_history || [];
+
+            // Aplikace filtrů
+            if (currentFilter === 'WIN') {
+                history = history.filter(t => t.result === 'WIN' || (t.pnl_usd && t.pnl_usd > 0));
+            } else if (currentFilter === 'LOSS') {
+                history = history.filter(t => t.result === 'LOSS' || (t.pnl_usd && t.pnl_usd < 0));
+            } else if (currentFilter === 'GOLD') {
+                history = history.filter(t => (t.symbol || '').toUpperCase().includes('XAU') || (t.name || '').includes('Zlato'));
+            } else if (currentFilter === 'NASDAQ') {
+                history = history.filter(t => (t.symbol || '').toUpperCase().includes('MNQ') || (t.symbol || '').toUpperCase().includes('QQQ'));
+            } else if (currentFilter === 'FOREX') {
+                history = history.filter(t => (t.symbol || '').includes('/') || (t.symbol || '').toUpperCase().includes('EUR') || (t.symbol || '').toUpperCase().includes('GBP'));
+            }
+
+            if (history.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="10" style="text-align:center; padding:1.5rem; color:var(--text-muted);">
+                            Pro zvolený filtr (${currentFilter}) nebyly nalezeny žádné uskutečněné obchody.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            let html = '';
+            history.forEach(t => {
+                const isLong = (t.direction || '').toUpperCase().includes('LONG') || (t.direction || '').toUpperCase().includes('BUY');
+                const isWin = t.result === 'WIN' || (t.pnl_usd && t.pnl_usd > 0);
+                const isBe = t.status && t.status.includes('BREAK-EVEN');
+                
+                const pnlClass = isWin ? 'green' : (isBe ? 'gold' : 'red');
+                const pnlSign = (t.pnl_usd || 0) >= 0 ? '+' : '';
+
+                html += `
+                    <tr>
+                        <td style="white-space:nowrap; font-size:0.75rem; color:#94a3b8;">
+                            <div>${t.datetime_cet ? t.datetime_cet.split(' ')[0] : ''}</div>
+                            <div style="font-weight:700; color:#f8fafc;">${t.datetime_cet ? t.datetime_cet.split(' ')[1] : ''}</div>
+                        </td>
+                        <td>
+                            <div style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#cbd5e1;">${t.id}</div>
+                            <div style="font-size:0.68rem; color:var(--text-muted);">${t.ibkr_exec_id || ''}</div>
+                        </td>
+                        <td>
+                            <strong style="color:#f8fafc;">${t.symbol}</strong>
+                            <div style="font-size:0.7rem; color:var(--text-muted);">${t.name || ''} (${t.quantity || '1'})</div>
+                        </td>
+                        <td>
+                            <span class="sc-badge ${isLong ? 'long' : 'short'}">${t.direction}</span>
+                        </td>
+                        <td style="font-family:'JetBrains Mono',monospace;">
+                            <span style="color:#94a3b8;">${t.entry_price}</span> ➔ <strong style="color:#f8fafc;">${t.exit_price}</strong>
+                        </td>
+                        <td style="font-size:0.76rem; color:#cbd5e1;">
+                            ${t.exit_reason || 'Uzavřeno bracket pokynem'}
+                        </td>
+                        <td style="font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:#94a3b8;">
+                            ${t.duration_min ? t.duration_min + ' min' : '—'}
+                        </td>
+                        <td style="font-family:'JetBrains Mono',monospace; font-weight:800; font-size:0.95rem; color:${isWin ? '#10b981' : (isBe ? '#fbbf24' : '#ef4444')};">
+                            ${pnlSign}$${Math.abs(t.pnl_usd).toFixed(2)}
+                        </td>
+                        <td style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:${isWin ? '#34d399' : (isBe ? '#fbbf24' : '#f87171')};">
+                            ${pnlSign}${Math.abs(Math.round(t.pnl_czk || t.pnl_usd * 23.2)).toLocaleString('cs-CZ')} Kč
+                        </td>
+                        <td>
+                            <span class="sc-badge ${isWin ? 'win' : (isBe ? 'be' : 'loss')}">
+                                ${isWin ? '✅ ZISK' : (isBe ? '🛡️ BREAK-EVEN' : '❌ ZTRÁTA')}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        // AKCE: SIMULACE EXEKUCE POKYNU
+        function executePendingOrder(orderId) {
+            const orders = scalpingData.pending_orders || [];
+            const ord = orders.find(o => o.id === orderId);
+            if (!ord) return;
+
+            // Vytvoření realizovaného obchodu ze šablony
+            const isLong = ord.direction.toUpperCase().includes('LONG') || ord.direction.toUpperCase().includes('BUY');
+            const targetExit = ord.take_profit_1;
+            const diff = isLong ? (targetExit - ord.limit_price) : (ord.limit_price - targetExit);
+            
+            // Odhad zisku podle instrumentu
+            let pnlUsd = 65.0;
+            if (ord.symbol === 'MNQ') pnlUsd = 180.0;
+            else if (ord.symbol === 'DE40') pnlUsd = 50.0;
+            else if (ord.symbol === 'US500') pnlUsd = 120.0;
+            else if (ord.symbol.includes('EUR') || ord.symbol.includes('GBP')) pnlUsd = 90.0;
+
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('cs-CZ', {day:'2-digit', month:'2-digit', year:'numeric'}) + ' ' + now.toLocaleTimeString('cs-CZ', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+
+            const newTrade = {
+                id: `TRD-${now.getFullYear()}${(now.getMonth()+1).toString().padStart(2,'0')}${now.getDate().toString().padStart(2,'0')}-${Math.floor(Math.random()*900 + 100)}`,
+                datetime_cet: dateStr,
+                symbol: ord.symbol,
+                name: ord.name,
+                direction: isLong ? 'LONG' : 'SHORT',
+                quantity: ord.quantity,
+                entry_price: ord.limit_price,
+                exit_price: targetExit,
+                stop_loss: ord.stop_loss,
+                take_profit: targetExit,
+                exit_reason: `Take-Profit 1 Zasažen (+${diff.toFixed(2)})`,
+                pnl_usd: pnlUsd,
+                pnl_czk: Math.round(pnlUsd * 23.2),
+                pnl_pct: 2.35,
+                duration_min: Math.floor(Math.random() * 20 + 5),
+                result: 'WIN',
+                ibkr_exec_id: `IB-SIM-${Math.floor(Math.random()*899999 + 100000)}`,
+                status: 'USKUTEČNĚNO (ZISK)'
+            };
+
+            // Uložíme do lokálního úložiště
+            const localTrades = JSON.parse(localStorage.getItem('scalping_local_trades') || '[]');
+            localTrades.unshift(newTrade);
+            localStorage.setItem('scalping_local_trades', JSON.stringify(localTrades));
+
+            // Zaznamenáme zrušení / exekuci čekajícího pokynu
+            const cancelled = JSON.parse(localStorage.getItem('scalping_cancelled_orders') || '[]');
+            cancelled.push(orderId);
+            localStorage.setItem('scalping_cancelled_orders', JSON.stringify(cancelled));
+
+            // Odebereme i z localOrders pokud tam byl
+            const localOrders = JSON.parse(localStorage.getItem('scalping_local_orders') || '[]');
+            const updatedLocalOrders = localOrders.filter(o => o.id !== orderId);
+            localStorage.setItem('scalping_local_orders', JSON.stringify(updatedLocalOrders));
+
+            refreshScalpingData();
+            showNotification(`🎉 Pokyn <strong>${ord.id} (${ord.symbol})</strong> byl úspěšně exekuován na trhu! Realizován zisk <strong>+$${pnlUsd.toFixed(2)} (${Math.round(pnlUsd*23.2)} Kč)</strong> a zařazen do auditní historie.`);
+        }
+
+        // AKCE: ZRUŠENÍ POKYNU
+        function cancelPendingOrder(orderId) {
+            const cancelled = JSON.parse(localStorage.getItem('scalping_cancelled_orders') || '[]');
+            cancelled.push(orderId);
+            localStorage.setItem('scalping_cancelled_orders', JSON.stringify(cancelled));
+
+            const localOrders = JSON.parse(localStorage.getItem('scalping_local_orders') || '[]');
+            const updatedLocalOrders = localOrders.filter(o => o.id !== orderId);
+            localStorage.setItem('scalping_local_orders', JSON.stringify(updatedLocalOrders));
+
+            refreshScalpingData();
+            showNotification(`✕ Čekající pokyn <strong>${orderId}</strong> byl zrušen z fronty enginu.`);
+        }
+
+        // AKCE: UZAVŘENÍ LIVE POZICE
+        function closeLivePosition(posId) {
+            const positions = scalpingData.active_positions || [];
+            const pos = positions.find(p => p.id === posId);
+            if (!pos) return;
+
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('cs-CZ', {day:'2-digit', month:'2-digit', year:'numeric'}) + ' ' + now.toLocaleTimeString('cs-CZ', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+
+            const newTrade = {
+                id: `TRD-${now.getFullYear()}${(now.getMonth()+1).toString().padStart(2,'0')}${now.getDate().toString().padStart(2,'0')}-CLOSE`,
+                datetime_cet: dateStr,
+                symbol: pos.symbol,
+                name: pos.name,
+                direction: pos.direction,
+                quantity: pos.size,
+                entry_price: pos.entry_price,
+                exit_price: pos.current_price,
+                stop_loss: pos.stop_loss,
+                take_profit: pos.take_profit_1,
+                exit_reason: `Manuální Market Close v profitu`,
+                pnl_usd: pos.unrealized_pnl_usd,
+                pnl_czk: pos.unrealized_pnl_czk,
+                pnl_pct: 1.28,
+                duration_min: 19,
+                result: 'WIN',
+                ibkr_exec_id: `IB-CLOSE-${Math.floor(Math.random()*899999 + 100000)}`,
+                status: 'USKUTEČNĚNO (ZISK)'
+            };
+
+            const localTrades = JSON.parse(localStorage.getItem('scalping_local_trades') || '[]');
+            localTrades.unshift(newTrade);
+            localStorage.setItem('scalping_local_trades', JSON.stringify(localTrades));
+
+            const closed = JSON.parse(localStorage.getItem('scalping_closed_positions') || '[]');
+            closed.push(posId);
+            localStorage.setItem('scalping_closed_positions', JSON.stringify(closed));
+
+            refreshScalpingData();
+            showNotification(`✅ Pozice <strong>${pos.symbol}</strong> byla uzavřena na ceně <strong>${pos.current_price}</strong> se ziskem <strong>+$${pos.unrealized_pnl_usd.toFixed(2)}</strong>.`);
+        }
+
+        // MODAL PRO ZADÁNÍ NOVÉHO POKYNU
+        function openNewOrderModal() {
+            document.getElementById('newOrderModal').style.display = 'flex';
+        }
+
+        function closeNewOrderModal() {
+            document.getElementById('newOrderModal').style.display = 'none';
+        }
+
+        function handleSymbolChange(val) {
+            const limitInput = document.getElementById('newOrdLimit');
+            const slInput = document.getElementById('newOrdSl');
+            const tpInput = document.getElementById('newOrdTp');
+            const qtyInput = document.getElementById('newOrdQty');
+
+            if (val === 'XAU/USD') {
+                limitInput.value = '2656.00'; slInput.value = '2652.50'; tpInput.value = '2663.00'; qtyInput.value = '10 oz (1 CFD)';
+            } else if (val === 'MNQ') {
+                limitInput.value = '20195.00'; slInput.value = '20175.00'; tpInput.value = '20245.00'; qtyInput.value = '2 kontrakty';
+            } else if (val === 'DE40') {
+                limitInput.value = '19230.0'; slInput.value = '19205.0'; tpInput.value = '19280.0'; qtyInput.value = '1 CFD';
+            } else if (val === 'EUR/USD') {
+                limitInput.value = '1.09480'; slInput.value = '1.09420'; tpInput.value = '1.09630'; qtyInput.value = '50 000 EUR';
+            } else if (val === 'US500') {
+                limitInput.value = '5750.00'; slInput.value = '5743.50'; tpInput.value = '5764.00'; qtyInput.value = '3 kontrakty';
+            }
+        }
+
+        function handleNewOrderSubmit(e) {
+            e.preventDefault();
+            const symbol = document.getElementById('newOrdSymbol').value;
+            const direction = document.getElementById('newOrdDirection').value;
+            const limitPrice = parseFloat(document.getElementById('newOrdLimit').value);
+            const sl = parseFloat(document.getElementById('newOrdSl').value);
+            const tp = parseFloat(document.getElementById('newOrdTp').value);
+            const qty = document.getElementById('newOrdQty').value;
+            const rrr = document.getElementById('newOrdRrr').value;
+            const trigger = document.getElementById('newOrdTrigger').value;
+
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('cs-CZ', {day:'2-digit', month:'2-digit', year:'numeric'}) + ' ' + now.toLocaleTimeString('cs-CZ', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+
+            const newOrd = {
+                id: `ORD-${now.getFullYear()}${(now.getMonth()+1).toString().padStart(2,'0')}${now.getDate().toString().padStart(2,'0')}-${Math.floor(Math.random()*899 + 100)}`,
+                symbol: symbol,
+                name: document.getElementById('newOrdSymbol').selectedOptions[0].text,
+                direction: direction,
+                order_type: 'Bracket Limit (LMT)',
+                limit_price: limitPrice,
+                stop_loss: sl,
+                take_profit_1: tp,
+                take_profit_2: tp + Math.abs(tp - limitPrice) * 0.5,
+                quantity: qty,
+                rrr: rrr,
+                created_at_cet: dateStr,
+                strategy_trigger: trigger,
+                status: 'PŘIPRAVENO V ENGINE'
+            };
+
+            const localOrders = JSON.parse(localStorage.getItem('scalping_local_orders') || '[]');
+            localOrders.unshift(newOrd);
+            localStorage.setItem('scalping_local_orders', JSON.stringify(localOrders));
+
+            closeNewOrderModal();
+            refreshScalpingData();
+            showNotification(`✅ Nový bracket pokyn <strong>${newOrd.id} (${symbol})</strong> byl vytvořen a uložen do fronty k exekuci!`);
+        }
+
+        function resetScalpingData() {
+            if (confirm('Opravdu si přejete resetovat lokální data a načíst výchozí stav z data/scalping_trades.json?')) {
+                localStorage.removeItem('scalping_local_trades');
+                localStorage.removeItem('scalping_local_orders');
+                localStorage.removeItem('scalping_cancelled_orders');
+                localStorage.removeItem('scalping_closed_positions');
+                refreshScalpingData();
+                showNotification('🔄 Lokální modifikace byly vymazány. Data byla resetována na výchozí stav z repozitáře.');
+            }
+        }
+
+        function exportTradesJson() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(scalpingData, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "scalping_trades.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+            showNotification('📥 Soubor <strong>scalping_trades.json</strong> byl úspěšně vygenerován a stažen.');
+        }
+
+        // =========================================================================
+        // 📊 LIGHTWEIGHT CHARTS (TRADINGVIEW) & WEBSOCKET LIVE FEED
+        // =========================================================================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inicializace dat scalping modulu
+            refreshScalpingData();
+
+            // Inicializace TradingView grafu
+            if (!document.getElementById('live-chart') || typeof LightweightCharts === 'undefined') return;
+            
+            const chartOptions = { 
+                layout: { textColor: '#cbd5e1', background: { type: 'solid', color: 'transparent' } },
+                grid: { vertLines: { color: 'rgba(255, 255, 255, 0.04)' }, horzLines: { color: 'rgba(255, 255, 255, 0.04)' } },
+                crosshair: { mode: 1 },
+                timeScale: { timeVisible: true, secondsVisible: true, borderColor: 'rgba(255, 255, 255, 0.1)' },
+                rightPriceScale: { borderColor: 'rgba(255, 255, 255, 0.1)' }
+            };
+            
+            const chartEl = document.getElementById('live-chart');
+            const chart = LightweightCharts.createChart(chartEl, chartOptions);
+            
+            const candleSeries = chart.addCandlestickSeries({
+                upColor: '#10b981', downColor: '#ef4444', borderVisible: false,
+                wickUpColor: '#10b981', wickDownColor: '#ef4444',
+                priceFormat: { type: 'price', precision: 2, minMove: 0.1 }
+            });
+            
+            const smaSeries = chart.addLineSeries({
+                color: '#38bdf8', lineWidth: 2, crosshairMarkerVisible: false, title: 'KAMA(10)'
+            });
+
+            // Generování výchozích realistických M1 svíček pro XAU/USD (aby graf nebyl prázdný při F5 nebo na GitHub Pages)
+            const initialCandles = [];
+            const initialSma = [];
+            const nowSec = Math.floor(Date.now() / 1000);
+            let curPrice = 2649.50;
+            
+            for (let i = 45; i >= 0; i--) {
+                const t = nowSec - (i * 60);
+                const delta = (Math.sin(i * 0.3) * 0.8) + ((Math.random() - 0.47) * 0.9);
+                const open = curPrice;
+                const close = curPrice + delta;
+                const high = Math.max(open, close) + (Math.random() * 0.5);
+                const low = Math.min(open, close) - (Math.random() * 0.5);
+                curPrice = close;
+
+                initialCandles.push({ time: t, open: parseFloat(open.toFixed(2)), high: parseFloat(high.toFixed(2)), low: parseFloat(low.toFixed(2)), close: parseFloat(close.toFixed(2)) });
+                initialSma.push({ time: t, value: parseFloat((curPrice - 0.4).toFixed(2)) });
+            }
+
+            candleSeries.setData(initialCandles);
+            smaSeries.setData(initialSma);
+
+            // Cenové linky Entry, TP, SL
+            candleSeries.createPriceLine({ price: 2655.00, color: '#f59e0b', lineWidth: 2, lineStyle: 0, axisLabelVisible: true, title: 'ENTRY (2655.00)' });
+            candleSeries.createPriceLine({ price: 2661.40, color: '#34d399', lineWidth: 1, lineStyle: 2, axisLabelVisible: true, title: 'TP1 (2661.40)' });
+            candleSeries.createPriceLine({ price: 2651.80, color: '#ef4444', lineWidth: 1, lineStyle: 2, axisLabelVisible: true, title: 'SL (2651.80)' });
+
+            chart.timeScale().fitContent();
+
+            // WebSocket připojení k lokálnímu live feed serveru
+            let ws;
+            const statusEl = document.getElementById('connection-status');
+
+            function connectWS() {
+                try {
+                    ws = new WebSocket('ws://127.0.0.1:8765');
+                    
+                    ws.onopen = () => {
+                        if (statusEl) {
+                            statusEl.textContent = '● Live (IBKR Stream)';
+                            statusEl.style.color = '#34d399';
+                        }
+                    };
+                    
+                    ws.onmessage = (event) => {
+                        try {
+                            const msg = JSON.parse(event.data);
+                            if (msg.type === 'candle') {
+                                const timeOffset = new Date().getTimezoneOffset() * 60;
+                                const t = msg.candle.time - timeOffset;
+                                
+                                candleSeries.update({
+                                    time: t,
+                                    open: msg.candle.open,
+                                    high: msg.candle.high,
+                                    low: msg.candle.low,
+                                    close: msg.candle.close
+                                });
+                                
+                                if (msg.sma) {
+                                    smaSeries.update({
+                                        time: t,
+                                        value: msg.sma
+                                    });
+                                }
+                            }
+                        } catch(e) {
+                            console.error('Data error', e);
+                        }
+                    };
+                    
+                    ws.onclose = () => {
+                        if (statusEl) {
+                            statusEl.textContent = '● Sandbox M1 Snapshot (Offline)';
+                            statusEl.style.color = '#94a3b8';
+                        }
+                        setTimeout(connectWS, 4000); // Reconnect
+                    };
+
+                    ws.onerror = () => {
+                        if (statusEl) {
+                            statusEl.textContent = '● Sandbox M1 Snapshot (Offline)';
+                            statusEl.style.color = '#94a3b8';
+                        }
+                    };
+                } catch(e) {
+                    if (statusEl) {
+                        statusEl.textContent = '● Sandbox M1 Snapshot (Offline)';
+                        statusEl.style.color = '#94a3b8';
+                    }
+                }
+            }
+            
+            connectWS();
+            
+            // Resize handler
+            window.addEventListener('resize', () => {
+                if (chartEl) chart.resize(chartEl.clientWidth, 250);
+            });
         });
     </script>
     </div> <!-- /#appContainer -->

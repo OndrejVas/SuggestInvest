@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>SuggestInvest | Profi Scalping & Forward Testing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@800;900&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #030712;
+            --bg-card: rgba(15, 23, 42, 0.85);
+            --border-c: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-blue: #3b82f6;
+            --accent-gold: #f59e0b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-main);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* HEADER */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: rgba(15, 23, 42, 0.95);
+            border-bottom: 1px solid var(--border-c);
+        }
+
+        .logo { font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 900; }
+        .logo span { color: var(--accent-gold); }
+
+        .timeframe-btns {
+            display: flex;
+            gap: 8px;
+            background: rgba(0,0,0,0.5);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-c);
+        }
+
+        .tf-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tf-btn.active { background: rgba(255,255,255,0.1); color: #fff; }
+        .tf-btn:hover:not(.active) { color: #fff; }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-green);
+        }
+
+        /* MAIN LAYOUT */
+        .workspace {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* LEFT: CHART (70%) */
+        .chart-section {
+            flex: 7;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border-c);
+            position: relative;
+        }
+
+        .chart-header {
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.02);
+            border-bottom: 1px solid var(--border-c);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chart-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .yahoo-link {
+            font-size: 0.8rem;
+            color: var(--accent-blue);
+            text-decoration: none;
+            border: 1px solid var(--accent-blue);
+            padding: 3px 8px;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+        .yahoo-link:hover { background: var(--accent-blue); color: #fff; }
+
+        #chart-container { flex: 1; width: 100%; height: 100%; }
+
+        /* RIGHT: SCOREBOARD (30%) */
+        .scoreboard-section {
+            flex: 3;
+            background: rgba(10, 15, 25, 0.95);
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            gap: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .panel-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #fff;
+            border-bottom: 1px solid var(--border-c);
+            padding-bottom: 0.5rem;
+        }
+
+        /* HERO STATS */
+        .hero-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .stat-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-c);
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+            cursor: help; /* Tooltip kurzor */
+        }
+
+        .stat-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; font-weight: 800; letter-spacing: 0.05em; }
+        .stat-val { font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; font-weight: 800; margin-top: 4px; }
+        
+        .val-green { color: var(--accent-green); }
+        .val-red { color: var(--accent-red); }
+
+        /* LIVE TRADES */
+        .live-trade-card {
+            background: linear-gradient(145deg, rgba(16, 185, 129, 0.05) 0%, rgba(0,0,0,0) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .lt-header { display: flex; justify-content: space-between; font-weight: 800; font-size: 0.9rem; }
+        .lt-pnl { font-family: 'JetBrains Mono', monospace; font-size: 1.2rem; font-weight: 800; color: var(--accent-green); text-align: right;}
+        
+        .lt-row { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); }
+        .lt-row span:last-child { color: #fff; font-family: 'JetBrains Mono', monospace; }
+
+        /* TRADE HISTORY */
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .history-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-c);
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+
+        .hi-top { display: flex; justify-content: space-between; align-items: center; }
+        .hi-type { font-weight: 800; display: flex; align-items: center; gap: 6px; }
+        .hi-type.long { color: var(--accent-green); }
+        .hi-type.short { color: var(--accent-red); }
+        
+        .hi-badge { font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; font-weight: 800; color: #fff;}
+        .hi-badge.win { background: var(--accent-green); }
+        .hi-badge.loss { background: var(--accent-red); }
+
+        .hi-details { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; margin-top: 4px; border-top: 1px dashed var(--border-c); padding-top: 6px;}
+        .hi-details span strong { color: #fff; font-weight: normal; }
+
+        .hi-pnl { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 0.9rem;}
+
+        #loader {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            z-index: 10;
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Suggest<span>Invest</span></div>
+        
+        <div class="timeframe-btns">
+            <button class="tf-btn active" data-tf="1 min">1 Min</button>
+            <button class="tf-btn" data-tf="1 hour">1 Hodina</button>
+            <button class="tf-btn" data-tf="1 day">1 Den</button>
+        </div>
+
+        <div class="status-badge" id="conn-status">
+            ● Zastaveno
+        </div>
+    </header>
+
+    <div class="workspace">
+        <div class="chart-section">
+            <div class="chart-header">
+                <div class="chart-title">
+                    <span style="color: var(--accent-gold)">●</span> EUR/USD (Euro / US Dollar)
+                </div>
+                <a href="https://finance.yahoo.com/quote/EURUSD=X" target="_blank" class="yahoo-link">↗ Otevřít na Yahoo Finance</a>
+            </div>
+            
+            <div id="loader">Stahuji historii z IBKR...</div>
+            <div id="chart-container"></div>
+        </div>
+
+        <div class="scoreboard-section">
+            
+            <div>
+                <div class="panel-title">Celkové Skóre (Simulace)</div>
+                <div class="hero-stats" style="margin-top: 1rem;">
+                    <div class="stat-box" title="Procento obchodů, které skončily v zisku (Zasažen Take-Profit).">
+                        <div class="stat-label">Win Rate</div>
+                        <div class="stat-val val-green" id="ui-winrate">0.0 %</div>
+                    </div>
+                    <div class="stat-box" title="Celkový čistý teoretický zisk v dolarech za všechny zaznamenané obchody.">
+                        <div class="stat-label">Total PnL</div>
+                        <div class="stat-val val-green" id="ui-totalpnl">$0.00</div>
+                    </div>
+                    <div class="stat-box" title="Celkový počet úspěšných obchodů v plusu.">
+                        <div class="stat-label">Ziskové (Wins)</div>
+                        <div class="stat-val val-green" id="ui-wins">0</div>
+                    </div>
+                    <div class="stat-box" title="Celkový počet ztrátových obchodů (zasažen Stop-Loss).">
+                        <div class="stat-label">Ztrátové (Losses)</div>
+                        <div class="stat-val val-red" id="ui-losses">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="panel-title" title="Obchod, který aktuálně běží a čeká na zásah Stop-Lossu nebo Take-Profitu.">Otevřený Obchod</div>
+                <div id="live-trades-container" style="margin-top: 1rem;">
+                    <!-- Zde se ukáže live obchod -->
+                    <div class="live-trade-card" id="empty-live" style="background: transparent; border-style: dashed; opacity: 0.5; text-align: center;">
+                        <span style="color: var(--text-muted); font-size: 0.85rem;">Žádný signál, vyčkávám...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="flex: 1; display: flex; flex-direction: column;">
+                <div class="panel-title" title="Přehled uzavřených teoretických obchodů s detaily (SL/TP, Entry, Exit).">Historie (Log)</div>
+                <div class="history-list" id="history-container" style="margin-top: 1rem; overflow-y: auto;">
+                    <!-- Uzavřené obchody -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Skript pro graf - Použijeme lokální stažený -->
+    <script src="/lightweight-charts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. INICIALIZACE GRAFU
+            const chartContainer = document.getElementById('chart-container');
+            const chartOptions = { 
+                layout: { textColor: '#cbd5e1', background: { type: 'solid', color: '#030712' } },
+                grid: { vertLines: { color: 'rgba(255, 255, 255, 0.04)' }, horzLines: { color: 'rgba(255, 255, 255, 0.04)' } },
+                crosshair: { mode: 1 },
+                timeScale: { timeVisible: true, secondsVisible: false, borderColor: 'rgba(255, 255, 255, 0.1)' },
+                rightPriceScale: { borderColor: 'rgba(255, 255, 255, 0.1)', mode: LightweightCharts.PriceScaleMode.Normal }
+            };
+            
+            const chart = LightweightCharts.createChart(chartContainer, chartOptions);
+            
+            // Hlavní série svíček - 5 desetinných míst pro EUR/USD
+            const candleSeries = chart.addCandlestickSeries({
+                upColor: '#10b981', downColor: '#ef4444', borderVisible: false,
+                wickUpColor: '#10b981', wickDownColor: '#ef4444',
+                priceFormat: { type: 'price', precision: 5, minMove: 0.00001 }
+            });
+            
+            // SMA trend
+            const smaSeries = chart.addLineSeries({
+                color: '#38bdf8', lineWidth: 2, crosshairMarkerVisible: false, title: 'SMA(20)',
+                priceFormat: { type: 'price', precision: 5, minMove: 0.00001 }
+            });
+
+            // Resize observer
+            new ResizeObserver(entries => {
+                if (entries.length === 0 || entries[0].target !== chartContainer) return;
+                const newRect = entries[0].contentRect;
+                chart.applyOptions({ height: newRect.height, width: newRect.width });
+            }).observe(chartContainer);
+
+
+            // 2. SIMULAČNÍ PAPER-TRADING LOGIKA
+            let simulation = {
+                activeTrade: null,
+                history: [],
+                totalPnl: 0,
+                wins: 0,
+                losses: 0
+            };
+
+            // Jednoduchý kalkulátor SMA
+            let priceHistory = [];
+            
+            function calculateSMA(data, period=20) {
+                if(data.length < period) return null;
+                let sum = 0;
+                for(let i = data.length - period; i < data.length; i++){
+                    sum += data[i].close;
+                }
+                return sum / period;
+            }
+
+            function updateUI() {
+                // Update Hero Stats
+                const totalTrades = simulation.wins + simulation.losses;
+                const winrate = totalTrades > 0 ? ((simulation.wins / totalTrades) * 100).toFixed(1) : 0.0;
+                
+                document.getElementById('ui-winrate').textContent = `${winrate} %`;
+                document.getElementById('ui-winrate').className = `stat-val ${winrate >= 50 ? 'val-green' : 'val-red'}`;
+                
+                const pnlStr = simulation.totalPnl >= 0 ? `+$${simulation.totalPnl.toFixed(2)}` : `-$${Math.abs(simulation.totalPnl).toFixed(2)}`;
+                document.getElementById('ui-totalpnl').textContent = pnlStr;
+                document.getElementById('ui-totalpnl').className = `stat-val ${simulation.totalPnl >= 0 ? 'val-green' : 'val-red'}`;
+
+                document.getElementById('ui-wins').textContent = simulation.wins;
+                document.getElementById('ui-losses').textContent = simulation.losses;
+
+                // Update Active Trade
+                const liveCont = document.getElementById('live-trades-container');
+                if (simulation.activeTrade) {
+                    const t = simulation.activeTrade;
+                    const pnlColor = t.currentPnl >= 0 ? 'val-green' : 'val-red';
+                    const pnlSign = t.currentPnl >= 0 ? '+' : '';
+                    
+                    liveCont.innerHTML = `
+                        <div class="live-trade-card" style="border-color: ${t.type === 'LONG' ? 'rgba(16,185,129,0.5)' : 'rgba(239,68,68,0.5)'}">
+                            <div class="lt-header">
+                                <span style="color: ${t.type === 'LONG' ? 'var(--accent-green)' : 'var(--accent-red)'}">● ${t.type} EUR/USD</span>
+                            </div>
+                            <div class="lt-pnl ${pnlColor}">${pnlSign}$${t.currentPnl.toFixed(2)}</div>
+                            <div class="lt-row"><span>Entry:</span> <span>${t.entry.toFixed(5)}</span></div>
+                            <div class="lt-row"><span>Cíl (TP):</span> <span style="color:var(--accent-green)">${t.tp.toFixed(5)}</span></div>
+                            <div class="lt-row"><span>Riziko (SL):</span> <span style="color:var(--accent-red)">${t.sl.toFixed(5)}</span></div>
+                            <div class="lt-row"><span>Aktuální trh:</span> <span style="color:var(--accent-gold)">${t.currentPrice.toFixed(5)}</span></div>
+                        </div>
+                    `;
+                } else {
+                    liveCont.innerHTML = `<div class="live-trade-card" id="empty-live" style="background: transparent; border-style: dashed; opacity: 0.5; text-align: center;"><span style="color: var(--text-muted); font-size: 0.85rem;">Žádný signál, vyčkávám...</span></div>`;
+                }
+
+                // Update History
+                const histCont = document.getElementById('history-container');
+                histCont.innerHTML = '';
+                [...simulation.history].reverse().slice(0, 50).forEach(h => {
+                    const isWin = h.pnl > 0;
+                    histCont.innerHTML += `
+                        <div class="history-item">
+                            <div class="hi-top">
+                                <div class="hi-type ${h.type.toLowerCase()}">${h.type} <span>EUR/USD</span></div>
+                                <div class="hi-pnl ${isWin ? 'val-green' : 'val-red'}">${isWin ? '+' : ''}$${h.pnl.toFixed(2)}</div>
+                            </div>
+                            <div class="hi-details">
+                                <span>In: <strong>${h.entry.toFixed(5)}</strong></span>
+                                <span>Out: <strong>${h.exit.toFixed(5)}</strong></span>
+                                <span>SL: <strong>${h.sl.toFixed(5)}</strong></span>
+                                <span>TP: <strong>${h.tp.toFixed(5)}</strong></span>
+                            </div>
+                            <div style="margin-top: 4px; text-align: right;">
+                                <span class="hi-badge ${isWin ? 'win' : 'loss'}">${isWin ? 'ZISK (WIN)' : 'ZTRÁTA (LOSS)'}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            function checkSignals(currentPrice, time) {
+                if (!simulation.activeTrade && priceHistory.length > 20) {
+                    const sma = calculateSMA(priceHistory);
+                    
+                    // Demo Fiktivní strategie (SMA Crossover Pullback)
+                    if (currentPrice > sma && priceHistory[priceHistory.length-2].close < sma) {
+                        simulation.activeTrade = {
+                            type: 'LONG',
+                            entry: currentPrice,
+                            tp: currentPrice + 0.0010, // 10 pips target
+                            sl: currentPrice - 0.0005, // 5 pips stop
+                            currentPrice: currentPrice,
+                            currentPnl: 0,
+                            size: 100000 // 1 standard lot
+                        };
+                    }
+                    else if (currentPrice < sma && priceHistory[priceHistory.length-2].close > sma) {
+                        simulation.activeTrade = {
+                            type: 'SHORT',
+                            entry: currentPrice,
+                            tp: currentPrice - 0.0010,
+                            sl: currentPrice + 0.0005,
+                            currentPrice: currentPrice,
+                            currentPnl: 0,
+                            size: 100000
+                        };
+                    }
+                }
+
+                if (simulation.activeTrade) {
+                    let t = simulation.activeTrade;
+                    t.currentPrice = currentPrice;
+                    let diff = t.type === 'LONG' ? (currentPrice - t.entry) : (t.entry - currentPrice);
+                    t.currentPnl = diff * t.size;
+
+                    let closed = false;
+                    
+                    // Hit TP?
+                    if ((t.type === 'LONG' && currentPrice >= t.tp) || (t.type === 'SHORT' && currentPrice <= t.tp)) {
+                        closed = true;
+                    }
+                    // Hit SL?
+                    if ((t.type === 'LONG' && currentPrice <= t.sl) || (t.type === 'SHORT' && currentPrice >= t.sl)) {
+                        closed = true;
+                    }
+
+                    if(closed) {
+                        simulation.history.push({
+                            type: t.type,
+                            entry: t.entry,
+                            exit: currentPrice,
+                            sl: t.sl,
+                            tp: t.tp,
+                            pnl: t.currentPnl
+                        });
+                        simulation.totalPnl += t.currentPnl;
+                        if(t.currentPnl > 0) simulation.wins++; else simulation.losses++;
+                        simulation.activeTrade = null;
+                    }
+                }
+                
+                updateUI();
+            }
+
+
+            // 3. WEBSOCKET SPOJENÍ (Nová Verze)
+            let ws;
+            const statusEl = document.getElementById('conn-status');
+            const loader = document.getElementById('loader');
+
+            function connectWS() {
+                ws = new WebSocket('ws://127.0.0.1:8765');
+                
+                ws.onopen = () => {
+                    statusEl.innerHTML = '● Live (IBKR)';
+                    statusEl.style.color = 'var(--accent-green)';
+                    loader.style.display = 'flex'; // Zobrazíme loader, čekáme na historii
+                };
+                
+                ws.onmessage = (event) => {
+                    try {
+                        const msg = JSON.parse(event.data);
+                        
+                        if (msg.type === 'history') {
+                            // Dostali jsme historická data
+                            priceHistory = msg.data;
+                            candleSeries.setData(priceHistory);
+                            
+                            // Spočítat SMA pro historii a vykreslit
+                            let smaData = [];
+                            for(let i = 20; i < priceHistory.length; i++) {
+                                let sum = 0;
+                                for(let j = i - 20; j < i; j++) sum += priceHistory[j].close;
+                                smaData.push({ time: priceHistory[i].time, value: sum/20 });
+                            }
+                            smaSeries.setData(smaData);
+                            loader.style.display = 'none'; // Schovat loader
+                            
+                            // Reset simulace pro nový timeframe
+                            simulation.activeTrade = null;
+                            updateUI();
+                        } 
+                        else if (msg.type === 'live_tick') {
+                            if (priceHistory.length === 0) return;
+                            
+                            const lastCandle = priceHistory[priceHistory.length - 1];
+                            const t = msg.time;
+                            const p = msg.price;
+                            
+                            if(t > lastCandle.time) {
+                                lastCandle.high = Math.max(lastCandle.high, p);
+                                lastCandle.low = Math.min(lastCandle.low, p);
+                                lastCandle.close = p;
+                                candleSeries.update(lastCandle);
+                            }
+                            
+                            checkSignals(p, t);
+                        }
+                    } catch(e) {
+                        console.error('Data error', e);
+                    }
+                };
+                
+                ws.onclose = () => {
+                    statusEl.innerHTML = '○ Odpojeno';
+                    statusEl.style.color = 'var(--accent-red)';
+                    setTimeout(connectWS, 3000);
+                };
+            }
+            
+            connectWS();
+
+            // 4. PŘEPÍNÁNÍ TIMEFRAMES
+            document.querySelectorAll('.tf-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    
+                    const tf = e.target.dataset.tf;
+                    loader.style.display = 'flex';
+                    
+                    if(ws && ws.readyState === WebSocket.OPEN) {
+                        ws.send(JSON.stringify({
+                            action: 'set_timeframe',
+                            timeframe: tf
+                        }));
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

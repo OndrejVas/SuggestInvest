@@ -10,6 +10,10 @@ on:
       - 'trading.html'
       - 'trading_template.html'
       - 'scalping.html'
+      - 'lightweight-charts.js'
+      - 'data/**'
+      - 'scalping_engine/**'
+      - '*.js'
       - '*.docx'
   workflow_dispatch:
 
