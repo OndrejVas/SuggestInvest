@@ -1,7 +1,7 @@
 {
   "version": "2.2.0",
   "account_id": "IBKR: DUR222134 (Paper Trading Sandbox)",
-  "last_updated_cet": "10.10.2026 16:44:27",
+  "last_updated_cet": "10.10.2026 16:45:58",
   "mode": "OPTIMIZED REAL-NET (Jednotky USD zisku | 2.0 oz)",
   "market_status": {
     "is_open": false,
@@ -9,7 +9,7 @@
     "status_text": "TRH UZAVŘEN (VÍKENDOVÁ PAUZA)",
     "next_open_cet": "11.10.2026 23:00:00",
     "next_open_timestamp": 1791752400.0,
-    "time_to_open_sec": 108939,
+    "time_to_open_sec": 108849,
     "trading_hours": {
       "start": "Neděle 23:00 SEČ (17:00 NY EST / 22:00 UTC)",
       "end": "Pátek 23:00 SEČ (17:00 NY EST / 21:00 UTC)",
@@ -46,7 +46,7 @@
       "name": "Bitcoin Spot 24/7",
       "direction": "LONG",
       "entry_price": 83036.0,
-      "current_price": 83034.0,
+      "current_price": 83040.01,
       "sl": 82975.8,
       "tp": 83130.0,
       "stop_loss": 82975.8,
@@ -62,8 +62,8 @@
       "entry_reason": "Kvantitativní LONG signál [KAMA Momentum Trend]: Trendový cyklus (ER=0.39 >= 0.28), cena (83036.00) vykazuje nákupní tlak nad KAMA (82959.17) a nad VWAP (82854.11).",
       "strategy_name": "KAMA Momentum Trend",
       "strategy_trigger": "Kvantitativní LONG signál [KAMA Momentum Trend]: Trendový cyklus (ER=0.39 >= 0.28), cena (83036.00) vykazuje nákupní tlak nad KAMA (82959.17) a nad VWAP (82854.11).",
-      "unrealized_pnl_usd": -0.04,
-      "unrealized_pnl_czk": -0.93,
+      "unrealized_pnl_usd": 0.08,
+      "unrealized_pnl_czk": 1.86,
       "be_moved": false,
       "atr": 37.62
     }
@@ -1282,7 +1282,7 @@
   "ibkr_live_account": {
     "account_id": "DUR222134",
     "status": "PŘIPOJENO K IBKR DEMO (PORT 7497)",
-    "last_synced_cet": "10.10.2026 16:44:25",
+    "last_synced_cet": "10.10.2026 16:45:56",
     "net_liquidation_czk": 246240.64,
     "net_liquidation_usd": 10613.82,
     "available_funds_czk": 205748.39,
@@ -1297,6 +1297,6 @@
     "portfolio": []
   },
   "current_symbol": "BTCUSD",
-  "btc_spot": 83034.0,
+  "btc_spot": 83040.01,
   "gold_spot": 4195.86
 }
