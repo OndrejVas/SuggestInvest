@@ -1,7 +1,7 @@
 {
   "version": "2.2.0",
   "account_id": "IBKR: DUR222134 (Paper Trading Sandbox)",
-  "last_updated_cet": "10.10.2026 17:32:47",
+  "last_updated_cet": "10.10.2026 17:34:17",
   "mode": "OPTIMIZED REAL-NET (Jednotky USD zisku | 2.0 oz)",
   "market_status": {
     "is_open": false,
@@ -9,7 +9,7 @@
     "status_text": "TRH UZAVŘEN (VÍKENDOVÁ PAUZA)",
     "next_open_cet": "11.10.2026 23:00:00",
     "next_open_timestamp": 1791752400.0,
-    "time_to_open_sec": 106035,
+    "time_to_open_sec": 105944,
     "trading_hours": {
       "start": "Neděle 23:00 SEČ (17:00 NY EST / 22:00 UTC)",
       "end": "Pátek 23:00 SEČ (17:00 NY EST / 21:00 UTC)",
@@ -46,7 +46,7 @@
       "name": "Bitcoin Spot 24/7",
       "direction": "LONG",
       "entry_price": 83034.33,
-      "current_price": 83028.01,
+      "current_price": 83014.09,
       "sl": 82984.33,
       "tp": 83104.33,
       "stop_loss": 82984.33,
@@ -62,8 +62,8 @@
       "entry_reason": "Kvantitativní LONG signál [KAMA Momentum Trend]: Trendový cyklus (ER=1.00 >= 0.28), cena (83034.33) vykazuje nákupní tlak nad KAMA (83007.01) a nad VWAP (82912.26).",
       "strategy_name": "KAMA Momentum Trend",
       "strategy_trigger": "Kvantitativní LONG signál [KAMA Momentum Trend]: Trendový cyklus (ER=1.00 >= 0.28), cena (83034.33) vykazuje nákupní tlak nad KAMA (83007.01) a nad VWAP (82912.26).",
-      "unrealized_pnl_usd": -0.13,
-      "unrealized_pnl_czk": -2.93,
+      "unrealized_pnl_usd": -0.4,
+      "unrealized_pnl_czk": -9.39,
       "be_moved": false,
       "atr": 8.48
     }
@@ -1471,7 +1471,7 @@
   "ibkr_live_account": {
     "account_id": "DUR222134",
     "status": "PŘIPOJENO K IBKR DEMO (PORT 7497)",
-    "last_synced_cet": "10.10.2026 17:32:42",
+    "last_synced_cet": "10.10.2026 17:34:13",
     "net_liquidation_czk": 246240.64,
     "net_liquidation_usd": 10613.82,
     "available_funds_czk": 205748.39,
@@ -1486,6 +1486,6 @@
     "portfolio": []
   },
   "current_symbol": "BTCUSD",
-  "btc_spot": 83028.01,
+  "btc_spot": 83014.09,
   "gold_spot": 4195.86
 }
