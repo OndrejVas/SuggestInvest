@@ -1,7 +1,7 @@
 {
   "version": "2.2.0",
   "account_id": "IBKR: DUR222134 (Paper Trading Sandbox)",
-  "last_updated_cet": "10.10.2026 16:37:04",
+  "last_updated_cet": "10.10.2026 16:38:25",
   "mode": "OPTIMIZED REAL-NET (Jednotky USD zisku | 2.0 oz)",
   "market_status": {
     "is_open": false,
@@ -9,7 +9,7 @@
     "status_text": "TRH UZAVŘEN (VÍKENDOVÁ PAUZA)",
     "next_open_cet": "11.10.2026 23:00:00",
     "next_open_timestamp": 1791752400.0,
-    "time_to_open_sec": 109382,
+    "time_to_open_sec": 109302,
     "trading_hours": {
       "start": "Neděle 23:00 SEČ (17:00 NY EST / 22:00 UTC)",
       "end": "Pátek 23:00 SEČ (17:00 NY EST / 21:00 UTC)",
@@ -32,13 +32,42 @@
     "total_net_pnl_usd": 27.58,
     "total_pnl_czk": 639.86,
     "profit_factor": 1.48,
-    "active_positions_count": 0,
+    "active_positions_count": 1,
     "pending_orders_count": 0,
     "avg_trade_pnl_usd": 0.67,
     "target_capital_allocation": "2.0 oz (~$8 390 notional / marže ~$420 USD)",
     "target_net_profit_per_win": "+3.50 až +7.50 USD (po odečtu provizí)"
   },
-  "active_positions": [],
+  "active_positions": [
+    {
+      "id": "POS-20261010-041",
+      "symbol_raw": "BTCUSD",
+      "symbol": "BTC/USD",
+      "name": "Bitcoin Spot 24/7",
+      "direction": "LONG",
+      "entry_price": 82999.15,
+      "current_price": 83022.01,
+      "sl": 82949.15,
+      "tp": 83076.35,
+      "stop_loss": 82949.15,
+      "take_profit_1": 83076.35,
+      "take_profit_2": 83114.95,
+      "qty": "0.02 BTC ($1660)",
+      "size": "0.02 BTC ($1660 / marže $83)",
+      "qty_num": 0.02,
+      "invested_usd": 1659.98,
+      "margin_usd": 83.0,
+      "open_time": "10.10.2026 16:37:21",
+      "open_timestamp": 1791643041.234264,
+      "entry_reason": "Kvantitativní LONG signál [KAMA Momentum Trend]: Trendový cyklus (ER=0.35 >= 0.28), cena (82999.15) vykazuje nákupní tlak nad KAMA (82939.67) a nad VWAP (82840.73).",
+      "strategy_name": "KAMA Momentum Trend",
+      "strategy_trigger": "Kvantitativní LONG signál [KAMA Momentum Trend]: Trendový cyklus (ER=0.35 >= 0.28), cena (82999.15) vykazuje nákupní tlak nad KAMA (82939.67) a nad VWAP (82840.73).",
+      "unrealized_pnl_usd": 0.46,
+      "unrealized_pnl_czk": 10.61,
+      "be_moved": false,
+      "atr": 30.86
+    }
+  ],
   "pending_orders": [],
   "executed_history": [
     {
@@ -1226,7 +1255,7 @@
   "ibkr_live_account": {
     "account_id": "DUR222134",
     "status": "PŘIPOJENO K IBKR DEMO (PORT 7497)",
-    "last_synced_cet": "10.10.2026 16:37:03",
+    "last_synced_cet": "10.10.2026 16:38:23",
     "net_liquidation_czk": 246240.64,
     "net_liquidation_usd": 10613.82,
     "available_funds_czk": 205748.39,
@@ -1241,6 +1270,6 @@
     "portfolio": []
   },
   "current_symbol": "BTCUSD",
-  "btc_spot": 82999.14,
+  "btc_spot": 83022.01,
   "gold_spot": 4195.86
 }
