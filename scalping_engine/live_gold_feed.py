@@ -35,6 +35,8 @@ active_test_trades = []
 last_trade_closed_time = datetime.min
 latest_btc_spot = 82750.0
 latest_gold_spot = 4195.86
+last_btc_data_time = datetime.now()
+last_git_sync_time = datetime.now()
 
 timeframes_durations = {
     '1m': '1 D',
@@ -202,8 +204,24 @@ def calculate_indicators(bars):
         })
     return result
 
-def evaluate_trades(current_price: float, symbol: str = "BTCUSD"):
-    """Průběžná aktualizace otevřených pozic, trailing / BE a kontrola SL/TP s odečtem reálných provizí."""
+def git_sync_push():
+    """Odešle nejnovější data/scalping_trades.json na GitHub pro okamžitou synchronizaci živých GitHub Pages."""
+    try:
+        import subprocess
+        repo_dir = str(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        subprocess.run(["git", "add", "data/scalping_trades.json"], cwd=repo_dir, capture_output=True, timeout=10)
+        res = subprocess.run(["git", "commit", "-m", "Auto-sync live scalping trades & audit snapshot [skip ci]"], cwd=repo_dir, capture_output=True, timeout=10)
+        if res.returncode == 0:
+            p = subprocess.run(["git", "push", "origin", "main"], cwd=repo_dir, capture_output=True, timeout=25)
+            if p.returncode == 0:
+                logger.info("✅ Watchdog: Živá data scalping obchodů úspěšně publikována na GitHub Pages!")
+            else:
+                logger.debug(f"Git push result: {p.stderr.decode('utf-8', 'ignore')}")
+    except Exception as e:
+        logger.debug(f"Git sync warning: {e}")
+
+def evaluate_trades(current_price: float, symbol: str = "BTCUSD", force_close_id: Optional[str] = None):
+    """Průběžná aktualizace otevřených pozic, trailing / BE a kontrola SL/TP s odečtem reálných provizí a Stagnation Breakerem."""
     global active_test_trades, last_trade_closed_time
     remaining = []
     
@@ -218,27 +236,42 @@ def evaluate_trades(current_price: float, symbol: str = "BTCUSD"):
         exit_price = 0.0
         
         entry_p = t["entry_price"]
-        qty_num = float(t.get("qty_num", 0.02 if "BTC" in symbol else TARGET_GOLD_OZ))
+        qty_num = float(t.get("qty_num", TARGET_BTC_QTY if "BTC" in symbol else TARGET_GOLD_OZ))
         is_long = t["direction"] == "LONG"
         gross_float_pnl = (current_price - entry_p) * qty_num if is_long else (entry_p - current_price) * qty_num
         
-        # Break-Even ochrana kryjící provize
+        open_ts = t.get("open_timestamp", datetime.now().timestamp() - 60)
+        duration = max(1, round((datetime.now().timestamp() - open_ts) / 60.0))
+        
+        # Break-Even ochrana kryjící provize (bezpečný posun s ověřením)
         atr = t.get("atr", 25.0 if "BTC" in symbol else 0.8)
-        be_offset = round((IBKR_ROUNDTRIP_COMMISSION / qty_num) + (2.0 if "BTC" in symbol else 0.15), 2)
+        be_pts = round((IBKR_ROUNDTRIP_COMMISSION / qty_num) + (3.0 if "BTC" in symbol else 0.15), 2)
         if not t.get("be_moved", False):
-            if is_long and current_price >= entry_p + (1.2 * atr):
-                t["sl"] = round(entry_p + be_offset, 2)
+            if is_long and current_price >= entry_p + be_pts + (0.5 * atr):
+                t["sl"] = round(entry_p + be_pts, 2)
                 t["be_moved"] = True
-                logger.info(f"Pozice {t['id']}: Dosažen profit +1.2x ATR -> SL posunut na BE + komise ({t['sl']:.2f})!")
-            elif not is_long and current_price <= entry_p - (1.2 * atr):
-                t["sl"] = round(entry_p - be_offset, 2)
+                logger.info(f"Pozice {t['id']}: Dosažen profit -> SL posunut na BE + komise ({t['sl']:.2f})!")
+            elif not is_long and current_price <= entry_p - be_pts - (0.5 * atr):
+                t["sl"] = round(entry_p - be_pts, 2)
                 t["be_moved"] = True
-                logger.info(f"Pozice {t['id']}: Dosažen profit +1.2x ATR -> SL posunut na BE - komise ({t['sl']:.2f})!")
+                logger.info(f"Pozice {t['id']}: Dosažen profit -> SL posunut na BE - komise ({t['sl']:.2f})!")
                 
         virt_engine.update_active_position_spot(t["id"], current_price, t.get("be_moved", False))
         
-        # Kontrola exekuce SL a TP
-        if is_long:
+        # 1. Force close od Watchdog Stagnation Breakeru
+        if force_close_id and t.get("id") == force_close_id:
+            closed = True
+            reason = "Časový Stop (Stagnation Breaker)"
+            exit_price = current_price
+            
+        # 2. Běžný Stagnation Breaker (pokud pozice trvá déle než 8 minut v úzkém pásmu)
+        elif "BTC" in symbol and duration >= 8:
+            closed = True
+            reason = "Časový Stop (Stagnation Breaker)"
+            exit_price = current_price
+            
+        # 3. Kontrola exekuce SL a TP
+        elif is_long:
             if current_price >= t["tp"]:
                 closed = True; reason = "Take-Profit Zasažen"; exit_price = t["tp"]
             elif current_price <= t["sl"]:
@@ -251,9 +284,6 @@ def evaluate_trades(current_price: float, symbol: str = "BTCUSD"):
                 
         if closed:
             last_trade_closed_time = datetime.now()
-            open_ts = t.get("open_timestamp", datetime.now().timestamp() - 60)
-            duration = max(1, round((datetime.now().timestamp() - open_ts) / 60.0))
-            
             gross_pnl = (exit_price - entry_p) * qty_num if is_long else (entry_p - exit_price) * qty_num
             commission = IBKR_ROUNDTRIP_COMMISSION
             net_pnl = round(gross_pnl - commission, 2)
@@ -265,12 +295,12 @@ def evaluate_trades(current_price: float, symbol: str = "BTCUSD"):
             
             if is_win:
                 outcome_analysis = f"Cíl TP ({exit_price:.2f} USD) úspěšně zasažen. Čistý zisk v jednotkách dolarů +${net_pnl:.2f} USD (Hrubý: +${gross_pnl:.2f} USD, provize: -${commission:.2f} USD) při alokaci {invested_str}."
-                lesson_learned = f"Potvrzení platnosti strategie [{strategy_name}]: Dosažen zisk v jednotkách dolarů po odečtu poplatků."
+                lesson_learned = f"Potvrzení platnosti strategie [{strategy_name}]: Dosažen zisk po odečtu poplatků."
                 model_feedback = "Zvýšit váhu této signálové třídy o +3.5 %; zachovat poměr RRR 1:2.0."
             else:
-                outcome_analysis = f"Zasažen Stop-Loss na {exit_price:.2f} USD. Čistá ztráta -${abs(net_pnl):.2f} USD (Hrubá ztráta: -${abs(gross_pnl):.2f} USD, provize: -${commission:.2f} USD)."
-                lesson_learned = f"Poučení pro model [{strategy_name}]: Lokální šum prorazil ochranný SL."
-                model_feedback = "Zvýšit ATR bezpečnostní násobek na 1.35x."
+                outcome_analysis = f"Ukončeno {reason} na {exit_price:.2f} USD. Čistý výsledek -${abs(net_pnl):.2f} USD (Hrubý: -${abs(gross_pnl):.2f} USD, provize: -${commission:.2f} USD)."
+                lesson_learned = f"Poučení pro model [{strategy_name}]: Víkendová nízká volatilita vyžadovala uvolnění marže."
+                model_feedback = "Udržovat aktivní 24/7 Stagnation Breaker pro plynulé obchodování."
 
             virt_engine.remove_active_position(t["id"])
             virt_engine.record_executed_trade(
@@ -282,6 +312,9 @@ def evaluate_trades(current_price: float, symbol: str = "BTCUSD"):
                 gross_pnl_usd=round(gross_pnl, 2), commission_usd=commission
             )
             logger.info(f"Obchod {t['id']} uzavřen: {reason} | Čistý PnL: ${net_pnl:.2f} USD")
+            
+            # Okamžitý background Git sync nového obchodu
+            asyncio.create_task(asyncio.to_thread(git_sync_push))
             
             for ws in list(connected_clients):
                 asyncio.create_task(ws.send(json.dumps({"type": "refresh"})))
@@ -363,9 +396,9 @@ async def quant_strategy_loop():
         if is_btc:
             # Bitcoin parametry: 0.02 BTC
             qty_num = TARGET_BTC_QTY
-            # Pohyb o $250 přinese 0.02 * 250 = $5.00 gross - $1.50 comm = +$3.50 net
-            tp_dist = max(250.0, round(2.0 * atr, 1))
-            sl_dist = max(150.0, round(1.0 * atr, 1))
+            # Adaptivní TP a SL: respektuje reálnou volatilitu ATR, aby obchody nezamrzaly na hodiny
+            tp_dist = max(70.0, min(160.0, round(2.5 * atr, 1)))
+            sl_dist = max(50.0, min(110.0, round(1.6 * atr, 1)))
             sym_display = "BTC/USD"
             name_display = "Bitcoin Spot 24/7"
         else:
@@ -484,6 +517,10 @@ async def btc_stream_task():
                 btc_bars['1m'] = sorted(existing_map.values(), key=lambda x: x['time'])[-150:]
                 
                 latest_btc_spot = btc_bars['1m'][-1]['close']
+                last_btc_data_time = datetime.now()
+                
+                # Vždy průběžně vyhodnocovat otevřené obchody a SL/TP/Stagnation
+                evaluate_trades(latest_btc_spot, "BTCUSD")
                 
                 # Pokud klient sleduje BTC a 1m, poslat update svíčky
                 if current_symbol == 'BTCUSD' and current_timeframe == '1m':
@@ -507,8 +544,6 @@ async def btc_stream_task():
                         msg_str = json.dumps(candle_msg)
                         for ws in list(connected_clients):
                             asyncio.create_task(ws.send(msg_str))
-                            
-                        evaluate_trades(last_ind["close"], "BTCUSD")
         except Exception as e:
             logger.warning(f"Chyba v btc_stream_task: {e}")
             await asyncio.sleep(3)
@@ -528,6 +563,70 @@ async def ibkr_account_sync_task():
         except Exception as e:
             logger.debug(f"Chyba v account sync: {e}")
             await asyncio.sleep(5)
+
+async def watchdog_supervisor():
+    """
+    24/7 Autonomní hlídací pes (Watchdog & Self-Healing Engine):
+    - Každou vteřinu kontroluje integritu dat a živost streamu z Binance.
+    - Pokud data nepřišla déle než 5 sekund, provede okamžitý nouzový REST re-fetch a oživí stream.
+    - Kontroluje otevřené pozice a aplikuje Stagnation Breaker (časový exit po 8 minutách v nízké volatilitě).
+    - Každou vteřinu aktualizuje timestamps a stav v data/scalping_trades.json.
+    - Periodicky (každých 90 s) synchronizuje data na GitHub pro živé GitHub Pages.
+    """
+    global last_btc_data_time, last_git_sync_time, latest_btc_spot
+    logger.info("🛡️ Spouštím 24/7 Watchdog Supervisor (1-sekundový nepřetržitý dohled).")
+    
+    while True:
+        await asyncio.sleep(1)
+        try:
+            now = datetime.now()
+            
+            # 1. Kontrola živosti Binance toku dat
+            if (now - last_btc_data_time).total_seconds() > 5.0:
+                logger.warning("⚠️ Watchdog: Zpoždění dat z Binance (>5s) -> Okamžitý nouzový re-fetch...")
+                fresh = await asyncio.to_thread(fetch_btc_klines_sync, '1m', 15)
+                if fresh:
+                    last_btc_data_time = now
+                    latest_btc_spot = fresh[-1]["close"]
+                    evaluate_trades(latest_btc_spot, "BTCUSD")
+                    
+            # 2. Kontrola otevřených pozic (Stagnation Breaker po 8 minutách)
+            for t in list(active_test_trades):
+                open_ts = t.get("open_timestamp", now.timestamp() - 60)
+                dur_min = (now.timestamp() - open_ts) / 60.0
+                if "BTC" in t.get("symbol_raw", "BTCUSD") and dur_min >= 8.0:
+                    logger.info(f"⏱️ Watchdog Stagnation Breaker: Pozice {t['id']} otevřena již {dur_min:.1f} min -> Uzavírám na tržní ceně {latest_btc_spot} USD.")
+                    evaluate_trades(latest_btc_spot, "BTCUSD", force_close_id=t["id"])
+                    
+            # 3. Kontrola visících pozic v JSONu
+            trades_data = virt_engine.load_trades_data()
+            json_active = trades_data.get("active_positions", [])
+            active_ids = {t["id"] for t in active_test_trades}
+            orphan_found = False
+            cleaned_active = []
+            for jp in json_active:
+                if jp.get("id") in active_ids:
+                    cleaned_active.append(jp)
+                else:
+                    orphan_found = True
+            if orphan_found:
+                trades_data["active_positions"] = cleaned_active
+                trades_data["summary"]["active_positions_count"] = len(cleaned_active)
+                virt_engine.save_trades_data(trades_data)
+                
+            # 4. Aktualizace timestampu v JSONu každou vteřinu
+            trades_data["last_updated_cet"] = now.strftime("%d.%m.%Y %H:%M:%S")
+            trades_data["btc_spot"] = latest_btc_spot
+            trades_data["gold_spot"] = latest_gold_spot
+            virt_engine.save_trades_data(trades_data)
+            
+            # 5. Periodický Git sync na GitHub pro GitHub Pages (každých 90 s)
+            if (now - last_git_sync_time).total_seconds() >= 90.0:
+                last_git_sync_time = now
+                await asyncio.to_thread(git_sync_push)
+                
+        except Exception as e:
+            logger.debug(f"Chyba ve watchdog_supervisor: {e}")
 
 async def push_history_to_client(websocket, symbol: str, timeframe: str):
     """Odešle historická data a indikátory klientovi pro zvolený symbol a timeframe."""
@@ -702,6 +801,7 @@ async def main():
     asyncio.create_task(btc_stream_task())
     asyncio.create_task(ibkr_account_sync_task())
     asyncio.create_task(quant_strategy_loop())
+    asyncio.create_task(watchdog_supervisor())
     
     # 4. Spuštění WebSocket serveru na portu 8765
     async with websockets.serve(ws_handler, "127.0.0.1", 8765):

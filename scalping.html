@@ -3217,12 +3217,13 @@
             const readiness = document.getElementById('engineReadinessStatus');
             
             if (badge && txt) {
-                if (mkt.is_open) {
+                const isBtcActive = (window.activeScalpingSymbol === 'BTCUSD');
+                if (isBtcActive || mkt.is_open) {
                     badge.style.background = 'rgba(16, 185, 129, 0.2)';
                     badge.style.borderColor = '#10b981';
                     badge.style.color = '#34d399';
                     if (badge.firstElementChild) badge.firstElementChild.style.background = '#10b981';
-                    txt.textContent = 'TRH OTEVŘEN (ŽIVÁ SEANCE)';
+                    txt.textContent = isBtcActive ? '24/7 TRH OTEVŘEN (NON-STOP SEANCE)' : 'TRH OTEVŘEN (ŽIVÁ SEANCE)';
                 } else {
                     badge.style.background = 'rgba(239, 68, 68, 0.2)';
                     badge.style.borderColor = '#ef4444';
@@ -3233,11 +3234,17 @@
             }
             
             if (readiness && mkt.engine_readiness) {
-                readiness.textContent = `● ${mkt.engine_readiness}`;
+                const isBtcActive = (window.activeScalpingSymbol === 'BTCUSD');
+                readiness.textContent = isBtcActive ? '● ENGINE AKTIVNÍ: 24/7 AUTONOMNÍ BITCOIN SCALPING' : `● ${mkt.engine_readiness}`;
             }
 
             if (timerEl) {
-                if (mkt.is_open) {
+                const isBtcActive = (window.activeScalpingSymbol === 'BTCUSD');
+                if (isBtcActive) {
+                    if (marketCountdownInterval) clearInterval(marketCountdownInterval);
+                    timerEl.textContent = '● KONTINUÁLNÍ SEANCE BĚŽÍ (24/7 NON-STOP)';
+                    timerEl.style.color = '#34d399';
+                } else if (mkt.is_open) {
                     timerEl.textContent = '● SEANCE BĚŽÍ (LIVE)';
                     timerEl.style.color = '#34d399';
                 } else if (mkt.next_open_timestamp) {
@@ -3942,12 +3949,207 @@
             }
         }
 
+        function calculateClientIndicators(bars) {
+            if (!bars || bars.length === 0) return [];
+            let cumPv = 0, cumVol = 0;
+            const period = 10;
+            const fastC = 2.0 / (2.0 + 1.0);
+            const slowC = 2.0 / (30.0 + 1.0);
+            let prevKama = bars[0].close;
+
+            return bars.map((b, i) => {
+                const typ = (b.high + b.low + b.close) / 3.0;
+                const vol = Math.max(1, b.volume || 1);
+                cumPv += typ * vol;
+                cumVol += vol;
+                const vwap = Math.round((cumPv / cumVol) * 100) / 100;
+
+                let kama = prevKama;
+                if (i >= period) {
+                    const change = Math.abs(b.close - bars[i - period].close);
+                    let volatility = 0;
+                    for (let j = i - period + 1; j <= i; j++) {
+                        volatility += Math.abs(bars[j].close - bars[j - 1].close);
+                    }
+                    const er = volatility === 0 ? 0 : Math.min(1, Math.max(0, change / volatility));
+                    const sc = Math.pow(er * (fastC - slowC) + slowC, 2);
+                    kama = Math.round((prevKama + sc * (b.close - prevKama)) * 100) / 100;
+                } else {
+                    kama = b.close;
+                }
+                prevKama = kama;
+                return {
+                    time: b.time,
+                    open: b.open, high: b.high, low: b.low, close: b.close,
+                    vwap: vwap,
+                    kama: kama
+                };
+            });
+        }
+
+        let binanceDirectWs = null;
+        let isBinanceDirectActive = false;
+        let clientCachedCandles = [];
+
+        function updateSpotPriceDisplay(price) {
+            if (!price) return;
+            window.latestSpotPrice = price;
+            const spotEl = document.getElementById('current-spot-price');
+            if (spotEl) {
+                spotEl.textContent = price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' USD';
+            }
+
+            if (scalpingData && scalpingData.active_positions && scalpingData.active_positions.length > 0) {
+                let posChanged = false;
+                scalpingData.active_positions.forEach(pos => {
+                    if ((pos.symbol || '').toUpperCase().includes('BTC')) {
+                        pos.current_price = price;
+                        const isLong = (pos.direction || '').toUpperCase().includes('LONG') || (pos.direction || '').toUpperCase().includes('BUY');
+                        const diff = isLong ? (pos.current_price - pos.entry_price) : (pos.entry_price - pos.current_price);
+                        pos.unrealized_pnl_usd = parseFloat((diff * (pos.qty_num || 0.02)).toFixed(2));
+                        pos.unrealized_pnl_czk = Math.round(pos.unrealized_pnl_usd * 23.2);
+                        posChanged = true;
+                    }
+                });
+                if (posChanged && typeof renderExecutedHistory === 'function') {
+                    renderExecutedHistory();
+                }
+            }
+        }
+
+        async function fetchBinanceKlinesDirect() {
+            try {
+                const resp = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1m&limit=120');
+                if (!resp.ok) throw new Error('HTTP ' + resp.status);
+                const raw = await resp.json();
+                clientCachedCandles = raw.map(d => ({
+                    time: Math.floor(d[0] / 1000),
+                    open: parseFloat(d[1]),
+                    high: parseFloat(d[2]),
+                    low: parseFloat(d[3]),
+                    close: parseFloat(d[4]),
+                    volume: parseFloat(d[5])
+                }));
+                const inds = calculateClientIndicators(clientCachedCandles);
+                if (inds.length === 0) return;
+                const lastInd = inds[inds.length - 1];
+
+                const historyMsg = {
+                    type: 'history',
+                    symbol: 'BTCUSD',
+                    timeframe: '1m',
+                    candles: inds.map(c => ({ time: c.time, open: c.open, high: c.high, low: c.low, close: c.close })),
+                    kama: inds.map(c => ({ time: c.time, value: c.kama })),
+                    vwap: inds.map(c => ({ time: c.time, value: c.vwap })),
+                    spot: lastInd.close
+                };
+                window.pendingChartHistory = historyMsg;
+                applyChartHistory(historyMsg);
+                updateSpotPriceDisplay(lastInd.close);
+            } catch(e) {
+                console.warn('Nepodařilo se stáhnout Binance REST svíčky:', e);
+            }
+        }
+
+        function connectDirectBinanceStream() {
+            if (binanceDirectWs && binanceDirectWs.readyState === WebSocket.OPEN) return;
+            isBinanceDirectActive = true;
+            try {
+                binanceDirectWs = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@kline_1m');
+                const statusEl = document.getElementById('connection-status');
+
+                binanceDirectWs.onopen = () => {
+                    if (statusEl) {
+                        statusEl.textContent = '● Live 24/7 Cloud Stream (Binance Direct • Non-stop)';
+                        statusEl.style.color = '#34d399';
+                        statusEl.style.background = 'rgba(16, 185, 129, 0.15)';
+                        statusEl.style.borderColor = '#10b981';
+                    }
+                };
+
+                binanceDirectWs.onmessage = (event) => {
+                    try {
+                        const data = JSON.parse(event.data);
+                        if (data && data.k) {
+                            const k = data.k;
+                            const candleTime = Math.floor(k.t / 1000);
+                            const open = parseFloat(k.o);
+                            const high = parseFloat(k.h);
+                            const low = parseFloat(k.l);
+                            const close = parseFloat(k.c);
+                            const volume = parseFloat(k.v);
+
+                            const timeOffset = new Date().getTimezoneOffset() * 60;
+                            const t = candleTime - timeOffset;
+
+                            if (window.tvCandleSeries) {
+                                window.tvCandleSeries.update({
+                                    time: t, open: open, high: high, low: low, close: close
+                                });
+                            }
+
+                            if (clientCachedCandles.length > 0) {
+                                const lastCached = clientCachedCandles[clientCachedCandles.length - 1];
+                                if (lastCached.time === candleTime) {
+                                    lastCached.high = Math.max(lastCached.high, high);
+                                    lastCached.low = Math.min(lastCached.low, low);
+                                    lastCached.close = close;
+                                    lastCached.volume = volume;
+                                } else if (candleTime > lastCached.time) {
+                                    clientCachedCandles.push({ time: candleTime, open, high, low, close, volume });
+                                    if (clientCachedCandles.length > 150) clientCachedCandles.shift();
+                                }
+                                const inds = calculateClientIndicators(clientCachedCandles);
+                                const curInd = inds[inds.length - 1];
+                                if (window.tvKamaSeries && curInd && curInd.kama) {
+                                    window.tvKamaSeries.update({ time: t, value: curInd.kama });
+                                }
+                                if (window.tvVwapSeries && curInd && curInd.vwap) {
+                                    window.tvVwapSeries.update({ time: t, value: curInd.vwap });
+                                }
+                            }
+
+                            updateSpotPriceDisplay(close);
+                        }
+                    } catch(err) {
+                        console.error('Chyba ticku Binance:', err);
+                    }
+                };
+
+                binanceDirectWs.onclose = () => {
+                    if (isBinanceDirectActive) {
+                        setTimeout(connectDirectBinanceStream, 2000);
+                    }
+                };
+
+                binanceDirectWs.onerror = (err) => {
+                    console.warn('Binance WebSocket chyba:', err);
+                };
+            } catch(e) {
+                console.error('Nelze otevřít Binance WebSocket:', e);
+            }
+        }
+
         function connectWS() {
             const statusEl = document.getElementById('connection-status');
+            const isHttpsOrRemote = window.location.protocol === 'https:' || (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1');
+
+            // Pokud jsme na HTTPS (např. GitHub Pages), prohlížeč blokuje ws://127.0.0.1 jako Mixed Content.
+            // Automaticky ihned aktivujeme přímý 24/7 Binance Cloud Stream (WSS + REST) bez závislosti na lokálním démonu!
+            if (isHttpsOrRemote) {
+                console.info('🌐 GitHub Pages / HTTPS detekováno -> Spouštím přímý 24/7 Binance Cloud Stream.');
+                fetchBinanceKlinesDirect();
+                connectDirectBinanceStream();
+                return;
+            }
+
+            // Lokální režim (HTTP na localhostu): Zkusit lokální engine, fallback na Binance
             try {
                 window.liveWebSocket = new WebSocket('ws://127.0.0.1:8765');
-                
+                let localHasConnected = false;
+
                 window.liveWebSocket.onopen = () => {
+                    localHasConnected = true;
                     if (statusEl) {
                         statusEl.textContent = '● Live 24/7 Engine Stream (Port 8765)';
                         statusEl.style.color = '#34d399';
@@ -3955,7 +4157,7 @@
                         statusEl.style.borderColor = '#10b981';
                     }
                 };
-                
+
                 window.liveWebSocket.onmessage = (event) => {
                     try {
                         const msg = JSON.parse(event.data);
@@ -3979,26 +4181,7 @@
                                 window.tvVwapSeries.update({ time: t, value: msg.vwap });
                             }
                             if (msg.spot) {
-                                window.latestSpotPrice = msg.spot;
-                                const spotEl = document.getElementById('current-spot-price');
-                                if (spotEl) spotEl.textContent = msg.spot.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' USD';
-
-                                if (scalpingData && scalpingData.active_positions && scalpingData.active_positions.length > 0) {
-                                    let posChanged = false;
-                                    scalpingData.active_positions.forEach(pos => {
-                                        if ((pos.symbol || '').toUpperCase().includes('BTC')) {
-                                            pos.current_price = msg.spot;
-                                            const isLong = (pos.direction || '').toUpperCase().includes('LONG') || (pos.direction || '').toUpperCase().includes('BUY');
-                                            const diff = isLong ? (pos.current_price - pos.entry_price) : (pos.entry_price - pos.current_price);
-                                            pos.unrealized_pnl_usd = parseFloat((diff * (pos.qty_num || 0.02)).toFixed(2));
-                                            pos.unrealized_pnl_czk = Math.round(pos.unrealized_pnl_usd * 23.2);
-                                            posChanged = true;
-                                        }
-                                    });
-                                    if (posChanged && typeof renderExecutedHistory === 'function') {
-                                        renderExecutedHistory();
-                                    }
-                                }
+                                updateSpotPriceDisplay(msg.spot);
                             }
                         }
                         else if (msg.type === 'ibkr_account') {
@@ -4030,27 +4213,28 @@
                         console.error('Data error', e);
                     }
                 };
-                
+
                 window.liveWebSocket.onclose = () => {
-                    if (statusEl) {
+                    if (!localHasConnected) {
+                        fetchBinanceKlinesDirect();
+                        connectDirectBinanceStream();
+                    } else if (statusEl) {
                         statusEl.textContent = '● Lokální Engine Offline (Znovu připojuji...)';
                         statusEl.style.color = '#94a3b8';
                         statusEl.style.borderColor = 'rgba(255,255,255,0.2)';
                     }
-                    setTimeout(connectWS, 3000); // Reconnect
+                    setTimeout(connectWS, 4000);
                 };
 
                 window.liveWebSocket.onerror = () => {
-                    if (statusEl) {
-                        statusEl.textContent = '● Odpojeno od Engine feedu';
-                        statusEl.style.color = '#ef4444';
+                    if (!localHasConnected) {
+                        fetchBinanceKlinesDirect();
+                        connectDirectBinanceStream();
                     }
                 };
             } catch(e) {
-                if (statusEl) {
-                    statusEl.textContent = '● Sandbox Snapshot (Offline)';
-                    statusEl.style.color = '#94a3b8';
-                }
+                fetchBinanceKlinesDirect();
+                connectDirectBinanceStream();
             }
         }
 
@@ -4060,6 +4244,11 @@
             initTradingViewChart();
             connectWS();
             setTimeout(resizeTradingViewChart, 300);
+            
+            // 🔄 Automatická periodická synchronizace historie obchodů každých 10 sekund (pro GitHub Pages i lokál)
+            setInterval(() => {
+                refreshScalpingData();
+            }, 10000);
         });
 
         window.addEventListener('load', () => {
