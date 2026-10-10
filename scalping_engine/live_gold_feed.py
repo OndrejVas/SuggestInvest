@@ -31,9 +31,10 @@ current_symbol = 'BTCUSD'   # Výchozí je BTC pro 24/7 non-stop obchodování i
 current_timeframe = '1m'
 gold_bars = {}              # Timeframe -> BarDataList z IBKR
 btc_bars = {}               # Timeframe -> List[Dict] svíček z 24/7 streamu
-active_test_trades = []
+_init_data = virt_engine.load_trades_data()
+active_test_trades = _init_data.get("active_positions", [])
 last_trade_closed_time = datetime.min
-latest_btc_spot = 82750.0
+latest_btc_spot = 82994.0
 latest_gold_spot = 4195.86
 last_btc_data_time = datetime.now()
 last_git_sync_time = datetime.now()
@@ -264,8 +265,8 @@ def evaluate_trades(current_price: float, symbol: str = "BTCUSD", force_close_id
             reason = "Časový Stop (Stagnation Breaker)"
             exit_price = current_price
             
-        # 2. Běžný Stagnation Breaker (pokud pozice trvá déle než 8 minut v úzkém pásmu)
-        elif "BTC" in symbol and duration >= 8:
+        # 2. Běžný Stagnation Breaker (pokud pozice trvá déle než 30 minut v úzkém pásmu)
+        elif "BTC" in symbol and duration >= 30:
             closed = True
             reason = "Časový Stop (Stagnation Breaker)"
             exit_price = current_price
@@ -313,9 +314,7 @@ def evaluate_trades(current_price: float, symbol: str = "BTCUSD", force_close_id
             )
             logger.info(f"Obchod {t['id']} uzavřen: {reason} | Čistý PnL: ${net_pnl:.2f} USD")
             
-            # Okamžitý background Git sync nového obchodu
-            asyncio.create_task(asyncio.to_thread(git_sync_push))
-            
+            # Git sync probíhá v hodinovém intervalu (3600 s) z watchdog_supervisor
             for ws in list(connected_clients):
                 asyncio.create_task(ws.send(json.dumps({"type": "refresh"})))
         else:
@@ -590,11 +589,11 @@ async def watchdog_supervisor():
                     latest_btc_spot = fresh[-1]["close"]
                     evaluate_trades(latest_btc_spot, "BTCUSD")
                     
-            # 2. Kontrola otevřených pozic (Stagnation Breaker po 8 minutách)
+            # 2. Kontrola otevřených pozic (Stagnation Breaker po 30 minutách)
             for t in list(active_test_trades):
                 open_ts = t.get("open_timestamp", now.timestamp() - 60)
                 dur_min = (now.timestamp() - open_ts) / 60.0
-                if "BTC" in t.get("symbol_raw", "BTCUSD") and dur_min >= 8.0:
+                if "BTC" in t.get("symbol_raw", "BTCUSD") and dur_min >= 30.0:
                     logger.info(f"⏱️ Watchdog Stagnation Breaker: Pozice {t['id']} otevřena již {dur_min:.1f} min -> Uzavírám na tržní ceně {latest_btc_spot} USD.")
                     evaluate_trades(latest_btc_spot, "BTCUSD", force_close_id=t["id"])
                     
@@ -620,8 +619,8 @@ async def watchdog_supervisor():
             trades_data["gold_spot"] = latest_gold_spot
             virt_engine.save_trades_data(trades_data)
             
-            # 5. Periodický Git sync na GitHub pro GitHub Pages (každých 90 s)
-            if (now - last_git_sync_time).total_seconds() >= 90.0:
+            # 5. Periodický Git sync na GitHub pro GitHub Pages (striktně 1x za hodinu = 3600 s)
+            if (now - last_git_sync_time).total_seconds() >= 3600.0:
                 last_git_sync_time = now
                 await asyncio.to_thread(git_sync_push)
                 
