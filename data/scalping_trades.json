@@ -1,7 +1,7 @@
 {
   "version": "2.2.0",
   "account_id": "IBKR: DUR222134 (Paper Trading Sandbox)",
-  "last_updated_cet": "10.10.2026 16:04:29",
+  "last_updated_cet": "10.10.2026 16:06:43",
   "mode": "OPTIMIZED REAL-NET (Jednotky USD zisku | 2.0 oz)",
   "market_status": {
     "is_open": false,
@@ -9,7 +9,7 @@
     "status_text": "TRH UZAVŘEN (VÍKENDOVÁ PAUZA)",
     "next_open_cet": "11.10.2026 23:00:00",
     "next_open_timestamp": 1791752400.0,
-    "time_to_open_sec": 111330,
+    "time_to_open_sec": 111199,
     "trading_hours": {
       "start": "Neděle 23:00 SEČ (17:00 NY EST / 22:00 UTC)",
       "end": "Pátek 23:00 SEČ (17:00 NY EST / 21:00 UTC)",
@@ -40,32 +40,32 @@
   },
   "active_positions": [
     {
-      "id": "POS-20261010-968",
+      "id": "POS-20261010-120",
       "symbol_raw": "BTCUSD",
       "symbol": "BTC/USD",
       "name": "Bitcoin Spot 24/7",
-      "direction": "LONG",
-      "entry_price": 82812.41,
-      "current_price": 82800.02,
-      "sl": 82762.41,
-      "tp": 82882.41,
-      "stop_loss": 82762.41,
-      "take_profit_1": 82882.41,
-      "take_profit_2": 82917.41,
+      "direction": "SHORT",
+      "entry_price": 82778.0,
+      "current_price": 82780.01,
+      "sl": 82828.0,
+      "tp": 82708.0,
+      "stop_loss": 82828.0,
+      "take_profit_1": 82708.0,
+      "take_profit_2": 82673.0,
       "qty": "0.02 BTC ($1656)",
       "size": "0.02 BTC ($1656 / marže $83)",
       "qty_num": 0.02,
-      "invested_usd": 1656.25,
-      "margin_usd": 82.81,
-      "open_time": "10.10.2026 16:02:48",
-      "open_timestamp": 1791640968.586726,
-      "entry_reason": "Kvantitativní LONG signál [VWAP Mean Reversion]: Pásmová rovnováha (ER=0.22 < 0.28), cena pod VWAP (82812.41 < 82831.35) s absorpčním odrazem.",
-      "strategy_name": "VWAP Mean Reversion",
-      "strategy_trigger": "Kvantitativní LONG signál [VWAP Mean Reversion]: Pásmová rovnováha (ER=0.22 < 0.28), cena pod VWAP (82812.41 < 82831.35) s absorpčním odrazem.",
-      "unrealized_pnl_usd": -0.25,
-      "unrealized_pnl_czk": -5.75,
+      "invested_usd": 1655.56,
+      "margin_usd": 82.78,
+      "open_time": "10.10.2026 16:05:20",
+      "open_timestamp": 1791641120.049815,
+      "entry_reason": "Kvantitativní SHORT signál [KAMA Momentum Breakdown]: Trendový cyklus (ER=1.00 >= 0.28), cena (82778.00) vykazuje prodejní tlak pod KAMA (82789.95) a pod VWAP (82829.75).",
+      "strategy_name": "KAMA Momentum Breakdown",
+      "strategy_trigger": "Kvantitativní SHORT signál [KAMA Momentum Breakdown]: Trendový cyklus (ER=1.00 >= 0.28), cena (82778.00) vykazuje prodejní tlak pod KAMA (82789.95) a pod VWAP (82829.75).",
+      "unrealized_pnl_usd": -0.04,
+      "unrealized_pnl_czk": -0.93,
       "be_moved": false,
-      "atr": 7.79
+      "atr": 8.96
     }
   ],
   "pending_orders": [],
@@ -1120,7 +1120,7 @@
   "ibkr_live_account": {
     "account_id": "DUR222134",
     "status": "PŘIPOJENO K IBKR DEMO (PORT 7497)",
-    "last_synced_cet": "10.10.2026 16:04:22",
+    "last_synced_cet": "10.10.2026 16:06:43",
     "net_liquidation_czk": 246240.64,
     "net_liquidation_usd": 10613.82,
     "available_funds_czk": 205748.39,
@@ -1135,6 +1135,6 @@
     "portfolio": []
   },
   "current_symbol": "BTCUSD",
-  "btc_spot": 82800.02,
+  "btc_spot": 82780.01,
   "gold_spot": 4195.86
 }
