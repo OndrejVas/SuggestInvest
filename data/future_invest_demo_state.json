@@ -1,6 +1,6 @@
 {
-  "sync_time_cet": "19.10.2026 23:00:32",
-  "sync_timestamp_iso": "2026-10-19T23:00:32.244752",
+  "sync_time_cet": "19.10.2026 23:04:44",
+  "sync_timestamp_iso": "2026-10-19T23:04:44.484908",
   "account_id": "DUR222134",
   "gateway_connected": true,
   "gateway_disconnect_minutes": 0,
@@ -23,7 +23,7 @@
     "gold_proxies": "GLD, GDX, NEM, GOLD, FCX, AGI, MGC",
     "silver_proxies": "SLV, SIL, SILJ, PAAS, HL, AG, PSLV",
     "system_date": "19. 10. 2026",
-    "system_time": "23:00:32 CET",
+    "system_time": "23:04:44 CET",
     "recent_news": [
       {
         "id": 30106,
@@ -233,7 +233,7 @@
       "is_start": true
     },
     {
-      "time": "19.10. 23:00 (Nyní)",
+      "time": "19.10. 23:04 (Nyní)",
       "equity_czk": 228237.23,
       "equity_usd": 10534.36,
       "is_start": false
@@ -285,108 +285,108 @@
       "best_bid": 4192.9,
       "best_ask": 4193.1,
       "spread_ticks": 2.0,
-      "wobi_10": -0.081,
-      "micro_skew_ticks": -0.33,
+      "wobi_10": 0.1599,
+      "micro_skew_ticks": 0.67,
       "bid_wall_detected": false,
       "ask_wall_detected": false,
       "bid_levels": [
         {
           "price": 4192.9,
-          "size": 6.6
+          "size": 15.5
         },
         {
           "price": 4192.8,
-          "size": 10.0
+          "size": 5.6
         },
         {
           "price": 4192.7,
-          "size": 3.5
+          "size": 2.5
         },
         {
           "price": 4192.6,
-          "size": 3.2
+          "size": 6.5
         },
         {
           "price": 4192.5,
-          "size": 14.7
+          "size": 6.1
         },
         {
           "price": 4192.4,
-          "size": 6.8
+          "size": 4.2
         },
         {
           "price": 4192.3,
-          "size": 11.2
+          "size": 12.9
         },
         {
           "price": 4192.2,
-          "size": 6.8
+          "size": 7.3
         },
         {
           "price": 4192.1,
-          "size": 14.1
+          "size": 4.1
         },
         {
           "price": 4192.0,
-          "size": 8.5
+          "size": 12.6
         }
       ],
       "ask_levels": [
         {
           "price": 4193.1,
-          "size": 13.2
+          "size": 3.1
         },
         {
           "price": 4193.2,
-          "size": 2.4
+          "size": 9.8
         },
         {
           "price": 4193.3,
-          "size": 9.1
+          "size": 4.1
         },
         {
           "price": 4193.4,
-          "size": 9.6
+          "size": 6.1
         },
         {
           "price": 4193.5,
-          "size": 14.4
+          "size": 10.9
         },
         {
           "price": 4193.6,
-          "size": 3.7
+          "size": 9.5
         },
         {
           "price": 4193.7,
-          "size": 3.2
+          "size": 4.9
         },
         {
           "price": 4193.8,
-          "size": 7.1
+          "size": 8.1
         },
         {
           "price": 4193.9,
-          "size": 9.9
+          "size": 3.3
         },
         {
           "price": 4194.0,
-          "size": 5.5
+          "size": 9.5
         }
       ],
-      "total_bid_depth": 85.4,
-      "total_ask_depth": 78.1
+      "total_bid_depth": 77.3,
+      "total_ask_depth": 69.3
     },
     "execution_long": {
       "allow": true,
       "style": "DEFENSIVE_PASSIVE_JOIN (34% expozice)",
       "limit_price": 4192.9,
-      "reason": "[MAKRO TLUMENÍ 0.34x - ODLIV DO AI/10Y SAZEB] PASSIVE_BID_SAVES_SPREAD (WOBI=-0.08)"
+      "reason": "[MAKRO TLUMENÍ 0.34x - ODLIV DO AI/10Y SAZEB] PASSIVE_BID_SAVES_SPREAD (WOBI=+0.16)"
     },
     "execution_short": {
-      "allow": true,
-      "style": "EMPOWERED_PASSIVE_JOIN_BEST_ASK (135% síla)",
-      "limit_price": 4193.1,
-      "reason": "[MAKRO ZVÝHODNĚNÍ 1.35x] PASSIVE_ASK_SAVES_SPREAD (WOBI=-0.08)"
+      "allow": false,
+      "style": "EMPOWERED_VETO_BULLISH_BOOK (135% síla)",
+      "limit_price": 0.0,
+      "reason": "[MAKRO ZVÝHODNĚNÍ 1.35x] BLOCKED_SHORT_BY_POSITIVE_WOBI (+0.16)"
     }
   },
   "dom_silver_l2": {
@@ -400,96 +400,96 @@
       "best_bid": 32.45,
       "best_ask": 32.45,
       "spread_ticks": 2.0,
-      "wobi_10": 0.0266,
-      "micro_skew_ticks": 0.44,
+      "wobi_10": 0.0919,
+      "micro_skew_ticks": 0.1,
       "bid_wall_detected": false,
       "ask_wall_detected": false,
       "bid_levels": [
         {
           "price": 32.45,
-          "size": 21.5
+          "size": 17.2
         },
         {
           "price": 32.44,
-          "size": 20.0
-        },
-        {
-          "price": 32.44,
-          "size": 16.9
-        },
-        {
-          "price": 32.43,
-          "size": 12.5
-        },
-        {
-          "price": 32.42,
-          "size": 12.9
-        },
-        {
-          "price": 32.42,
-          "size": 17.6
-        },
-        {
-          "price": 32.41,
-          "size": 18.5
-        },
-        {
-          "price": 32.41,
-          "size": 10.2
-        },
-        {
-          "price": 32.41,
           "size": 10.0
         },
         {
+          "price": 32.44,
+          "size": 23.6
+        },
+        {
+          "price": 32.43,
+          "size": 11.6
+        },
+        {
+          "price": 32.42,
+          "size": 19.2
+        },
+        {
+          "price": 32.42,
+          "size": 13.7
+        },
+        {
+          "price": 32.41,
+          "size": 18.1
+        },
+        {
+          "price": 32.41,
+          "size": 25.9
+        },
+        {
+          "price": 32.41,
+          "size": 17.8
+        },
+        {
           "price": 32.4,
-          "size": 11.3
+          "size": 7.0
         }
       ],
       "ask_levels": [
         {
           "price": 32.45,
-          "size": 8.4
+          "size": 14.0
         },
         {
           "price": 32.46,
-          "size": 32.5
+          "size": 12.8
         },
         {
           "price": 32.47,
-          "size": 11.6
+          "size": 8.0
         },
         {
           "price": 32.47,
-          "size": 21.3
+          "size": 17.8
         },
         {
           "price": 32.48,
-          "size": 17.1
+          "size": 7.7
         },
         {
           "price": 32.48,
-          "size": 20.7
+          "size": 14.7
         },
         {
           "price": 32.48,
-          "size": 5.7
+          "size": 20.1
         },
         {
           "price": 32.49,
-          "size": 11.2
+          "size": 21.9
         },
         {
           "price": 32.49,
-          "size": 17.2
+          "size": 25.1
         },
         {
           "price": 32.5,
-          "size": 17.4
+          "size": 11.8
         }
       ],
-      "total_bid_depth": 151.4,
-      "total_ask_depth": 163.1
+      "total_bid_depth": 164.1,
+      "total_ask_depth": 153.9
     },
     "execution_long": {
       "allow": true,
@@ -617,7 +617,7 @@
     "consistent": true,
     "status_code": "CONSISTENT_LIVE",
     "status_label": "🟢 100% KONZISTENTNÍ (ŽIVÝ FEED AKTIVNÍ)",
-    "system_time": "19. 10. 2026 23:00:32 CET",
+    "system_time": "19. 10. 2026 23:04:44 CET",
     "last_candle_time": "2026-10-16 22:00",
     "last_macro_date": "2026-10-16",
     "gap_hours": 0,
@@ -636,7 +636,7 @@
     "bot_mode": "READY_STANDBY_WEEKEND",
     "bot_status_label": "🟢 PŘIPRAVEN (Button ON • Start v Ne 24:00 CET)",
     "bot_active": true,
-    "last_evaluation": "19.10.2026 23:00:32",
+    "last_evaluation": "19.10.2026 23:04:44",
     "active_strategies": [
       "Strat 2: Argon L2 DOM Gate Scalper",
       "Strat 4: Cross-Asset Macro Yield Bridge",
@@ -646,14 +646,14 @@
     "current_action": "Systém je 100% připraven k první investici. Burza CME Globex je přes víkend uzavřena. Jakmile trh v neděli ve 24:00 CET otevře, bot automaticky zahájí živé obchodování.",
     "last_signal": "WAITING_GLOBEX_OPEN",
     "target_contract": "COMEX Micro Gold (MGCZ6 Dec 2026)",
-    "wobi_signal": "-8.10%",
+    "wobi_signal": "+15.99%",
     "macro_bias": "Long 0.34x / Short 1.35x"
   },
   "silver_trading_bot": {
     "bot_mode": "READY_STANDBY_WEEKEND",
     "bot_status_label": "🟢 PŘIPRAVEN (Button ON • Start v Ne 24:00 CET)",
     "bot_active": true,
-    "last_evaluation": "19.10.2026 23:00:32",
+    "last_evaluation": "19.10.2026 23:04:44",
     "commodity": "SILVER",
     "active_strategies": [
       "Strat 1: Trend KAMA Pullback",
@@ -667,7 +667,7 @@
     "current_action": "Systém je 100% připraven k samostatné exekuci Stříbra (SIL). Burza CME Globex je přes víkend uzavřena. Jakmile v neděli ve 24:00 CET otevře, bot zahájí nezávislé obchodování.",
     "last_signal": "WAITING_GLOBEX_OPEN",
     "target_contract": "COMEX Micro Silver (SILZ6 Dec 2026)",
-    "wobi_signal": "+2.66%",
+    "wobi_signal": "+9.19%",
     "shanghai_premium": "+1.85%"
   }
 }
