@@ -91,6 +91,13 @@ def sync_to_github(trigger_reason="Scheduled Sync"):
     # 1. Verify security gates
     verify_security_gates()
 
+    # 2. Bake latest live data snapshots (portfolio, 2026 backtest, balances) into HTML dashboards
+    try:
+        from scripts.bake_snapshots import bake_all_snapshots
+        bake_all_snapshots()
+    except Exception as e:
+        logging.warning(f"Snapshot baking warning: {e}")
+
     # 3. Stage relevant pages and telemetry JSON files
     stage_targets = [
         ".gitignore",
@@ -112,6 +119,7 @@ def sync_to_github(trigger_reason="Scheduled Sync"):
         "index.html",
         "template.html",
         "scripts/inject_security_gate.py",
+        "scripts/bake_snapshots.py",
         "scripts/git_scheduled_sync.py",
         "start_scheduled_sync.bat",
         # Data files

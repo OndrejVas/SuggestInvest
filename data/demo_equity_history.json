@@ -1,14 +1,14 @@
 [
   {
     "time": "17.10. 09:00 (Start Demo)",
-    "equity_czk": 228239.05,
-    "equity_usd": 10534.45,
+    "equity_czk": 228234.96,
+    "equity_usd": 10534.26,
     "is_start": true
   },
   {
-    "time": "19.10. 23:22 (Nyní)",
-    "equity_czk": 228239.05,
-    "equity_usd": 10534.45,
+    "time": "19.10. 23:55 (Nyní)",
+    "equity_czk": 228234.96,
+    "equity_usd": 10534.26,
     "is_start": false
   }
 ]

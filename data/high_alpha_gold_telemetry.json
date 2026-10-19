@@ -1,10 +1,10 @@
 {
-  "updated_at_utc": "2026-10-19T20:25:29.764481+00:00",
-  "updated_at_cet": "19. 10. 2026, 22:25:29 SELČ",
+  "updated_at_utc": "2026-10-19T21:25:34.316645+00:00",
+  "updated_at_cet": "19. 10. 2026, 23:25:34 SELČ",
   "intraday_macro_micro": {
     "gvz_gold_vix": 22.79,
-    "equity_vix": 18.39,
-    "gvz_to_vix_ratio": 1.239,
+    "equity_vix": 18.43,
+    "gvz_to_vix_ratio": 1.237,
     "gold_specific_vol_stress": true,
     "tip_ief_ratio": 1.16856,
     "tip_ief_24h_chg_pct": -0.008,

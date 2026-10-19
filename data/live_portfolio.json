@@ -1,5 +1,5 @@
 {
-  "timestamp_cet": "19.10.2026 23:22:37",
+  "timestamp_cet": "19.10.2026 23:55:29",
   "account_id": "DUR222134",
   "is_authenticated": true,
   "connection_source": "IBKR_GATEWAY_SOCKET_7497",
@@ -7,12 +7,12 @@
   "strategy_mode": "AGGRESSIVE_MOMENTUM",
   "laggard_pnl_threshold": -2.5,
   "laggards_count": 0,
-  "cash_czk": 280064.36,
+  "cash_czk": 280049.29,
   "reserved_cash_czk": 0,
-  "free_cash_czk": 280064.36,
-  "equity_czk": 228239.05,
-  "buying_power_czk": 1399350.38,
-  "gross_position_czk": 51494.25,
+  "free_cash_czk": 280049.29,
+  "equity_czk": 228234.96,
+  "buying_power_czk": 1399341.36,
+  "gross_position_czk": 51483.38,
   "open_positions": [
     {
       "symbol": "RHM",

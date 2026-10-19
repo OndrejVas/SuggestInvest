@@ -1,9 +1,18 @@
 [
   {
-    "from": "19.10.2026 21:25:15",
-    "to": "19.10.2026 21:26:14",
-    "duration_sec": 58,
-    "duration_str": "58 s",
+    "from": "19.10.2026 23:45:05",
+    "to": "19.10.2026 23:45:30",
+    "duration_sec": 24,
+    "duration_str": "24 s",
+    "duration_min": 1,
+    "status": "Obnoveno",
+    "reason": "Watchdog Auto-Recovery (Port 7497)"
+  },
+  {
+    "from": "19.10.2026 21:25:17",
+    "to": "19.10.2026 21:25:49",
+    "duration_sec": 31,
+    "duration_str": "31 s",
     "duration_min": 1,
     "status": "Obnoveno",
     "reason": "Watchdog Auto-Recovery (Port 7497)"
@@ -74,15 +83,6 @@
   {
     "from": "17.10.2026 23:50:44",
     "to": "17.10.2026 23:51:09",
-    "duration_sec": 25,
-    "duration_str": "25 s",
-    "duration_min": 1,
-    "status": "Obnoveno",
-    "reason": "Watchdog Auto-Recovery (Port 7497)"
-  },
-  {
-    "from": "17.10.2026 23:45:05",
-    "to": "17.10.2026 23:45:30",
     "duration_sec": 25,
     "duration_str": "25 s",
     "duration_min": 1,

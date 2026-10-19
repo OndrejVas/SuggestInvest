@@ -37,6 +37,8 @@ data/cache/
 data/historical/
 data/system_telemetry_history.jsonl
 export_argon/
+argon_silver_audit_package/
+analyza_modelu_silver_backtest/
 extracted_argon_input.txt
 summary_sections.txt
 *.tmp
