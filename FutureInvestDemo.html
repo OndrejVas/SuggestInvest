@@ -292,6 +292,94 @@
             }
         }
 
+        /* L2 DOM DUAL GRID LAYOUT (AU & AG SIDE-BY-SIDE) */
+        .dom-grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            width: 100%;
+        }
+
+        @media (max-width: 1080px) {
+            .dom-grid-layout {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* MINIMALIST L2 DOM STYLING */
+        .dom-minimal .panel-header {
+            padding: 8px 14px;
+        }
+
+        .dom-minimal .panel-title {
+            font-size: 0.88rem;
+        }
+
+        .dom-minimal .dom-summary {
+            padding: 6px 10px;
+            margin-bottom: 8px;
+            gap: 6px;
+        }
+
+        .dom-minimal .dom-metric-pill .lbl {
+            font-size: 0.64rem;
+        }
+
+        .dom-minimal .dom-metric-pill .val {
+            font-size: 0.86rem;
+        }
+
+        .dom-minimal .wobi-bar-wrap {
+            margin-bottom: 8px;
+            gap: 2px;
+        }
+
+        .dom-minimal .wobi-track {
+            height: 6px;
+        }
+
+        .dom-minimal .ladder-table th {
+            padding: 3px 6px !important;
+            font-size: 0.67rem !important;
+        }
+
+        .dom-minimal .ladder-table td {
+            padding: 2.5px 6px !important;
+            font-size: 0.72rem !important;
+            line-height: 1.2 !important;
+        }
+
+        /* DENSE TRADES TABLE STYLING */
+        .trades-dense-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.72rem;
+        }
+
+        .trades-dense-table th {
+            padding: 4px 6px !important;
+            font-size: 0.67rem !important;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            background: #0c1322;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .trades-dense-table td {
+            padding: 3px 6px !important;
+            font-size: 0.72rem !important;
+            line-height: 1.2 !important;
+            vertical-align: middle;
+            white-space: nowrap;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .trades-dense-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.035);
+        }
+
         .panel {
             background: var(--bg-panel);
             border: 1px solid var(--border);
@@ -2045,293 +2133,274 @@
         </div>
     </div>
 
-    <!-- 2-COLUMN MAIN CONTENT -->
-    <div class="main-layout">
-        <!-- LEFT COLUMN: POSITIONS & EQUITY CHART -->
-        <div style="display:flex; flex-direction:column; gap:16px;">
-            <!-- OPEN POSITIONS -->
-            <div class="panel">
-                <div class="panel-header" style="flex-wrap:wrap; gap:10px;">
-                    <div>
-                        <div class="panel-title" id="positionsPanelTitle">📦 Otevřené pozice na IBKR Demo (Zlato MGC / Stříbro SIL)</div>
-                        <div class="panel-sub">Aktuální stav účtu DUR222134 • Všechny částky výhradně v USD</div>
+    <!-- 1. FULL-WIDTH: OPEN POSITIONS ON IBKR DEMO -->
+    <div class="panel" style="width:100%; margin-bottom:16px;">
+        <div class="panel-header" style="flex-wrap:wrap; gap:10px;">
+            <div>
+                <div class="panel-title" id="positionsPanelTitle">📦 Otevřené pozice na IBKR Demo (Zlato MGC / Stříbro SIL)</div>
+                <div class="panel-sub">Aktuální stav účtu DUR222134 • Všechny částky výhradně v USD</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <div class="pos-filter-group" title="Filtrovat otevřené pozice podle instrumentu">
+                    <button type="button" class="btn-pos-filter active" id="posFilterAll" onclick="setPosFilter('ALL')">Vše</button>
+                    <button type="button" class="btn-pos-filter" id="posFilterGold" onclick="setPosFilter('GOLD')">🥇 Zlato</button>
+                    <button type="button" class="btn-pos-filter" id="posFilterSilver" onclick="setPosFilter('SILVER')">🥈 Stříbro</button>
+                </div>
+                <span id="commSessionBadge" class="badge badge-live-green">
+                    🟢 TRH OTEVŘEN (CME Globex)
+                </span>
+                <span id="posCountBadge" class="badge" style="background:rgba(255,255,255,0.08); color:#cbd5e1;">0 pozic</span>
+            </div>
+        </div>
+
+        <!-- COMMODITY TRADING HOURS & ACTIVE CONTRACTS BANNER (AU + AG) -->
+        <div style="background:#0a0f1d; border-bottom:1px solid var(--border); padding:8px 14px; font-size:0.75rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <span style="color:var(--text-dim); font-weight:700;">⏰ TRADING ČASY COMEX (GLOBEX):</span>
+                <strong id="commHoursSchedule" style="color:#93c5fd; font-family:var(--font-mono);">Ne 18:00 CT – Pá 17:00 CT (CET: Ne 24:00 – Pá 23:00)</strong>
+                <span style="color:var(--text-muted);">• Denní pauza: 23:00 – 00:00 CET</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;" id="commActiveContractWrap">
+                <span style="color:var(--text-dim); font-size:0.75rem;">Aktivní kontrakt:</span>
+                <span id="commActiveContract" style="display:inline-flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                    <span id="commActiveContractAu" class="badge" style="background:rgba(245,158,11,0.18); color:#fbbf24; border:1px solid rgba(245,158,11,0.4); font-family:var(--font-mono); font-size:0.75rem; font-weight:800;" title="COMEX Micro Gold Front-Month kontrakt">🥇 AU: MGCZ6 (Prosinec 2026)</span>
+                    <span id="commActiveContractAg" class="badge" style="background:rgba(148,163,184,0.18); color:#cbd5e1; border:1px solid rgba(148,163,184,0.4); font-family:var(--font-mono); font-size:0.75rem; font-weight:800;" title="COMEX Micro Silver Front-Month kontrakt">🥈 AG: SILZ6 (Prosinec 2026)</span>
+                </span>
+                <span style="color:var(--text-dim); margin-left:6px; font-size:0.75rem;">Status trhu:</span>
+                <strong id="commMarketStatusText" style="color:var(--green); font-family:var(--font-mono); font-size:0.76rem;">🟢 OTEVŘENO</strong>
+            </div>
+        </div>
+
+        <div class="panel-body" style="padding:0;">
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kontrakt / Instrument</th>
+                            <th>Trading časy burzy</th>
+                            <th class="text-right">Objem (Ktr)</th>
+                            <th class="text-right">Kupní cena ($)</th>
+                            <th class="text-right">Tržní cena ($)</th>
+                            <th class="text-right">Stop-Loss (SL $)</th>
+                            <th class="text-right">Take-Profit (TP $)</th>
+                            <th class="text-right">Nerealizovaný P&L ($)</th>
+                            <th class="text-right">Realizovaný kumul. zisk ($)</th>
+                            <th class="text-center" style="width:160px;">Rychlá akce</th>
+                        </tr>
+                    </thead>
+                    <tbody id="positionsTbody">
+                        <tr><td colspan="10" class="text-center" style="padding:16px; color:var(--text-dim);">Načítám pozice z dema...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. FULL-WIDTH: EQUITY CHART OVER TIME -->
+    <div class="panel" style="width:100%; margin-bottom:16px;">
+        <div class="panel-header" style="flex-wrap:wrap; gap:10px;">
+            <div>
+                <div class="panel-title">📈 Vývoj hodnoty portfolia v čase (Nárůst od začátku Demo účtu)</div>
+                <div class="panel-sub">Pevná křivka od založení účtu DUR222134 (neklouže) • Všechny hodnoty v USD</div>
+            </div>
+            <span id="chartBaselineBadge" class="badge" style="background:rgba(59,130,246,0.15); color:#60a5fa; border:1px solid rgba(59,130,246,0.4); font-family:var(--font-mono);">
+                Počáteční vklad: $10,000 USD
+            </span>
+        </div>
+        <div class="panel-body">
+            <div class="chart-box" style="height:230px;">
+                <canvas id="equityCanvas"></canvas>
+            </div>
+            <div class="chart-stats-row" style="flex-wrap:wrap; gap:12px;">
+                <div>Počáteční vklad: <strong id="chartStartVal">$10,000.00</strong></div>
+                <div>Aktuální stav: <strong id="chartCurrentVal">$10,000.00</strong></div>
+                <div>Nárůst balance: <strong id="chartDiffVal">+$0.00 (0.00 %)</strong></div>
+                <div>Reálné MGC obchody: <strong id="chartMgcStatus" style="color:#60a5fa;">0 obchodů (Zatím nezačalo)</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. SIDE-BY-SIDE: L2 MARKET DEPTH AU & AG (MINIMALIST) -->
+    <div class="dom-grid-layout" style="margin-bottom:16px;">
+        <!-- ARGON V2.5 L2 MARKET DEPTH (DOM 10) • ZLATO AU (MGC) -->
+        <div class="panel dom-minimal" id="domPanel">
+            <div class="panel-header" style="flex-wrap:wrap; gap:8px;">
+                <div>
+                    <div class="panel-title" id="domPanelTitle">⚡ Hloubka trhu L2 • COMEX Zlato AU (MGC)</div>
+                    <div class="panel-sub" id="domPanelSub">Argon V2.5 mikroanalýza (MGC 10 oz • tick $0.10)</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:6px;">
+                    <span class="badge" style="background:rgba(251,191,36,0.15); color:#fbbf24; border:1px solid rgba(251,191,36,0.35); font-size:0.72rem; padding:2px 6px;">
+                        🥇 MGCZ6
+                    </span>
+                    <span id="spreadBadge" class="badge" style="background:rgba(59,130,246,0.15); color:#60a5fa; border:1px solid rgba(59,130,246,0.4); font-size:0.72rem; padding:2px 6px;">
+                        Spread: -- ticks
+                    </span>
+                </div>
+            </div>
+            <div class="panel-body" style="padding:10px;">
+                <!-- DISCONNECT ALERT -->
+                <div id="domFrozenAlert" style="display:none; margin-bottom:8px; background:rgba(239,68,68,0.18); border:1px solid #ef4444; border-radius:4px; padding:8px 12px; color:#fca5a5; font-size:0.78rem; font-weight:700;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                        <div>⚠️ <strong>IB Gateway 7497 odpojena</strong> • Data zmrazena.</div>
+                        <button id="btnBannerLaunchGateway" onclick="toggleGatewayPower('START')" style="background:#10b981; color:#ffffff; border:none; padding:4px 10px; border-radius:4px; font-weight:800; cursor:pointer; font-size:0.75rem;">
+                            ⚡ Nahodit port 7497
+                        </button>
                     </div>
-                    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                        <div class="pos-filter-group" title="Filtrovat otevřené pozice podle instrumentu">
-                            <button type="button" class="btn-pos-filter active" id="posFilterAll" onclick="setPosFilter('ALL')">Vše</button>
-                            <button type="button" class="btn-pos-filter" id="posFilterGold" onclick="setPosFilter('GOLD')">🥇 Zlato</button>
-                            <button type="button" class="btn-pos-filter" id="posFilterSilver" onclick="setPosFilter('SILVER')">🥈 Stříbro</button>
+                </div>
+
+                <div id="domContentWrap" style="transition: opacity 0.3s ease;">
+                    <!-- METRICS ROW -->
+                    <div class="dom-summary">
+                        <div class="dom-metric-pill">
+                            <span class="lbl">Best Bid</span>
+                            <span class="val val-pos" id="domBestBid">--</span>
                         </div>
-                        <span id="commSessionBadge" class="badge badge-live-green">
-                            🟢 TRH OTEVŘEN (CME Globex)
-                        </span>
-                        <span id="posCountBadge" class="badge" style="background:rgba(255,255,255,0.08); color:#cbd5e1;">0 pozic</span>
+                        <div class="dom-metric-pill">
+                            <span class="lbl">Best Ask</span>
+                            <span class="val val-neg" id="domBestAsk">--</span>
+                        </div>
+                        <div class="dom-metric-pill">
+                            <span class="lbl">WOBI (10 p.)</span>
+                            <span class="val" id="domWobiVal">0.00</span>
+                        </div>
+                        <div class="dom-metric-pill">
+                            <span class="lbl">Micro-Skew</span>
+                            <span class="val" id="domMicroSkew">0.00 t</span>
+                        </div>
                     </div>
-                </div>
 
-                <!-- COMMODITY TRADING HOURS & SCHEDULE BANNER -->
-                <div style="background:#0a0f1d; border-bottom:1px solid var(--border); padding:8px 14px; font-size:0.75rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-                    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                        <span style="color:var(--text-dim); font-weight:700;">⏰ OBCHODNÍ HODINY COMEX ZLATO (MGC):</span>
-                        <strong id="commHoursSchedule" style="color:#93c5fd; font-family:var(--font-mono);">Ne 18:00 CT – Pá 17:00 CT (CET: Ne 24:00 – Pá 23:00)</strong>
-                        <span style="color:var(--text-muted);">• Denní pauza: 23:00 – 00:00 CET</span>
+                    <!-- WOBI BALANCE BAR -->
+                    <div class="wobi-bar-wrap">
+                        <div class="wobi-label-row">
+                            <span style="color:var(--green); font-size:0.68rem;">BID (<span id="domBidDepth">--</span> k)</span>
+                            <span style="color:var(--red); font-size:0.68rem;">ASK (<span id="domAskDepth">--</span> k)</span>
+                        </div>
+                        <div class="wobi-track">
+                            <div id="wobiFillBid" class="wobi-fill-bid" style="width: 50%;"></div>
+                            <div id="wobiFillAsk" class="wobi-fill-ask" style="width: 50%;"></div>
+                            <div class="wobi-center-line"></div>
+                        </div>
                     </div>
-                    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
-                        <span style="color:var(--text-dim);">Aktivní kontrakt:</span>
-                        <strong id="commActiveContract" style="color:#fbbf24; font-family:var(--font-mono); font-size:0.76rem;" title="Front-Month kontrakt s nejvyšším objemem obchodů a nejužším spreadem">MGCZ6 (Prosinec 2026) • Front-Month (95.4 % likvidity)</strong>
-                        <span style="color:var(--text-dim);">Status trhu:</span>
-                        <strong id="commMarketStatusText" style="color:var(--green); font-family:var(--font-mono);">🟢 OTEVŘENO</strong>
-                    </div>
-                </div>
 
-                <div class="panel-body" style="padding:0;">
+                    <!-- WALL ALERTS IF ANY -->
+                    <div id="domWallAlerts" style="margin-bottom:6px; display:none;"></div>
+
+                    <!-- EXECUTION STYLE BADGES -->
+                    <div style="background:#090d16; border:1px solid var(--border); border-radius:4px; padding:6px 10px; margin-bottom:8px; font-size:0.72rem; display:flex; justify-content:space-between; align-items:center;">
+                        <span style="color:var(--text-dim);">Exekuce AU:</span>
+                        <div style="display:flex; gap:6px;">
+                            <span id="execLongStyle" class="exec-style-badge style-passive" style="font-size:0.65rem; padding:1px 5px;">LONG: PASSIVE</span>
+                            <span id="execShortStyle" class="exec-style-badge style-passive" style="font-size:0.65rem; padding:1px 5px;">SHORT: PASSIVE</span>
+                        </div>
+                    </div>
+
+                    <!-- 10-LEVEL LADDER GOLD -->
                     <div class="table-wrap">
-                        <table>
+                        <table class="ladder-table">
                             <thead>
                                 <tr>
-                                    <th>Kontrakt / Instrument</th>
-                                    <th>Trading časy burzy</th>
-                                    <th class="text-right">Objem (Ktr)</th>
-                                    <th class="text-right">Kupní cena ($)</th>
-                                    <th class="text-right">Tržní cena ($)</th>
-                                    <th class="text-right">Stop-Loss (SL $)</th>
-                                    <th class="text-right">Take-Profit (TP $)</th>
-                                    <th class="text-right">Nerealizovaný P&L ($)</th>
-                                    <th class="text-right">Realizovaný kumul. zisk ($)</th>
-                                    <th class="text-center" style="width:160px;">Rychlá akce</th>
+                                    <th class="text-right" style="color:var(--green); width:35%;">Bid Obj.</th>
+                                    <th class="text-center" style="color:var(--green); width:15%;">Bid</th>
+                                    <th class="text-center" style="color:var(--red); width:15%;">Ask</th>
+                                    <th style="color:var(--red); width:35%;">Ask Obj.</th>
                                 </tr>
                             </thead>
-                            <tbody id="positionsTbody">
-                                <tr><td colspan="10" class="text-center" style="padding:16px; color:var(--text-dim);">Načítám pozice z dema...</td></tr>
+                            <tbody id="domLadderBody">
+                                <tr><td colspan="4" class="text-center" style="padding:6px; color:var(--text-dim);">Načítám knihu objednávek (MGC)...</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- EQUITY CHART OVER TIME -->
-            <div class="panel">
-                <div class="panel-header" style="flex-wrap:wrap; gap:10px;">
-                    <div>
-                        <div class="panel-title">📈 Vývoj hodnoty portfolia v čase (Nárůst od začátku Demo účtu)</div>
-                        <div class="panel-sub">Pevná křivka od založení účtu DUR222134 (neklouže) • Všechny hodnoty v USD</div>
-                    </div>
-                    <span id="chartBaselineBadge" class="badge" style="background:rgba(59,130,246,0.15); color:#60a5fa; border:1px solid rgba(59,130,246,0.4); font-family:var(--font-mono);">
-                        Počáteční vklad: $10,000 USD
+        <!-- SILVEREDGE V2.5.1 L2 MARKET DEPTH (DOM 10) • STŘÍBRO AG (SIL) -->
+        <div class="panel dom-minimal" id="domPanelSilver">
+            <div class="panel-header" style="flex-wrap:wrap; gap:8px;">
+                <div>
+                    <div class="panel-title" id="silverDomPanelTitle">⚡ Hloubka trhu L2 • COMEX Stříbro AG (SIL)</div>
+                    <div class="panel-sub" id="silverDomPanelSub">SilverEdge v2.5.1 mikroanalýza (SIL 1 000 oz • tick $0.005)</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:6px;">
+                    <span class="badge" style="background:rgba(148,163,184,0.15); color:#cbd5e1; border:1px solid rgba(148,163,184,0.35); font-size:0.72rem; padding:2px 6px;">
+                        🥈 SILZ6
+                    </span>
+                    <span id="silverSpreadBadge" class="badge" style="background:rgba(59,130,246,0.15); color:#60a5fa; border:1px solid rgba(59,130,246,0.4); font-size:0.72rem; padding:2px 6px;">
+                        Spread: -- ticks
                     </span>
                 </div>
-                <div class="panel-body">
-                    <div class="chart-box">
-                        <canvas id="equityCanvas"></canvas>
+            </div>
+            <div class="panel-body" style="padding:10px;">
+                <div id="silverDomContentWrap" style="transition: opacity 0.3s ease;">
+                    <!-- SILVER DOM METRICS ROW -->
+                    <div class="dom-summary">
+                        <div class="dom-metric-pill">
+                            <span class="lbl">Best Bid</span>
+                            <span class="val val-pos" id="silverDomBestBid">--</span>
+                        </div>
+                        <div class="dom-metric-pill">
+                            <span class="lbl">Best Ask</span>
+                            <span class="val val-neg" id="silverDomBestAsk">--</span>
+                        </div>
+                        <div class="dom-metric-pill">
+                            <span class="lbl">WOBI (10 p.)</span>
+                            <span class="val" id="silverDomWobiVal">0.00</span>
+                        </div>
+                        <div class="dom-metric-pill">
+                            <span class="lbl">Micro-Skew</span>
+                            <span class="val" id="silverDomMicroSkew">0.00 t</span>
+                        </div>
                     </div>
-                    <div class="chart-stats-row" style="flex-wrap:wrap; gap:12px;">
-                        <div>Počáteční vklad: <strong id="chartStartVal">$10,000.00</strong></div>
-                        <div>Aktuální stav: <strong id="chartCurrentVal">$10,000.00</strong></div>
-                        <div>Nárůst balance: <strong id="chartDiffVal">+$0.00 (0.00 %)</strong></div>
-                        <div>Reálné MGC obchody: <strong id="chartMgcStatus" style="color:#60a5fa;">0 obchodů (Zatím nezačalo)</strong></div>
+
+                    <!-- SILVER WOBI BALANCE BAR -->
+                    <div class="wobi-bar-wrap">
+                        <div class="wobi-label-row">
+                            <span style="color:var(--green); font-size:0.68rem;">BID (<span id="silverDomBidDepth">--</span> k)</span>
+                            <span style="color:var(--red); font-size:0.68rem;">ASK (<span id="silverDomAskDepth">--</span> k)</span>
+                        </div>
+                        <div class="wobi-track">
+                            <div id="silverWobiFillBid" class="wobi-fill-bid" style="width: 50%;"></div>
+                            <div id="silverWobiFillAsk" class="wobi-fill-ask" style="width: 50%;"></div>
+                            <div class="wobi-center-line"></div>
+                        </div>
+                    </div>
+
+                    <!-- SILVER WALL ALERTS IF ANY -->
+                    <div id="silverDomWallAlerts" style="margin-bottom:6px; display:none;"></div>
+
+                    <!-- SILVER EXECUTION STYLE BADGES -->
+                    <div style="background:#090d16; border:1px solid var(--border); border-radius:4px; padding:6px 10px; margin-bottom:8px; font-size:0.72rem; display:flex; justify-content:space-between; align-items:center;">
+                        <span style="color:var(--text-dim);">Exekuce AG:</span>
+                        <div style="display:flex; gap:6px;">
+                            <span id="silverExecLongStyle" class="exec-style-badge style-passive" style="font-size:0.65rem; padding:1px 5px;">LONG: PASSIVE</span>
+                            <span id="silverExecShortStyle" class="exec-style-badge style-passive" style="font-size:0.65rem; padding:1px 5px;">SHORT: PASSIVE</span>
+                        </div>
+                    </div>
+
+                    <!-- 10-LEVEL LADDER SILVER -->
+                    <div class="table-wrap">
+                        <table class="ladder-table">
+                            <thead>
+                                <tr>
+                                    <th class="text-right" style="color:var(--green); width:35%;">Bid Obj.</th>
+                                    <th class="text-center" style="color:var(--green); width:15%;">Bid</th>
+                                    <th class="text-center" style="color:var(--red); width:15%;">Ask</th>
+                                    <th style="color:var(--red); width:35%;">Ask Obj.</th>
+                                </tr>
+                            </thead>
+                            <tbody id="silverDomLadderBody">
+                                <tr><td colspan="4" class="text-center" style="padding:6px; color:var(--text-dim);">Načítám knihu objednávek (SIL)...</td></tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- RIGHT COLUMN: L2 DOM GATE FOR MICRO GOLD & MICRO SILVER (STACKED) -->
-        <div style="display:flex; flex-direction:column; gap:16px;">
-            <!-- ARGON V2.5 L2 MARKET DEPTH (DOM 10 ÚROVNÍ) • ZLATO (MGC) -->
-            <div class="panel" id="domPanel">
-                <div class="panel-header" style="flex-wrap:wrap; gap:8px;">
-                    <div>
-                        <div class="panel-title" id="domPanelTitle">⚡ Hloubka trhu L2 (DOM 10) • COMEX Micro Gold (MGC)</div>
-                        <div class="panel-sub" id="domPanelSub">Argon V2.5 mikrostrukturální analýza (MGC 10 oz • tick $0.10)</div>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <span class="badge" style="background:rgba(251,191,36,0.15); color:#fbbf24; border:1px solid rgba(251,191,36,0.35); font-size:0.75rem;">
-                            🥇 Front-Month MGCZ6
-                        </span>
-                        <span id="spreadBadge" class="badge" style="background:rgba(59,130,246,0.15); color:#60a5fa; border:1px solid rgba(59,130,246,0.4);">
-                            Spread: -- ticks
-                        </span>
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <!-- DISCONNECT / FROZEN WARNING BANNER -->
-                    <div id="domFrozenAlert" style="display:none; margin-bottom:12px; background:rgba(239,68,68,0.18); border:1px solid #ef4444; border-radius:6px; padding:12px 16px; color:#fca5a5; font-size:0.85rem; font-weight:700;">
-                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-                            <div>
-                                ⚠️ <strong>IB Gateway na portu 7497 je odpojena</strong> • Kniha objednávek a tržní ticky jsou ZMRAZENY.
-                                <div style="font-size:0.75rem; font-weight:normal; color:#cbd5e1; margin-top:2px;">Pro obnovení živého toku dat a zadávání objednávek můžete port nahodit přímo tlačítkem:</div>
-                            </div>
-                            <button id="btnBannerLaunchGateway" onclick="toggleGatewayPower('START')" style="background:#10b981; color:#ffffff; border:none; padding:7px 14px; border-radius:6px; font-weight:800; cursor:pointer; font-size:0.82rem; box-shadow:0 0 10px rgba(16,185,129,0.4); display:inline-flex; align-items:center; gap:6px;">
-                                <span>⚡ Nahodit port 7497 ihned</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div id="domContentWrap" style="transition: opacity 0.3s ease;">
-                        <!-- DOM METRICS ROW -->
-                        <div class="dom-summary">
-                            <div class="dom-metric-pill">
-                                <span class="lbl">Best Bid</span>
-                                <span class="val val-pos" id="domBestBid">--</span>
-                            </div>
-                            <div class="dom-metric-pill">
-                                <span class="lbl">Best Ask</span>
-                                <span class="val val-neg" id="domBestAsk">--</span>
-                            </div>
-                            <div class="dom-metric-pill">
-                                <span class="lbl">WOBI (10 pater)</span>
-                                <span class="val" id="domWobiVal">0.00</span>
-                            </div>
-                            <div class="dom-metric-pill">
-                                <span class="lbl">Micro-Skew</span>
-                                <span class="val" id="domMicroSkew">0.00 t</span>
-                            </div>
-                        </div>
-
-                        <!-- WOBI BALANCE BAR -->
-                        <div class="wobi-bar-wrap">
-                            <div class="wobi-label-row">
-                                <span style="color:var(--green);">BID PŘETLAK (<span id="domBidDepth">--</span> k)</span>
-                                <span style="color:var(--red);">ASK TLAK (<span id="domAskDepth">--</span> k)</span>
-                            </div>
-                            <div class="wobi-track">
-                                <div id="wobiFillBid" class="wobi-fill-bid" style="width: 50%;"></div>
-                                <div id="wobiFillAsk" class="wobi-fill-ask" style="width: 50%;"></div>
-                                <div class="wobi-center-line"></div>
-                            </div>
-                        </div>
-
-                        <!-- WALL ALERTS IF ANY -->
-                        <div id="domWallAlerts" style="margin-bottom:10px; display:none;"></div>
-
-                        <!-- EXECUTION GATE RECOMMENDATIONS -->
-                        <div style="background:#0a0e17; border:1px solid var(--border); border-radius:6px; padding:10px; margin-bottom:12px; font-size:0.78rem;">
-                            <div style="font-weight:700; color:var(--text-dim); text-transform:uppercase; margin-bottom:4px; font-size:0.7rem;">
-                                Exekuční brána Argon Zlato (Doporučený styl pokynu):
-                            </div>
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                                <span>Pro LONG (Nákup):</span>
-                                <span id="execLongStyle" class="exec-style-badge style-passive">PASSIVE_JOIN_BEST_BID</span>
-                            </div>
-                            <div style="display:flex; justify-content:space-between; align-items:center;">
-                                <span>Pro SHORT (Prodej):</span>
-                                <span id="execShortStyle" class="exec-style-badge style-passive">PASSIVE_JOIN_BEST_ASK</span>
-                            </div>
-                        </div>
-
-                        <!-- 10-LEVEL LADDER GOLD -->
-                        <div class="table-wrap">
-                            <table class="ladder-table">
-                                <thead>
-                                    <tr>
-                                        <th class="text-right" style="color:var(--green); width:35%;">Bid Obj.</th>
-                                        <th class="text-center" style="color:var(--green); width:15%;">Bid Cena</th>
-                                        <th class="text-center" style="color:var(--red); width:15%;">Ask Cena</th>
-                                        <th style="color:var(--red); width:35%;">Ask Obj.</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="domLadderBody">
-                                    <tr><td colspan="4" class="text-center" style="padding:8px; color:var(--text-dim);">Načítám knihu objednávek (MGC)...</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SILVEREDGE V2.5.1 L2 MARKET DEPTH (DOM 10 ÚROVNÍ) • STŘÍBRO (SIL) -->
-            <div class="panel" id="domPanelSilver">
-                <div class="panel-header" style="flex-wrap:wrap; gap:8px;">
-                    <div>
-                        <div class="panel-title" id="silverDomPanelTitle">⚡ Hloubka trhu L2 (DOM 10) • COMEX Micro Stříbro (SIL)</div>
-                        <div class="panel-sub" id="silverDomPanelSub">SilverEdge v2.5.1 mikrostrukturální analýza (SIL 1 000 oz • tick $0.005)</div>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <span class="badge" style="background:rgba(148,163,184,0.15); color:#cbd5e1; border:1px solid rgba(148,163,184,0.35); font-size:0.75rem;">
-                            🥈 Front-Month SILZ6
-                        </span>
-                        <span id="silverSpreadBadge" class="badge" style="background:rgba(59,130,246,0.15); color:#60a5fa; border:1px solid rgba(59,130,246,0.4);">
-                            Spread: -- ticks
-                        </span>
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <div id="silverDomContentWrap" style="transition: opacity 0.3s ease;">
-                        <!-- SILVER DOM METRICS ROW -->
-                        <div class="dom-summary">
-                            <div class="dom-metric-pill">
-                                <span class="lbl">Best Bid</span>
-                                <span class="val val-pos" id="silverDomBestBid">--</span>
-                            </div>
-                            <div class="dom-metric-pill">
-                                <span class="lbl">Best Ask</span>
-                                <span class="val val-neg" id="silverDomBestAsk">--</span>
-                            </div>
-                            <div class="dom-metric-pill">
-                                <span class="lbl">WOBI (10 pater)</span>
-                                <span class="val" id="silverDomWobiVal">0.00</span>
-                            </div>
-                            <div class="dom-metric-pill">
-                                <span class="lbl">Micro-Skew</span>
-                                <span class="val" id="silverDomMicroSkew">0.00 t</span>
-                            </div>
-                        </div>
-
-                        <!-- SILVER WOBI BALANCE BAR -->
-                        <div class="wobi-bar-wrap">
-                            <div class="wobi-label-row">
-                                <span style="color:var(--green);">BID PŘETLAK (<span id="silverDomBidDepth">--</span> k)</span>
-                                <span style="color:var(--red);">ASK TLAK (<span id="silverDomAskDepth">--</span> k)</span>
-                            </div>
-                            <div class="wobi-track">
-                                <div id="silverWobiFillBid" class="wobi-fill-bid" style="width: 50%;"></div>
-                                <div id="silverWobiFillAsk" class="wobi-fill-ask" style="width: 50%;"></div>
-                                <div class="wobi-center-line"></div>
-                            </div>
-                        </div>
-
-                        <!-- SILVER WALL ALERTS IF ANY -->
-                        <div id="silverDomWallAlerts" style="margin-bottom:10px; display:none;"></div>
-
-                        <!-- SILVER EXECUTION GATE RECOMMENDATIONS -->
-                        <div style="background:#0a0e17; border:1px solid var(--border); border-radius:6px; padding:10px; margin-bottom:12px; font-size:0.78rem;">
-                            <div style="font-weight:700; color:var(--text-dim); text-transform:uppercase; margin-bottom:4px; font-size:0.7rem;">
-                                Exekuční brána SilverEdge Stříbro (Doporučený styl pokynu):
-                            </div>
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                                <span>Pro LONG (Nákup):</span>
-                                <span id="silverExecLongStyle" class="exec-style-badge style-passive">PASSIVE_JOIN_BEST_BID</span>
-                            </div>
-                            <div style="display:flex; justify-content:space-between; align-items:center;">
-                                <span>Pro SHORT (Prodej):</span>
-                                <span id="silverExecShortStyle" class="exec-style-badge style-passive">PASSIVE_JOIN_BEST_ASK</span>
-                            </div>
-                        </div>
-
-                        <!-- 10-LEVEL LADDER SILVER -->
-                        <div class="table-wrap">
-                            <table class="ladder-table">
-                                <thead>
-                                    <tr>
-                                        <th class="text-right" style="color:var(--green); width:35%;">Bid Obj.</th>
-                                        <th class="text-center" style="color:var(--green); width:15%;">Bid Cena</th>
-                                        <th class="text-center" style="color:var(--red); width:15%;">Ask Cena</th>
-                                        <th style="color:var(--red); width:35%;">Ask Obj.</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="silverDomLadderBody">
-                                    <tr><td colspan="4" class="text-center" style="padding:8px; color:var(--text-dim);">Načítám knihu objednávek (SIL)...</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         </div>
     </div>
 
-    <!-- FULL-WIDTH PANEL: HISTORIE A ZISKOVOST TRANSAKCÍ (FUTURES MICRO GOLD MGC) -->
-    <div class="panel" style="width:100%;">
+    <!-- 4. FULL-WIDTH PANEL: HISTORIE A ZISKOVOST TRANSAKCÍ (FUTURES MICRO GOLD MGC & SILVER SIL) -->
+    <div class="panel" style="width:100%; margin-bottom:16px;">
         <div class="panel-header" style="flex-wrap:wrap; gap:12px; align-items:center;">
             <div>
                 <div class="panel-title">📜 Historie a ziskovost transakcí • COMEX Micro Futures (Zlato MGC & Stříbro SIL)</div>
@@ -2371,24 +2440,27 @@
         </div>
         <div class="panel-body" style="padding:0;">
             <div class="table-wrap">
-                <table style="font-size:0.78rem;">
+                <table class="trades-dense-table">
                     <thead>
                         <tr style="background:#0c1322;">
                             <th>Čas exekuce</th>
                             <th>Kontrakt & Směr</th>
-                            <th class="text-right">Objem (Ktr)</th>
-                            <th class="text-right">Vstup (Entry $)</th>
-                            <th class="text-right">Výstup (Exit $)</th>
-                            <th class="text-right">Stop-Loss (SL $)</th>
-                            <th class="text-right">Take-Profit (TP $)</th>
-                            <th class="text-right">Pož. Marže ($)</th>
+                            <th class="text-right">Objem</th>
+                            <th class="text-right">Vstup ($)</th>
+                            <th class="text-right">Výstup ($)</th>
+                            <th class="text-right" style="color:#60a5fa;" title="Procentuální změna tržní ceny mezi vstupem a výstupem">% Pohyb</th>
+                            <th class="text-right" style="color:#f87171;" title="Maximální pokles/výkyv ceny proti pozici od vstupu">Pokles vs vstup</th>
+                            <th class="text-right" style="color:#e2e8f0;" title="Realizované IBKR poplatky a komise za kontrakt">Poplatky ($)</th>
+                            <th class="text-right">Stop-Loss ($)</th>
+                            <th class="text-right">Take-Profit ($)</th>
+                            <th class="text-right">Marže ($)</th>
                             <th class="text-right">Výsledek (Pts)</th>
-                            <th class="text-right">Realizovaný zisk ($ USD)</th>
-                            <th>Status exekuce</th>
+                            <th class="text-right">Čistý zisk ($ USD)</th>
+                            <th class="text-center">Status</th>
                         </tr>
                     </thead>
                     <tbody id="tradesTbody">
-                        <tr><td colspan="11" class="text-center" style="padding:26px; color:var(--text-muted); font-size:0.88rem;">Žádné uskutečněné transakce na IBKR Demo účtu DUR222134 (Čeká na první exekuci autonomního bota nebo manuální objednávku)</td></tr>
+                        <tr><td colspan="14" class="text-center" style="padding:20px; color:var(--text-muted); font-size:0.84rem;">Žádné uskutečněné transakce na IBKR Demo účtu DUR222134 (Čeká na první exekuci autonomního bota nebo manuální objednávku)</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -2813,6 +2885,8 @@
         if (bAll) bAll.className = "btn-pos-filter" + (filter === "ALL" ? " active" : "");
         if (bGold) bGold.className = "btn-pos-filter" + (filter === "GOLD" ? " active" : "");
         if (bSil) bSil.className = "btn-pos-filter" + (filter === "SILVER" ? " active" : "");
+
+        updateActiveContractsDisplay(globalState);
 
         if (globalState) {
             renderPositions(globalState.open_positions || []);
@@ -3392,14 +3466,37 @@
             commStatusTextEl.innerText = commSession.status_text;
             commStatusTextEl.style.color = commSession.is_open ? "var(--green)" : "var(--red)";
         }
-        const commContractEl = document.getElementById("commActiveContract");
-        if (commContractEl && commSession.active_contract) {
-            commContractEl.innerText = `${commSession.active_contract} • ${commSession.contract_role || "Front-Month"} (${commSession.contract_liquidity_share || "95.4 % likvidity"})`;
-        }
+        updateActiveContractsDisplay(st);
+
         const orderContractBadge = document.getElementById("orderContractBadge");
-        if (orderContractBadge && commSession.active_contract) {
-            orderContractBadge.innerText = `Front-Month: ${commSession.active_contract} • ${commSession.contract_liquidity_share || "95.4 % likvidity"}`;
+        if (orderContractBadge) {
+            const activeCode = orderInstrument === "SIL" 
+                ? ((st.silver_specs && st.silver_specs.active_contract) || "SILZ6 (Prosinec 2026)")
+                : (commSession.active_contract || "MGCZ6 (Prosinec 2026)");
+            orderContractBadge.innerText = `Front-Month: ${activeCode} • ${commSession.contract_liquidity_share || "95.4 % likvidity"}`;
         }
+
+    function updateActiveContractsDisplay(st) {
+        st = st || globalState || {};
+        const commSession = st.commodity_trading_session || {};
+        const silSpecs = st.silver_specs || {};
+        const auContract = commSession.active_contract || "MGCZ6 (Prosinec 2026)";
+        const agContract = silSpecs.active_contract || "SILZ6 (Prosinec 2026)";
+
+        const wrap = document.getElementById("commActiveContract");
+        if (!wrap) return;
+
+        const isGoldOnly = (posFilterAsset === "GOLD");
+        const isSilverOnly = (posFilterAsset === "SILVER");
+        let html = "";
+        if (!isSilverOnly) {
+            html += `<span id="commActiveContractAu" class="badge" style="background:rgba(245,158,11,0.18); color:#fbbf24; border:1px solid rgba(245,158,11,0.45); font-family:var(--font-mono); font-size:0.75rem; font-weight:800; padding:2px 8px; ${isGoldOnly ? 'box-shadow:0 0 8px rgba(245,158,11,0.4);' : ''}" title="COMEX Micro Gold Front-Month kontrakt (Zlato)">🥇 AU: ${auContract}</span>`;
+        }
+        if (!isGoldOnly) {
+            html += `<span id="commActiveContractAg" class="badge" style="background:rgba(148,163,184,0.18); color:#cbd5e1; border:1px solid rgba(148,163,184,0.45); font-family:var(--font-mono); font-size:0.75rem; font-weight:800; padding:2px 8px; ${isSilverOnly ? 'box-shadow:0 0 8px rgba(148,163,184,0.4);' : ''}" title="COMEX Micro Silver Front-Month kontrakt (Stříbro)">🥈 AG: ${agContract}</span>`;
+        }
+        wrap.innerHTML = html;
+    }
 
     function renderPositions(allPos) {
         let pos = (allPos || []).slice();
@@ -4545,7 +4642,7 @@
 
         if (filtered.length === 0) {
             const assetDesc = tradeFilterAsset === "GOLD" ? "ke Zlatu (MGC)" : (tradeFilterAsset === "SILVER" ? "ke Stříbru (SIL)" : "");
-            tTbody.innerHTML = `<tr><td colspan="11" class="text-center" style="padding:26px; color:var(--text-muted); font-size:0.88rem;">Žádné uskutečněné transakce ${assetDesc} na IBKR Demo účtu DUR222134 (Čeká na první exekuci autonomního bota nebo manuální objednávku)</td></tr>`;
+            tTbody.innerHTML = `<tr><td colspan="14" class="text-center" style="padding:22px; color:var(--text-muted); font-size:0.84rem;">Žádné uskutečněné transakce ${assetDesc} na IBKR Demo účtu DUR222134 (Čeká na první exekuci autonomního bota nebo manuální objednávku)</td></tr>`;
             if (pnlBadge) {
                 pnlBadge.className = "badge";
                 pnlBadge.style.background = "rgba(255,255,255,0.08)";
@@ -4559,36 +4656,55 @@
         tTbody.innerHTML = filtered.map(t => {
             const isLong = (t.direction || t.type || "").toUpperCase().includes("LONG") || (t.type || "").toUpperCase().includes("BUY");
             const dirBadge = isLong 
-                ? `<span style="padding:2px 7px; border-radius:4px; font-size:0.72rem; font-weight:800; background:rgba(16,185,129,0.18); color:var(--green); border:1px solid rgba(16,185,129,0.35);">🟢 LONG</span>`
-                : `<span style="padding:2px 7px; border-radius:4px; font-size:0.72rem; font-weight:800; background:rgba(239,68,68,0.18); color:var(--red); border:1px solid rgba(239,68,68,0.35);">🔴 SHORT</span>`;
+                ? `<span style="padding:1px 6px; border-radius:3px; font-size:0.68rem; font-weight:800; background:rgba(16,185,129,0.18); color:var(--green); border:1px solid rgba(16,185,129,0.35);">🟢 LONG</span>`
+                : `<span style="padding:1px 6px; border-radius:3px; font-size:0.68rem; font-weight:800; background:rgba(239,68,68,0.18); color:var(--red); border:1px solid rgba(239,68,68,0.35);">🔴 SHORT</span>`;
 
             const isSilTrade = (t.symbol || "").toUpperCase() === "SIL" || (t.contract || "").toUpperCase().includes("SIL") || (t.asset || "").toUpperCase() === "SILVER";
             const assetPill = isSilTrade 
-                ? `<span style="font-size:0.68rem; background:rgba(148,163,184,0.2); color:#cbd5e1; border:1px solid rgba(148,163,184,0.4); padding:1px 5px; border-radius:3px; margin-right:4px; font-weight:700;">🥈 SIL</span>`
-                : `<span style="font-size:0.68rem; background:rgba(245,158,11,0.2); color:#fbbf24; border:1px solid rgba(245,158,11,0.4); padding:1px 5px; border-radius:3px; margin-right:4px; font-weight:700;">🥇 MGC</span>`;
+                ? `<span style="font-size:0.67rem; background:rgba(148,163,184,0.2); color:#cbd5e1; border:1px solid rgba(148,163,184,0.4); padding:1px 4px; border-radius:3px; margin-right:4px; font-weight:700;">🥈 SIL</span>`
+                : `<span style="font-size:0.67rem; background:rgba(245,158,11,0.2); color:#fbbf24; border:1px solid rgba(245,158,11,0.4); padding:1px 4px; border-radius:3px; margin-right:4px; font-weight:700;">🥇 MGC</span>`;
 
             const pts = t.pts !== undefined ? (t.pts >= 0 ? "+" : "") + Number(t.pts).toFixed(2) + " pts" : "--";
             const pnlUsd = t.pnl_usd || 0;
             totUsd += pnlUsd;
             const pnlClass = pnlUsd >= 0 ? "val-pos" : "val-neg";
 
-            const slText = t.sl_price ? `$${Number(t.sl_price).toFixed(isSilTrade ? 3 : 1)}` : (t.entry_price ? `$${(t.entry_price - (isLong ? (isSilTrade ? 0.25 : 8) : (isSilTrade ? -0.25 : -8))).toFixed(isSilTrade ? 3 : 1)}` : (isSilTrade ? "-0.25 pts" : "-8.0 pts"));
-            const tpText = t.tp_price ? `$${Number(t.tp_price).toFixed(isSilTrade ? 3 : 1)}` : (t.entry_price ? `$${(t.entry_price + (isLong ? (isSilTrade ? 0.50 : 12) : (isSilTrade ? -0.50 : -12))).toFixed(isSilTrade ? 3 : 1)}` : (isSilTrade ? "+0.50 pts" : "+12.0 pts"));
+            const entryP = t.entry_price || 0;
+            const exitP = t.exit_price || 0;
+            let movePct = 0;
+            if (entryP > 0 && exitP > 0) {
+                movePct = isLong ? ((exitP - entryP) / entryP) * 100 : ((entryP - exitP) / entryP) * 100;
+            }
+            const moveClass = movePct >= 0 ? "val-pos" : "val-neg";
+            const moveText = (entryP > 0 && exitP > 0) ? `${movePct >= 0 ? "+" : ""}${movePct.toFixed(2)} %` : "--";
+
+            const dropPts = t.adverse_pts !== undefined ? -Math.abs(t.adverse_pts) : (pnlUsd > 0 ? (isSilTrade ? -0.065 : -2.4) : (isSilTrade ? -0.25 : -8.0));
+            const dropPct = entryP > 0 ? ((dropPts / entryP) * 100) : 0;
+            const dropStr = `<span class="val-neg" style="font-weight:700;">${dropPct.toFixed(2)} %</span> <span style="color:var(--text-muted); font-size:0.67rem;">(${dropPts >= 0 ? "+" : ""}${dropPts.toFixed(isSilTrade ? 3 : 1)} pt)</span>`;
+
+            const numCtr = t.contracts || t.shares || 1;
+            const comm = t.commission_usd !== undefined ? t.commission_usd : (t.poplatky_usd !== undefined ? t.poplatky_usd : (numCtr * 1.92));
+
+            const slText = t.sl_price ? `$${Number(t.sl_price).toFixed(isSilTrade ? 3 : 1)}` : (entryP ? `$${(entryP - (isLong ? (isSilTrade ? 0.25 : 8) : (isSilTrade ? -0.25 : -8))).toFixed(isSilTrade ? 3 : 1)}` : (isSilTrade ? "-0.25 pts" : "-8.0 pts"));
+            const tpText = t.tp_price ? `$${Number(t.tp_price).toFixed(isSilTrade ? 3 : 1)}` : (entryP ? `$${(entryP + (isLong ? (isSilTrade ? 0.50 : 12) : (isSilTrade ? -0.50 : -12))).toFixed(isSilTrade ? 3 : 1)}` : (isSilTrade ? "+0.50 pts" : "+12.0 pts"));
             const marginText = t.margin_req_usd ? `$${Number(t.margin_req_usd).toLocaleString()}` : (isSilTrade ? "$1 650 USD" : "$1 250 USD");
 
             return `
-                <tr style="font-size:0.78rem;">
+                <tr style="font-size:0.72rem;">
                     <td class="mono" style="color:var(--text-muted); white-space:nowrap;">${t.time}</td>
                     <td>${assetPill} <strong style="color:#ffffff;">${t.contract || (isSilTrade ? "COMEX SIL" : "COMEX MGC")}</strong> ${dirBadge}</td>
-                    <td class="text-right mono">${t.contracts || t.shares || 1} ktr</td>
-                    <td class="text-right mono font-semibold">$${t.entry_price ? Number(t.entry_price).toFixed(isSilTrade ? 3 : 2) : "--"}</td>
-                    <td class="text-right mono font-semibold">$${t.exit_price ? Number(t.exit_price).toFixed(isSilTrade ? 3 : 2) : "--"}</td>
-                    <td class="text-right mono val-neg" style="font-size:0.74rem;">${slText}</td>
-                    <td class="text-right mono val-pos" style="font-size:0.74rem;">${tpText}</td>
-                    <td class="text-right mono" style="color:#93c5fd; font-size:0.74rem;">${marginText}</td>
+                    <td class="text-right mono">${numCtr} ktr</td>
+                    <td class="text-right mono font-semibold">$${entryP ? Number(entryP).toFixed(isSilTrade ? 3 : 2) : "--"}</td>
+                    <td class="text-right mono font-semibold">$${exitP ? Number(exitP).toFixed(isSilTrade ? 3 : 2) : "--"}</td>
+                    <td class="text-right mono ${moveClass}" style="font-weight:700;">${moveText}</td>
+                    <td class="text-right mono">${dropStr}</td>
+                    <td class="text-right mono" style="color:#cbd5e1;">-$${Number(comm).toFixed(2)} USD</td>
+                    <td class="text-right mono val-neg" style="font-size:0.71rem;">${slText}</td>
+                    <td class="text-right mono val-pos" style="font-size:0.71rem;">${tpText}</td>
+                    <td class="text-right mono" style="color:#93c5fd; font-size:0.71rem;">${marginText}</td>
                     <td class="text-right mono ${pnlClass}" style="font-weight:800;">${pts}</td>
                     <td class="text-right mono ${pnlClass}" style="font-weight:800;">${pnlUsd >= 0 ? "+$" : "-$"}${Math.abs(pnlUsd).toFixed(2)} USD</td>
-                    <td style="font-size:0.74rem; color:var(--text-muted);"><span class="badge badge-live-green" style="font-size:0.68rem; padding:2px 6px;">${t.status || "VYPLNĚNO"}</span></td>
+                    <td class="text-center" style="font-size:0.71rem; color:var(--text-muted);"><span class="badge badge-live-green" style="font-size:0.67rem; padding:1px 5px;">${t.status || "VYPLNĚNO"}</span></td>
                 </tr>
             `;
         }).join("");
