@@ -44,6 +44,25 @@ LIVE_PORTFOLIO_PATH = os.path.join(WORKSPACE_DIR, "data", "live_portfolio.json")
 HISTORY_FILE_PATH = os.path.join(WORKSPACE_DIR, "data", "history", "2026-09-29.json")
 ROTATION_QUEUE_PATH = os.path.join(WORKSPACE_DIR, "data", "rotation_queue.json")
 
+
+def safe_json_write(path: str, data: dict) -> None:
+    """Atomický zápis JSON přes dočasný soubor – zabraňuje race condition.
+    os.replace() je atomická operace na NTFS: čtenář nikdy nedostane prázdný soubor.
+    """
+    import tempfile
+    dir_ = os.path.dirname(path) or "."
+    tmp_fd, tmp_path = tempfile.mkstemp(dir=dir_, suffix=".tmp")
+    try:
+        with os.fdopen(tmp_fd, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+        os.replace(tmp_path, path)
+    except Exception:
+        try:
+            os.unlink(tmp_path)
+        except OSError:
+            pass
+        raise
+
 # Fallback kandidáti na rotaci v případě, že se uvolní kapitál
 ROTATION_CANDIDATES = [
     {"symbol": "SAP", "exchange": "XETRA", "cur": "EUR", "price": 198.40, "name": "SAP SE"},
@@ -219,8 +238,7 @@ def save_live_portfolio_state(
 
     try:
         os.makedirs(os.path.dirname(LIVE_PORTFOLIO_PATH), exist_ok=True)
-        with open(LIVE_PORTFOLIO_PATH, "w", encoding="utf-8") as f:
-            json.dump(state, f, indent=2, ensure_ascii=False)
+        safe_json_write(LIVE_PORTFOLIO_PATH, state)  # atomický zápis – žádná race condition
     except Exception as e:
         logger.error(f"Nelze zapsat {LIVE_PORTFOLIO_PATH}: {e}")
 

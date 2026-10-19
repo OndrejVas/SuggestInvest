@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-10-18T07:10:45.017879+00:00",
+  "silver_price_usd": 57.305,
+  "gold_price_usd": 4181.1,
+  "copper_price_usd": 6.5735,
+  "usd_cnh_rate": 6.6853,
+  "gsr_futures": {
+    "current": 72.96,
+    "rolling_90d_mean": 68.63,
+    "rolling_90d_std": 1.54,
+    "zscore": 2.81,
+    "signal": "STRONG_LONG"
+  },
+  "industrial_copper_proxy": {
+    "silver_copper_ratio": 8.718,
+    "copper_1d_change_pct": 0.95,
+    "momentum": "BULLISH"
+  },
+  "macro_proxies": {
+    "real_yield_tip_ief": 1.1672,
+    "gold_volatility_gvz": 22.58,
+    "equity_volatility_vix": 19.99,
+    "vol_spread_gvz_vix": 1.13
+  },
+  "status": "HEALTHY"
+}

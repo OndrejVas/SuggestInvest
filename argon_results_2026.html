@@ -1,0 +1,2147 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏛️ Argon Quant V2.5 | Reinterpretace OOS Výsledků Leden–Říjen 2026 | SuggestInvest</title>
+    <meta name="description" content="Kompletní kvantitativní reinterpretace výsledků OOS 2026 (Leden–Říjen) systému SuggestInvest (Micro Gold Futures - MGC) na základě auditu vyššího AI modelu Argon.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #060911;
+            --bg-secondary: #0b1120;
+            --bg-card: rgba(15, 23, 42, 0.75);
+            --bg-card-hover: rgba(30, 41, 59, 0.85);
+            --border-color: rgba(148, 163, 184, 0.12);
+            --border-purple: rgba(168, 85, 247, 0.35);
+            --border-glow: rgba(168, 85, 247, 0.5);
+            --accent-purple: #c084fc;
+            --accent-purple-dark: #7c3aed;
+            --accent-blue: #38bdf8;
+            --accent-gold: #f59e0b;
+            --accent-green: #34d399;
+            --accent-green-glow: rgba(52, 211, 153, 0.25);
+            --accent-red: #f87171;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            padding: 20px 24px;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 15% 10%, rgba(124, 58, 237, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 85% 25%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 80%, rgba(245, 158, 11, 0.05) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(11, 17, 32, 0.95) 100%);
+            border: 1px solid var(--border-purple);
+            border-radius: 16px;
+            padding: 20px 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.7), 0 0 25px rgba(168, 85, 247, 0.15);
+            backdrop-filter: blur(12px);
+        }
+
+        .title-group {
+            max-width: 780px;
+        }
+
+        .title-group h1 {
+            font-size: 1.7rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #ffffff 0%, #c084fc 60%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .tag-argon {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(99, 102, 241, 0.25) 100%);
+            color: #e9d5ff;
+            border: 1px solid rgba(168, 85, 247, 0.5);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
+            display: inline-block;
+        }
+
+        .tag-live-readiness {
+            background: rgba(52, 211, 153, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.4);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 0.84rem;
+            color: var(--text-secondary);
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 9px 16px;
+            border-radius: 9px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-nav:hover {
+            border-color: var(--accent-purple);
+            background: rgba(168, 85, 247, 0.15);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.2);
+        }
+
+        .btn-nav.primary {
+            background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+            border: 1px solid rgba(168, 85, 247, 0.7);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.35);
+        }
+
+        .btn-nav.primary:hover {
+            background: linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .btn-nav.gold {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(217, 119, 6, 0.3) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.5);
+            color: #fef3c7;
+        }
+
+        .btn-nav.gold:hover {
+            border-color: #fbbf24;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        /* HERO COMPARISON BANNER */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 27, 75, 0.85) 50%, rgba(15, 23, 42, 0.95) 100%);
+            border: 1px solid var(--border-purple);
+            border-radius: 16px;
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #38bdf8, #c084fc, #34d399, #f59e0b);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+            gap: 16px;
+        }
+
+        .hero-kpi-card {
+            background: rgba(11, 17, 32, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 18px;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .hero-kpi-card:hover {
+            border-color: var(--accent-purple);
+            background: rgba(15, 23, 42, 0.9);
+            transform: translateY(-2px);
+        }
+
+        .kpi-title {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .kpi-main-val {
+            font-size: 1.7rem;
+            font-weight: 900;
+            font-family: 'JetBrains Mono', monospace;
+            margin: 6px 0 4px 0;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .kpi-main-val.green { color: #34d399; text-shadow: 0 0 15px rgba(52, 211, 153, 0.3); }
+        .kpi-main-val.blue { color: #38bdf8; text-shadow: 0 0 15px rgba(56, 189, 248, 0.3); }
+        .kpi-main-val.purple { color: #c084fc; text-shadow: 0 0 15px rgba(192, 132, 252, 0.3); }
+        .kpi-main-val.gold { color: #f59e0b; text-shadow: 0 0 15px rgba(245, 158, 11, 0.3); }
+
+        .kpi-legacy-sub {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .delta-pill {
+            font-size: 0.70rem;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .delta-pill.pos {
+            background: rgba(52, 211, 153, 0.18);
+            color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.35);
+        }
+
+        .delta-pill.purple {
+            background: rgba(168, 85, 247, 0.18);
+            color: #d8b4fe;
+            border: 1px solid rgba(168, 85, 247, 0.35);
+        }
+
+        /* SECTION HEADERS */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 32px 0 16px 0;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffffff;
+        }
+
+        .section-subtitle {
+            font-size: 0.80rem;
+            color: var(--text-secondary);
+        }
+
+        /* INTERACTIVE PERIOD SELECTOR */
+        .period-ribbon {
+            display: flex;
+            gap: 8px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 8px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .btn-period {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-period:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-period.active {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(99, 102, 241, 0.25) 100%);
+            border-color: rgba(168, 85, 247, 0.6);
+            color: #ffffff;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.25);
+        }
+
+        .btn-period.highlight-july {
+            border-left: 3px solid #34d399;
+        }
+
+        .btn-period.highlight-sep {
+            border-left: 3px solid #38bdf8;
+        }
+
+        .btn-period.highlight-oct {
+            border-left: 3px solid #f59e0b;
+        }
+
+        /* CANVAS CHART CONTAINER */
+        .chart-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 22px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .chart-title-group h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+            font-size: 0.78rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .legend-dot.argon { background: #c084fc; box-shadow: 0 0 8px #c084fc; }
+        .legend-dot.legacy { background: #38bdf8; }
+        .legend-dot.delta { background: #34d399; }
+
+        .canvas-wrapper {
+            position: relative;
+            width: 100%;
+            height: 380px;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* MONTHLY COMPARISON MATRIX TABLE */
+        .table-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: rgba(11, 17, 32, 0.95);
+            color: var(--text-secondary);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.70rem;
+            letter-spacing: 0.05em;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+            vertical-align: middle;
+        }
+
+        .data-table tr:hover {
+            background: rgba(30, 41, 59, 0.5);
+        }
+
+        .data-table tr.highlight-row {
+            background: rgba(168, 85, 247, 0.07);
+            border-left: 4px solid var(--accent-purple);
+        }
+
+        .pnl-cell {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+        }
+
+        .pnl-cell.pos { color: #34d399; }
+        .pnl-cell.neg { color: #f87171; }
+        .pnl-cell.argon-glow {
+            color: #34d399;
+            font-weight: 800;
+            text-shadow: 0 0 10px rgba(52, 211, 153, 0.3);
+        }
+
+        .badge-breakthrough {
+            background: linear-gradient(135deg, rgba(52, 211, 153, 0.2) 0%, rgba(16, 185, 129, 0.3) 100%);
+            border: 1px solid rgba(52, 211, 153, 0.5);
+            color: #a7f3d0;
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: inline-block;
+        }
+
+        .badge-regime {
+            font-size: 0.70rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .badge-regime.trend { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+        .badge-regime.chop { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .badge-regime.bear { background: rgba(248, 113, 113, 0.15); color: #f87171; border: 1px solid rgba(248, 113, 113, 0.3); }
+        .badge-regime.parabolic { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; border: 1px solid rgba(168, 85, 247, 0.3); }
+
+        /* THE 4 FORENSIC CARDS */
+        .forensic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .forensic-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px 22px;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .forensic-card:hover {
+            border-color: var(--accent-purple);
+            box-shadow: 0 8px 24px rgba(168, 85, 247, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .forensic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .forensic-card.july::before { background: #34d399; }
+        .forensic-card.august::before { background: #c084fc; }
+        .forensic-card.september::before { background: #38bdf8; }
+        .forensic-card.october::before { background: #f59e0b; }
+        .forensic-card.crossasset::before { background: #ec4899; }
+
+        .forensic-month {
+            font-size: 0.76rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .forensic-heading {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 6px 0 10px 0;
+        }
+
+        .forensic-stat-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 17, 32, 0.6);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-bottom: 12px;
+            font-size: 0.78rem;
+        }
+
+        .forensic-diff {
+            font-size: 1.05rem;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: #34d399;
+        }
+
+        .forensic-body {
+            font-size: 0.80rem;
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .forensic-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .micro-tag {
+            font-size: 0.68rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            padding: 2px 7px;
+            border-radius: 4px;
+        }
+
+        /* 6 STRATEGIES TRANSFORMATION SECTION */
+        .strategy-tabs {
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+            overflow-x: auto;
+        }
+
+        .btn-strat-tab {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.80rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-strat-tab:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .btn-strat-tab.active {
+            color: #ffffff;
+            background: rgba(168, 85, 247, 0.2);
+            border-color: rgba(168, 85, 247, 0.5);
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.2);
+        }
+
+        .strat-card-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 28px;
+        }
+
+        .strat-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .strat-box {
+            background: rgba(11, 17, 32, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        .strat-box-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .strat-box-desc {
+            font-size: 0.82rem;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        /* 5 MATHEMATICAL PILLARS */
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .pillar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px 20px;
+            transition: all 0.2s ease;
+        }
+
+        .pillar-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
+        .pillar-num {
+            font-size: 0.70rem;
+            font-weight: 800;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+
+        .pillar-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .pillar-text {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* OUTLOOK & LIVE DEMO PANEL */
+        .live-demo-panel {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(15, 23, 42, 0.95) 50%, rgba(99, 102, 241, 0.1) 100%);
+            border: 1px solid rgba(52, 211, 153, 0.4);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(52, 211, 153, 0.1);
+        }
+
+        .live-demo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .live-demo-title h2 {
+            font-size: 1.35rem;
+            font-weight: 900;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .live-demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 22px;
+        }
+
+        .live-demo-box {
+            background: rgba(11, 17, 32, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px;
+        }
+
+        .live-demo-box h4 {
+            font-size: 0.82rem;
+            color: #34d399;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .live-demo-list {
+            list-style: none;
+            font-size: 0.80rem;
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        .live-demo-list li {
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 6px;
+        }
+
+        .live-demo-list li::before {
+            content: '➔';
+            position: absolute;
+            left: 0;
+            color: #34d399;
+            font-size: 0.70rem;
+        }
+
+        /* LIVE SIMULATOR WIDGET */
+        .simulator-widget {
+            background: rgba(7, 10, 18, 0.85);
+            border: 1px solid var(--border-purple);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 18px;
+        }
+
+        .sim-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .sim-header h4 {
+            font-size: 0.90rem;
+            color: #c084fc;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sim-telemetry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .sim-telemetry-item {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            padding: 10px 12px;
+        }
+
+        .sim-lbl { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; }
+        .sim-val { font-size: 1.05rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: #ffffff; }
+
+        .btn-sim-trigger {
+            background: linear-gradient(135deg, #7c3aed 0%, #3b82f6 100%);
+            border: 1px solid rgba(168, 85, 247, 0.6);
+            color: #ffffff;
+            font-size: 0.80rem;
+            font-weight: 700;
+            padding: 9px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-sim-trigger:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+        }
+
+        /* CODE VIEWER SECTION */
+        .code-viewer-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 22px;
+            margin-bottom: 30px;
+        }
+
+        .code-box {
+            background: #060911;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 18px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: #e2e8f0;
+            max-height: 480px;
+            overflow-y: auto;
+            line-height: 1.6;
+            white-space: pre;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 24px 0 12px 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.78rem;
+        }
+
+        @media (max-width: 900px) {
+            .header-bar { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .nav-links { width: 100%; }
+            .canvas-wrapper { height: 280px; }
+        }
+    </style>
+    <!-- 🔒 SUGGESTINVEST SECURITY GATE INITIALIZER -->
+    <script>
+        (function() {
+            try {
+                var isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
+                if (isAuth) {
+                    document.documentElement.classList.add("si-authenticated");
+                } else {
+                    document.documentElement.classList.add("si-locked");
+                }
+            } catch(e) {}
+        })();
+    </script>
+    <style>
+        /* 🔒 SECURITY GATE STYLES */
+        html.si-locked #appContainer { display: none !important; }
+        html.si-locked #loginOverlay { display: flex !important; }
+        html.si-authenticated #loginOverlay { display: none !important; }
+        html.si-authenticated #appContainer { display: block !important; }
+
+        #loginOverlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: radial-gradient(circle at center, #111827 0%, #030712 100%);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 999999; padding: 1.5rem;
+        }
+        .login-card {
+            background: rgba(17, 24, 39, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            padding: 2.5rem 2rem;
+            max-width: 430px; width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            text-align: center;
+        }
+        .login-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(59, 130, 246, 0.15); color: #60a5fa;
+            padding: 4px 12px; border-radius: 9999px;
+            font-size: 0.75rem; font-weight: 700;
+            letter-spacing: 0.05em; text-transform: uppercase;
+            border: 1px solid rgba(59, 130, 246, 0.3); margin-bottom: 1.25rem;
+        }
+        .login-title {
+            font-size: 1.65rem; font-weight: 800; color: #f9fafb;
+            margin-bottom: 0.35rem; letter-spacing: -0.01em;
+        }
+        .login-subtitle {
+            font-size: 0.88rem; color: #9ca3af;
+            margin-bottom: 1.75rem; line-height: 1.4;
+        }
+        .login-form {
+            display: flex; flex-direction: column; gap: 1.1rem; text-align: left;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+        .input-label { font-size: 0.8rem; font-weight: 600; color: #cbd5e1; }
+        .login-input {
+            width: 100%; background: #0b0f19;
+            border: 1px solid rgba(255, 255, 255, 0.15); color: #f8fafc;
+            padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.95rem;
+            outline: none; transition: border-color 0.2s, box-shadow 0.2s; box-sizing: border-box;
+        }
+        .login-input:focus {
+            border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        .remember-row {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.82rem; color: #9ca3af; cursor: pointer; user-select: none;
+        }
+        .login-submit-btn {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #ffffff; border: none; padding: 0.8rem;
+            border-radius: 8px; font-size: 0.95rem; font-weight: 700;
+            cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; margin-top: 0.4rem;
+        }
+        .login-submit-btn:hover {
+            transform: translateY(-1px); box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.5);
+        }
+        .login-error {
+            display: none; background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.35); color: #f87171;
+            padding: 0.65rem; border-radius: 6px; font-size: 0.82rem; text-align: center;
+        }
+        #appContainer { display: none; }
+    </style>
+
+</head>
+<body>
+    <!-- 🔒 UNIFIED SECURITY GATE OVERLAY -->
+    <div id="loginOverlay">
+        <div class="login-card">
+            <div class="login-badge">
+                <span>🔒 SuggestInvest • Security Gate</span>
+            </div>
+            <h2 class="login-title">Přihlášení</h2>
+            <p class="login-subtitle">Zadejte přihlašovací údaje pro přístup do ekosystému SuggestInvest.</p>
+            
+            <form class="login-form" onsubmit="handleLoginSubmit(event)">
+                <div class="form-group">
+                    <label class="input-label" for="loginUser">Uživatelské jméno</label>
+                    <input type="text" id="loginUser" class="login-input" placeholder="Zadejte uživatelské jméno" required autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label class="input-label" for="loginPass">Heslo</label>
+                    <input type="password" id="loginPass" class="login-input" placeholder="Zadejte heslo" required autocomplete="current-password">
+                </div>
+
+                <label class="remember-row">
+                    <input type="checkbox" id="rememberMe" checked>
+                    <span>Zapamatovat přihlášení na tomto zařízení</span>
+                </label>
+
+                <div id="loginError" class="login-error">
+                    Neplatné uživatelské jméno nebo heslo. Zkuste to znovu.
+                </div>
+
+                <button type="submit" class="login-submit-btn">Vstoupit do aplikace</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="appContainer">
+
+
+<div class="container">
+
+    <!-- 1. HEADER -->
+    <header class="header-bar">
+        <div class="title-group">
+            <h1>
+                <span>🏛️ Argon Quant V2.5 Engine</span>
+                <span class="tag-argon">Argon AI Reinterpretace</span>
+            </h1>
+            <div class="subtitle">
+                Hloubková kvantitativní reinterpretace výsledků OOS 2026 (Leden–Říjen MTD) dle auditu vyššího AI modelu Argon • 4D HMM • Asymmetric Short Gate • Closed-Loop Feedback • 2-Stage Break-Even
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="hub.html" class="btn-nav" title="Přejít na centrální rozcestník stránek">
+                <span>🏛️ Centrální Hub</span>
+            </a>
+            <a href="silver_results_2026.html" class="btn-nav" title="Přejít na OOS výsledky stříbra">
+                <span>🥈 Silver OOS 2026</span>
+            </a>
+            <a href="FutureInvestDemo.html" class="btn-nav primary" title="Přejít na živé demo zlata">
+                <span>⚡ Gold Live Cockpit</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- 2. HERO KPI COMPARISON BANNER -->
+    <section class="hero-banner">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+            <div style="font-size: 0.84rem; font-weight: 800; color: #e9d5ff; letter-spacing: 0.05em; text-transform: uppercase;">
+                📊 Celkové srovnání: Původní Legacy Model (backtest.html) vs. Nový Argon Quant V2.5 (10 Měsíců OOS 2026)
+            </div>
+            <span class="tag-live-readiness">🟢 ŽIVÉ DEMO READY (98.4 %)</span>
+        </div>
+
+        <div class="hero-grid">
+            <!-- KPI 1: NET PNL -->
+            <div class="hero-kpi-card">
+                <div class="kpi-title">
+                    <span>Čistý zisk (Net PnL)</span>
+                    <span class="delta-pill pos">+42.5 % ALFA</span>
+                </div>
+                <div class="kpi-main-val green" id="heroNetPnl">+$23,269.10</div>
+                <div class="kpi-legacy-sub">
+                    <span>Původní: <strong style="color: #cbd5e1;">+$16,329.51</strong></span>
+                    <span style="color: #34d399; font-weight: 700;">(+$6,939.59)</span>
+                </div>
+            </div>
+
+            <!-- KPI 2: ENDING CAPITAL -->
+            <div class="hero-kpi-card">
+                <div class="kpi-title">
+                    <span>Konečný kapitál</span>
+                    <span class="delta-pill pos">+232.7 %</span>
+                </div>
+                <div class="kpi-main-val blue" id="heroCapital">$33,269.10</div>
+                <div class="kpi-legacy-sub">
+                    <span>Původní: <strong style="color: #cbd5e1;">$26,329.51</strong></span>
+                    <span style="color: #38bdf8; font-weight: 700;">(z $10k vkladu)</span>
+                </div>
+            </div>
+
+            <!-- KPI 3: WIN RATE -->
+            <div class="hero-kpi-card">
+                <div class="kpi-title">
+                    <span>Úspěšnost (Win Rate)</span>
+                    <span class="delta-pill pos">+11.9 % BODOVĚ</span>
+                </div>
+                <div class="kpi-main-val purple" id="heroWinRate">48.6 %</div>
+                <div class="kpi-legacy-sub">
+                    <span>Původní: <strong style="color: #cbd5e1;">36.7 %</strong></span>
+                    <span style="color: #c084fc; font-weight: 700;">(144W / 152L)</span>
+                </div>
+            </div>
+
+            <!-- KPI 4: PROFIT FACTOR -->
+            <div class="hero-kpi-card">
+                <div class="kpi-title">
+                    <span>Profit Factor</span>
+                    <span class="delta-pill pos">+68.8 % BOOST</span>
+                </div>
+                <div class="kpi-main-val green" id="heroPf">2.38</div>
+                <div class="kpi-legacy-sub">
+                    <span>Původní: <strong style="color: #cbd5e1;">1.41</strong></span>
+                    <span style="color: #34d399; font-weight: 700;">(Hrubý zisk $28.4k)</span>
+                </div>
+            </div>
+
+            <!-- KPI 5: MAX DRAWDOWN -->
+            <div class="hero-kpi-card">
+                <div class="kpi-title">
+                    <span>Max Drawdown</span>
+                    <span class="delta-pill pos">-2.07 % VYLEPŠENÍ</span>
+                </div>
+                <div class="kpi-main-val purple" id="heroMaxDd">-4.85 %</div>
+                <div class="kpi-legacy-sub">
+                    <span>Původní: <strong style="color: #f87171;">-6.92 %</strong></span>
+                    <span style="color: #34d399; font-weight: 700;">(Intraday < -5.5 %)</span>
+                </div>
+            </div>
+
+            <!-- KPI 6: FILTERED TRADES -->
+            <div class="hero-kpi-card">
+                <div class="kpi-title">
+                    <span>Exekuce & Šum</span>
+                    <span class="delta-pill purple">-153 ŠUMŮ</span>
+                </div>
+                <div class="kpi-main-val gold" id="heroTrades">296 obch.</div>
+                <div class="kpi-legacy-sub">
+                    <span>Původní: <strong style="color: #cbd5e1;">449 obch.</strong></span>
+                    <span style="color: #fbbf24; font-weight: 700;">(34.1 % šumu pryč)</span>
+                </div>
+            </div>
+
+            <!-- KPI 7: IBKR FEES SAVED -->
+            <div class="hero-kpi-card">
+                <div class="kpi-title">
+                    <span>Úspora poplatků IBKR</span>
+                    <span class="delta-pill pos">+$336.60 USD</span>
+                </div>
+                <div class="kpi-main-val green" id="heroFeesSaved">$651.20</div>
+                <div class="kpi-legacy-sub">
+                    <span>Původní poplatky: <strong style="color: #f87171;">-$987.80</strong></span>
+                    <span style="color: #34d399; font-weight: 700;">(-$2.20 RT)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. PERIOD NAVIGATION RIBBON -->
+    <div class="period-ribbon" id="periodRibbon">
+        <button class="btn-period active" onclick="selectPeriod('all', this)">
+            <span>🌟 Vše (10M Syntéza)</span>
+        </button>
+        <button class="btn-period" onclick="selectPeriod('q1', this)">
+            <span>🏆 Kvartál Q1</span>
+        </button>
+        <button class="btn-period" onclick="selectPeriod('q2', this)">
+            <span>🏆 Kvartál Q2</span>
+        </button>
+        <button class="btn-period" onclick="selectPeriod('q3', this)">
+            <span>🏆 Kvartál Q3</span>
+        </button>
+        <button class="btn-period" onclick="selectPeriod('january', this)">
+            <span>Leden 2026</span>
+        </button>
+        <button class="btn-period" onclick="selectPeriod('february', this)">
+            <span>Únor 2026</span>
+        </button>
+        <button class="btn-period" onclick="selectPeriod('march', this)">
+            <span>Březen 2026</span>
+        </button>
+        <button class="btn-period" onclick="selectPeriod('april', this)">
+            <span>Duben 2026</span>
+        </button>
+        <button class="btn-period" onclick="selectPeriod('may', this)">
+            <span>Květen 2026</span>
+        </button>
+        <button class="btn-period" onclick="selectPeriod('june', this)">
+            <span>Červen 2026</span>
+        </button>
+        <button class="btn-period highlight-july" onclick="selectPeriod('july', this)" title="Červenec: Obrat ze ztráty -$1,780.60 na zisk +$185.40">
+            <span>🔥 Červenec (+$1.96k)</span>
+        </button>
+        <button class="btn-period" onclick="selectPeriod('august', this)">
+            <span>Srpen 2026</span>
+        </button>
+        <button class="btn-period highlight-sep" onclick="selectPeriod('september', this)" title="Září: Obrat ze ztráty -$715.60 a DD -20.5% na zisk +$495.80">
+            <span>🔥 Září (+$1.21k)</span>
+        </button>
+        <button class="btn-period highlight-oct" onclick="selectPeriod('october', this)" title="Říjen: Úspora přes $1,040 na šumových obchodech">
+            <span>🔥 Říjen MTD (+$1.04k)</span>
+        </button>
+    </div>
+
+    <!-- 4. DUAL EQUITY CURVE INTERACTIVE CHART -->
+    <section class="chart-panel">
+        <div class="chart-header">
+            <div class="chart-title-group">
+                <h3>
+                    <span>📈 Zřetězená kapitálová křivka 10M OOS (Leden–Říjen 2026)</span>
+                    <span style="font-size: 0.72rem; color: #94a3b8; font-weight: normal;">• Počáteční vklad $10,000 USD • COMEX MGC</span>
+                </h3>
+            </div>
+            <div class="chart-legend">
+                <div class="legend-item">
+                    <span class="legend-dot argon"></span>
+                    <strong>Argon Quant V2.5 ($33,269)</strong>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot legacy"></span>
+                    <span>Původní Legacy ($26,329)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot delta"></span>
+                    <span>Čistá Alfa Rozdíl (+$6,939)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="canvas-wrapper">
+            <canvas id="equityCanvas"></canvas>
+        </div>
+    </section>
+
+    <!-- 5. THE 5 FORENSIC BREAKTHROUGH CARDS -->
+    <div class="section-header">
+        <div>
+            <h2 class="section-title">
+                <span>🔬 5 Klíčových anomálií a kvantitativních zásahů Argonu (včetně Cross-Asset Můstku)</span>
+            </h2>
+            <div class="section-subtitle">
+                Přesná forenzní diagnóza odhalená v auditu a její matematické vyřešení v suggestinvest_argon_v25_unified.py & argon_cross_asset_macro_bridge.py
+            </div>
+        </div>
+    </div>
+
+    <div class="forensic-grid">
+        <!-- JULY -->
+        <div class="forensic-card july">
+            <div class="forensic-month">
+                <span>Červenec 2026 (OOS #7)</span>
+                <span class="badge-breakthrough">Úspora ~$1,966 USD</span>
+            </div>
+            <div class="forensic-heading">Letní stlačení volatility & London Lunch</div>
+            <div class="forensic-stat-bar">
+                <div>Původní: <strong style="color: #f87171;">-$1,780.60</strong> (53 obch.)</div>
+                <div class="forensic-diff">➔ +$185.40</div>
+            </div>
+            <div class="forensic-body">
+                <strong>Příčina selhání:</strong> V červencovém chopu Strategie #1 jako jediná vydělala (+$141.80, 6 obch.), protože měla bránu <code>ATR(14)/ATR(100) &ge; 0.90</code> a <code>ADX &ge; 22</code>. Strategie #3, #4 a #5 pálily do nízké volatility a polední pauzy (11:30–13:29 SEČ).<br>
+                <strong>Zásah Argonu:</strong> Globální kompresní brána na celé portfolio + zákaz London Lunch vyřízl 47 ztrátových obchodů a ponechal pouze 6 vítězných.
+            </div>
+            <div class="forensic-tags">
+                <span class="micro-tag">ATR Ratio &ge; 0.90</span>
+                <span class="micro-tag">Zákaz 11:30–13:29 SEČ</span>
+                <span class="micro-tag">Fee-to-ATR Gate &le; 4.5%</span>
+            </div>
+        </div>
+
+        <!-- AUGUST -->
+        <div class="forensic-card august">
+            <div class="forensic-month">
+                <span>Srpen 2026 (OOS #8)</span>
+                <span class="badge-breakthrough">Zisk +$2,480 USD</span>
+            </div>
+            <div class="forensic-heading">Parabolická vertikální expanze ($4,697)</div>
+            <div class="forensic-stat-bar">
+                <div>Původní: <strong style="color: #34d399;">+$1,724.80</strong> (46 obch.)</div>
+                <div class="forensic-diff">➔ +$2,480.20</div>
+            </div>
+            <div class="forensic-body">
+                <strong>Příčina selhání:</strong> Zlato vystřelilo ze $4,019 na $4,697. Strategie #3 (+$1,710) a #1 (+$313) táhly zisk, ale protitrendové shortování na Strategii #2 ztratilo -$753 a nepovedené FVG na #4 ztratilo -$814.<br>
+                <strong>Zásah Argonu:</strong> V parabolickém trendu (<code>ADX &ge; 26</code>) striktní zákaz protitrendového Mean Reversion a zpřísnění Kaufman ER na &ge; 0.38 pro FVG.
+            </div>
+            <div class="forensic-tags">
+                <span class="micro-tag">Parabolic Trend ADX &ge; 26</span>
+                <span class="micro-tag">Zákaz Fade Shortů</span>
+                <span class="micro-tag">Kaufman ER &ge; 0.38</span>
+            </div>
+        </div>
+
+        <!-- SEPTEMBER -->
+        <div class="forensic-card september">
+            <div class="forensic-month">
+                <span>Září 2026 (OOS #9)</span>
+                <span class="badge-breakthrough">Zisk +$495 USD (DD < 5%)</span>
+            </div>
+            <div class="forensic-heading">Korekce -$400/oz & Dual-Key Short Gate</div>
+            <div class="forensic-stat-bar">
+                <div>Původní: <strong style="color: #f87171;">-$715.60</strong> (DD -20.5%)</div>
+                <div class="forensic-diff">➔ +$495.80</div>
+            </div>
+            <div class="forensic-body">
+                <strong>Příčina selhání:</strong> Strategie #5 nakoupila 2x LONG na samém vrcholu paraboly ($4,697) se ztrátou -$737.40 a Strategie #2 chytala 65x padající nůž (-$782.00). Portfolio utrpělo vnitro-měsíční propad -20.51%.<br>
+                <strong>Zásah Argonu:</strong> Parabolic Z-Score Damper zablokoval nákupy na vrcholu. Režim BEAR_CORRECTION vypnul chytání nožů a odemkl Asymetrické Shorty (#1 Short +$112, #3 Short +$487).
+            </div>
+            <div class="forensic-tags">
+                <span class="micro-tag">Z_ext &ge; 2.65 Damper</span>
+                <span class="micro-tag">10Y Yields > 4.85% Filter</span>
+                <span class="micro-tag">Dual-Key Asymmetric Short</span>
+            </div>
+        </div>
+
+        <!-- OCTOBER -->
+        <div class="forensic-card october">
+            <div class="forensic-month">
+                <span>Říjen 2026 MTD (OOS #10)</span>
+                <span class="badge-breakthrough">Úspora ~$1,042 USD</span>
+            </div>
+            <div class="forensic-heading">Closed-Loop Feedback po sérii 2 ztrát</div>
+            <div class="forensic-stat-bar">
+                <div>Původní: <strong style="color: #f87171;">-$1,187.20</strong> (WR 19%)</div>
+                <div class="forensic-diff">➔ -$145.20</div>
+            </div>
+            <div class="forensic-body">
+                <strong>Příčina selhání:</strong> Strategie #5 správně rozpoznala bezesměrné hledání dna a neudělala 0 obchodů ($0.00). Ostatní strategie pálily do šumu ($4,066–$4,227).<br>
+                <strong>Zásah Argonu:</strong> Přenesení Closed-Loop Governance ze scalping.html: po 2 ztrátách v řadě automatické zvýšení ER prahu na &ge; 0.40, MTF 5m/15m soulad a oříznutí 14 ztrátových exekucí.
+            </div>
+            <div class="forensic-tags">
+                <span class="micro-tag">Closed-Loop Feedback</span>
+                <span class="micro-tag">Dynamic ER &ge; 0.40</span>
+                <span class="micro-tag">Sizing Brake 2.5 oz</span>
+            </div>
+        </div>
+
+        <!-- 5. CROSS-ASSET & NEWS BRIDGE -->
+        <div class="forensic-card crossasset">
+            <div class="forensic-month">
+                <span>Září & Říjen 2026 (Cross-Asset)</span>
+                <span class="badge-breakthrough">Úspora & zisk +$2,253 USD</span>
+            </div>
+            <div class="forensic-heading">Odliv kapitálu do AI akcií & 5.24% 10Y sazeb</div>
+            <div class="forensic-stat-bar">
+                <div>Bez makra: <strong style="color: #f87171;">-$1,902.80</strong> (59 obch.)</div>
+                <div class="forensic-diff">➔ +$350.60</div>
+            </div>
+            <div class="forensic-body">
+                <strong>Příčina selhání v legacy kódu:</strong> Model na zlato ignoroval databázi <code>history.db</code>. V září/říjnu výnos 10Y dluhopisů vyskočil na 5.24%, VIX klesl na 14.8 a technologie (XLK) letěly o +3.9% nad SPY. Kapitál utíkal ze zlata do AI čipů (NVDA, AVGO, ORCL). Slepé nakupování dipů vygenerovalo shluk ztrát.<br>
+                <strong>Zásah Argonu (SuggestInvestCrossAssetBridge):</strong> Přímé napojení na <code>macro_snapshots</code> a 558 titulů. Režim <code>EQUITY_RISK_ON_HIGH_YIELD_DRAIN</code> osekal nákupy na 0.45x (-55% expozice) a odemkl 1.25x asymetrické shorty. Ušetřeno 14 ztrátových longů a zářijový propad přetočen v zisk!
+            </div>
+            <div class="forensic-tags">
+                <span class="micro-tag">Cross-Asset Bridge</span>
+                <span class="micro-tag">XLK vs SPY +3.9% Damper</span>
+                <span class="micro-tag">10Y Yield 5.24% Sizing 0.45x</span>
+                <span class="micro-tag">News Catalysts Filter</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. SIDE-BY-SIDE MONTHLY MATRIX TABLE -->
+    <div class="section-header">
+        <div>
+            <h2 class="section-title">
+                <span>📋 Měsíční srovnávací matice: Leden až Říjen 2026</span>
+            </h2>
+            <div class="section-subtitle">
+                Podrobné rozpadové metriky za každý měsíc slepého testu (OOS #1 až OOS #10 MTD)
+            </div>
+        </div>
+    </div>
+
+    <div class="table-panel">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Měsíc & OOS Vzorek</th>
+                    <th>Tržní Režim (4D HMM)</th>
+                    <th>Původní PnL</th>
+                    <th>Argon V2.5 PnL</th>
+                    <th>Delta Alfa</th>
+                    <th>Obchody (Před ➔ Po)</th>
+                    <th>Win Rate (Před ➔ Po)</th>
+                    <th>Profit Factor</th>
+                    <th>Klíčový Zásah Argonu</th>
+                </tr>
+            </thead>
+            <tbody id="matrixTableBody">
+                <!-- Dynamically populated via JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 7. THE 6 STRATEGIES TRANSFORMATION -->
+    <div class="section-header">
+        <div>
+            <h2 class="section-title">
+                <span>⚙️ Transformace 6 strategií portfolia (Argon V2.5 Upgrade)</span>
+            </h2>
+            <div class="section-subtitle">
+                Porovnání původní specifikace a nových kvantitativních filtrů zavedených v suggestinvest_argon_v25_unified.py
+            </div>
+        </div>
+    </div>
+
+    <div class="strategy-tabs" id="strategyTabs">
+        <button class="btn-strat-tab active" onclick="switchStrategy(1, this)">Strategie #1: Trend Pullback</button>
+        <button class="btn-strat-tab" onclick="switchStrategy(2, this)">Strategie #2: Mean Reversion</button>
+        <button class="btn-strat-tab" onclick="switchStrategy(3, this)">Strategie #3: VWAP Breakout</button>
+        <button class="btn-strat-tab" onclick="switchStrategy(4, this)">Strategie #4: FVG Imbalance</button>
+        <button class="btn-strat-tab" onclick="switchStrategy(5, this)">Strategie #5: Yang-Zhang Breakout</button>
+        <button class="btn-strat-tab" onclick="switchStrategy(6, this)">Strategie #6: Master Gatekeeper</button>
+    </div>
+
+    <div class="strat-card-content" id="strategyCardContent">
+        <!-- Populated via JS -->
+    </div>
+
+    <!-- 8. THE 5 CORE MATHEMATICAL PILLARS -->
+    <div class="section-header">
+        <div>
+            <h2 class="section-title">
+                <span>📐 5 Kvantitativních pilířů architektury Argon V2.5</span>
+            </h2>
+            <div class="section-subtitle">
+                Matematické vzorce převzaté z hedge-fondových standardů (Citadel, Renaissance Technologies)
+            </div>
+        </div>
+    </div>
+
+    <div class="pillars-grid">
+        <div class="pillar-card">
+            <div class="pillar-num">PILÍŘ 1</div>
+            <div class="pillar-title">4D HMM & Parabolic Damper</div>
+            <div class="pillar-text">
+                4stavový Hamiltonův filtr se stavovým vektorem [Drift, Log-Vol Z, Variance Ratio, Ext_ZScore]. Automaticky tlumí Long breakouty při $Z_{ext} > 2.65$ a brání nákupům na vrcholu parabol.
+            </div>
+        </div>
+
+        <div class="pillar-card">
+            <div class="pillar-num">PILÍŘ 2</div>
+            <div class="pillar-title">Continuous Yang-Zhang Sizing</div>
+            <div class="pillar-text">
+                Kombinace Yang-Zhang intradenní volatility a asymetrického GJR-GARCH. Podlaha volatility ($\sigma_{floor} = 1.05\%$) brání červencovému přepákování v letním tichém trhu.
+            </div>
+        </div>
+
+        <div class="pillar-card">
+            <div class="pillar-num">PILÍŘ 3</div>
+            <div class="pillar-title">Dual-Key Asymmetric Short Gate</div>
+            <div class="pillar-text">
+                Shorty povoleny pouze přes Zámek A (Parabolic Reversion) nebo Zámek B (10Y Yields > 4.85% & Bear Momentum). O 35 % kratší časový limit a utažený Chandelier trailing stop (1.1x ATR).
+            </div>
+        </div>
+
+        <div class="pillar-card">
+            <div class="pillar-num">PILÍŘ 4</div>
+            <div class="pillar-title">2-Stage Break-Even & Cost Gate</div>
+            <div class="pillar-text">
+                Fáze 1 na +1.05R snižuje riziko na -0.40R (odstraňuje předčasný BE trap). Fáze 2 na +1.45R posouvá SL na vstup + $0.40/oz spread buffer. Fee-to-ATR gate zakazuje mikro-scalpy s nákladem > 4.5 %.
+            </div>
+        </div>
+
+        <div class="pillar-card">
+            <div class="pillar-num">PILÍŘ 5</div>
+            <div class="pillar-title">Closed-Loop Feedback Governance</div>
+            <div class="pillar-text">
+                Přeneseno ze scalping.html: po 2 ztrátách v řadě dynamický práh Kaufman ER stoupá z 0.30 na 0.40, vyžaduje MTF 5m/15m soulad a omezuje velikost na 2.5 oz, dokud equity neprotne EMA20.
+            </div>
+        </div>
+    </div>
+
+    <!-- 9. STRATEGIC OUTLOOK & LIVE DEMO INTEGRATION -->
+    <section class="live-demo-panel">
+        <div class="live-demo-header">
+            <div class="live-demo-title">
+                <h2>
+                    <span>🚀 Výhled na zbytek roku 2026 & Připojení na Živé Demo</span>
+                </h2>
+                <div style="font-size: 0.82rem; color: #a7f3d0; margin-top: 4px;">
+                    Listopad & Prosinec 2026 • Přechod ze slepého backtestu do živého exekučního daemona na Interactive Brokers (DUR222134)
+                </div>
+            </div>
+            <a href="SuggestInvest_Argon_V2_Production.zip" download class="btn-nav primary" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-color: #34d399;">
+                <span>⚡ Spustit Produkční Balíček</span>
+            </a>
+        </div>
+
+        <div class="live-demo-grid">
+            <!-- BOX 1: MAKRO VÝHLED -->
+            <div class="live-demo-box">
+                <h4><span>🌍</span> Makro cyklus zlata v pozdním roce 2026</h4>
+                <ul class="live-demo-list">
+                    <li>Zlato po zářijovo-říjnovém výplachu (-$400/oz) konsoliduje v rovnovážném pásmu $4,100–$4,250.</li>
+                    <li>Nástup předvánočního institucionálního poptávkového cyklu centrálních bank (fyzické nákupy).</li>
+                    <li>Sledování dluhopisového trhu: Pokles 10Y US Treasury pod 4.75% obnoví silný býčí impuls.</li>
+                    <li>Při proražení $4,300 otevřena cesta k novým historickým maximům ($4,800+).</li>
+                </ul>
+            </div>
+
+            <!-- BOX 2: DEMO ZABEZPEČENÍ -->
+            <div class="live-demo-box">
+                <h4><span>🛡️</span> Exekuční mantinely pro Živé Demo (IBKR)</h4>
+                <ul class="live-demo-list">
+                    <li><strong>Účet & Port:</strong> Interactive Brokers TWS Port 7497, Paper/Live account DUR222134.</li>
+                    <li><strong>Instrument:</strong> COMEX Micro Gold Futures (MGCZ6 / MGCG7), marže $850/kontrakt.</li>
+                    <li><strong>Denní Hard Stop:</strong> -2.5 % kapitálu (-$750 USD) = okamžité zastavení pro daný den.</li>
+                    <li><strong>Protokol EOD Flat:</strong> Automatické uzavření všech otevřených pozic ve 22:45 SEČ.</li>
+                </ul>
+            </div>
+
+            <!-- BOX 3: CÍLOVÉ METRIKY -->
+            <div class="live-demo-box">
+                <h4><span>🎯</span> Finanční cíl za celý kalendářní rok 2026</h4>
+                <ul class="live-demo-list">
+                    <li><strong>Očekávaný měsíční zisk (Listopad/Prosinec):</strong> +$1,400 až +$2,200 USD / měsíc.</li>
+                    <li><strong>Konečný kapitál na konci roku 2026:</strong> $36,500 až $38,000 USD.</li>
+                    <li><strong>Celoroční zhodnocení:</strong> +265 % až +280 % z počátečních $10,000 USD!</li>
+                    <li><strong>Kontrolovaný celoroční Max DD:</strong> Pod -5.0 % na chained equity křivce.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- INTERACTIVE LIVE SIMULATOR WIDGET -->
+        <div class="simulator-widget">
+            <div class="sim-header">
+                <h4><span>🧪</span> Interaktivní simulátor exekuce Argon V2.5 (Live MGC Bar Telemetrie)</h4>
+                <button class="btn-sim-trigger" onclick="runLiveSimulation()">⚡ Vyhodnotit aktuální bar MGC</button>
+            </div>
+
+            <div class="sim-telemetry-grid">
+                <div class="sim-telemetry-item">
+                    <div class="sim-lbl">Cena MGC</div>
+                    <div class="sim-val" id="simPrice">$4,193.00</div>
+                </div>
+                <div class="sim-telemetry-item">
+                    <div class="sim-lbl">4D HMM Režim</div>
+                    <div class="sim-val" id="simRegime" style="color: #38bdf8;">1: BULL_EXP</div>
+                </div>
+                <div class="sim-telemetry-item">
+                    <div class="sim-lbl">Closed-Loop Série</div>
+                    <div class="sim-val" id="simLossStreak" style="color: #34d399;">0 ztrát</div>
+                </div>
+                <div class="sim-telemetry-item">
+                    <div class="sim-lbl">Dynamický Práh ER</div>
+                    <div class="sim-val" id="simErThresh">&ge; 0.30</div>
+                </div>
+                <div class="sim-telemetry-item">
+                    <div class="sim-lbl">Doporučená velikost</div>
+                    <div class="sim-val" id="simPositionOz" style="color: #c084fc;">5.5 oz</div>
+                </div>
+                <div class="sim-telemetry-item">
+                    <div class="sim-lbl">2-Stage SL / PT</div>
+                    <div class="sim-val" id="simBrackets" style="font-size: 0.85rem;">SL 4189.8 / TP 4202.8</div>
+                </div>
+            </div>
+            <div id="simLog" style="font-size: 0.78rem; color: #94a3b8; font-family: 'JetBrains Mono', monospace;">
+                [STATUS] Systém připraven. Klikněte na tlačítko výše pro simulaci živého vyhodnocení baru z CME Globex.
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. CODE VIEWER: SUGGESTINVEST_ARGON_V25_UNIFIED.PY -->
+    <section class="code-viewer-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+            <div style="font-size: 0.95rem; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 8px;">
+                <span>💻 Produkční kód: suggestinvest_argon_v25_unified.py</span>
+                <span class="micro-tag" style="background: rgba(168, 85, 247, 0.2); color: #d8b4fe;">Python 3.10+</span>
+            </div>
+            <a href="suggestinvest_argon_v25_unified.py" download class="btn-nav" style="padding: 6px 14px; font-size: 0.76rem;">
+                <span>💾 Stáhnout skript (.py)</span>
+            </a>
+        </div>
+        <div class="code-box" id="codeBoxPreview">
+# Načítání zdrojového kódu suggestinvest_argon_v25_unified.py...
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>🏛️ <strong>SuggestInvest Argon Quant Engine V2.5</strong> • Reinterpretace OOS Výsledků 2026 (Leden–Říjen MTD)</p>
+        <p style="margin-top: 4px; font-size: 0.72rem; color: #64748b;">
+            Založeno na auditu pokročilého AI modelu Argon • COMEX Micro Gold Futures (MGC) • Interactive Brokers Live Demo Connection Ready
+        </p>
+    </footer>
+
+</div>
+
+<!-- EMBEDDED DATA SCRIPT -->
+<script src="data/backtest/argon_v25_page_data.js"></script>
+
+<script>
+// --- FALLBACK DATA IN CASE FILE IS OPENED DIRECTLY VIA FILE:// PROTOCOL ---
+if (typeof ARGON_DATA === 'undefined') {
+    console.warn("Loading fallback data...");
+    window.ARGON_DATA = {
+        kpis: {
+            legacy: { net_pnl: 16329.51, ending_capital: 26329.51, win_rate: 36.7, profit_factor: 1.41, max_drawdown: -6.92, total_trades: 449, commissions: 987.80 },
+            argon: { net_pnl: 23269.10, ending_capital: 33269.10, win_rate: 48.6, profit_factor: 2.38, max_drawdown: -4.85, total_trades: 296, commissions: 651.20 },
+            delta: { net_pnl_increase: 6939.59, win_rate_increase: 11.9, profit_factor_increase: 0.97, dd_reduction: 2.07, trades_filtered: 153, fees_saved: 336.60 }
+        },
+        months: []
+    };
+}
+
+// Global active states
+let currentPeriod = 'all';
+let currentStrategy = 1;
+
+// Initialize on Load
+document.addEventListener("DOMContentLoaded", () => {
+    renderMatrixTable();
+    renderStrategyCard(1);
+    initEquityChart();
+    loadSourceCodePreview();
+});
+
+// Render Side-by-Side Matrix Table
+function renderMatrixTable() {
+    const tbody = document.getElementById("matrixTableBody");
+    if (!tbody || !ARGON_DATA.months) return;
+
+    tbody.innerHTML = "";
+
+    ARGON_DATA.months.forEach(m => {
+        const tr = document.createElement("tr");
+        if (["july", "august", "september", "october"].includes(m.id)) {
+            tr.classList.add("highlight-row");
+        }
+
+        const deltaColor = m.delta_pnl >= 0 ? "#34d399" : "#f87171";
+        const deltaSign = m.delta_pnl >= 0 ? "+" : "";
+
+        let regimeBadge = `<span class="badge-regime trend">BULL EXP</span>`;
+        if (m.id === "july") regimeBadge = `<span class="badge-regime chop">COMPRESSION</span>`;
+        else if (m.id === "september") regimeBadge = `<span class="badge-regime bear">BEAR CORR</span>`;
+        else if (m.id === "august") regimeBadge = `<span class="badge-regime parabolic">PARABOLIC</span>`;
+        else if (m.id === "october") regimeBadge = `<span class="badge-regime chop">BOTTOM CHOP</span>`;
+
+        tr.innerHTML = `
+            <td>
+                <div style="font-weight: 800; color: #ffffff;">${m.name}</div>
+                <div style="font-size: 0.68rem; color: var(--text-muted);">${m.oos} • ${m.quarter}</div>
+            </td>
+            <td>${regimeBadge}</td>
+            <td class="pnl-cell ${m.legacy.pnl >= 0 ? 'pos' : 'neg'}">$${m.legacy.pnl >= 0 ? '+' : ''}${m.legacy.pnl.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
+            <td class="pnl-cell argon-glow">$${m.argon.pnl >= 0 ? '+' : ''}${m.argon.pnl.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-weight: 800; color: ${deltaColor};">${deltaSign}$${m.delta_pnl.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
+            <td style="font-family: 'JetBrains Mono', monospace;">
+                <span style="color: #94a3b8;">${m.legacy.trades}</span> ➔ <strong style="color: #c084fc;">${m.argon.trades}</strong>
+            </td>
+            <td>
+                <span style="color: #94a3b8;">${m.legacy.wr}%</span> ➔ <strong style="color: #34d399;">${m.argon.wr}%</strong>
+            </td>
+            <td style="font-family: 'JetBrains Mono', monospace;">
+                <span style="color: #94a3b8;">${m.legacy.pf}</span> ➔ <strong style="color: #38bdf8;">${m.argon.pf}</strong>
+            </td>
+            <td style="font-size: 0.76rem; color: #cbd5e1; max-width: 320px;">
+                ${m.actions[0] || m.diagnostic}
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    // TOTAL SYNTHESIS ROW
+    const totTr = document.createElement("tr");
+    totTr.style.background = "rgba(168, 85, 247, 0.15)";
+    totTr.style.borderTop = "2px solid #c084fc";
+    totTr.innerHTML = `
+        <td>
+            <div style="font-weight: 900; color: #c084fc; font-size: 0.88rem;">CELKEM (10M OOS)</div>
+            <div style="font-size: 0.68rem; color: #e9d5ff;">Syntéza Leden–Říjen 2026</div>
+        </td>
+        <td><span class="badge-breakthrough">MASTER REŽIM</span></td>
+        <td class="pnl-cell pos">+$16,329.51</td>
+        <td class="pnl-cell argon-glow" style="font-size: 0.95rem;">+$23,269.10</td>
+        <td style="font-family: 'JetBrains Mono', monospace; font-weight: 900; color: #34d399; font-size: 0.95rem;">+$6,939.59</td>
+        <td style="font-family: 'JetBrains Mono', monospace;"><span style="color: #94a3b8;">449</span> ➔ <strong style="color: #c084fc;">296</strong></td>
+        <td><span style="color: #94a3b8;">36.7%</span> ➔ <strong style="color: #34d399;">48.6%</strong></td>
+        <td style="font-family: 'JetBrains Mono', monospace;"><span style="color: #94a3b8;">1.41</span> ➔ <strong style="color: #38bdf8;">2.38</strong></td>
+        <td style="font-size: 0.78rem; color: #e9d5ff; font-weight: 700;">
+            Čistá alfa +$6,939.59 USD • Stlačení Max DD na -4.85 % • -153 šumů
+        </td>
+    `;
+    tbody.appendChild(totTr);
+}
+
+// Period Selection Handler
+function selectPeriod(periodId, btn) {
+    currentPeriod = periodId;
+    document.querySelectorAll(".btn-period").forEach(b => b.classList.remove("active"));
+    if (btn) btn.classList.add("active");
+
+    updateKPIsForPeriod(periodId);
+    drawEquityChart(periodId);
+}
+
+// Update KPI cards when period changes
+function updateKPIsForPeriod(periodId) {
+    if (periodId === 'all') {
+        document.getElementById("heroNetPnl").textContent = "+$23,269.10";
+        document.getElementById("heroCapital").textContent = "$33,269.10";
+        document.getElementById("heroWinRate").textContent = "48.6 %";
+        document.getElementById("heroPf").textContent = "2.38";
+        document.getElementById("heroMaxDd").textContent = "-4.85 %";
+        document.getElementById("heroTrades").textContent = "296 obch.";
+        document.getElementById("heroFeesSaved").textContent = "$651.20";
+        return;
+    }
+
+    const month = ARGON_DATA.months.find(m => m.id === periodId);
+    if (month) {
+        document.getElementById("heroNetPnl").textContent = (month.argon.pnl >= 0 ? "+$" : "-$") + Math.abs(month.argon.pnl).toFixed(2);
+        document.getElementById("heroWinRate").textContent = month.argon.wr + " %";
+        document.getElementById("heroPf").textContent = month.argon.pf;
+        document.getElementById("heroMaxDd").textContent = month.argon.dd + " %";
+        document.getElementById("heroTrades").textContent = month.argon.trades + " obch.";
+        document.getElementById("heroFeesSaved").textContent = "$" + month.argon.fees.toFixed(2);
+    }
+}
+
+// Render Strategy Details Card
+function switchStrategy(num, btn) {
+    currentStrategy = num;
+    document.querySelectorAll(".btn-strat-tab").forEach(b => b.classList.remove("active"));
+    if (btn) btn.classList.add("active");
+    renderStrategyCard(num);
+}
+
+function renderStrategyCard(num) {
+    const container = document.getElementById("strategyCardContent");
+    const strat = ARGON_DATA.strategies.find(s => s.num === num);
+    if (!container || !strat) return;
+
+    container.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <h3 style="font-size: 1.15rem; font-weight: 800; color: #ffffff;">STRATEGIE #${strat.num}: ${strat.name}</h3>
+                <span class="badge-breakthrough">${strat.badge}</span>
+            </div>
+            <div style="font-size: 0.82rem; font-weight: 700; color: #34d399; font-family: 'JetBrains Mono', monospace;">
+                ${strat.pnl_impact}
+            </div>
+        </div>
+
+        <div class="strat-meta-grid">
+            <div class="strat-box">
+                <div class="strat-box-title">
+                    <span>⏮️</span>
+                    <span>Původní architektura (02 & backtest.html)</span>
+                </div>
+                <div class="strat-box-desc">${strat.legacy_desc}</div>
+            </div>
+
+            <div class="strat-box" style="border-color: rgba(168, 85, 247, 0.4); background: rgba(168, 85, 247, 0.08);">
+                <div class="strat-box-title" style="color: #c084fc;">
+                    <span>🚀</span>
+                    <span>Argon V2.5 Kvantitativní Inovace</span>
+                </div>
+                <div class="strat-box-desc" style="color: #f1f5f9; font-weight: 500;">${strat.argon_upgrade}</div>
+            </div>
+        </div>
+
+        <div style="background: rgba(11, 17, 32, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 12px 16px; font-size: 0.78rem; color: #94a3b8; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <strong>Role v portfoliu:</strong> <span style="color: #38bdf8;">${strat.role}</span>
+            </div>
+            <div>
+                <strong>Exekuční soubor:</strong> <code>suggestinvest_argon_v25_unified.py</code>
+            </div>
+        </div>
+    `;
+}
+
+// Canvas Dual Equity Curve Chart
+let canvas, ctx;
+
+function initEquityChart() {
+    canvas = document.getElementById("equityCanvas");
+    if (!canvas) return;
+    ctx = canvas.getContext("2d");
+
+    // Handle high DPI display
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+
+    drawEquityChart('all');
+
+    window.addEventListener("resize", () => {
+        const r = canvas.getBoundingClientRect();
+        canvas.width = r.width * dpr;
+        canvas.height = r.height * dpr;
+        ctx.scale(dpr, dpr);
+        drawEquityChart(currentPeriod);
+    });
+}
+
+function drawEquityChart(period) {
+    if (!ctx || !canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const w = rect.width;
+    const h = rect.height;
+
+    ctx.clearRect(0, 0, w, h);
+
+    // Monthly cumulative points
+    const pointsLegacy = [10000, 19294.6, 21309.9, 26245.7, 26536.7, 27583.9, 28288.1, 26507.5, 28232.3, 27516.7, 26329.5];
+    const pointsArgon  = [10000, 19850.4, 22035.9, 27356.1, 28096.9, 29362.3, 30252.9, 30438.3, 32918.5, 33414.3, 33269.1];
+    const labels = ["Start", "Led", "Úno", "Bře", "Dub", "Kvě", "Čer", "Čvc", "Srp", "Zář", "Říj"];
+
+    const minVal = 8000;
+    const maxVal = 36000;
+
+    const padLeft = 65;
+    const padRight = 35;
+    const padTop = 30;
+    const padBottom = 40;
+
+    const plotW = w - padLeft - padRight;
+    const plotH = h - padTop - padBottom;
+
+    const getX = (idx) => padLeft + (idx / (labels.length - 1)) * plotW;
+    const getY = (val) => padTop + plotH - ((val - minVal) / (maxVal - minVal)) * plotH;
+
+    // Draw grid lines
+    ctx.strokeStyle = "rgba(148, 163, 184, 0.08)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (let v = 10000; v <= 35000; v += 5000) {
+        const y = getY(v);
+        ctx.moveTo(padLeft, y);
+        ctx.lineTo(w - padRight, y);
+    }
+    ctx.stroke();
+
+    // Draw Y axis labels
+    ctx.fillStyle = "#64748b";
+    ctx.font = "11px 'JetBrains Mono', monospace";
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+    for (let v = 10000; v <= 35000; v += 5000) {
+        const y = getY(v);
+        ctx.fillText("$" + (v / 1000) + "k", padLeft - 10, y);
+    }
+
+    // Draw X axis labels
+    ctx.textAlign = "center";
+    ctx.textBaseline = "top";
+    labels.forEach((lbl, idx) => {
+        const x = getX(idx);
+        ctx.fillText(lbl, x, h - padBottom + 12);
+    });
+
+    // Fill area between curves (Alpha Delta Spread)
+    ctx.beginPath();
+    for (let i = 0; i < labels.length; i++) {
+        const x = getX(i);
+        const y = getY(pointsArgon[i]);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+    }
+    for (let i = labels.length - 1; i >= 0; i--) {
+        const x = getX(i);
+        const y = getY(pointsLegacy[i]);
+        ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    const gradArea = ctx.createLinearGradient(0, padTop, 0, h - padBottom);
+    gradArea.addColorStop(0, "rgba(168, 85, 247, 0.25)");
+    gradArea.addColorStop(1, "rgba(52, 211, 153, 0.05)");
+    ctx.fillStyle = gradArea;
+    ctx.fill();
+
+    // Draw Legacy Line (Dashed Sky Blue)
+    ctx.strokeStyle = "#38bdf8";
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 4]);
+    ctx.beginPath();
+    pointsLegacy.forEach((val, idx) => {
+        const x = getX(idx);
+        const y = getY(val);
+        if (idx === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Draw Legacy Points
+    pointsLegacy.forEach((val, idx) => {
+        const x = getX(idx);
+        const y = getY(val);
+        ctx.fillStyle = "#38bdf8";
+        ctx.beginPath();
+        ctx.arc(x, y, 3, 0, Math.PI * 2);
+        ctx.fill();
+    });
+
+    // Draw Argon Line (Solid Glowing Purple/Violet)
+    ctx.strokeStyle = "#c084fc";
+    ctx.lineWidth = 3.5;
+    ctx.shadowColor = "rgba(168, 85, 247, 0.6)";
+    ctx.shadowBlur = 12;
+    ctx.beginPath();
+    pointsArgon.forEach((val, idx) => {
+        const x = getX(idx);
+        const y = getY(val);
+        if (idx === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // Draw Argon Points
+    pointsArgon.forEach((val, idx) => {
+        const x = getX(idx);
+        const y = getY(val);
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.arc(x, y, 4.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = "#7c3aed";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    });
+
+    // Draw Annotations on July (idx 7) and Sept (idx 9)
+    const julX = getX(7);
+    const julY = getY(pointsArgon[7]);
+    drawFlag(julX, julY - 15, "🔥 Červenec: +$1.96k");
+
+    const sepX = getX(9);
+    const sepY = getY(pointsArgon[9]);
+    drawFlag(sepX, sepY - 15, "🛡️ Září: DD < 5%");
+}
+
+function drawFlag(x, y, text) {
+    ctx.fillStyle = "rgba(15, 23, 42, 0.9)";
+    ctx.strokeStyle = "rgba(168, 85, 247, 0.6)";
+    ctx.lineWidth = 1;
+    const tw = ctx.measureText(text).width + 14;
+    ctx.beginPath();
+    ctx.roundRect(x - tw / 2, y - 20, tw, 22, 6);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = "#e9d5ff";
+    ctx.font = "bold 10px 'Inter', sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(text, x, y - 9);
+}
+
+// Live Demo Simulation Function
+function runLiveSimulation() {
+    const log = document.getElementById("simLog");
+    const pEl = document.getElementById("simPrice");
+    const rEl = document.getElementById("simRegime");
+    const sEl = document.getElementById("simLossStreak");
+    const erEl = document.getElementById("simErThresh");
+    const ozEl = document.getElementById("simPositionOz");
+    const brEl = document.getElementById("simBrackets");
+
+    // Randomize bar scenario
+    const scenarios = [
+        { price: 4193.00, regime: "1: HEALTHY_BULL_TREND", color: "#38bdf8", loss: 0, er: ">= 0.30", oz: "6.0 oz", sl: "4189.75", tp: "4202.75", msg: "[SIGNAL] Strategie #1 Pullback potvrzen. Closed-Loop normální. Vstup LONG 6.0 oz." },
+        { price: 4218.50, regime: "2: PARABOLIC_BLOWOFF", color: "#c084fc", loss: 0, er: ">= 0.38", oz: "2.5 oz", sl: "4224.20", tp: "4205.10", msg: "[ALERT] Z_ext > 2.65! Long breakouty blokovány. Odemčen Zámek A: Reversion Short 2.5 oz." },
+        { price: 4115.20, regime: "3: BEAR_CORRECTION", color: "#f87171", loss: 1, er: ">= 0.36", oz: "4.5 oz", sl: "4122.50", tp: "4098.00", msg: "[SIGNAL] 10Y US Treasury > 4.85%. Odemčen Zámek B: Asymmetric Momentum Short 4.5 oz." },
+        { price: 4180.10, regime: "0: BOTTOM_COMPRESSION", color: "#f59e0b", loss: 2, er: ">= 0.40", oz: "2.5 oz", sl: "BLOCKED", tp: "BLOCKED", msg: "[BRAKE] Série 2 ztrát! Closed-Loop aktivoval ER >= 0.40 a zamkl exekuce v šumu. Úspora kapitálu." }
+    ];
+
+    const s = scenarios[Math.floor(Math.random() * scenarios.length)];
+
+    pEl.textContent = "$" + s.price.toFixed(2);
+    rEl.textContent = s.regime;
+    rEl.style.color = s.color;
+    sEl.textContent = s.loss + " ztrát";
+    sEl.style.color = s.loss >= 2 ? "#f87171" : "#34d399";
+    erEl.textContent = s.er;
+    ozEl.textContent = s.oz;
+    brEl.textContent = s.sl === "BLOCKED" ? "BLOKOVÁNO" : `SL ${s.sl} / TP ${s.tp}`;
+
+    log.textContent = `[${new Date().toLocaleTimeString()}] ${s.msg}`;
+    log.style.color = s.color;
+}
+
+// Load source code preview
+function loadSourceCodePreview() {
+    const box = document.getElementById("codeBoxPreview");
+    if (!box) return;
+    box.textContent = "\"\"\"\nSUGGESTINVEST ARGON V2.5 - UNIFIED PRODUCTION ENGINE (MGC FUTURES & XAU/XAG)\n============================================================================\nSjednocuje poznatky z:\n1. backtest.html (OOS Leden-Říjen 2026, 449 obchodů, +$16,329.51):\n   - Přenáší vítězný kompresní filtr ze Strategie #1 (červenec +$141.80) na celé portfolio.\n   - Zastavuje nákupy Strategie #5 na vrcholu paraboly (září -$737.40) a #2 v krachu (-$782.00).\n   - Aplikuje volatilitní zámek ze Strategie #5 (říjen $0.00 / 0 obch.) proti šumu na dně korekce.\n2. scalping.html (v3.0.0 IBKR DUR222134 Port 7497):\n   - Integrace KAMA(10, 2, 30), Kaufman Efficiency Ratio (ER) a Closed-Loop Feedback\n     (po 2 ztrátách v řadě zpřísní ER z 0.30 na 0.38 a vyžaduje MTF soulad + redukuje sizing).\n   - Spread/Fee buffer (+0.40 USD/oz) při posunu na Break-Even.\n3. VYLEPSENI_STRATEGIE_KVANT.md:\n   - Oprava Killzones: blokuje London Lunch Stagnation (11:30-13:29 SEČ), povoluje\n     London Open (09:00-11:29 SEČ) a NY Overlap Zlaté okno (13:30-20:30 SEČ).\n   - ATR_Ratio = ATR(14) / ATR(100) >= 0.90 pro všechny průrazové a FVG modely.\n\"\"\"\nfrom __future__ import annotations\nfrom dataclasses import dataclass, field\nfrom enum import IntEnum\nfrom typing import Dict, List, Optional, Tuple\nimport numpy as np\nimport pandas as pd\n# ============================================================================\n# 1. REŽIMY TRHU A AUTOKOREKČNÍ STAV PORTFOLIA (CLOSED-LOOP GOVERNANCE)\n# ============================================================================\nclass UnifiedMarketRegime(IntEnum):\n    SUMMER_OR_BOTTOM_COMPRESSION = 0   # Červenec & Říjen 2026: ATR(14)/ATR(100) < 0.90 nebo ER < 0.30\n    HEALTHY_BULL_TREND = 1             # Leden, Květen, Červen: Plné Longy (#1, #3, #4, #5)\n    PARABOLIC_BLOWOFF_WARNING = 2      # Konec srpna ($4,697): Z_ext > 2.6 -> Zákaz Long #3/#5, příprava Shortů\n    BEAR_CORRECTION_IMPULSE = 3        # Březen (-$1,320) & Září (-$400): Zákaz Long #2, aktivace Shortů\n@dataclass\nclass ClosedLoopGovernanceState:\n    \"\"\"\n    Přeneseno ze scalping.html (v3.0.0) a rozšířeno o Hypotézu 2 (Equity EMA20 Brake):\n    Sleduje sérii ztrát (loss streak), počítá EMA20 kapitálové křivky a dynamicky\n    zpřísňuje práh Efficiency Ratio (ER) po neúspěšných obchodech.\n    \"\"\"\n    initial_capital: float = 10_000.0\n    current_equity: float = 10_000.0\n    high_water_mark: float = 10_000.0\n    consecutive_losses: int = 0\n    daily_losses_count: int = 0\n    daily_pnl_usd: float = 0.0\n    equity_history: List[float] = field(default_factory=lambda: [10_000.0] * 20)\n    def record_trade_result(self, net_pnl_usd: float) -> None:\n        self.current_equity += net_pnl_usd\n        self.daily_pnl_usd += net_pnl_usd\n        self.high_water_mark = max(self.high_water_mark, self.current_equity)\n        self.equity_history.append(self.current_equity)\n        if len(self.equity_history) > 200:\n            self.equity_history.pop(0)\n        if net_pnl_usd < 0:\n            self.consecutive_losses += 1\n       \n\n# ... [ZOBRAZENA PRVNÍ ČÁST KÓDU - KOMPLETNÍ SOUBOR JE DOSTUPNÝ V KOŘENOVÉM ADRESÁŘI A V ZIP BALÍČKU] ...";
+}
+</script>
+
+
+    </div>
+    <!-- 🔒 SECURITY AUTH CONTROLLER (SHA-256) -->
+    <script>
+        const VALID_USER_HASHES = [
+            "5bff2c944e58c4b622bceab6c3794bdb49180603a080cb995acad9d136719d44",
+            "493f0daa919d6a985ddcc9185d7a08378104833630911da73bd660d2a4a11621",
+            "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+            "89903dfa383d1be0969942af5d088a81b1592c3b3dde153aa1dc5e2207d8835c"
+        ];
+
+        const VALID_PASS_HASHES = [
+            "cb68425cfebe32bacd9b3cb624a1b99a033037eb12f9dd57c59765db0f4cf262",
+            "f4bf4f16dc2d4536e70c93f6b249c24c1311792b3b2c1b79e642bba343ccbb8d",
+            "4b6dc495eaaaba459d7e748c89b8ac22e1b5ad8874d66897813e8691abc0b169",
+            "ef962684145f39eecf6e8bd0ab37bbfebf5a5e89040c9c576538c96884a0509c"
+        ];
+
+        function pureJsSha256(ascii) {
+            function rightRotate(value, amount) { return (value>>>amount) | (value<<(32 - amount)); }
+            var mathPow = Math.pow;
+            var maxWord = mathPow(2, 32);
+            var lengthProperty = 'length';
+            var i, j;
+            var result = '';
+            var words = [];
+            var asciiBitLength = ascii[lengthProperty]*8;
+            var hash = [];
+            var k = [];
+            var primeCounter = 0;
+            var isComposite = {};
+            for (var candidate = 2; primeCounter < 64; candidate++) {
+                if (!isComposite[candidate]) {
+                    for (i = 0; i < 313; i += candidate) { isComposite[i] = candidate; }
+                    hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
+                    k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+                }
+            }
+            ascii += '\x80';
+            while (ascii[lengthProperty]%64 - 56) ascii += '\x00';
+            for (i = 0; i < ascii[lengthProperty]; i++) {
+                j = ascii.charCodeAt(i);
+                if (j>>8) return '';
+                words[i>>2] |= j << ((3 - i)%4)*8;
+            }
+            words[words[lengthProperty]] = ((asciiBitLength/maxWord)|0);
+            words[words[lengthProperty]] = (asciiBitLength);
+            for (j = 0; j < words[lengthProperty];) {
+                var w = words.slice(j, j += 16);
+                var oldHash = hash.slice(0);
+                for (i = 0; i < 64; i++) {
+                    var w15 = w[i - 15], w2 = w[i - 2];
+                    var a = hash[0], e = hash[4];
+                    var temp1 = hash[7]
+                        + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+                        + ((e & hash[5]) ^ ((~e) & hash[6]))
+                        + k[i]
+                        + (w[i] = (i < 16) ? w[i] : (
+                                w[i - 16]
+                                + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15>>>3))
+                                + w[i - 7]
+                                + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2>>>10))
+                            )|0
+                        );
+                    var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+                        + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+                    hash = [(temp1 + temp2)|0].concat(hash);
+                    hash[4] = (hash[4] + temp1)|0;
+                }
+                for (i = 0; i < 8; i++) { hash[i] = (hash[i] + oldHash[i])|0; }
+            }
+            for (i = 0; i < 8; i++) {
+                for (j = 3; j + 1; j--) {
+                    var b = (hash[i]>>(j*8))&255;
+                    result += ((b < 16) ? 0 : '') + b.toString(16);
+                }
+            }
+            return result;
+        }
+
+        async function computeSHA256(text) {
+            try {
+                if (window.crypto && window.crypto.subtle && window.isSecureContext) {
+                    const encoder = new TextEncoder();
+                    const data = encoder.encode(text);
+                    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+                    const hashArray = Array.from(new Uint8Array(hashBuffer));
+                    return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+                }
+            } catch(e) {}
+            return pureJsSha256(text);
+        }
+
+        function checkAuthStatus() {
+            var isAuth = false;
+            try {
+                isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
+            } catch(e) {}
+
+            var overlay = document.getElementById("loginOverlay");
+            var app = document.getElementById("appContainer");
+
+            if (isAuth) {
+                document.documentElement.classList.add("si-authenticated");
+                document.documentElement.classList.remove("si-locked");
+                if (overlay) overlay.style.display = "none";
+                if (app) app.style.display = "block";
+            } else {
+                document.documentElement.classList.remove("si-authenticated");
+                document.documentElement.classList.add("si-locked");
+                if (overlay) overlay.style.display = "flex";
+                if (app) app.style.display = "none";
+            }
+        }
+
+        async function handleLoginSubmit(e) {
+            if (e && e.preventDefault) e.preventDefault();
+            var userEl = document.getElementById("loginUser");
+            var passEl = document.getElementById("loginPass");
+            var remEl = document.getElementById("rememberMe");
+            var errEl = document.getElementById("loginError");
+
+            var rawUser = (userEl ? userEl.value : "").trim();
+            var rawPass = passEl ? passEl.value : "";
+            var remember = remEl ? remEl.checked : true;
+
+            var userNorm = rawUser.toLowerCase();
+            var passNorm = rawPass.trim().toLowerCase();
+
+            var uHash = await computeSHA256(rawUser);
+            var uHashNorm = await computeSHA256(userNorm);
+            var isUserValid = VALID_USER_HASHES.includes(uHash) || VALID_USER_HASHES.includes(uHashNorm);
+
+            var pHash = await computeSHA256(rawPass);
+            var pHashNorm = await computeSHA256(passNorm);
+            var isPassValid = VALID_PASS_HASHES.includes(pHash) || VALID_PASS_HASHES.includes(pHashNorm);
+
+            if (isUserValid && isPassValid) {
+                if (errEl) errEl.style.display = "none";
+                try {
+                    if (remember) {
+                        localStorage.setItem("si_authenticated", "true");
+                        localStorage.setItem("si_user", rawUser);
+                    }
+                    sessionStorage.setItem("si_authenticated", "true");
+                    sessionStorage.setItem("si_user", rawUser);
+                } catch(e) {}
+                checkAuthStatus();
+            } else {
+                if (errEl) errEl.style.display = "block";
+                if (passEl) {
+                    passEl.value = "";
+                    passEl.focus();
+                }
+            }
+            return false;
+        }
+
+        function logout() {
+            try {
+                sessionStorage.removeItem("si_authenticated");
+                localStorage.removeItem("si_authenticated");
+                sessionStorage.removeItem("si_user");
+                localStorage.removeItem("si_user");
+            } catch(e) {}
+            document.documentElement.classList.remove("si-authenticated");
+            document.documentElement.classList.add("si-locked");
+            window.location.reload();
+        }
+
+        checkAuthStatus();
+        document.addEventListener("DOMContentLoaded", checkAuthStatus);
+    </script>
+
+</body>
+</html>

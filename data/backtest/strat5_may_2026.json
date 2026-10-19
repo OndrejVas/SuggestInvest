@@ -1,0 +1,75 @@
+{
+  "strategy_id": "strat_5_h1_yang_zhang",
+  "strategy_num": 5,
+  "strategy_name": "STRATEGIE #5: H1 Yang-Zhang Volatility",
+  "strategy_badge": "PF 1.80 • Volatilita",
+  "commodity": "Micro Gold Futures (MGC na COMEXu)",
+  "contract_symbol": "MGCM6",
+  "contract_size_oz": 10.0,
+  "leverage": "Burzovní marže ($850)",
+  "margin_req_pct": 8.5,
+  "metadata": {
+    "id": "strat_5_h1_yang_zhang_may_2026",
+    "name": "🎯 Slepý vzorek (OOS #5): Květen 2026 [STRATEGIE #5]",
+    "type": "OUT_OF_SAMPLE",
+    "status": "UNLOCKED_ACTIVE",
+    "start": "2026-05-01",
+    "end": "2026-06-01",
+    "description": "Pátý odemčený slepý měsíc z roku 2026 pro STRATEGIE #5: H1 Yang-Zhang Volatility pod pravidly MGC."
+  },
+  "summary": {
+    "initial_capital": 10000.0,
+    "final_equity": 10684.8,
+    "total_net_pnl": 684.8,
+    "total_gross_pnl": 687.0,
+    "total_fees_paid": 2.2,
+    "return_pct": 6.85,
+    "total_trades": 1,
+    "winning_trades": 1,
+    "losing_trades": 0,
+    "win_rate_pct": 100.0,
+    "profit_factor": 99.0,
+    "avg_trade_usd": 684.8,
+    "max_drawdown_pct": 0.0,
+    "candles_analyzed": 28980
+  },
+  "equity_curve": [
+    {
+      "time": "2026-05-01 00:00",
+      "equity": 10000.0,
+      "drawdown_pct": 0.0
+    },
+    {
+      "time": "2026-05-31 23:00",
+      "equity": 10684.8,
+      "drawdown_pct": 0.0
+    }
+  ],
+  "trades": [
+    {
+      "id": 1,
+      "strategy_num": 5,
+      "strategy_name": "STRATEGIE #5: H1 Yang-Zhang Volatility",
+      "entry_time": "2026-05-28 15:00",
+      "exit_time": "2026-05-31 23:00",
+      "direction": "LONG",
+      "entry_price": 4469.7,
+      "exit_price": 4538.4,
+      "gross_pnl": 687.0,
+      "fees": 2.2,
+      "net_pnl": 684.8,
+      "equity": 10684.8,
+      "drawdown_pct": 0.0,
+      "exit_reason": "Chandelier Trailing SL (2.8x ATR)",
+      "commodity": "Micro Gold Futures (MGC)",
+      "contract_symbol": "MGCZ6",
+      "contracts": 1,
+      "position_size_oz": 10.0,
+      "notional_usd": 44697.0,
+      "margin_usd": 850.0,
+      "leverage": "Burzovní marže ($850)",
+      "tp_price": 4472.7,
+      "sl_price": 4468.5
+    }
+  ]
+}

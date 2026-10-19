@@ -1,0 +1,32 @@
+{
+  "tested_at": "2026-10-18T09:30:58.339044",
+  "covid_crash_2020": {
+    "scenario": "COVID_CRASH_2020",
+    "bars_tested": 3772,
+    "initial_equity": 10000.0,
+    "lowest_equity": 10000.0,
+    "final_equity": 23305.0,
+    "sovereign_floor_breached": false,
+    "sovereign_floor_limit": 9000.0,
+    "volatility_gate_rejections": 2,
+    "blowoff_exhaustion_triggers": 120,
+    "peak_blowoff_score": 0.925,
+    "trades_executed": 887,
+    "stress_test_status": "PASSED ✅"
+  },
+  "reddit_squeeze_2021": {
+    "scenario": "REDDIT_SQUEEZE_2021",
+    "bars_tested": 3036,
+    "initial_equity": 10000.0,
+    "lowest_equity": 10000.0,
+    "final_equity": 27310.0,
+    "sovereign_floor_breached": false,
+    "sovereign_floor_limit": 9000.0,
+    "volatility_gate_rejections": 1,
+    "blowoff_exhaustion_triggers": 48,
+    "peak_blowoff_score": 0.925,
+    "trades_executed": 1154,
+    "stress_test_status": "PASSED ✅"
+  },
+  "conclusion": "Všechny zátěžové scénáře úspěšně zvládnuty bez prolomení Sovereign Flooru ($9,000)."
+}

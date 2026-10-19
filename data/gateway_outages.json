@@ -1,0 +1,92 @@
+[
+  {
+    "from": "19.10.2026 21:25:15",
+    "to": "19.10.2026 21:26:14",
+    "duration_sec": 58,
+    "duration_str": "58 s",
+    "duration_min": 1,
+    "status": "Obnoveno",
+    "reason": "Watchdog Auto-Recovery (Port 7497)"
+  },
+  {
+    "from": "19.10.2026 00:15:27",
+    "to": "19.10.2026 00:17:19",
+    "duration_sec": 112,
+    "duration_str": "1 min 52 s",
+    "duration_min": 2,
+    "status": "Obnoveno",
+    "reason": "Watchdog Auto-Recovery (Port 7497)"
+  },
+  {
+    "from": "19.10.2026 00:14:05",
+    "to": "19.10.2026 00:15:14",
+    "duration_sec": 68,
+    "duration_str": "1 min 8 s",
+    "duration_min": 1,
+    "status": "Obnoveno",
+    "reason": "Watchdog Auto-Recovery (Port 7497)"
+  },
+  {
+    "from": "18.10.2026 23:59:42",
+    "to": "19.10.2026 00:04:35",
+    "duration_sec": 293,
+    "duration_str": "4 min 53 s",
+    "duration_min": 5,
+    "status": "Obnoveno",
+    "reason": "Watchdog Auto-Recovery (Port 7497)"
+  },
+  {
+    "from": "18.10.2026 21:46:33",
+    "to": "18.10.2026 21:47:19",
+    "duration_sec": 45,
+    "duration_str": "45 s",
+    "duration_min": 1,
+    "status": "Obnoveno",
+    "reason": "Watchdog Auto-Recovery (Port 7497)"
+  },
+  {
+    "from": "18.10.2026 21:36:17",
+    "to": "18.10.2026 21:40:05",
+    "duration_sec": 228,
+    "duration_str": "3 min 48 s",
+    "duration_min": 4,
+    "status": "Obnoveno",
+    "reason": "Watchdog Auto-Recovery (Port 7497)"
+  },
+  {
+    "from": "18.10.2026 20:37:12",
+    "to": "18.10.2026 20:37:47",
+    "duration_sec": 35,
+    "duration_str": "35 s",
+    "duration_min": 1,
+    "status": "Obnoveno",
+    "reason": "Watchdog Auto-Recovery (Port 7497)"
+  },
+  {
+    "from": "18.10.2026 20:01:31",
+    "to": "18.10.2026 20:02:17",
+    "duration_sec": 45,
+    "duration_str": "45 s",
+    "duration_min": 1,
+    "status": "Obnoveno",
+    "reason": "Watchdog Auto-Recovery (Port 7497)"
+  },
+  {
+    "from": "17.10.2026 23:50:44",
+    "to": "17.10.2026 23:51:09",
+    "duration_sec": 25,
+    "duration_str": "25 s",
+    "duration_min": 1,
+    "status": "Obnoveno",
+    "reason": "Watchdog Auto-Recovery (Port 7497)"
+  },
+  {
+    "from": "17.10.2026 23:45:05",
+    "to": "17.10.2026 23:45:30",
+    "duration_sec": 25,
+    "duration_str": "25 s",
+    "duration_min": 1,
+    "status": "Obnoveno",
+    "reason": "Watchdog Auto-Recovery (Port 7497)"
+  }
+]

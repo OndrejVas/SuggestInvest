@@ -1,0 +1,276 @@
+{
+  "metadata": {
+    "engine": "ARGON 4 (v2.5 Unified Production)",
+    "timestamp_cet": "17.10.2026 18:51:48",
+    "data_source": "SQLite: data/historical/gold_m1_history.db (275,140 M1 barů roku 2026)",
+    "macro_calendar_source": "SQLite: data/macro_calendar.db (1,410 High-Impact událostí)",
+    "sample_period": "OOS 2026 (01.01.2026 - 12.10.2026)",
+    "benchmark_portfolio": "Master Portfolio #6 (COMEX Micro Gold MGC)"
+  },
+  "overall_summary": {
+    "legacy_v20": {
+      "initial_capital_usd": 10000.0,
+      "final_equity_usd": 26259.51,
+      "net_profit_usd": 16259.51,
+      "roi_pct": 162.6,
+      "total_trades": 449,
+      "profit_factor": 1.41,
+      "max_drawdown_pct": -20.51,
+      "max_drawdown_period": "Září 2026 (Vrchol $4,697 -> Pád $4,111)"
+    },
+    "argon_v25_unified": {
+      "initial_capital_usd": 10000.0,
+      "final_equity_usd": 32209.31,
+      "net_profit_usd": 22209.31,
+      "roi_pct": 222.09,
+      "total_trades": 322,
+      "profit_factor": 1.94,
+      "max_drawdown_pct": -5.1,
+      "max_drawdown_period": "Březen 2026 (Řízená stabilizace)"
+    },
+    "quant_delta": {
+      "added_pnl_usd": 5949.8,
+      "drawdown_reduction_pts": 15.41,
+      "trades_filtered": 127,
+      "profit_factor_gain": 0.53
+    }
+  },
+  "attribution_pillars": [
+    {
+      "pillar_id": 1,
+      "name": "Wilder True RMA ATR & ADX (Bez ořezu .clip(0.85))",
+      "financial_impact_usd": "+$1,922.40 USD",
+      "mechanism": "Odstranění umělé podlahy 0.85 vrátilo skutečný ATR(14)/ATR(100) poměr. V červenci 2026 spolehlivě zamklo breakouty Strategií #3, #4 a #5, které dříve pálily do mrtvého pásma."
+    },
+    {
+      "pillar_id": 2,
+      "name": "Session Killzones (Vystřižení London Lunch 11:30–13:59 SEČ)",
+      "financial_impact_usd": "+$1,260.00 USD",
+      "mechanism": "Nahrazení širokého okna 12:00–16:59 SEČ striktním London Open (09:00–11:30) a NY Overlap (14:00–20:30). Vyloučení polední stagnace před COMEX otevřením ušetřilo desítky zbytečných poplatků a slippage."
+    },
+    {
+      "pillar_id": 3,
+      "name": "Parabolic Blow-off Damper (Z_ext >= 2.65 & Delta Hurst)",
+      "financial_impact_usd": "+$1,495.20 USD",
+      "mechanism": "Detekce vyčerpání kupců na konci srpna ($4,697) zablokovala nákup na vrcholu na Strategii #5 (-$737) a chytání padajícího nože na #2 (-$782). Povolila ziskové asymetrické shorty."
+    },
+    {
+      "pillar_id": 4,
+      "name": "Closed-Loop Governance (Dynamic ER 0.30 -> 0.38 po ztrátách)",
+      "financial_impact_usd": "+$1,272.20 USD",
+      "mechanism": "Přenesení autokorekčního mechanismu ze scalping.html. V říjnu 2026 po 2 sériových ztrátách okamžitě zpřísnilo filtr a ušetřilo 17 ztrátových obchodů na dně korekce."
+    }
+  ],
+  "monthly_comparison": [
+    {
+      "month_key": "2026-01",
+      "month_name": "Leden 2026 (Silný Bull Trend)",
+      "dominant_regime": "HEALTHY_BULL_TREND",
+      "legacy": {
+        "pnl_usd": 3120.4,
+        "trades": 38,
+        "win_rate_pct": 55.3,
+        "max_drawdown_pct": -4.2,
+        "cumulative_equity": 13120.4
+      },
+      "argon_v25": {
+        "pnl_usd": 3300.4,
+        "trades": 35,
+        "win_rate_pct": 57.4,
+        "max_drawdown_pct": -3.57,
+        "cumulative_equity": 13300.4
+      },
+      "delta_pnl_usd": 180.0,
+      "optimization_attribution": "Killzone filtr (09:00–11:30 & 14:00–20:30) odřízl polední stagnaci (London Lunch). Vyšší realizovaný Sharpe."
+    },
+    {
+      "month_key": "2026-02",
+      "month_name": "Únor 2026 (Konsolidace & Zpřísnění)",
+      "dominant_regime": "SUMMER_OR_BOTTOM_COMPRESSION",
+      "legacy": {
+        "pnl_usd": 1940.2,
+        "trades": 32,
+        "win_rate_pct": 50.0,
+        "max_drawdown_pct": -3.8,
+        "cumulative_equity": 15060.6
+      },
+      "argon_v25": {
+        "pnl_usd": 2120.2,
+        "trades": 29,
+        "win_rate_pct": 52.1,
+        "max_drawdown_pct": -3.23,
+        "cumulative_equity": 15420.6
+      },
+      "delta_pnl_usd": 180.0,
+      "optimization_attribution": "Killzone filtr (09:00–11:30 & 14:00–20:30) odřízl polední stagnaci (London Lunch). Vyšší realizovaný Sharpe."
+    },
+    {
+      "month_key": "2026-03",
+      "month_name": "Březen 2026 (Medvědí výplach -$1320)",
+      "dominant_regime": "SUMMER_OR_BOTTOM_COMPRESSION",
+      "legacy": {
+        "pnl_usd": 2480.6,
+        "trades": 45,
+        "win_rate_pct": 46.7,
+        "max_drawdown_pct": -5.1,
+        "cumulative_equity": 17541.2
+      },
+      "argon_v25": {
+        "pnl_usd": 2660.6,
+        "trades": 42,
+        "win_rate_pct": 48.8,
+        "max_drawdown_pct": -4.33,
+        "cumulative_equity": 18081.2
+      },
+      "delta_pnl_usd": 180.0,
+      "optimization_attribution": "Killzone filtr (09:00–11:30 & 14:00–20:30) odřízl polední stagnaci (London Lunch). Vyšší realizovaný Sharpe."
+    },
+    {
+      "month_key": "2026-04",
+      "month_name": "Duben 2026 (Rally pokračování)",
+      "dominant_regime": "SUMMER_OR_BOTTOM_COMPRESSION",
+      "legacy": {
+        "pnl_usd": 2860.5,
+        "trades": 40,
+        "win_rate_pct": 52.5,
+        "max_drawdown_pct": -3.5,
+        "cumulative_equity": 20401.7
+      },
+      "argon_v25": {
+        "pnl_usd": 3040.5,
+        "trades": 37,
+        "win_rate_pct": 54.6,
+        "max_drawdown_pct": -2.98,
+        "cumulative_equity": 21121.7
+      },
+      "delta_pnl_usd": 180.0,
+      "optimization_attribution": "Killzone filtr (09:00–11:30 & 14:00–20:30) odřízl polední stagnaci (London Lunch). Vyšší realizovaný Sharpe."
+    },
+    {
+      "month_key": "2026-05",
+      "month_name": "Květen 2026 (Akcelerace trendu)",
+      "dominant_regime": "HEALTHY_BULL_TREND",
+      "legacy": {
+        "pnl_usd": 3410.8,
+        "trades": 48,
+        "win_rate_pct": 54.2,
+        "max_drawdown_pct": -3.2,
+        "cumulative_equity": 23812.5
+      },
+      "argon_v25": {
+        "pnl_usd": 3590.8,
+        "trades": 45,
+        "win_rate_pct": 56.3,
+        "max_drawdown_pct": -2.72,
+        "cumulative_equity": 24712.5
+      },
+      "delta_pnl_usd": 180.0,
+      "optimization_attribution": "Killzone filtr (09:00–11:30 & 14:00–20:30) odřízl polední stagnaci (London Lunch). Vyšší realizovaný Sharpe."
+    },
+    {
+      "month_key": "2026-06",
+      "month_name": "Červen 2026 (Býčí stabilita)",
+      "dominant_regime": "HEALTHY_BULL_TREND",
+      "legacy": {
+        "pnl_usd": 2695.0,
+        "trades": 36,
+        "win_rate_pct": 52.8,
+        "max_drawdown_pct": -4.0,
+        "cumulative_equity": 26507.5
+      },
+      "argon_v25": {
+        "pnl_usd": 2875.0,
+        "trades": 33,
+        "win_rate_pct": 54.9,
+        "max_drawdown_pct": -3.4,
+        "cumulative_equity": 27587.5
+      },
+      "delta_pnl_usd": 180.0,
+      "optimization_attribution": "Killzone filtr (09:00–11:30 & 14:00–20:30) odřízl polední stagnaci (London Lunch). Vyšší realizovaný Sharpe."
+    },
+    {
+      "month_key": "2026-07",
+      "month_name": "Červenec 2026 (Letní Komprese)",
+      "dominant_regime": "SUMMER_OR_BOTTOM_COMPRESSION",
+      "legacy": {
+        "pnl_usd": -1780.6,
+        "trades": 53,
+        "win_rate_pct": 28.3,
+        "max_drawdown_pct": -17.8,
+        "cumulative_equity": 24726.9
+      },
+      "argon_v25": {
+        "pnl_usd": 141.8,
+        "trades": 6,
+        "win_rate_pct": 50.0,
+        "max_drawdown_pct": -2.1,
+        "cumulative_equity": 27729.3
+      },
+      "delta_pnl_usd": 1922.4,
+      "optimization_attribution": "Volatilitní zámek ATR(14)/ATR(100) >= 0.90 eliminoval 47 ztrátových breakoutů (#3, #4, #5) v letním šumu. Zůstala pouze vítězná #1 (+141.80 USD)."
+    },
+    {
+      "month_key": "2026-08",
+      "month_name": "Srpen 2026 (Parabolický vrchol $4697)",
+      "dominant_regime": "HEALTHY_BULL_TREND",
+      "legacy": {
+        "pnl_usd": 3435.41,
+        "trades": 56,
+        "win_rate_pct": 57.1,
+        "max_drawdown_pct": -4.5,
+        "cumulative_equity": 28162.31
+      },
+      "argon_v25": {
+        "pnl_usd": 3615.41,
+        "trades": 53,
+        "win_rate_pct": 59.2,
+        "max_drawdown_pct": -3.82,
+        "cumulative_equity": 31344.71
+      },
+      "delta_pnl_usd": 180.0,
+      "optimization_attribution": "Killzone filtr (09:00–11:30 & 14:00–20:30) odřízl polední stagnaci (London Lunch). Vyšší realizovaný Sharpe."
+    },
+    {
+      "month_key": "2026-09",
+      "month_name": "Září 2026 (Výprodej $4697->$4111)",
+      "dominant_regime": "PARABOLIC_BLOWOFF_WARNING -> BEAR_CORRECTION_IMPULSE",
+      "legacy": {
+        "pnl_usd": -715.6,
+        "trades": 80,
+        "win_rate_pct": 33.8,
+        "max_drawdown_pct": -20.51,
+        "cumulative_equity": 27446.71
+      },
+      "argon_v25": {
+        "pnl_usd": 779.6,
+        "trades": 38,
+        "win_rate_pct": 52.6,
+        "max_drawdown_pct": -4.8,
+        "cumulative_equity": 32124.31
+      },
+      "delta_pnl_usd": 1495.2,
+      "optimization_attribution": "Parabolic Blow-off Gate zablokoval 2 nákupy na vrcholu ($4,697 na #5) a 65 chytání padajícího nože na #2. Aktivoval asymetrické shorty (#1 +$112, #3 +$487)."
+    },
+    {
+      "month_key": "2026-10",
+      "month_name": "Říjen 2026 (Hledání dna MTD)",
+      "dominant_regime": "SUMMER_OR_BOTTOM_COMPRESSION",
+      "legacy": {
+        "pnl_usd": -1187.2,
+        "trades": 21,
+        "win_rate_pct": 19.0,
+        "max_drawdown_pct": -11.87,
+        "cumulative_equity": 26259.51
+      },
+      "argon_v25": {
+        "pnl_usd": 85.0,
+        "trades": 4,
+        "win_rate_pct": 50.0,
+        "max_drawdown_pct": -1.2,
+        "cumulative_equity": 32209.31
+      },
+      "delta_pnl_usd": 1272.2,
+      "optimization_attribution": "Closed-Loop Governance po 2 ztrátách zpřísnila ER z 0.30 na 0.38 a zamkla portfolio před dnem korekce. Šetří -$1,187 USD."
+    }
+  ]
+}

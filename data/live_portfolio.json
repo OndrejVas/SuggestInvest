@@ -1,199 +1,225 @@
 {
-  "timestamp_cet": "08.10.2026 21:01:39",
+  "timestamp_cet": "19.10.2026 22:58:06",
   "account_id": "DUR222134",
-  "is_authenticated": false,
+  "is_authenticated": true,
+  "connection_source": "IBKR_GATEWAY_SOCKET_7497",
   "autoinvest_active": true,
   "strategy_mode": "AGGRESSIVE_MOMENTUM",
   "laggard_pnl_threshold": -2.5,
   "laggards_count": 0,
-  "cash_czk": 93578.74,
+  "cash_czk": 280047.67,
   "reserved_cash_czk": 0,
-  "free_cash_czk": 93578.74,
-  "equity_czk": 249401.53,
-  "buying_power_czk": 1648077.5,
-  "open_positions": [],
-  "open_positions_count": 0,
+  "free_cash_czk": 280047.67,
+  "equity_czk": 228237.23,
+  "buying_power_czk": 1399410.82,
+  "gross_position_czk": 51479.44,
+  "open_positions": [
+    {
+      "symbol": "RHM",
+      "name": "Rheinmetall AG",
+      "conid": 15085,
+      "shares": -2,
+      "avg_price": 1078.7,
+      "avg_price_czk": 27237.18,
+      "market_price": 1057.8,
+      "market_price_czk": 26709.45,
+      "market_value": -2115.6,
+      "market_value_czk": -53418.9,
+      "currency": "EUR",
+      "unrealized_pnl": 41.8,
+      "unrealized_pnl_czk": 1055.45,
+      "unrealized_pnl_percent": 1.94,
+      "is_laggard": false,
+      "laggard_reason": "",
+      "tp_price": 1240.5,
+      "tp_price_czk": 31322.62,
+      "sl_price": 1003.19,
+      "sl_price_czk": 25330.55,
+      "exchange": "IBIS"
+    }
+  ],
+  "open_positions_count": 1,
   "pending_orders": [],
   "pending_orders_count": 0,
   "trades_history": [
     {
-      "symbol": "MSFT",
-      "shares": 4,
       "price": "428.10 USD (10,060 CZK)",
+      "shares": 4,
+      "status": "Okamžitý reinvest do TOP Strong Buy aktiva (++14.9 %)",
+      "symbol": "MSFT",
+      "time": "01.10.2026 22:33:25",
       "total_czk": 40241,
-      "time": "01.10.2026 22:33:25",
-      "type": "AGGRESSIVE_SUB_BUY",
-      "status": "Okamžitý reinvest do TOP Strong Buy aktiva (++14.9 %)"
+      "type": "AGGRESSIVE_SUB_BUY"
     },
     {
-      "symbol": "SAN",
-      "shares": 150,
       "price": "11.81 EUR (298 CZK)",
-      "total_czk": 44642,
-      "time": "01.10.2026 22:33:25",
-      "type": "AGGRESSIVE_PRUNE_SELL",
-      "status": "Odříznutí ležáku (-5.67 %): kapitál okamžitě rotován do MSFT"
-    },
-    {
-      "symbol": "NVDA",
-      "shares": 13,
-      "price": "121.50 USD (2,855 CZK)",
-      "total_czk": 37118,
-      "time": "01.10.2026 22:32:59",
-      "type": "AGGRESSIVE_SUB_BUY",
-      "status": "Okamžitý reinvest do TOP Strong Buy aktiva (++23.4 %)"
-    },
-    {
-      "symbol": "SAP",
-      "shares": 8,
-      "price": "187.34 EUR (4,721 CZK)",
-      "total_czk": 37768,
-      "time": "01.10.2026 22:32:59",
-      "type": "AGGRESSIVE_PRUNE_SELL",
-      "status": "Odříznutí ležáku (-5.8 %): kapitál okamžitě rotován do NVDA"
-    },
-    {
-      "symbol": "NVDA",
-      "shares": 13,
-      "price": "121.50 USD (2,855 CZK)",
-      "total_czk": 37118,
-      "time": "01.10.2026 22:31:08",
-      "type": "AGGRESSIVE_SUB_BUY",
-      "status": "Okamžitý reinvest do TOP Strong Buy aktiva (++23.4 %)"
-    },
-    {
-      "symbol": "SAP",
-      "shares": 8,
-      "price": "187.34 EUR (4,721 CZK)",
-      "total_czk": 37768,
-      "time": "01.10.2026 22:31:08",
-      "type": "AGGRESSIVE_PRUNE_SELL",
-      "status": "Odříznutí ležáku (-5.8 %): kapitál okamžitě rotován do NVDA"
-    },
-    {
-      "symbol": "SAP",
-      "shares": 8,
-      "price": "198.50 EUR (5 002 CZK)",
-      "total_czk": 40017,
-      "time": "30.09.2026 22:24:14",
-      "type": "BUY_QUEUED",
-      "status": "Submitted / Čeká na otevření XETRA v 09:00"
-    },
-    {
-      "symbol": "SAN",
       "shares": 150,
+      "status": "Odříznutí ležáku (-5.67 %): kapitál okamžitě rotován do MSFT",
+      "symbol": "SAN",
+      "time": "01.10.2026 22:33:25",
+      "total_czk": 44642,
+      "type": "AGGRESSIVE_PRUNE_SELL"
+    },
+    {
+      "price": "121.50 USD (2,855 CZK)",
+      "shares": 13,
+      "status": "Okamžitý reinvest do TOP Strong Buy aktiva (++23.4 %)",
+      "symbol": "NVDA",
+      "time": "01.10.2026 22:32:59",
+      "total_czk": 37118,
+      "type": "AGGRESSIVE_SUB_BUY"
+    },
+    {
+      "price": "187.34 EUR (4,721 CZK)",
+      "shares": 8,
+      "status": "Odříznutí ležáku (-5.8 %): kapitál okamžitě rotován do NVDA",
+      "symbol": "SAP",
+      "time": "01.10.2026 22:32:59",
+      "total_czk": 37768,
+      "type": "AGGRESSIVE_PRUNE_SELL"
+    },
+    {
+      "price": "121.50 USD (2,855 CZK)",
+      "shares": 13,
+      "status": "Okamžitý reinvest do TOP Strong Buy aktiva (++23.4 %)",
+      "symbol": "NVDA",
+      "time": "01.10.2026 22:31:08",
+      "total_czk": 37118,
+      "type": "AGGRESSIVE_SUB_BUY"
+    },
+    {
+      "price": "187.34 EUR (4,721 CZK)",
+      "shares": 8,
+      "status": "Odříznutí ležáku (-5.8 %): kapitál okamžitě rotován do NVDA",
+      "symbol": "SAP",
+      "time": "01.10.2026 22:31:08",
+      "total_czk": 37768,
+      "type": "AGGRESSIVE_PRUNE_SELL"
+    },
+    {
+      "price": "198.50 EUR (5 002 CZK)",
+      "shares": 8,
+      "status": "Submitted / Čeká na otevření XETRA v 09:00",
+      "symbol": "SAP",
+      "time": "30.09.2026 22:24:14",
+      "total_czk": 40017,
+      "type": "BUY_QUEUED"
+    },
+    {
       "price": "12.50 EUR (315 CZK)",
-      "total_czk": 47250,
+      "shares": 150,
+      "status": "Submitted / Čeká na otevření Bolsa de Madrid v 09:00",
+      "symbol": "SAN",
       "time": "30.09.2026 22:04:10",
-      "type": "BUY_QUEUED",
-      "status": "Submitted / Čeká na otevření Bolsa de Madrid v 09:00"
+      "total_czk": 47250,
+      "type": "BUY_QUEUED"
     },
     {
-      "symbol": "RHM",
-      "shares": 2,
       "price": "958.60 EUR (24 156 CZK)",
-      "total_czk": 48313,
+      "shares": 2,
+      "status": "Filled na XETRA (IBIS)",
+      "symbol": "RHM",
       "time": "30.09.2026 22:03:18",
-      "type": "BUY_FILLED",
-      "status": "Filled na XETRA (IBIS)"
+      "total_czk": 48313,
+      "type": "BUY_FILLED"
     },
     {
-      "symbol": "AVGO",
-      "shares": 5,
       "price": "351.39 USD (8 257 CZK)",
-      "total_czk": 41288,
+      "shares": 5,
+      "status": "Filled na NASDAQ",
+      "symbol": "AVGO",
       "time": "30.09.2026 22:03:13",
-      "type": "BUY_FILLED",
-      "status": "Filled na NASDAQ"
+      "total_czk": 41288,
+      "type": "BUY_FILLED"
     },
     {
-      "symbol": "ORCL",
-      "shares": 12,
       "price": "137.28 USD (3 226 CZK)",
-      "total_czk": 38713,
+      "shares": 12,
+      "status": "Filled na NYSE",
+      "symbol": "ORCL",
       "time": "30.09.2026 22:03:10",
-      "type": "BUY_FILLED",
-      "status": "Filled na NYSE"
+      "total_czk": 38713,
+      "type": "BUY_FILLED"
     },
     {
-      "symbol": "ALLY",
-      "shares": 34,
       "price": "38.04 USD (894 CZK)",
-      "total_czk": 30396,
+      "shares": 34,
+      "status": "Filled na NYSE",
+      "symbol": "ALLY",
       "time": "30.09.2026 22:03:08",
-      "type": "BUY_FILLED",
-      "status": "Filled na NYSE"
+      "total_czk": 30396,
+      "type": "BUY_FILLED"
     },
     {
-      "symbol": "ALLY",
-      "shares": 10,
       "price": "38.00 USD (893 CZK)",
-      "total_czk": 8930,
+      "shares": 10,
+      "status": "Filled na NYSE",
+      "symbol": "ALLY",
       "time": "30.09.2026 22:00:51",
-      "type": "BUY_FILLED",
-      "status": "Filled na NYSE"
+      "total_czk": 8930,
+      "type": "BUY_FILLED"
     }
   ],
   "rotation_queue": [
     {
-      "symbol": "NVDA",
-      "name": "NVIDIA Corp",
-      "exchange": "NASDAQ",
+      "catalyst": "AI Blackwell akcelerátory, poptávka datacenter překonává odhady o +32 %, masivní růst marží.",
       "cur": "USD",
+      "exchange": "NASDAQ",
+      "name": "NVIDIA Corp",
       "price": 121.5,
       "price_czk": 2855,
       "shares": 14,
-      "total_czk": 39970,
       "sl": "114 $",
-      "tp": "150 $",
+      "status": "TOP 1 • Silný tah na BUY (Preferovaný titul pro okamžitou rotaci)",
+      "symbol": "NVDA",
       "targetUpside": "+23.4 %",
-      "catalyst": "AI Blackwell akcelerátory, poptávka datacenter překonává odhady o +32 %, masivní růst marží.",
-      "status": "TOP 1 • Silný tah na BUY (Preferovaný titul pro okamžitou rotaci)"
+      "total_czk": 39970,
+      "tp": "150 $"
     },
     {
-      "symbol": "MSFT",
-      "name": "Microsoft Corp",
-      "exchange": "NASDAQ",
+      "catalyst": "Azure Cloud +29 % meziročně a masová enterprise adopce generativní AI.",
       "cur": "USD",
+      "exchange": "NASDAQ",
+      "name": "Microsoft Corp",
       "price": 428.1,
       "price_czk": 10060,
       "shares": 4,
-      "total_czk": 40240,
       "sl": "398 $",
-      "tp": "492 $",
+      "status": "2. v pořadí při zasažení TP/SL či odříznutí ležáku",
+      "symbol": "MSFT",
       "targetUpside": "+14.9 %",
-      "catalyst": "Azure Cloud +29 % meziročně a masová enterprise adopce generativní AI.",
-      "status": "2. v pořadí při zasažení TP/SL či odříznutí ležáku"
+      "total_czk": 40240,
+      "tp": "492 $"
     },
     {
-      "symbol": "ASML",
-      "name": "ASML Holding NV",
-      "exchange": "AEX",
+      "catalyst": "Globální monopol na High-NA EUV litografii nezbytnou pro 2nm AI čipy.",
       "cur": "EUR",
+      "exchange": "AEX",
+      "name": "ASML Holding NV",
       "price": 785.0,
       "price_czk": 19782,
       "shares": 2,
-      "total_czk": 39564,
       "sl": "740 €",
-      "tp": "920 €",
+      "status": "3. v pořadí rotací",
+      "symbol": "ASML",
       "targetUpside": "+17.2 %",
-      "catalyst": "Globální monopol na High-NA EUV litografii nezbytnou pro 2nm AI čipy.",
-      "status": "3. v pořadí rotací"
+      "total_czk": 39564,
+      "tp": "920 €"
     },
     {
-      "symbol": "AMZN",
-      "name": "Amazon.com Inc",
-      "exchange": "NASDAQ",
+      "catalyst": "Rekordní cash-flow v e-commerce a akcelerace cloudové divize AWS.",
       "cur": "USD",
+      "exchange": "NASDAQ",
+      "name": "Amazon.com Inc",
       "price": 188.5,
       "price_czk": 4430,
       "shares": 9,
-      "total_czk": 39870,
       "sl": "175 $",
-      "tp": "218 $",
+      "status": "4. v pořadí rotací",
+      "symbol": "AMZN",
       "targetUpside": "+15.6 %",
-      "catalyst": "Rekordní cash-flow v e-commerce a akcelerace cloudové divize AWS.",
-      "status": "4. v pořadí rotací"
+      "total_czk": 39870,
+      "tp": "218 $"
     }
   ]
 }

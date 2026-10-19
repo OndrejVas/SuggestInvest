@@ -1,0 +1,16 @@
+{
+  "updated_at": "2026-10-18T07:11:29.281434+00:00",
+  "composite_industrial_score": -0.421,
+  "signal": "WEAK_DEMAND",
+  "solar_etf_tan": {
+    "price": 41.85,
+    "change_5d_pct": -3.75
+  },
+  "copper_hg": {
+    "price": 6.5735,
+    "change_5d_pct": -1.87
+  },
+  "eia_solar_baseline_gw_mo": 2.4,
+  "annual_photovoltaic_demand_oz_est": "175,000,000",
+  "status": "HEALTHY"
+}

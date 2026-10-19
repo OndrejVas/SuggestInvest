@@ -44,6 +44,7 @@ WORKSPACE_DIR = os.path.dirname(os.path.abspath(__file__))
 GATEWAY_URL = "https://localhost:5000"
 SERVICE_PORT = 5001
 LIVE_PORTFOLIO_PATH = os.path.join(WORKSPACE_DIR, "data", "live_portfolio.json")
+PRUNE_COOLDOWN_LOCK_PATH = os.path.join(WORKSPACE_DIR, "data", "prune_cooldown_locks.json")
 
 # Ověřené ConID pro Interactive Brokers
 KNOWN_CONIDS = {
@@ -334,6 +335,39 @@ class AutoInvestEngine:
         self.laggard_pnl_threshold = -2.5  # Pozice s PnL <= -2.5 % jsou ležáky pro okamžitou rotaci
         self.custom_trades_history: List[Dict[str, Any]] = []
 
+    def _load_prune_locks(self) -> Dict[str, float]:
+        if os.path.exists(PRUNE_COOLDOWN_LOCK_PATH):
+            try:
+                with open(PRUNE_COOLDOWN_LOCK_PATH, "r", encoding="utf-8") as f:
+                    return json.load(f)
+            except Exception:
+                return {}
+        return {}
+
+    def _save_prune_locks(self, locks: Dict[str, float]):
+        try:
+            os.makedirs(os.path.dirname(PRUNE_COOLDOWN_LOCK_PATH), exist_ok=True)
+            with open(PRUNE_COOLDOWN_LOCK_PATH, "w", encoding="utf-8") as f:
+                json.dump(locks, f, indent=2)
+        except Exception as e:
+            logger.error(f"Chyba při ukládání prune locks: {e}")
+
+    def is_prune_locked(self, symbol: str, cooldown_seconds: float = 86400.0) -> bool:
+        """Ověří, zda pro daný symbol nebyl v posledních 24 hodinách odeslán prodej ležáku (Race condition ochrana)."""
+        if not symbol:
+            return False
+        locks = self._load_prune_locks()
+        last_time = locks.get(symbol.upper(), 0.0)
+        return (time.time() - last_time) < cooldown_seconds
+
+    def set_prune_lock(self, symbol: str):
+        """Zapíše čas prodeje ležáku do 24h zámku."""
+        if not symbol:
+            return
+        locks = self._load_prune_locks()
+        locks[symbol.upper()] = time.time()
+        self._save_prune_locks(locks)
+
     def start(self):
         if not self.is_running:
             self.is_running = True
@@ -352,7 +386,16 @@ class AutoInvestEngine:
         return self.is_active
 
     def sync_live_portfolio(self) -> Dict[str, Any]:
-        """Stáhne aktuální stav z brokera a uloží do data/live_portfolio.json."""
+        """Stáhne aktuální stav z brokera (IB Gateway port 7497) a uloží do data/live_portfolio.json."""
+        try:
+            from ibkr_sync_service import sync_ibkr
+            if sync_ibkr(host="127.0.0.1", port=7497, client_id=989, account_id="DUR222134"):
+                if os.path.exists(LIVE_PORTFOLIO_PATH):
+                    with open(LIVE_PORTFOLIO_PATH, "r", encoding="utf-8") as f:
+                        return json.load(f)
+        except Exception as e:
+            logger.debug(f"Socket sync error: {e}")
+
         auth_ok, acc_id = self.gw.check_auth()
         if not auth_ok:
             acc_id = "DUR222134"
@@ -585,20 +628,25 @@ class AutoInvestEngine:
         positions = state.get("open_positions", [])
         queue = state.get("rotation_queue", [])
 
-        # 1. Výběr pozice k prodeji (pokud nezadána, vybrat nejhorší ležák)
+        # 1. Výběr pozice k prodeji (pokud nezadána, vybrat nejhorší ležák, který NENÍ v 24h zámku)
         sell_pos = None
         if sell_symbol:
+            if self.is_prune_locked(sell_symbol):
+                logger.warning(f"⚡ [PRUNE COOLDOWN LOCK] Symbol {sell_symbol} je v 24h zámku po nedávné rotaci! Zamezeno duplicitní race-condition exekuci.")
+                return {"ok": False, "error": f"Symbol {sell_symbol} je chráněn 24h prune cooldown zámkem proti duplicitní rotaci."}
             for p in positions:
                 if p["symbol"].upper() == sell_symbol.upper():
                     sell_pos = p
                     break
         else:
             sorted_pos = sorted(positions, key=lambda x: x.get("unrealized_pnl_percent", 0))
-            if sorted_pos:
-                sell_pos = sorted_pos[0]
+            for p in sorted_pos:
+                if not self.is_prune_locked(p.get("symbol", "")):
+                    sell_pos = p
+                    break
 
         if not sell_pos:
-            return {"ok": False, "error": f"Nenalezena pozice k prodeji pro symbol '{sell_symbol or 'AUTO'}'"}
+            return {"ok": False, "error": f"Nenalezena pozice k prodeji pro symbol '{sell_symbol or 'AUTO'}' (nebo jsou všechny dostupné pozice v 24h cooldown zámku)"}
 
         # 2. Výběr cílového titulu k nákupu (pokud nezadán, vybrat TOP 1 s nejvyšším upside)
         buy_cand = None
@@ -632,7 +680,8 @@ class AutoInvestEngine:
         # EXEKUCE PRODEJE NA IBKR
         sell_outside = True if sell_ccy == "USD" else False
         sell_res = self.gw.place_order(acc_id, sell_conid, "SELL", sell_shares, sell_price, outside_rth=sell_outside)
-        logger.info(f"Odeslán prodejní pokyn pro {sell_sym}: {sell_res.get('ok')}")
+        self.set_prune_lock(sell_sym)
+        logger.info(f"Odeslán prodejní pokyn pro {sell_sym}: {sell_res.get('ok')} | ⚡ [PRUNE COOLDOWN LOCK] Aktivován 24h zámek.")
 
         # VÝPOČET UVOLNĚNÉHO KAPITÁLU A NÁKUP
         fx_rates = {"CZK": 1.0, "USD": 23.5, "EUR": 25.2, "GBP": 30.5}

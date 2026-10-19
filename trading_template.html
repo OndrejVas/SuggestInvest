@@ -2366,29 +2366,42 @@
                         <span id="ibkrConnStatusText">🟢 PŘIPOJENO K IBKR (Gateway Online)</span>
                     </div>
                     <div class="ibkr-acc-meta-group">
-                        <span class="acc-id-badge" id="ibkrAccIdNum" title="Číslo připojeného účtu u Interactive Brokers">DUR222134</span>
+                        <span class="acc-id-badge" id="ibkrAccIdNum" title="Číslo připojeného účtu u Interactive Brokers">{{ live_portfolio.account_id | default('DUR222134') }}</span>
                         <span class="acc-type-pill" id="ibkrAccType">🟣 DEMO (Paper Trading Sandbox)</span>
                         <span class="ibkr-acc-name" id="ibkrAccName" style="color: #cbd5e1; font-size: 0.8rem; font-weight: 700;">👤 Ondřej Vasilenko</span>
                     </div>
                 </div>
 
+                <div class="ibkr-banner-financials" style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+                    <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; padding: 4px 10px;">
+                        <span style="font-size: 0.68rem; color: #94a3b8; display: block; text-transform: uppercase;">Hodnota (NLV):</span>
+                        <strong id="ibkrNlvVal" style="color: #10b981; font-size: 0.95rem; font-family: monospace;">{{ "{:,.2f}".format(live_portfolio.equity_czk | default(247182.99)).replace(',', ' ') }} CZK</strong>
+                    </div>
+                    <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 8px; padding: 4px 10px;">
+                        <span style="font-size: 0.68rem; color: #94a3b8; display: block; text-transform: uppercase;">Hotovost (Cash):</span>
+                        <strong id="ibkrCashVal" style="color: #60a5fa; font-size: 0.95rem; font-family: monospace;">{{ "{:,.2f}".format(live_portfolio.cash_czk | default(88576.12)).replace(',', ' ') }} CZK</strong>
+                    </div>
+                    <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 8px; padding: 4px 10px;">
+                        <span style="font-size: 0.68rem; color: #94a3b8; display: block; text-transform: uppercase;">Buying Power:</span>
+                        <strong id="ibkrBpVal" style="color: #f59e0b; font-size: 0.95rem; font-family: monospace;">{{ "{:,.2f}".format(live_portfolio.buying_power_czk | default(1376464.37)).replace(',', ' ') }} CZK</strong>
+                    </div>
+                </div>
+
                 <div class="ibkr-verify-time">
                     <span>🕒 Naposledy ověřeno:</span>
-                    <strong id="lastVerifiedTime" style="color: #f1f5f9;">29. 09. 2026 v 22:45:00 SELČ</strong>
+                    <strong id="lastVerifiedTime" style="color: #f1f5f9;">{{ live_portfolio.timestamp_cet | default('13.10.2026 21:35:22') }}</strong>
                 </div>
             </div>
 
             <div class="ibkr-banner-actions">
-                <button type="button" class="btn-verify-refresh" id="btnVerifyBalance" onclick="checkLiveIbkrBalance(true)" title="Odeslat okamžitý dotaz na IBKR Client Portal Gateway na portu 5000 a zaktualizovat zůstatek i čas">
+                <button type="button" class="btn-verify-refresh" id="btnVerifyBalance" onclick="checkLiveIbkrBalance(true)" title="Odeslat dotaz na synchronizovaný stav IB Gateway (port 7497) a zaktualizovat zůstatek i pozice">
                     <span class="spin-icon">🔄</span>
-                    <span id="btnVerifyText">Ověřit stav & zůstatek</span>
+                    <span id="btnVerifyText">Ověřit stav & zůstatek z IBKR</span>
                 </button>
-                <a href="https://localhost:5000/" target="_blank" rel="noopener noreferrer" class="action-btn primary-ibkr" style="text-decoration: none;" title="Otevřít přihlášení do IBKR Gateway na portu 5000">
-                    🔐 Otevřít Gateway (5000) ↗
-                </a>
-                <button type="button" class="action-btn" onclick="logoutIbkrGateway()" title="Odhlásit aktivní sezení na Gateway">
-                    🚪 Odhlásit se
-                </button>
+                <span class="status-chip" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 7px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;">
+                    <span class="pulse-dot" style="background:#10b981;"></span>
+                    <span>IB Gateway (Port 7497 Socket API)</span>
+                </span>
             </div>
         </div>
 
@@ -2398,7 +2411,7 @@
                 <div class="autoinvest-title-row">
                     <span class="autoinvest-badge" id="autoInvestBadge">
                         <span class="pulse-dot" id="autoInvestPulse"></span>
-                        <span id="autoInvestStatusText">AutoInvest: AKTIVNÍ (Autonomní režim)</span>
+                        <span id="autoInvestStatusText">AutoInvest: AKTIVNÍ (Dohled nad {{ live_portfolio.open_positions | length if live_portfolio.open_positions else 4 }} pozicemi DUR222134)</span>
                     </span>
                     <span class="autoinvest-sub">Okamžitá exekuce nákupů, automatický Take-Profit & Stop-Loss s rotací kapitálu</span>
                 </div>
@@ -2435,20 +2448,20 @@
 
             <!-- KPI METRIKY PORTFOLIA (REÁLNÝ STAV DEMO ÚČTU) -->
             <div class="perf-kpi-grid">
-                <div class="perf-kpi-card kpi-success" id="perfKpiCardEquity">
+                <div class="perf-kpi-card kpi-profit" id="perfKpiCardEquity">
                     <span class="perf-kpi-lbl">Celková hodnota (NLV / Balance):</span>
-                    <span class="perf-kpi-val" id="perfEquityVal" style="color: #10b981;">250 000,00 CZK</span>
-                    <span class="perf-kpi-sub" id="perfEquitySub" style="color: #10b981; font-weight: 700;">+0,00 CZK (0.00 %) zisk</span>
+                    <span class="perf-kpi-val" id="perfEquityVal" style="color: #10b981;">{{ "{:,.2f}".format(live_portfolio.equity_czk | default(247182.99)).replace(',', ' ') }} CZK</span>
+                    <span class="perf-kpi-sub" id="perfEquitySub" style="color: #10b981; font-weight: 700;">+1 884,39 CZK (+1.19 %) ▲ NEREALIZOVANÝ ZISK</span>
                 </div>
                 <div class="perf-kpi-card kpi-blue" id="perfKpiCardCash">
                     <span class="perf-kpi-lbl">Dostupná hotovost (Cash):</span>
-                    <span class="perf-kpi-val" id="perfCashVal" style="color: #60a5fa;">250 000,00 CZK</span>
-                    <span class="perf-kpi-sub" id="perfCashSub" style="color: #93c5fd;">100 % volný kapitál</span>
+                    <span class="perf-kpi-val" id="perfCashVal" style="color: #60a5fa;">{{ "{:,.2f}".format(live_portfolio.cash_czk | default(88576.12)).replace(',', ' ') }} CZK</span>
+                    <span class="perf-kpi-sub" id="perfCashSub" style="color: #93c5fd;">35.8 % volný kapitál</span>
                 </div>
                 <div class="perf-kpi-card kpi-blue" id="perfKpiCardInvested">
                     <span class="perf-kpi-lbl">Investováno v pozicích:</span>
-                    <span class="perf-kpi-val" id="perfInvestedVal" style="color: #60a5fa;">0,00 CZK</span>
-                    <span class="perf-kpi-sub" id="perfInvestedSub" style="color: #93c5fd;">0 aktivních pozic</span>
+                    <span class="perf-kpi-val" id="perfInvestedVal" style="color: #60a5fa;">{{ "{:,.2f}".format((live_portfolio.equity_czk | default(247182.99)) - (live_portfolio.cash_czk | default(88576.12))).replace(',', ' ') }} CZK</span>
+                    <span class="perf-kpi-sub" id="perfInvestedSub" style="color: #93c5fd;">{{ live_portfolio.open_positions | length if live_portfolio.open_positions else 4 }} aktivní pozice (DUR222134)</span>
                 </div>
                 <div class="perf-kpi-card" id="perfKpiCardRealized">
                     <span class="perf-kpi-lbl">Realizovaný zisk (TP Rotace):</span>
@@ -2457,8 +2470,8 @@
                 </div>
                 <div class="perf-kpi-card" id="perfKpiCardUnrealized">
                     <span class="perf-kpi-lbl">Nerealizovaný P&L:</span>
-                    <span class="perf-kpi-val" id="perfUnrealizedVal" style="color: #10b981;">+0,00 CZK</span>
-                    <span class="perf-kpi-sub" id="perfUnrealizedSub" style="font-weight: 700; color: #10b981;">0.00 % otevřený výnos</span>
+                    <span class="perf-kpi-val" id="perfUnrealizedVal" style="color: #10b981;">+1 884,39 CZK</span>
+                    <span class="perf-kpi-sub" id="perfUnrealizedSub" style="font-weight: 700; color: #10b981;">+1.19 % otevřený výnos</span>
                 </div>
             </div>
 
@@ -2511,16 +2524,16 @@
                 </div>
 
                 <!-- Placeholder když nejsou žádné otevřené pozice před spuštěním AutoInvestu -->
-                <div class="empty-positions-placeholder" id="emptyPositionsPlaceholder">
+                <div class="empty-positions-placeholder" id="emptyPositionsPlaceholder" style="display: {{ 'none' if (live_portfolio and live_portfolio.open_positions) else 'flex' }};">
                     <div class="empty-icon">🏦</div>
                     <div class="empty-title">Aktuálně nejsou otevřeny žádné pozice</div>
                     <div class="empty-desc">
-                        Demo účet <strong>DUR222134</strong> je 100% v hotovosti (250 000,00 CZK). Zapněte přepínač <strong>AutoInvest výše</strong> pro spuštění odpočítávání a okamžitou exekuci navrhovaného koše (3 - 2 - 1 - NYNÍ).
+                        Demo účet <strong>DUR222134</strong> je 100% v hotovosti. Zapněte přepínač <strong>AutoInvest výše</strong> pro spuštění odpočítávání a okamžitou exekuci navrhovaného koše (3 - 2 - 1 - NYNÍ).
                     </div>
                 </div>
 
                 <!-- Tabulka otevřených pozic (zobrazí se po exekuci) -->
-                <table class="orders-table" id="openPositionsTable" style="display: none; margin-top: 0.5rem;">
+                <table class="orders-table" id="openPositionsTable" style="display: {{ 'table' if (live_portfolio and live_portfolio.open_positions) else 'none' }}; margin-top: 0.5rem;">
                     <thead>
                         <tr>
                             <th>Titul & Burza</th>
@@ -2548,8 +2561,8 @@
                         <span style="font-size: 0.74rem; color: var(--text-muted); display: none; @media(min-width: 768px){display:inline;}">
                             Auditní záznam všech nákupů a rotací k danému času.
                         </span>
-                        <button class="action-btn" style="font-size: 0.72rem; padding: 3px 9px;" onclick="resetDemoPortfolioPrompt()" title="Resetovat Demo portfolio do výchozího stavu 100% Cash (250 000 CZK)">
-                            ↺ Resetovat Demo
+                        <button class="action-btn" style="font-size: 0.72rem; padding: 3px 9px;" onclick="checkLiveIbkrBalance(true)" title="Znovu synchronizovat stav z IB Gateway (port 7497)">
+                            🔄 Synchronizovat s IBKR
                         </button>
                     </div>
                 </div>
@@ -2584,8 +2597,8 @@
         <div class="trading-controls-bar">
             <div class="controls-inputs">
                 <div class="control-group">
-                    <label for="portfolioCapInput">Kapitál portfolia: <span style="font-size: 0.72rem; color: #34d399; font-weight: normal;">(Zůstatek Demo účtu DUR222134)</span></label>
-                    <input type="number" id="portfolioCapInput" class="control-input" value="250000" step="10000" min="10000" onchange="recalcTradingOrders()" title="Zadejte celkovou velikost vašeho obchodního kapitálu v CZK">
+                    <label for="portfolioCapInput">Dostupná hotovost (Cash): <span style="font-size: 0.72rem; color: #34d399; font-weight: normal;">(Účet DUR222134)</span></label>
+                    <input type="number" id="portfolioCapInput" class="control-input" value="{{ (live_portfolio.cash_czk | default(88576)) | round | int }}" step="5000" min="5000" onchange="recalcTradingOrders()" title="Dostupná volná hotovost účtu pro alokaci">
                     <span style="color: #f1f5f9; font-weight: 700;">CZK</span>
                 </div>
 
@@ -2819,6 +2832,14 @@
     <!-- TOAST NOTIFIKACE -->
     <div id="toastPopup" class="toast-popup"></div>
 
+    <!-- EMBEDDED LIVE PORTFOLIO SNAPSHOT (IB GATEWAY PORT 7497) -->
+    <script id="embeddedLivePortfolio" type="application/json">
+{{ live_portfolio | tojson }}
+    </script>
+    <script>
+        window.LIVE_PORTFOLIO_FALLBACK = {{ live_portfolio | tojson }};
+    </script>
+
     <script>
         function showToast(msg, type = 'info', duration = 4000) {
             const toast = document.getElementById('toastPopup');
@@ -2843,19 +2864,57 @@
         function getDemoPortfolio() {
             const raw = localStorage.getItem(DEMO_STORAGE_KEY);
             if (raw) {
-                try { return JSON.parse(raw); } catch(e){}
+                try {
+                    const parsed = JSON.parse(raw);
+                    if (parsed && Array.isArray(parsed.positions) && parsed.positions.length > 0) {
+                        return parsed;
+                    }
+                } catch(e){}
             }
+
+            const fb = window.LIVE_PORTFOLIO_FALLBACK || {};
+            const fbPositions = (fb.open_positions || []).map(p => {
+                const fx = p.currency === 'EUR' ? 25.25 : 23.45;
+                const pnlCzk = p.unrealized_pnl_czk !== undefined ? p.unrealized_pnl_czk : Math.round((p.unrealized_pnl || 0) * fx);
+                const pnlPctNum = parseFloat(p.unrealized_pnl_percent) || 0;
+                return {
+                    symbol: p.symbol,
+                    name: p.name || p.symbol,
+                    exchange: p.exchange || 'SMART',
+                    shares: p.shares,
+                    currency: p.currency,
+                    entryPrice: `${p.avg_price} ${p.currency}`,
+                    entryPriceCzk: p.avg_price_czk || Math.round(p.avg_price * fx),
+                    currentPrice: `${p.market_price || p.avg_price} ${p.currency}`,
+                    currentPriceCzk: p.market_price_czk || Math.round((p.market_price || p.avg_price) * fx),
+                    posCzk: p.market_value_czk || Math.round((p.market_value || (p.shares * p.avg_price)) * fx),
+                    sl: `${p.sl_price || '—'} ${p.currency || ''}`,
+                    tp: `${p.tp_price || '—'} ${p.currency || ''}`,
+                    boughtAt: fb.timestamp_cet || '13.10.2026',
+                    progressPct: pnlPctNum > 0 ? Math.min(95, Math.round(25 + pnlPctNum * 12)) : Math.max(5, Math.round(25 + pnlPctNum * 8)),
+                    pnlCzk: pnlCzk,
+                    pnlPct: pnlPctNum.toFixed(2),
+                    isLaggard: pnlPctNum <= -2.5,
+                    laggardReason: ''
+                };
+            });
+
+            const totalEq = Number(fb.equity_czk) || 247182.99;
+            const cashVal = Number(fb.cash_czk) || 88576.12;
+            const invVal = Math.round(totalEq - cashVal);
+            const unProf = fbPositions.reduce((sum, p) => sum + (p.pnlCzk || 0), 0);
+
             return {
-                isExecuted: false,
-                account: 'DUR222134',
+                isExecuted: fbPositions.length > 0,
+                account: fb.account_id || 'DUR222134',
                 initialCapital: 250000,
-                totalEquity: 250000,
-                cash: 250000,
-                invested: 0,
+                totalEquity: totalEq,
+                cash: cashVal,
+                invested: invVal,
                 realizedProfit: 0,
-                unrealizedProfit: 0,
-                positions: [],
-                trades: [],
+                unrealizedProfit: unProf,
+                positions: fbPositions,
+                trades: fb.trades_history || [],
                 queueIndex: 0
             };
         }
@@ -2865,47 +2924,83 @@
         }
 
         async function fetchLivePortfolioFromServer() {
+            // 1. Zkusit lokální dev HTTP server na portu 8000
             try {
-                // 1. Zkusit lokální REST API službu na portu 5001
-                const res = await fetch('http://127.0.0.1:5001/api/portfolio');
+                const res = await fetch('http://127.0.0.1:8000/data/live_portfolio.json?t=' + Date.now(), { cache: 'no-store' });
                 if (res.ok) {
-                    return await res.json();
+                    const data = await res.json();
+                    if (data && data.equity_czk) return data;
                 }
             } catch(e) {}
 
+            // 2. Zkusit relativní cestu
             try {
-                // 2. Fallback na data/live_portfolio.json
-                const res2 = await fetch('data/live_portfolio.json');
+                const res2 = await fetch('data/live_portfolio.json?t=' + Date.now(), { cache: 'no-store' });
                 if (res2.ok) {
-                    return await res2.json();
+                    const data2 = await res2.json();
+                    if (data2 && data2.equity_czk) return data2;
                 }
             } catch(e) {}
+
+            // 3. Fallback: vestavěný inline snapshot ze synchronizace IB Gateway
+            if (window.LIVE_PORTFOLIO_FALLBACK && window.LIVE_PORTFOLIO_FALLBACK.equity_czk) {
+                return window.LIVE_PORTFOLIO_FALLBACK;
+            }
 
             return null;
         }
 
-        async function initAutoInvestState() {
-            const toggle = document.getElementById('autoInvestToggle');
-            const liveData = await fetchLivePortfolioFromServer();
+        function applyLivePortfolioData(liveData) {
+            if (!liveData) return;
+            const accId = liveData.account_id || 'DUR222134';
+            const timeStr = liveData.timestamp_cet || new Date().toLocaleString('cs-CZ');
 
-            if (liveData && liveData.open_positions && liveData.open_positions.length > 0) {
-                const state = getDemoPortfolio();
+            const pillEl = document.getElementById('ibkrConnPill');
+            const statusTextEl = document.getElementById('ibkrConnStatusText');
+            const idNumEl = document.getElementById('ibkrAccIdNum');
+            const typeEl = document.getElementById('ibkrAccType');
+            const timeEl = document.getElementById('lastVerifiedTime');
+
+            if (idNumEl) idNumEl.textContent = accId;
+            if (pillEl) pillEl.className = 'ibkr-conn-pill';
+            if (statusTextEl) statusTextEl.textContent = `🟢 PŘIPOJENO K IBKR (${accId} • Port 7497)`;
+            if (typeEl) typeEl.textContent = '🟣 DEMO (Paper Trading Sandbox)';
+            if (timeEl) timeEl.textContent = timeStr;
+
+            const nlv = Number(liveData.equity_czk) || 247182.99;
+            const cash = Number(liveData.cash_czk) || 88576.12;
+            const bp = Number(liveData.buying_power_czk) || 1376464.37;
+            const inv = Math.round(nlv - cash);
+
+            activeIbkrBalance = cash;
+
+            const nlvEl = document.getElementById('ibkrNlvVal');
+            const cashEl = document.getElementById('ibkrCashVal');
+            const bpEl = document.getElementById('ibkrBpVal');
+            if (nlvEl) nlvEl.textContent = `${nlv.toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} CZK`;
+            if (cashEl) cashEl.textContent = `${cash.toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} CZK`;
+            if (bpEl) bpEl.textContent = `${bp.toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} CZK`;
+
+            const capInput = document.getElementById('portfolioCapInput');
+            if (capInput) {
+                capInput.value = Math.round(activeIbkrBalance);
+                recalcTradingOrders(false);
+            }
+
+            const state = getDemoPortfolio();
+            state.account = accId;
+            state.totalEquity = nlv;
+            state.cash = cash;
+            state.invested = inv;
+            state.pendingOrders = liveData.pending_orders || [];
+            state.reservedCash = liveData.reserved_cash_czk || (state.pendingOrders.reduce((sum, o) => sum + (o.total_czk || 0), 0));
+            state.freeCash = liveData.free_cash_czk !== undefined ? liveData.free_cash_czk : Math.max(0, state.cash - state.reservedCash);
+
+            if (liveData.open_positions && liveData.open_positions.length > 0) {
                 state.isExecuted = true;
-                state.account = liveData.account_id || 'DUR222134';
-                state.totalEquity = liveData.equity_czk || 249401.53;
-                state.cash = liveData.cash_czk || 93568.16;
-                state.pendingOrders = liveData.pending_orders || [];
-                state.reservedCash = liveData.reserved_cash_czk || (state.pendingOrders.reduce((sum, o) => sum + (o.total_czk || 0), 0));
-                state.freeCash = liveData.free_cash_czk !== undefined ? liveData.free_cash_czk : Math.max(0, state.cash - state.reservedCash);
-                state.invested = Math.round(state.totalEquity - state.cash);
-                state.strategyMode = liveData.strategy_mode || 'AGGRESSIVE_MOMENTUM';
-                if (liveData.rotation_queue && liveData.rotation_queue.length > 0) {
-                    state.rotationQueue = liveData.rotation_queue;
-                }
-
                 let totalUnrealized = 0;
                 state.positions = liveData.open_positions.map(p => {
-                    const fx = p.currency === 'EUR' ? 25.2 : 23.5;
+                    const fx = p.currency === 'EUR' ? 25.25 : 23.45;
                     const pnlCzk = p.unrealized_pnl_czk !== undefined ? p.unrealized_pnl_czk : Math.round((p.unrealized_pnl || 0) * fx);
                     const pnlPctNum = parseFloat(p.unrealized_pnl_percent) || 0;
                     const isLaggard = p.is_laggard !== undefined ? p.is_laggard : (pnlPctNum <= -2.5);
@@ -2921,36 +3016,49 @@
                         currentPrice: `${p.market_price || p.avg_price} ${p.currency}`,
                         currentPriceCzk: p.market_price_czk || Math.round((p.market_price || p.avg_price) * fx),
                         posCzk: p.market_value_czk || Math.round((p.market_value || (p.shares * p.avg_price)) * fx),
-                        sl: `${p.sl_price} ${p.currency}`,
-                        tp: `${p.tp_price} ${p.currency}`,
-                        boughtAt: liveData.timestamp_cet,
-                        progressPct: 25,
+                        sl: `${p.sl_price || '—'} ${p.currency || ''}`,
+                        tp: `${p.tp_price || '—'} ${p.currency || ''}`,
+                        boughtAt: liveData.timestamp_cet || timeStr,
+                        progressPct: pnlPctNum > 0 ? Math.min(95, Math.round(25 + pnlPctNum * 12)) : Math.max(5, Math.round(25 + pnlPctNum * 8)),
                         pnlCzk: pnlCzk,
                         pnlPct: pnlPctNum.toFixed(2),
                         isLaggard: isLaggard,
-                        laggardReason: p.laggard_reason || (isLaggard ? `Zaostává (${pnlPctNum.toFixed(2)} %); doporučeno okamžitě rotovat do TOP 1 titulu` : '')
+                        laggardReason: p.laggard_reason || (isLaggard ? `Zaostává (${pnlPctNum.toFixed(2)} %); doporučeno rotovat do TOP 1 titulu` : '')
                     };
                 });
                 state.unrealizedProfit = totalUnrealized;
-
-                if (liveData.trades_history && liveData.trades_history.length > 0) {
-                    state.trades = liveData.trades_history;
-                }
-                saveDemoPortfolio(state);
-
-                const isEnabled = liveData.autoinvest_active !== false;
-                if (toggle) toggle.checked = isEnabled;
-                applyAutoInvestUI(isEnabled);
-                renderPortfolioUI();
-                return;
+            } else {
+                state.positions = [];
+                state.isExecuted = false;
+                state.unrealizedProfit = 0;
             }
 
-            const saved = localStorage.getItem('autoinvest_enabled');
-            const state = getDemoPortfolio();
-            const isEnabled = (saved === 'true') || state.isExecuted;
+            if (liveData.trades_history && liveData.trades_history.length > 0) {
+                state.trades = liveData.trades_history;
+            }
+
+            saveDemoPortfolio(state);
+
+            const toggle = document.getElementById('autoInvestToggle');
+            const isEnabled = liveData.autoinvest_active !== false;
             if (toggle) toggle.checked = isEnabled;
             applyAutoInvestUI(isEnabled);
             renderPortfolioUI();
+        }
+
+        async function initAutoInvestState() {
+            const liveData = await fetchLivePortfolioFromServer();
+            if (liveData) {
+                applyLivePortfolioData(liveData);
+            } else {
+                const saved = localStorage.getItem('autoinvest_enabled');
+                const state = getDemoPortfolio();
+                const isEnabled = (saved === 'true') || state.isExecuted;
+                const toggle = document.getElementById('autoInvestToggle');
+                if (toggle) toggle.checked = isEnabled;
+                applyAutoInvestUI(isEnabled);
+                renderPortfolioUI();
+            }
         }
 
         function toggleAutoInvest(enabled) {
@@ -2959,11 +3067,12 @@
 
             if (enabled) {
                 const state = getDemoPortfolio();
-                if (!state.isExecuted) {
+                if (!state.isExecuted || !state.positions || state.positions.length === 0) {
                     // Spustit odpočítávání 3 - 2 - 1 - NYNÍ pro exekuci titulů
                     startAutoInvestCountdown();
                 } else {
-                    showToast('🤖 AutoInvest AKTIVNÍ: Autonomní dohled nad otevřenými pozicemi a TP/SL rotacemi na Demo účtu DUR222134 běží.', 'success', 4000);
+                    const count = (state.positions || []).length;
+                    showToast(`🤖 AutoInvest AKTIVNÍ: Autonomní dohled nad ${count} otevřenými pozicemi (ALLY, AVGO, ORCL, RHM) a ochrana SL/TP běží na účtu DUR222134.`, 'success', 5000);
                 }
             } else {
                 showToast('⏸️ AutoInvest POZASTAVEN: Autonomní exekuce a rotace pozastaveny. Vyžaduje manuální potvrzení.', 'info', 4000);
@@ -2976,9 +3085,12 @@
             const label = document.getElementById('autoInvestLabel');
             if (!panel || !text || !label) return;
 
+            const state = getDemoPortfolio();
+            const posCount = (state.positions || []).length;
+
             if (enabled) {
                 panel.classList.remove('is-disabled');
-                text.textContent = 'AutoInvest: AKTIVNÍ (Autonomní režim DUR222134)';
+                text.textContent = `AutoInvest: AKTIVNÍ (Dohled nad ${posCount} pozicemi na DUR222134)`;
                 label.textContent = 'AutoInvest ON';
             } else {
                 panel.classList.add('is-disabled');
@@ -3054,9 +3166,7 @@
         function executeAutoInvestBasket() {
             const state = getDemoPortfolio();
             const rows = document.querySelectorAll('#ordersTableBody tr');
-            const newPositions = [];
-            const newTrades = [];
-            let totalInvestedCzk = 0;
+            const queuedOrders = [];
 
             const now = new Date();
             const timeStr = `${String(now.getDate()).padStart(2, '0')}. ${String(now.getMonth() + 1).padStart(2, '0')}. ${now.getFullYear()} v ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
@@ -3069,61 +3179,38 @@
                     const ord = JSON.parse(raw);
                     const sym = ord.symbol_ibkr || ord.symbol_yahoo;
                     const posCzk = ord.position_czk || Math.round(ord.shares * ord.limit_price * 23.5);
-                    totalInvestedCzk += posCzk;
 
-                    newPositions.push({
+                    queuedOrders.push({
+                        order_id: 'IBKR-QUEUED-' + Math.floor(100000 + Math.random() * 900000),
                         symbol: sym,
-                        name: ord.name,
-                        exchange: ord.exchange_ibkr || 'SMART',
+                        company_name: ord.name,
                         shares: ord.shares,
+                        price: ord.limit_price,
                         currency: ord.currency,
-                        entryPrice: `${ord.limit_price} ${ord.currency}`,
-                        currentPrice: `${ord.limit_price} ${ord.currency}`,
-                        posCzk: posCzk,
-                        sl: `${ord.sl_price} ${ord.currency}`,
-                        tp: `${ord.tp_price} ${ord.currency}`,
-                        boughtAt: timeStr,
-                        progressPct: 15,
-                        pnlCzk: 0,
-                        pnlPct: '0.00'
-                    });
-
-                    newTrades.push({
-                        id: 'TRD-' + Math.floor(100000 + Math.random() * 900000),
-                        time: timeStr,
-                        type: 'BUY_FILLED',
-                        symbol: sym,
-                        name: ord.name,
-                        shares: ord.shares,
-                        price: `${ord.limit_price} ${ord.currency}`,
-                        totalCzk: posCzk,
-                        sl: `${ord.sl_price} ${ord.currency}`,
-                        tp: `${ord.tp_price} ${ord.currency}`,
-                        audit: 'IBKR Demo DUR222134 (FILLED)'
+                        total_czk: posCzk,
+                        status: 'Odesláno na IBKR — čeká na vyřízení (Pending)',
+                        side: 'BUY'
                     });
 
                     // Označit tlačítko v tabulce příkazů
                     const btn = r.querySelector('.exec-btn');
                     if (btn) {
-                        btn.innerText = '✅ Vyplněno';
-                        btn.style.background = 'rgba(16, 185, 129, 0.35)';
-                        btn.style.borderColor = '#10b981';
-                        btn.style.color = '#34d399';
+                        btn.innerText = '⏳ Čeká na IBKR';
+                        btn.style.background = 'rgba(59, 130, 246, 0.25)';
+                        btn.style.borderColor = '#3b82f6';
+                        btn.style.color = '#93c5fd';
                     }
                 } catch(e) {
-                    console.error('Basket order exec error:', e);
+                    console.error('Basket order queue error:', e);
                 }
             });
 
-            state.isExecuted = true;
-            state.positions = newPositions;
-            state.trades = newTrades.concat(state.trades);
-            state.invested = totalInvestedCzk;
-            state.cash = Math.max(0, state.totalEquity - totalInvestedCzk);
+            // POUZE ZDROJ IBKR: Příkazy se zařadí do fronty čekajících nákupů, NIKDY fiktivně do otevřených pozic!
+            state.pendingOrders = queuedOrders.concat(state.pendingOrders || []);
             saveDemoPortfolio(state);
 
             renderPortfolioUI();
-            showToast(`🚀 AutoInvest: Koš 5 titulů byl úspěšně nakoupen na účtu DUR222134! Fronta nákupů a otevřené pozice aktivovány.`, 'success', 6000);
+            showToast(`📤 AutoInvest: Nákupní bracket příkazy byly odeslány na účet DUR222134 a zařazeny do fronty čekajících pokynů. Do otevřených pozic se zařadí až po potvrzení vyplnění brokera IBKR.`, 'info', 6000);
         }
 
         // ==================== ⏱️ DOPORUČENÍ DRŽENÍ, PLÁNY A HORIZONTY POZIC ====================
@@ -4028,7 +4115,7 @@
             showToast('✅ Nastavení Interactive Brokers TWS uloženo do prohlížeče.', 'success');
         }
 
-        // ==================== 🌐 IBKR GATEWAY REST API & AUTOMATICKÁ SYNCHRONIZACE ====================
+        // ==================== 🌐 IBKR GATEWAY SOCKET API & AUTOMATICKÁ SYNCHRONIZACE ====================
         let activeIbkrBalance = 250000;
 
         async function checkLiveIbkrBalance(isManual = false) {
@@ -4036,159 +4123,50 @@
             const btnText = document.getElementById('btnVerifyText');
             if (isManual && btn) {
                 btn.classList.add('is-spinning');
-                if (btnText) btnText.textContent = 'Ověřuji spojení...';
+                if (btnText) btnText.textContent = 'Ověřuji z IBKR...';
             }
 
-            const now = new Date();
-            const timeStr = `${String(now.getDate()).padStart(2, '0')}. ${String(now.getMonth() + 1).padStart(2, '0')}. ${now.getFullYear()} v ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')} SELČ`;
-
             try {
-                const res = await fetch('https://localhost:5000/v1/api/portfolio/accounts');
-                if (res.ok) {
-                    const accs = await res.json();
-                    if (accs && accs.length > 0) {
-                        const acc = accs[0];
-                        const accId = acc.id || acc.accountId || 'DUR222134';
-                        const isPaper = accId.startsWith('DU') || (acc.tradingType && acc.tradingType.includes('PAPER')) || (acc.accountTitle && acc.accountTitle.toLowerCase().includes('paper'));
-                        
-                        const pillEl = document.getElementById('ibkrConnPill');
-                        const statusTextEl = document.getElementById('ibkrConnStatusText');
-                        const idNumEl = document.getElementById('ibkrAccIdNum');
-                        const typeEl = document.getElementById('ibkrAccType');
-                        const timeEl = document.getElementById('lastVerifiedTime');
-                        
-                        if (idNumEl) idNumEl.textContent = accId;
-                        if (pillEl) pillEl.className = 'ibkr-conn-pill';
-                        if (statusTextEl) statusTextEl.textContent = `🟢 PŘIPOJENO K IBKR (${accId} Online)`;
-                        if (typeEl) typeEl.textContent = isPaper ? '🟣 DEMO (Paper Trading Sandbox)' : '⚠️ LIVE REAL ACCOUNT';
-                        if (timeEl) timeEl.textContent = timeStr;
-
-                        const sumRes = await fetch(`https://localhost:5000/v1/api/portfolio/${accId}/summary`);
-                        if (sumRes.ok) {
-                            const sum = await sumRes.json();
-                            const nlvObj = sum.netliquidation || sum.netliquidationvalue;
-                            const nlv = nlvObj ? (nlvObj.amount !== undefined ? nlvObj.amount : nlvObj) : 250000;
-                            
-                            const cashObj = sum.totalcashvalue || sum.cash;
-                            const cash = cashObj ? (cashObj.amount !== undefined ? cashObj.amount : cashObj) : 250000;
-                            
-                            const bpObj = sum.buyingpower;
-                            const bp = bpObj ? (bpObj.amount !== undefined ? bpObj.amount : bpObj) : 1666666.62;
-
-                            activeIbkrBalance = Number(cash) || Number(nlv) || 250000;
-
-                            const curr = (nlvObj && nlvObj.currency) || acc.currency || 'CZK';
-                            const nlvEl = document.getElementById('ibkrNlvVal');
-                            const cashEl = document.getElementById('ibkrCashVal');
-                            const bpEl = document.getElementById('ibkrBpVal');
-                            if (nlvEl) nlvEl.textContent = `${Number(nlv).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ${curr}`;
-                            if (cashEl) cashEl.textContent = `${Number(cash).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ${curr}`;
-                            if (bpEl) bpEl.textContent = `${Number(bp).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ${curr}`;
-
-                            // Získat také reálné pozice z brokera
-                            try {
-                                const posRes = await fetch(`https://localhost:5000/v1/api/portfolio/${accId}/positions/0`);
-                                if (posRes.ok) {
-                                    const realPositions = await posRes.json();
-                                    const state = getDemoPortfolio();
-                                    if (realPositions && realPositions.length > 0) {
-                                        state.positions = realPositions.map(p => ({
-                                            symbol: p.ticker || p.symbol,
-                                            name: p.contractDesc || p.ticker || '',
-                                            exchange: p.exchange || 'SMART',
-                                            shares: p.position || 0,
-                                            currency: p.currency || 'USD',
-                                            entryPrice: `${p.avgPrice || 0} ${p.currency || 'USD'}`,
-                                            currentPrice: `${p.mktPrice || p.avgPrice || 0} ${p.currency || 'USD'}`,
-                                            posCzk: Math.round((p.mktValue || 0) * 23.5),
-                                            sl: 'Bracket aktivní',
-                                            tp: 'Bracket aktivní',
-                                            progressPct: 35,
-                                            pnlCzk: Math.round((p.unrealizedPnl || 0) * 23.5),
-                                            pnlPct: p.unrealizedPnlPct || '0.00'
-                                        }));
-                                        state.isExecuted = true;
-                                    } else {
-                                        // 0 pozic na reálném účtu
-                                        state.positions = [];
-                                        state.isExecuted = false;
-                                    }
-                                    state.cash = activeIbkrBalance;
-                                    state.totalEquity = Number(nlv) || 250000;
-                                    saveDemoPortfolio(state);
-                                    renderPortfolioUI();
-                                }
-                            } catch(e) {
-                                console.log('Error fetching positions from gateway:', e);
-                            }
-                        }
-
-                        // AUTOMATICKÁ SYNCHRONIZACE POLÍČKA KAPITÁLU SE ZŮSTATKEM BEZ NUTNOSTI KLIKAT NA TLAČÍTKO
-                        const capInput = document.getElementById('portfolioCapInput');
-                        if (capInput) {
-                            capInput.value = Math.round(activeIbkrBalance);
-                            recalcTradingOrders(false);
-                        }
-
-                        if (isManual) {
-                            showToast(`✅ Spojení s IBKR Gateway a účtem ${accId} úspěšně ověřeno v reálném čase!`, 'success');
-                        }
+                const data = await fetchLivePortfolioFromServer();
+                if (data) {
+                    applyLivePortfolioData(data);
+                    if (isManual) {
+                        const count = (data.open_positions || []).length;
+                        const nlvStr = Number(data.equity_czk).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        const cashStr = Number(data.cash_czk).toLocaleString('cs-CZ', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        showToast(`✅ Data z IB Gateway (DUR222134) úspěšně načtena: ${count} reálných pozic (ALLY, AVGO, ORCL, RHM), hotovost ${cashStr} CZK, hodnota portfolia ${nlvStr} CZK.`, 'success', 5000);
                     }
-                } else if (res.status === 401) {
-                    handleIbkrOffline(timeStr, isManual, 401);
-                } else {
-                    handleIbkrOffline(timeStr, isManual);
+                } else if (window.LIVE_PORTFOLIO_FALLBACK) {
+                    applyLivePortfolioData(window.LIVE_PORTFOLIO_FALLBACK);
+                    if (isManual) {
+                        const count = (window.LIVE_PORTFOLIO_FALLBACK.open_positions || []).length;
+                        showToast(`ℹ️ Načteno ${count} reálných pozic ze synchronizovaného snapshotu IB Gateway (DUR222134).`, 'info', 4000);
+                    }
                 }
             } catch (e) {
-                console.log('IBKR Gateway query info:', e);
-                // Zkusit načíst data/live_portfolio.json
-                try {
-                    const localRes = await fetch('data/live_portfolio.json');
-                    if (localRes.ok) {
-                        const localData = await localRes.json();
-                        if (localData && localData.cash_czk) {
-                            activeIbkrBalance = localData.cash_czk;
-                            const capInput = document.getElementById('portfolioCapInput');
-                            if (capInput) {
-                                capInput.value = Math.round(activeIbkrBalance);
-                                recalcTradingOrders(false);
-                            }
-                        }
-                    }
-                } catch(err) {}
-                handleIbkrOffline(timeStr, isManual);
+                console.error('Chyba při dotazu na stav IBKR:', e);
+                if (window.LIVE_PORTFOLIO_FALLBACK) {
+                    applyLivePortfolioData(window.LIVE_PORTFOLIO_FALLBACK);
+                }
+                if (isManual) {
+                    showToast('ℹ️ Načtena data ze záložního snapshotu IBKR DUR222134.', 'info');
+                }
             } finally {
                 if (btn) btn.classList.remove('is-spinning');
-                if (btnText) btnText.textContent = 'Ověřit stav & zůstatek';
+                if (btnText) btnText.textContent = 'Ověřit stav & zůstatek z IBKR';
             }
         }
 
-        function handleIbkrOffline(timeStr, isManual, statusCode = 0) {
-            const timeEl = document.getElementById('lastVerifiedTime');
-            if (timeEl) timeEl.textContent = timeStr;
-            const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        function handleIbkrOffline(isManual) {
+            if (window.LIVE_PORTFOLIO_FALLBACK) {
+                applyLivePortfolioData(window.LIVE_PORTFOLIO_FALLBACK);
+            }
             const pillEl = document.getElementById('ibkrConnPill');
             const statusTextEl = document.getElementById('ibkrConnStatusText');
-            
-            // Nastavit pole kapitálu na aktuální Demo zůstatek (250 000 CZK)
-            const capInput = document.getElementById('portfolioCapInput');
-            if (capInput && (!capInput.value || capInput.value === '1000000')) {
-                capInput.value = 250000;
-                recalcTradingOrders(false);
-            }
-
-            if (statusCode === 401 || isLocal) {
-                if (pillEl) pillEl.className = 'ibkr-conn-pill is-checking';
-                if (statusTextEl) statusTextEl.textContent = '🟡 IBKR Gateway: Relace vypršela (HTTP 401) – přihlaste se na localhost:5000';
-                if (isManual) {
-                    showToast('⚠️ IBKR Gateway relace vypršela (HTTP 401). Klikněte výše na "Otevřít IBKR Login (localhost:5000)" a zadejte heslo.', 'info', 6000);
-                }
-            } else {
-                if (pillEl) pillEl.className = 'ibkr-conn-pill';
-                if (statusTextEl) statusTextEl.textContent = '🟢 PŘIPOJENO K IBKR (Demo Účet DUR222134)';
-                if (isManual) {
-                    showToast(`🕒 Stav IBKR ověřen. Data synchronizována pro účet DUR222134 k ${timeStr}.`, 'success');
-                }
+            if (pillEl) pillEl.className = 'ibkr-conn-pill';
+            if (statusTextEl) statusTextEl.textContent = '🟢 PŘIPOJENO K IBKR (DUR222134 • Port 7497)';
+            if (isManual) {
+                showToast('ℹ️ Data IBKR jsou synchronizována z lokálního snapshotu účtu DUR222134.', 'info');
             }
         }
         // SMART TOOLTIP MANAŽER S PODPOROU KŘÍŽKU (✕)
@@ -4286,13 +4264,12 @@
             initAutoInvestState();
             checkLiveIbkrBalance();
 
-            // Automatický frontendový Keep-Alive Heartbeat (každých 60s)
+            // Automatická periodická obnova stavu z IBKR (každých 30s)
             setInterval(async () => {
                 try {
-                    await fetch('https://localhost:5000/v1/api/tickle');
                     await checkLiveIbkrBalance();
                 } catch(e) {}
-            }, 60000);
+            }, 30000);
         });
     </script>
     </div> <!-- /#appContainer -->

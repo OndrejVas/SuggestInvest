@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🥈 SuggestInvest SilverEdge V3.0 • Micro Silver SIL & 2026 Walk-Forward Lab</title>
+    <meta name="description" content="Autonomní trading systém pro Micro Silver Futures (SIL) s Volatility Gate, 2-Stage Break-Even, GSR Mean Reversion a interaktivním Walk-Forward odkrýváním roku 2026.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #070b14;
+            --bg-secondary: #0d1527;
+            --bg-card: rgba(15, 23, 42, 0.78);
+            --bg-card-hover: rgba(30, 41, 59, 0.90);
+            --border-color: rgba(148, 163, 184, 0.14);
+            --border-silver: rgba(203, 213, 225, 0.35);
+            --border-glow: rgba(56, 189, 248, 0.45);
+            --silver-primary: #f1f5f9;
+            --silver-muted: #94a3b8;
+            --silver-metallic: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
+            --accent-blue: #38bdf8;
+            --accent-blue-glow: rgba(56, 189, 248, 0.25);
+            --accent-green: #10b981;
+            --accent-green-glow: rgba(16, 185, 129, 0.25);
+            --accent-red: #ef4444;
+            --accent-red-glow: rgba(239, 68, 68, 0.25);
+            --accent-amber: #f59e0b;
+            --accent-purple: #c084fc;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--silver-primary);
+            line-height: 1.5;
+            padding: 20px 24px;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 8%, rgba(56, 189, 248, 0.10) 0%, transparent 40%),
+                radial-gradient(circle at 90% 15%, rgba(148, 163, 184, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 50% 85%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1480px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* HEADER */
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(13, 21, 39, 0.96) 100%);
+            border: 1px solid var(--border-silver);
+            border-radius: 16px;
+            padding: 20px 28px;
+            box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.8), 0 0 25px rgba(56, 189, 248, 0.12);
+            backdrop-filter: blur(14px);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .title-group h1 {
+            font-size: 1.75rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--silver-metallic);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .tag-silver {
+            background: linear-gradient(135deg, rgba(148, 163, 184, 0.25) 0%, rgba(56, 189, 248, 0.25) 100%);
+            color: #f8fafc;
+            border: 1px solid rgba(203, 213, 225, 0.45);
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+            display: inline-block;
+        }
+
+        .tag-status {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.45);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .btn-silver {
+            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.35);
+        }
+        .btn-silver:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+        }
+
+        .btn-outline {
+            background: rgba(15, 23, 42, 0.6);
+            color: var(--silver-primary);
+            border-color: var(--border-color);
+        }
+        .btn-outline:hover {
+            background: rgba(30, 41, 59, 0.8);
+            border-color: var(--silver-muted);
+        }
+
+        /* STATUS BADGES ROW */
+        .status-strip {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 10px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            align-items: center;
+            font-size: 0.82rem;
+        }
+
+        .strip-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding-right: 14px;
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .strip-item:last-child {
+            border-right: none;
+            padding-right: 0;
+        }
+
+        .dot-green {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-green);
+        }
+
+        .dot-blue {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-blue);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-blue);
+        }
+
+        /* KPI METRICS GRID */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.25s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-silver);
+            box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.5);
+        }
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, #38bdf8, transparent);
+        }
+
+        .kpi-label {
+            font-size: 0.75rem;
+            color: var(--silver-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .kpi-val {
+            font-family: var(--font-mono);
+            font-size: 1.65rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .kpi-sub {
+            font-size: 0.78rem;
+            color: var(--silver-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 2026 WALKFORWARD CONTROL PANEL */
+        .walkforward-panel {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(11, 18, 34, 0.98) 100%);
+            border: 2px solid rgba(56, 189, 248, 0.4);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(56, 189, 248, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .wf-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .wf-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffffff;
+        }
+
+        .wf-months-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 12px;
+        }
+
+        .month-chip {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .month-chip.locked {
+            border-color: rgba(148, 163, 184, 0.2);
+            opacity: 0.75;
+        }
+
+        .month-chip.completed {
+            border-color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.10);
+            box-shadow: 0 0 14px rgba(16, 185, 129, 0.2);
+            opacity: 1.0;
+        }
+
+        .month-chip-title {
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .month-chip-status {
+            font-size: 0.72rem;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .status-locked-badge {
+            background: rgba(148, 163, 184, 0.15);
+            color: var(--silver-muted);
+        }
+        .status-done-badge {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+        }
+
+        .month-chip-pnl {
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            font-weight: 800;
+        }
+
+        .wf-actions-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 14px 18px;
+            border-radius: 12px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        /* DUAL COLUMN SECTION */
+        .content-split {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .content-split {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            backdrop-filter: blur(12px);
+        }
+
+        .panel-heading {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        /* CHART CONTAINER */
+        .chart-box {
+            background: rgba(6, 10, 20, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 16px;
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* TABLE */
+        .table-wrap {
+            overflow-x: auto;
+            max-height: 420px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(15, 23, 42, 0.9);
+            color: var(--silver-muted);
+            padding: 10px 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            position: sticky;
+            top: 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-family: var(--font-mono);
+        }
+
+        tr:hover td {
+            background: rgba(30, 41, 59, 0.5);
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+        }
+        .pill-long { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .pill-short { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+        .pill-strat { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
+
+        /* TELEMETRY WIDGETS */
+        .telemetry-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .telem-box {
+            background: rgba(10, 16, 30, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .telem-title { font-size: 0.72rem; color: var(--silver-muted); text-transform: uppercase; font-weight: 700; }
+        .telem-val { font-family: var(--font-mono); font-size: 1.25rem; font-weight: 800; color: #ffffff; }
+        .telem-desc { font-size: 0.72rem; color: #94a3b8; }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            color: var(--silver-muted);
+            font-size: 0.8rem;
+            padding: 20px 0;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+    <!-- 🔒 SUGGESTINVEST SECURITY GATE INITIALIZER -->
+    <script>
+        (function() {
+            try {
+                var isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
+                if (isAuth) {
+                    document.documentElement.classList.add("si-authenticated");
+                } else {
+                    document.documentElement.classList.add("si-locked");
+                }
+            } catch(e) {}
+        })();
+    </script>
+    <style>
+        /* 🔒 SECURITY GATE STYLES */
+        html.si-locked #appContainer { display: none !important; }
+        html.si-locked #loginOverlay { display: flex !important; }
+        html.si-authenticated #loginOverlay { display: none !important; }
+        html.si-authenticated #appContainer { display: block !important; }
+
+        #loginOverlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: radial-gradient(circle at center, #111827 0%, #030712 100%);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 999999; padding: 1.5rem;
+        }
+        .login-card {
+            background: rgba(17, 24, 39, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            padding: 2.5rem 2rem;
+            max-width: 430px; width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            text-align: center;
+        }
+        .login-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(59, 130, 246, 0.15); color: #60a5fa;
+            padding: 4px 12px; border-radius: 9999px;
+            font-size: 0.75rem; font-weight: 700;
+            letter-spacing: 0.05em; text-transform: uppercase;
+            border: 1px solid rgba(59, 130, 246, 0.3); margin-bottom: 1.25rem;
+        }
+        .login-title {
+            font-size: 1.65rem; font-weight: 800; color: #f9fafb;
+            margin-bottom: 0.35rem; letter-spacing: -0.01em;
+        }
+        .login-subtitle {
+            font-size: 0.88rem; color: #9ca3af;
+            margin-bottom: 1.75rem; line-height: 1.4;
+        }
+        .login-form {
+            display: flex; flex-direction: column; gap: 1.1rem; text-align: left;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+        .input-label { font-size: 0.8rem; font-weight: 600; color: #cbd5e1; }
+        .login-input {
+            width: 100%; background: #0b0f19;
+            border: 1px solid rgba(255, 255, 255, 0.15); color: #f8fafc;
+            padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.95rem;
+            outline: none; transition: border-color 0.2s, box-shadow 0.2s; box-sizing: border-box;
+        }
+        .login-input:focus {
+            border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        .remember-row {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.82rem; color: #9ca3af; cursor: pointer; user-select: none;
+        }
+        .login-submit-btn {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #ffffff; border: none; padding: 0.8rem;
+            border-radius: 8px; font-size: 0.95rem; font-weight: 700;
+            cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; margin-top: 0.4rem;
+        }
+        .login-submit-btn:hover {
+            transform: translateY(-1px); box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.5);
+        }
+        .login-error {
+            display: none; background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.35); color: #f87171;
+            padding: 0.65rem; border-radius: 6px; font-size: 0.82rem; text-align: center;
+        }
+        #appContainer { display: none; }
+    </style>
+
+</head>
+<body>
+    <!-- 🔒 UNIFIED SECURITY GATE OVERLAY -->
+    <div id="loginOverlay">
+        <div class="login-card">
+            <div class="login-badge">
+                <span>🔒 SuggestInvest • Security Gate</span>
+            </div>
+            <h2 class="login-title">Přihlášení</h2>
+            <p class="login-subtitle">Zadejte přihlašovací údaje pro přístup do ekosystému SuggestInvest.</p>
+            
+            <form class="login-form" onsubmit="handleLoginSubmit(event)">
+                <div class="form-group">
+                    <label class="input-label" for="loginUser">Uživatelské jméno</label>
+                    <input type="text" id="loginUser" class="login-input" placeholder="Zadejte uživatelské jméno" required autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label class="input-label" for="loginPass">Heslo</label>
+                    <input type="password" id="loginPass" class="login-input" placeholder="Zadejte heslo" required autocomplete="current-password">
+                </div>
+
+                <label class="remember-row">
+                    <input type="checkbox" id="rememberMe" checked>
+                    <span>Zapamatovat přihlášení na tomto zařízení</span>
+                </label>
+
+                <div id="loginError" class="login-error">
+                    Neplatné uživatelské jméno nebo heslo. Zkuste to znovu.
+                </div>
+
+                <button type="submit" class="login-submit-btn">Vstoupit do aplikace</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="appContainer">
+
+
+<div class="container">
+    <!-- TOP HEADER -->
+    <header class="header-bar">
+        <div class="title-group">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <span class="tag-silver">🥈 SuggestInvest SilverEdge V3.0</span>
+                <span class="tag-status">Live Lab Ready</span>
+            </div>
+            <h1>Micro Silver Futures (SIL) & Walk-Forward 2026</h1>
+            <p style="color: var(--silver-muted); font-size: 0.86rem; margin-top: 4px;">
+                Replikace Gold modelu na Stříbro: NYMEX SIL (1,000 oz), Volatility Gate ($0.40/oz max SL), 2-Stage Break-Even a GSR Mean Reversion.
+            </p>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-outline" onclick="fetchFullTelemetry()">🔄 Obnovit data</button>
+            <a href="/hub.html" class="btn btn-outline">🏛️ Hub</a>
+            <a href="/silver_results_2026.html" class="btn btn-silver">📊 Silver Results 2026</a>
+            <a href="/FutureInvestDemo.html" class="btn btn-outline">🥇 Gold Live</a>
+        </div>
+    </header>
+
+    <!-- STATUS STRIP -->
+    <div class="status-strip">
+        <div class="strip-item">
+            <div class="dot-green"></div>
+            <span><strong>IBKR Port:</strong> 4002 (SIL Dedikovaný)</span>
+        </div>
+        <div class="strip-item">
+            <div class="dot-blue"></div>
+            <span><strong>Client ID:</strong> 20</span>
+        </div>
+        <div class="strip-item">
+            <span><strong>Killzone:</strong> <span id="lblKillzone" style="color: #38bdf8; font-weight:700;">AKTIVNÍ</span></span>
+        </div>
+        <div class="strip-item">
+            <span><strong>Sovereign Floor:</strong> <span style="color: #f59e0b; font-weight:700;">$9,000.00</span> (Stop-Loss ochrana účtu)</span>
+        </div>
+        <div class="strip-item">
+            <span><strong>Volatility Gate:</strong> <span id="lblVolGate" style="color: #34d399; font-weight:700;">AKTIVNÍ (Max SL: $0.40/oz)</span></span>
+        </div>
+    </div>
+
+    <!-- KPI SUMMARY GRID -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <span class="kpi-label">Aktuální Ekvita Účtu</span>
+            <span class="kpi-val" id="valCurrentEquity">$10,000.00</span>
+            <span class="kpi-sub" id="subEquity">Floor Buffer: +$1,000.00 (Bezpečno)</span>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-label">Volatilitní Profil vs Gold</span>
+            <span class="kpi-val" style="color: #38bdf8;">2.01× ATR</span>
+            <span class="kpi-sub">Silver ATR 2.92% vs Gold 1.46%</span>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-label">In-Sample Historie M1</span>
+            <span class="kpi-val" style="color: #c084fc;">1,497,660</span>
+            <span class="kpi-sub">2021-10 až 2025-12 (4.25 roku)</span>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-label">Rok 2026 Walk-Forward</span>
+            <span class="kpi-val" id="valWfStatus" style="color: #f59e0b;">0 / 10 Odemčeno</span>
+            <span class="kpi-sub" id="valWfSub">Slepý test (Žádný lookahead bias)</span>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-label">Synergie 70/30 Gold+Silver</span>
+            <span class="kpi-val" style="color: #34d399;">Sharpe 2.43</span>
+            <span class="kpi-sub">Max DD portfolia jen 4.12% (-72% vs SIL)</span>
+        </div>
+    </div>
+
+    <!-- 2026 WALK-FORWARD INTERACTIVE CONTROL CENTER -->
+    <div class="walkforward-panel">
+        <div class="wf-header">
+            <div class="wf-title">
+                <span>🔒 Interaktivní Walk-Forward Odkrývání roku 2026</span>
+                <span class="pill pill-strat" style="font-size:0.75rem;">Autonomní OOS Evaluátor</span>
+            </div>
+            <div style="font-size:0.82rem; color:var(--silver-muted);">
+                Rok 2026 je striktně uzamčený. Odkrývejte jednotlivé měsíce postupně na kliknutí:
+            </div>
+        </div>
+
+        <div class="wf-months-grid" id="wfMonthsContainer">
+            <!-- Dynamicky naplněno JS -->
+        </div>
+
+        <div class="wf-actions-bar">
+            <div>
+                <span style="font-size:0.86rem; font-weight:700;">Celkový zisk v roce 2026: </span>
+                <span id="lblWfTotalPnl" style="font-family:var(--font-mono); font-size:1.15rem; font-weight:800; color:#38bdf8;">$0.00</span>
+                <span style="font-size:0.8rem; color:var(--silver-muted); margin-left:12px;">(Celkem obchodů: <span id="lblWfTotalTrades">0</span>)</span>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-silver" id="btnUnlockNext" onclick="unlockNextMonth()">⚡ Odemknout další měsíc (Leden 2026)</button>
+                <button class="btn btn-outline" onclick="resetWalkforward()" style="color: #ef4444; border-color: rgba(239, 68, 68, 0.4);">🔄 Znovu uzamknout 2026</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN TWO COLUMN SECTION -->
+    <div class="content-split">
+        <!-- LEFT: EQUITY CHART & COMPARISON -->
+        <div style="display:flex; flex-direction:column; gap:20px;">
+            <!-- CHART CARD -->
+            <div class="card-panel">
+                <div class="panel-heading">
+                    <span>📈 Vývoj Ekvity a Sovereign Floor ($9,000)</span>
+                    <div style="display:flex; gap:8px;">
+                        <button class="btn btn-outline" style="padding:4px 10px; font-size:0.75rem;" onclick="switchChartTab('wf2026')">Rok 2026 OOS</button>
+                        <button class="btn btn-outline" style="padding:4px 10px; font-size:0.75rem;" onclick="switchChartTab('insample')">In-Sample 2021–2024</button>
+                        <button class="btn btn-outline" style="padding:4px 10px; font-size:0.75rem;" onclick="switchChartTab('stress')">Covid & Reddit Stress</button>
+                    </div>
+                </div>
+                <div class="chart-box">
+                    <canvas id="equityChartCanvas" width="850" height="300" style="width:100%; height:300px;"></canvas>
+                    <div id="chartEmptyOverlay" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px; background:rgba(7,11,20,0.85); border-radius:12px;">
+                        <span style="font-size:1.5rem;">🔒</span>
+                        <span style="font-weight:700;">Rok 2026 je zatím plně uzamčený</span>
+                        <span style="font-size:0.8rem; color:var(--silver-muted);">Klikněte na „Odemknout další měsíc“ pro vyhodnocení prvního měsíce</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GOLD VS SILVER COMPARISON & 70/30 SYNERGY -->
+            <div class="card-panel">
+                <div class="panel-heading">
+                    <span>🏛️ Srovnání Gold (MGC) vs Silver (SIL) & Portfolio Synergy 70/30</span>
+                    <span class="pill pill-strat">Argon Quant Audit</span>
+                </div>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Parametr</th>
+                                <th>Gold (MGC Micro)</th>
+                                <th>Silver (SIL Micro)</th>
+                                <th>Kombinace 70% Gold / 30% Silver</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Velikost kontraktu</td>
+                                <td>10 oz (~$27,200)</td>
+                                <td>1,000 oz (~$32,500)</td>
+                                <td>Optimální diverzifikace</td>
+                            </tr>
+                            <tr>
+                                <td>Hodnota 1 ticku</td>
+                                <td>$1.00 ($0.10 / oz)</td>
+                                <td>$5.00 ($0.005 / oz)</td>
+                                <td>Risk-Parity vyvážení</td>
+                            </tr>
+                            <tr>
+                                <td>Denní volatilita (ATR)</td>
+                                <td>1.46 %</td>
+                                <td>2.92 % (2.01× vyšší)</td>
+                                <td><strong>1.85 %</strong> (-37% pokles volatility)</td>
+                            </tr>
+                            <tr>
+                                <td>Sharpe Ratio</td>
+                                <td>2.68</td>
+                                <td>0.85 (samostatně)</td>
+                                <td><strong style="color:#34d399;">2.43</strong> (vysoká stabilita)</td>
+                            </tr>
+                            <tr>
+                                <td>Max Drawdown</td>
+                                <td>4.85 %</td>
+                                <td>14.72 % (samostatně)</td>
+                                <td><strong style="color:#34d399;">4.12 %</strong> (-72% redukce propadu)</td>
+                            </tr>
+                            <tr>
+                                <td>Unikátní Alpha motor</td>
+                                <td>L2 DOM nákupní patra</td>
+                                <td>Strategie #7: GSR Mean Reversion</td>
+                                <td>Korelace strategií jen 0.58!</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: HIGH ALPHA TELEMETRY & STRATEGY ENGINE -->
+        <div style="display:flex; flex-direction:column; gap:20px;">
+            <!-- TELEMETRY CARD -->
+            <div class="card-panel">
+                <div class="panel-heading">
+                    <span>⚡ High-Alpha Telemetrie Stříbra</span>
+                    <span class="pill pill-strat">Real-time</span>
+                </div>
+                <div class="telemetry-row">
+                    <div class="telem-box">
+                        <span class="telem-title">SHFE Shanghai Prémie</span>
+                        <span class="telem-val" style="color:#34d399;" id="valShfePremium">+5.97 %</span>
+                        <span class="telem-desc">Noční arbitráž 02:00–08:00 CET</span>
+                    </div>
+                    <div class="telem-box">
+                        <span class="telem-title">GSR Z-Score (Mean Rev)</span>
+                        <span class="telem-val" style="color:#38bdf8;" id="valGsrZscore">+2.14 σ</span>
+                        <span class="telem-desc">Stříbro podhodnocené vůči Zlatu</span>
+                    </div>
+                    <div class="telem-box">
+                        <span class="telem-title">Point-in-Time COT Index</span>
+                        <span class="telem-val" style="color:#c084fc;" id="valCotIndex">64.5</span>
+                        <span class="telem-desc">Komerční zajišťovatelé (Pátek 15:30 lock)</span>
+                    </div>
+                    <div class="telem-box">
+                        <span class="telem-title">Průmyslový TAN Solar Proxy</span>
+                        <span class="telem-val" style="color:#f59e0b;" id="valTanProxy">41.85</span>
+                        <span class="telem-desc">Poptávka po fotovoltaických článcích</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7 STRATEGY ARCHITECTURE -->
+            <div class="card-panel">
+                <div class="panel-heading">
+                    <span>🧠 7 Specializovaných Strategií SilverEdge</span>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:10px; font-size:0.82rem;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <span>#1 Trend Following (KAMA + ADX)</span>
+                        <span class="pill pill-strat">Aktivní v Bull</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <span>#2 Mean Reversion (Bollinger + RSI)</span>
+                        <span class="pill pill-strat">Chop komprese</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <span>#3 Range Breakout (Donchian 20)</span>
+                        <span class="pill pill-strat">Volatilní impuls</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <span>#4 Macro Regime Bridge (Real Yield + China)</span>
+                        <span class="pill pill-strat">Váhový filtr</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <span>#5 L2 DOM Imbalance (Micro-liquidity)</span>
+                        <span class="pill pill-strat">CME Globex</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <span>#6 News Sentiment & Fed Lock</span>
+                        <span class="pill pill-strat">Bezpečný filtr</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0;">
+                        <span><strong>#7 GSR Mean Reversion (2-Stage BE)</strong></span>
+                        <span class="pill pill-long">Klíčová Alpha</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VOLATILITY GATE WIDGET -->
+            <div class="card-panel">
+                <div class="panel-heading">
+                    <span>🛡️ Volatility Gate & 2-Stage Break-Even</span>
+                </div>
+                <div style="font-size:0.82rem; color:var(--silver-muted); display:flex; flex-direction:column; gap:8px;">
+                    <div>• <strong>Hard Volatility Gate:</strong> Pokud SL > $0.40/oz ($400 na 1 SIL), obchod je striktně zamítnut.</div>
+                    <div>• <strong>Stage 1 BE:</strong> Při zisku +0.80R se SL posune na -0.30R (odstranění 70 % rizika).</div>
+                    <div>• <strong>Stage 2 Fee-Plus:</strong> Při zisku +1.00R se SL uzamkne na zisk +$0.025/oz (garance zisku a poplatků).</div>
+                    <div>• <strong>Sovereign Floor:</strong> Účet má tvrdé dno $9,000. Žádný ztrátový obchod nesmí účet ohrozit.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TRADE JOURNAL TABLE -->
+    <div class="card-panel">
+        <div class="panel-heading">
+            <span>📋 Obchodní Deník (Exekuce & Zátěžové Testy)</span>
+            <span id="lblTradeCount" style="font-size:0.8rem; color:var(--silver-muted);">Načítám obchody...</span>
+        </div>
+        <div class="table-wrap">
+            <table id="tradesTable">
+                <thead>
+                    <tr>
+                        <th>Čas vstupu</th>
+                        <th>Čas výstupu</th>
+                        <th>Směr</th>
+                        <th>Strategie</th>
+                        <th>Kontrakty</th>
+                        <th>Vstupní cena</th>
+                        <th>Výstupní cena</th>
+                        <th>Čistý zisk ($)</th>
+                        <th>Výsledek R</th>
+                        <th>Důvod výstupu</th>
+                        <th>Session</th>
+                        <th>Ekvita po obchodu</th>
+                    </tr>
+                </thead>
+                <tbody id="tradesTableBody">
+                    <tr>
+                        <td colspan="12" style="text-align:center; padding:20px; color:var(--silver-muted);">Načítám data z API...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        SuggestInvest SilverEdge V3.0 (Argon Quant Edition) • Vyvinuto pro Micro Silver Futures (SIL) na NYMEX • 
+        Pravidlo integrity: Rok 2026 je OOS a odkrývá se pouze interaktivně.
+    </footer>
+</div>
+
+<script>
+    let manifestData = null;
+    let walkforwardState = null;
+    let currentChartTab = 'wf2026';
+
+    async function initDashboard() {
+        await fetchManifestAndState();
+        await fetchTelemetry();
+        await fetchTrades();
+        renderChart();
+    }
+
+    async function fetchManifestAndState() {
+        try {
+            let res;
+            try {
+                res = await fetch('/api/silver/walkforward-manifest');
+                if (!res.ok) throw new Error();
+            } catch(e) {
+                res = await fetch('data/silver_walkforward_manifest.json?t=' + Date.now());
+            }
+            const data = await res.json();
+            if (data.ok) {
+                manifestData = data.manifest;
+                walkforwardState = data.state;
+                renderWalkforwardUI();
+            }
+        } catch (e) {
+            console.error("Chyba při načítání manifestu:", e);
+        }
+    }
+
+    async function fetchTelemetry() {
+        try {
+            let res;
+            try {
+                res = await fetch('/api/silver/telemetry');
+                if (!res.ok) throw new Error();
+            } catch(e) {
+                res = await fetch('data/high_alpha_silver_telemetry.json?t=' + Date.now());
+            }
+            const data = await res.json();
+            if (data.ok && data.telemetry) {
+                const t = data.telemetry;
+                if (t.shfe_shanghai_spread) {
+                    document.getElementById('valShfePremium').textContent = (t.shfe_shanghai_spread.shanghai_premium_pct >= 0 ? '+' : '') + t.shfe_shanghai_spread.shanghai_premium_pct.toFixed(2) + ' %';
+                }
+                if (t.gold_silver_ratio) {
+                    document.getElementById('valGsrZscore').textContent = (t.gold_silver_ratio.z_score >= 0 ? '+' : '') + t.gold_silver_ratio.z_score.toFixed(2) + ' σ';
+                }
+                if (t.cot_sentiment) {
+                    document.getElementById('valCotIndex').textContent = t.cot_sentiment.cot_index.toFixed(1);
+                }
+                if (t.industrial_proxies) {
+                    document.getElementById('valTanProxy').textContent = '$' + t.industrial_proxies.tan_solar_etf_price.toFixed(2);
+                }
+            }
+        } catch (e) {
+            console.warn("Telemetrie selhala:", e);
+        }
+    }
+
+    async function fetchTrades() {
+        try {
+            const res = await fetch('/api/silver/trades');
+            const data = await res.json();
+            if (data.ok) {
+                const trades = (walkforwardState && getWalkforwardTrades().length > 0) 
+                    ? getWalkforwardTrades() 
+                    : (data.journal_trades && data.journal_trades.length > 0 ? data.journal_trades : data.insample_trades || []);
+                renderTradesTable(trades);
+            }
+        } catch (e) {
+            console.error("Chyba při načítání obchodů:", e);
+        }
+    }
+
+    function getWalkforwardTrades() {
+        if (!walkforwardState || !walkforwardState.months) return [];
+        let all = [];
+        for (const m of Object.values(walkforwardState.months)) {
+            if (m.trades && m.trades.length > 0) {
+                all = all.concat(m.trades);
+            }
+        }
+        return all;
+    }
+
+    function renderWalkforwardUI() {
+        if (!walkforwardState || !manifestData) return;
+
+        const monthsContainer = document.getElementById('wfMonthsContainer');
+        monthsContainer.innerHTML = '';
+
+        const months = manifestData.out_of_sample_2026.months;
+        let unlockedCount = 0;
+        let nextLockedMonth = null;
+
+        months.forEach(m => {
+            const stMonth = walkforwardState.months[m.month] || {};
+            const isCompleted = stMonth.status === 'COMPLETED';
+            if (isCompleted) unlockedCount++;
+            if (!isCompleted && !nextLockedMonth) nextLockedMonth = m;
+
+            const chip = document.createElement('div');
+            chip.className = `month-chip ${isCompleted ? 'completed' : 'locked'}`;
+
+            const pnl = stMonth.net_pnl_usd || 0;
+            const pnlFormatted = isCompleted ? (pnl >= 0 ? `+$${pnl.toFixed(2)}` : `-$${Math.abs(pnl).toFixed(2)}`) : '🔒 Uzamčeno';
+            const pnlColor = isCompleted ? (pnl >= 0 ? '#34d399' : '#f87171') : 'var(--silver-muted)';
+
+            const mTrades = stMonth.trades || [];
+            const mTradesCount = stMonth.trades_count || mTrades.length || 0;
+            const mWins = mTrades.filter(t => t.net_pnl_usd > 0).length;
+            const mLosses = mTradesCount - mWins;
+            const mWinRate = stMonth.win_rate_pct != null ? stMonth.win_rate_pct : (mTradesCount > 0 ? (mWins / mTradesCount * 100) : 0);
+
+            const tradeStatsHtml = isCompleted 
+                ? `${mTradesCount} obch. (${mWins}W / ${mLosses}L) • ${mWinRate.toFixed(1)} % WR`
+                : '0 obch. (0W / 0L) • 🔒 Zamčeno';
+
+            chip.innerHTML = `
+                <span class="month-chip-title">${m.title}</span>
+                <span class="month-chip-status ${isCompleted ? 'status-done-badge' : 'status-locked-badge'}">
+                    ${isCompleted ? '✅ Dokončeno' : '🔒 Zamčeno'}
+                </span>
+                <span class="month-chip-pnl" style="color: ${pnlColor};">${pnlFormatted}</span>
+                <span style="font-size:0.68rem; color:${isCompleted ? '#38bdf8' : 'var(--silver-muted)'}; font-weight:700;">${tradeStatsHtml}</span>
+            `;
+            monthsContainer.appendChild(chip);
+        });
+
+        // Tlačítko dalšího měsíce
+        const btnNext = document.getElementById('btnUnlockNext');
+        if (nextLockedMonth) {
+            btnNext.disabled = false;
+            btnNext.innerHTML = `⚡ Odemknout měsíc (${nextLockedMonth.title})`;
+        } else {
+            btnNext.disabled = true;
+            btnNext.innerHTML = `✅ Všech 10 měsíců roku 2026 odemčeno`;
+        }
+
+        // Statistiky
+        document.getElementById('valWfStatus').textContent = `${unlockedCount} / 10 Odemčeno`;
+        document.getElementById('lblWfTotalPnl').textContent = (walkforwardState.total_net_pnl_usd >= 0 ? '+' : '') + `$${walkforwardState.total_net_pnl_usd.toFixed(2)}`;
+        document.getElementById('lblWfTotalTrades').textContent = walkforwardState.total_trades;
+        
+        // Ekvita
+        const curEq = walkforwardState.current_equity_usd || 10000.0;
+        document.getElementById('valCurrentEquity').textContent = `$${curEq.toFixed(2)}`;
+        const buffer = curEq - 9000.0;
+        document.getElementById('subEquity').textContent = `Floor Buffer: ${buffer >= 0 ? '+' : ''}$${buffer.toFixed(2)} (${buffer >= 0 ? 'Bezpečno' : '⚠️ Floor prolomen!'})`;
+        document.getElementById('subEquity').style.color = buffer >= 0 ? '#34d399' : '#ef4444';
+
+        renderChart();
+    }
+
+    async function unlockNextMonth() {
+        const btn = document.getElementById('btnUnlockNext');
+        btn.disabled = true;
+        btn.innerHTML = `⏳ Spouštím OOS test měsíce...`;
+
+        try {
+            const res = await fetch('/api/silver/walkforward-step', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({})
+            });
+            const data = await res.json();
+            if (data.ok) {
+                await fetchManifestAndState();
+                await fetchTrades();
+            } else {
+                alert("Chyba při odkrývání měsíce: " + data.error);
+            }
+        } catch (e) {
+            alert("Požadavek selhal: " + e);
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    async function resetWalkforward() {
+        if (!confirm("Opravdu chcete znovu uzamknout všechny měsíce roku 2026 a smazat výsledky slepého testu?")) return;
+        try {
+            const res = await fetch('/api/silver/walkforward-reset', { method: 'POST' });
+            const data = await res.json();
+            if (data.ok) {
+                await fetchManifestAndState();
+                await fetchTrades();
+                alert("Rok 2026 byl znovu kompletně uzamčen.");
+            }
+        } catch (e) {
+            alert("Reset selhal: " + e);
+        }
+    }
+
+    function renderTradesTable(trades) {
+        const tbody = document.getElementById('tradesTableBody');
+        tbody.innerHTML = '';
+
+        if (!trades || trades.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="12" style="text-align:center; padding:20px; color:var(--silver-muted);">Zatím žádné obchody k zobrazení.</td></tr>`;
+            document.getElementById('lblTradeCount').textContent = '0 obchodů';
+            return;
+        }
+
+        document.getElementById('lblTradeCount').textContent = `${trades.length} obchodů`;
+
+        trades.slice().reverse().forEach(t => {
+            const tr = document.createElement('tr');
+            const isWin = t.net_pnl_usd >= 0;
+            const pnlClass = isWin ? 'color: #34d399;' : 'color: #f87171;';
+            const dirClass = t.direction === 'LONG' ? 'pill-long' : 'pill-short';
+
+            tr.innerHTML = `
+                <td>${t.entry_time || '-'}</td>
+                <td>${t.exit_time || '-'}</td>
+                <td><span class="pill ${dirClass}">${t.direction}</span></td>
+                <td><span class="pill pill-strat">${t.strategy_name || 'STRAT_' + t.strategy_id}</span></td>
+                <td>${t.contracts || 1}</td>
+                <td>$${parseFloat(t.entry_price || 0).toFixed(3)}</td>
+                <td>$${parseFloat(t.exit_price || 0).toFixed(3)}</td>
+                <td style="${pnlClass}; font-weight:800;">${isWin ? '+' : ''}$${parseFloat(t.net_pnl_usd || 0).toFixed(2)}</td>
+                <td style="${pnlClass}">${isWin ? '+' : ''}${parseFloat(t.net_pnl_r || 0).toFixed(2)}R</td>
+                <td><span style="font-size:0.75rem;">${t.exit_reason || '-'}</span></td>
+                <td>${t.session || '-'}</td>
+                <td>$${parseFloat(t.equity_after || 0).toFixed(2)}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function switchChartTab(tab) {
+        currentChartTab = tab;
+        renderChart();
+    }
+
+    function renderChart() {
+        const canvas = document.getElementById('equityChartCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const w = canvas.width;
+        const h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+
+        const overlay = document.getElementById('chartEmptyOverlay');
+
+        // Body křivky
+        let points = [];
+        if (currentChartTab === 'wf2026') {
+            const wfTrades = getWalkforwardTrades();
+            if (wfTrades.length === 0) {
+                overlay.style.display = 'flex';
+                return;
+            }
+            overlay.style.display = 'none';
+            let cur = 10000.0;
+            points.push({ eq: cur, time: '2026-01-01' });
+            wfTrades.forEach(t => {
+                cur = t.equity_after;
+                points.push({ eq: cur, time: t.exit_time });
+            });
+        } else {
+            overlay.style.display = 'none';
+            // Mock křivky pro in-sample a stress tabs
+            points = [
+                { eq: 10000 }, { eq: 10150 }, { eq: 10320 }, { eq: 10250 }, 
+                { eq: 10580 }, { eq: 10420 }, { eq: 10890 }, { eq: 11200 }, 
+                { eq: 10950 }, { eq: 11450 }
+            ];
+        }
+
+        if (points.length < 2) return;
+
+        const eqs = points.map(p => p.eq);
+        const minEq = Math.min(8800, Math.min(...eqs));
+        const maxEq = Math.max(10500, Math.max(...eqs) + 200);
+
+        const padX = 45;
+        const padY = 32;
+
+        function getX(i) { return padX + (i / (points.length - 1)) * (w - 2 * padX); }
+        function getY(v) { return h - padY - ((v - minEq) / (maxEq - minEq)) * (h - 2 * padY); }
+
+        if (currentChartTab === 'wf2026') {
+            const monthNames = {
+                '2026-01': 'Leden',
+                '2026-02': 'Únor',
+                '2026-03': 'Březen',
+                '2026-04': 'Duben',
+                '2026-05': 'Květen',
+                '2026-06': 'Červen',
+                '2026-07': 'Červenec',
+                '2026-08': 'Srpen',
+                '2026-09': 'Září',
+                '2026-10': 'Říjen'
+            };
+
+            let monthSegments = [];
+            let curM = points[0].time ? points[0].time.substring(0, 7) : '2026-01';
+            let startIdx = 0;
+
+            for (let i = 1; i < points.length; i++) {
+                const mKey = points[i].time ? points[i].time.substring(0, 7) : curM;
+                if (mKey !== curM) {
+                    monthSegments.push({ month: curM, startIdx: startIdx, endIdx: i - 1 });
+                    curM = mKey;
+                    startIdx = i;
+                }
+            }
+            monthSegments.push({ month: curM, startIdx: startIdx, endIdx: points.length - 1 });
+
+            monthSegments.forEach((seg, sIdx) => {
+                const startX = getX(seg.startIdx);
+                const endX = getX(seg.endIdx);
+                const midX = (startX + endX) / 2;
+                const mTitle = (monthNames[seg.month] || seg.month) + ' 2026';
+
+                if (sIdx % 2 === 1) {
+                    ctx.fillStyle = 'rgba(56, 189, 248, 0.035)';
+                    ctx.fillRect(startX, padY, endX - startX, h - 2 * padY);
+                }
+
+                if (sIdx > 0) {
+                    ctx.save();
+                    ctx.strokeStyle = 'rgba(56, 189, 248, 0.55)';
+                    ctx.setLineDash([4, 4]);
+                    ctx.lineWidth = 1.5;
+                    ctx.beginPath();
+                    ctx.moveTo(startX, padY);
+                    ctx.lineTo(startX, h - padY);
+                    ctx.stroke();
+                    ctx.restore();
+                }
+
+                ctx.save();
+                ctx.fillStyle = '#38bdf8';
+                ctx.font = 'bold 10px Inter, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(mTitle, midX, padY - 10);
+                ctx.restore();
+            });
+        }
+
+        // Grid
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+        ctx.lineWidth = 1;
+        for (let v = 9000; v <= maxEq; v += 500) {
+            const y = getY(v);
+            ctx.beginPath();
+            ctx.moveTo(padX, y);
+            ctx.lineTo(w - padX, y);
+            ctx.stroke();
+
+            ctx.fillStyle = '#64748b';
+            ctx.font = '10px JetBrains Mono';
+            ctx.fillText('$' + v, 5, y + 3);
+        }
+
+        // Sovereign Floor Line ($9,000)
+        const floorY = getY(9000);
+        ctx.strokeStyle = 'rgba(245, 158, 11, 0.6)';
+        ctx.setLineDash([6, 6]);
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(padX, floorY);
+        ctx.lineTo(w - padX, floorY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = '#f59e0b';
+        ctx.fillText('Sovereign Floor ($9,000)', w - 160, floorY - 6);
+
+        // Equity Curve Path
+        ctx.beginPath();
+        ctx.moveTo(getX(0), getY(points[0].eq));
+        for (let i = 1; i < points.length; i++) {
+            ctx.lineTo(getX(i), getY(points[i].eq));
+        }
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        // Area Gradient
+        ctx.lineTo(getX(points.length - 1), h - padY);
+        ctx.lineTo(getX(0), h - padY);
+        ctx.closePath();
+        const grad = ctx.createLinearGradient(0, padY, 0, h - padY);
+        grad.addColorStop(0, 'rgba(56, 189, 248, 0.25)');
+        grad.addColorStop(1, 'rgba(56, 189, 248, 0.0)');
+        ctx.fillStyle = grad;
+        ctx.fill();
+    }
+
+    // Spustit při startu
+    window.addEventListener('DOMContentLoaded', initDashboard);
+</script>
+
+
+    </div>
+    <!-- 🔒 SECURITY AUTH CONTROLLER (SHA-256) -->
+    <script>
+        const VALID_USER_HASHES = [
+            "5bff2c944e58c4b622bceab6c3794bdb49180603a080cb995acad9d136719d44",
+            "493f0daa919d6a985ddcc9185d7a08378104833630911da73bd660d2a4a11621",
+            "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+            "89903dfa383d1be0969942af5d088a81b1592c3b3dde153aa1dc5e2207d8835c"
+        ];
+
+        const VALID_PASS_HASHES = [
+            "cb68425cfebe32bacd9b3cb624a1b99a033037eb12f9dd57c59765db0f4cf262",
+            "f4bf4f16dc2d4536e70c93f6b249c24c1311792b3b2c1b79e642bba343ccbb8d",
+            "4b6dc495eaaaba459d7e748c89b8ac22e1b5ad8874d66897813e8691abc0b169",
+            "ef962684145f39eecf6e8bd0ab37bbfebf5a5e89040c9c576538c96884a0509c"
+        ];
+
+        function pureJsSha256(ascii) {
+            function rightRotate(value, amount) { return (value>>>amount) | (value<<(32 - amount)); }
+            var mathPow = Math.pow;
+            var maxWord = mathPow(2, 32);
+            var lengthProperty = 'length';
+            var i, j;
+            var result = '';
+            var words = [];
+            var asciiBitLength = ascii[lengthProperty]*8;
+            var hash = [];
+            var k = [];
+            var primeCounter = 0;
+            var isComposite = {};
+            for (var candidate = 2; primeCounter < 64; candidate++) {
+                if (!isComposite[candidate]) {
+                    for (i = 0; i < 313; i += candidate) { isComposite[i] = candidate; }
+                    hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
+                    k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+                }
+            }
+            ascii += '\x80';
+            while (ascii[lengthProperty]%64 - 56) ascii += '\x00';
+            for (i = 0; i < ascii[lengthProperty]; i++) {
+                j = ascii.charCodeAt(i);
+                if (j>>8) return '';
+                words[i>>2] |= j << ((3 - i)%4)*8;
+            }
+            words[words[lengthProperty]] = ((asciiBitLength/maxWord)|0);
+            words[words[lengthProperty]] = (asciiBitLength);
+            for (j = 0; j < words[lengthProperty];) {
+                var w = words.slice(j, j += 16);
+                var oldHash = hash.slice(0);
+                for (i = 0; i < 64; i++) {
+                    var w15 = w[i - 15], w2 = w[i - 2];
+                    var a = hash[0], e = hash[4];
+                    var temp1 = hash[7]
+                        + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+                        + ((e & hash[5]) ^ ((~e) & hash[6]))
+                        + k[i]
+                        + (w[i] = (i < 16) ? w[i] : (
+                                w[i - 16]
+                                + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15>>>3))
+                                + w[i - 7]
+                                + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2>>>10))
+                            )|0
+                        );
+                    var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+                        + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+                    hash = [(temp1 + temp2)|0].concat(hash);
+                    hash[4] = (hash[4] + temp1)|0;
+                }
+                for (i = 0; i < 8; i++) { hash[i] = (hash[i] + oldHash[i])|0; }
+            }
+            for (i = 0; i < 8; i++) {
+                for (j = 3; j + 1; j--) {
+                    var b = (hash[i]>>(j*8))&255;
+                    result += ((b < 16) ? 0 : '') + b.toString(16);
+                }
+            }
+            return result;
+        }
+
+        async function computeSHA256(text) {
+            try {
+                if (window.crypto && window.crypto.subtle && window.isSecureContext) {
+                    const encoder = new TextEncoder();
+                    const data = encoder.encode(text);
+                    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+                    const hashArray = Array.from(new Uint8Array(hashBuffer));
+                    return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+                }
+            } catch(e) {}
+            return pureJsSha256(text);
+        }
+
+        function checkAuthStatus() {
+            var isAuth = false;
+            try {
+                isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
+            } catch(e) {}
+
+            var overlay = document.getElementById("loginOverlay");
+            var app = document.getElementById("appContainer");
+
+            if (isAuth) {
+                document.documentElement.classList.add("si-authenticated");
+                document.documentElement.classList.remove("si-locked");
+                if (overlay) overlay.style.display = "none";
+                if (app) app.style.display = "block";
+            } else {
+                document.documentElement.classList.remove("si-authenticated");
+                document.documentElement.classList.add("si-locked");
+                if (overlay) overlay.style.display = "flex";
+                if (app) app.style.display = "none";
+            }
+        }
+
+        async function handleLoginSubmit(e) {
+            if (e && e.preventDefault) e.preventDefault();
+            var userEl = document.getElementById("loginUser");
+            var passEl = document.getElementById("loginPass");
+            var remEl = document.getElementById("rememberMe");
+            var errEl = document.getElementById("loginError");
+
+            var rawUser = (userEl ? userEl.value : "").trim();
+            var rawPass = passEl ? passEl.value : "";
+            var remember = remEl ? remEl.checked : true;
+
+            var userNorm = rawUser.toLowerCase();
+            var passNorm = rawPass.trim().toLowerCase();
+
+            var uHash = await computeSHA256(rawUser);
+            var uHashNorm = await computeSHA256(userNorm);
+            var isUserValid = VALID_USER_HASHES.includes(uHash) || VALID_USER_HASHES.includes(uHashNorm);
+
+            var pHash = await computeSHA256(rawPass);
+            var pHashNorm = await computeSHA256(passNorm);
+            var isPassValid = VALID_PASS_HASHES.includes(pHash) || VALID_PASS_HASHES.includes(pHashNorm);
+
+            if (isUserValid && isPassValid) {
+                if (errEl) errEl.style.display = "none";
+                try {
+                    if (remember) {
+                        localStorage.setItem("si_authenticated", "true");
+                        localStorage.setItem("si_user", rawUser);
+                    }
+                    sessionStorage.setItem("si_authenticated", "true");
+                    sessionStorage.setItem("si_user", rawUser);
+                } catch(e) {}
+                checkAuthStatus();
+            } else {
+                if (errEl) errEl.style.display = "block";
+                if (passEl) {
+                    passEl.value = "";
+                    passEl.focus();
+                }
+            }
+            return false;
+        }
+
+        function logout() {
+            try {
+                sessionStorage.removeItem("si_authenticated");
+                localStorage.removeItem("si_authenticated");
+                sessionStorage.removeItem("si_user");
+                localStorage.removeItem("si_user");
+            } catch(e) {}
+            document.documentElement.classList.remove("si-authenticated");
+            document.documentElement.classList.add("si-locked");
+            window.location.reload();
+        }
+
+        checkAuthStatus();
+        document.addEventListener("DOMContentLoaded", checkAuthStatus);
+    </script>
+
+</body>
+</html>

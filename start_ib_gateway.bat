@@ -1,32 +1,17 @@
 @echo off
-title Interactive Brokers - Client Portal Gateway
+title Interactive Brokers - IB Gateway 1051
 color 0A
 echo =====================================================================
-echo  Interactive Brokers Client Portal Gateway (SuggestInvest Bridge)
+echo  Interactive Brokers - IB Gateway Standalone (Port 7497)
 echo =====================================================================
 echo.
 
-set "JAVA_DIR=C:\Program Files\Eclipse Adoptium\jre-17.0.20.101-hotspot\bin"
-if exist "%JAVA_DIR%\java.exe" set "PATH=%JAVA_DIR%;%PATH%"
-
-where java >nul 2>&1
-if errorlevel 1 (
-    echo [CHYBA] Java nebyla nalezena v ceste PATH!
-    echo Prosim overte instalaci Java Runtime Environment.
-    echo.
+if exist "C:\Jts\ibgateway\1051\ibgateway.exe" (
+    echo [INFO] Spoustim oficialni IB Gateway z C:\Jts\ibgateway\1051...
+    start "" "C:\Jts\ibgateway\1051\ibgateway.exe"
+    echo [OK] IB Gateway byla spustena na portu 7497.
+) else (
+    echo [VAROVANI] IB Gateway nebyla nalezena v C:\Jts\ibgateway\1051\ibgateway.exe.
     pause
-    exit /b 1
 )
 
-echo [OK] Java 17 je pripravena.
-echo [INFO] Spoustim Client Portal Gateway na portu 5000...
-echo [INFO] Po zobrazeni "Server listening on port 5000"
-echo        otevrete v prohlizeci odkaz: https://localhost:5000/
-echo.
-
-cd /d "%~dp0IB Gateway"
-call bin\run.bat root\conf.yaml
-
-echo.
-echo Gateway byla ukoncena.
-pause

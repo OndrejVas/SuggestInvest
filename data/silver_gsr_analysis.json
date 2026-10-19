@@ -1,0 +1,26 @@
+{
+  "analysis_date": "2026-10-18T06:41:56.513302",
+  "data_range": "2021-10-13 → 2026-10-12",
+  "observations": 1545,
+  "gsr_stats": {
+    "mean": 81.07,
+    "median": 83.45,
+    "std": 9.78,
+    "min": 45.86,
+    "max": 104.89
+  },
+  "current": {
+    "date": "2026-10-12",
+    "gsr": 69.21,
+    "zscore": -1.21,
+    "gold_price": 4170.46,
+    "silver_price": 60.255
+  },
+  "signal_distribution": {
+    "strong_long": 19,
+    "weak_long": 54,
+    "neutral": 1235,
+    "weak_short": 148,
+    "strong_short": 89
+  }
+}

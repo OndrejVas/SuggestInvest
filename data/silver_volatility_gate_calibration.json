@@ -1,0 +1,43 @@
+{
+  "analysis_date": "2026-10-18T09:07:32.518682",
+  "bars_analyzed": 300000,
+  "sessions": {
+    "SHANGHAI": {
+      "bars": 78119,
+      "mean_atr_pct": 0.1232,
+      "max_atr_pct": 1.6098,
+      "mean_tr_usd": 0.0905,
+      "p95_tr_usd": 0.2345
+    },
+    "LONDON": {
+      "bars": 32679,
+      "mean_atr_pct": 0.1025,
+      "max_atr_pct": 1.1588,
+      "mean_tr_usd": 0.0757,
+      "p95_tr_usd": 0.1935
+    },
+    "NEW_YORK": {
+      "bars": 85238,
+      "mean_atr_pct": 0.1476,
+      "max_atr_pct": 3.2116,
+      "mean_tr_usd": 0.1095,
+      "p95_tr_usd": 0.295
+    },
+    "OFF_PEAK": {
+      "bars": 103964,
+      "mean_atr_pct": 0.1193,
+      "max_atr_pct": 1.8519,
+      "mean_tr_usd": 0.0926,
+      "p95_tr_usd": 0.2705
+    }
+  },
+  "volatility_gate": {
+    "contract_oz": 1000.0,
+    "max_account_risk_usd": 400.0,
+    "max_sl_dollars_per_oz": 0.4,
+    "atr_threshold_for_skip": 0.2,
+    "overall_skip_trade_pct": 7.27,
+    "overall_allowed_trade_pct": 92.73,
+    "rule": "IF (strategy_sl_multiplier * atr14 * 1000) > $400 THEN SKIP_TRADE ELSE ALLOW_1_CONTRACT"
+  }
+}

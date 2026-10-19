@@ -1,0 +1,16 @@
+{
+  "composite_score": -1.0,
+  "direction_bias": "STRONG_BEARISH",
+  "sizing_multiplier": 1.2,
+  "allow_long": false,
+  "allow_short": true,
+  "components": {
+    "real_yield": -1.0,
+    "gsr_reversion": -0.75,
+    "china_pmi": -1.0,
+    "ism_manufacturing": -1.0,
+    "solar_copper": -0.7,
+    "india_demand": 0.0
+  },
+  "updated_at": "2026-10-18T07:13:29.411414+00:00"
+}

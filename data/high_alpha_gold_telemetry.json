@@ -1,0 +1,98 @@
+{
+  "updated_at_utc": "2026-10-19T20:25:29.764481+00:00",
+  "updated_at_cet": "19. 10. 2026, 22:25:29 SELČ",
+  "intraday_macro_micro": {
+    "gvz_gold_vix": 22.79,
+    "equity_vix": 18.39,
+    "gvz_to_vix_ratio": 1.239,
+    "gold_specific_vol_stress": true,
+    "tip_ief_ratio": 1.16856,
+    "tip_ief_24h_chg_pct": -0.008,
+    "intraday_real_yield_spike": false,
+    "dxy_index": 101.99,
+    "tnx_10y_yield": 5.136
+  },
+  "treasury_auctions": {
+    "status": "OK",
+    "weak_demand_detected": true,
+    "recent_10y_30y_auctions": [
+      {
+        "security_term": "30-Year",
+        "record_date": "2026-08-17",
+        "issue_date": "2026-08-17",
+        "high_yield": 5.216,
+        "bid_to_cover_ratio": 2.39
+      },
+      {
+        "security_term": "10-Year",
+        "record_date": "2026-08-17",
+        "issue_date": "2026-08-17",
+        "high_yield": 4.683,
+        "bid_to_cover_ratio": 2.53
+      },
+      {
+        "security_term": "10-Year",
+        "record_date": "2026-07-31",
+        "issue_date": "2026-07-31",
+        "high_yield": 2.438,
+        "bid_to_cover_ratio": 2.3
+      },
+      {
+        "security_term": "10-Year",
+        "record_date": "2026-05-15",
+        "issue_date": "2026-05-15",
+        "high_yield": 4.468,
+        "bid_to_cover_ratio": 2.4
+      },
+      {
+        "security_term": "30-Year",
+        "record_date": "2026-05-15",
+        "issue_date": "2026-05-15",
+        "high_yield": 5.046,
+        "bid_to_cover_ratio": 2.3
+      },
+      {
+        "security_term": "30-Year",
+        "record_date": "2026-02-27",
+        "issue_date": "2026-02-27",
+        "high_yield": 2.473,
+        "bid_to_cover_ratio": 2.75
+      },
+      {
+        "security_term": "30-Year",
+        "record_date": "2026-02-17",
+        "issue_date": "2026-02-17",
+        "high_yield": 4.75,
+        "bid_to_cover_ratio": 2.66
+      },
+      {
+        "security_term": "10-Year",
+        "record_date": "2026-02-17",
+        "issue_date": "2026-02-17",
+        "high_yield": 4.177,
+        "bid_to_cover_ratio": 2.39
+      },
+      {
+        "security_term": "10-Year",
+        "record_date": "2026-01-30",
+        "issue_date": "2026-01-30",
+        "high_yield": 1.94,
+        "bid_to_cover_ratio": 2.38
+      },
+      {
+        "security_term": "30-Year",
+        "record_date": "2025-11-17",
+        "issue_date": "2025-11-17",
+        "high_yield": 4.694,
+        "bid_to_cover_ratio": 2.29
+      }
+    ]
+  },
+  "risk_governance": {
+    "recommended_mgc_contracts": 1,
+    "recommended_xauusd_cfd_oz": 2.0,
+    "execution_allow_long": true,
+    "execution_allow_short": true,
+    "volatility_stress_mode": true
+  }
+}

@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuggestInvest • System Reporting & VPS Telemetry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0f1d;
+            --bg-panel: #0d1527;
+            --bg-panel-alt: #131e36;
+            --border: rgba(99, 179, 237, 0.22);
+            --border-hover: rgba(99, 179, 237, 0.45);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --blue: #3b82f6;
+            --blue-glow: rgba(59, 130, 246, 0.35);
+            --green: #10b981;
+            --green-glow: rgba(16, 185, 129, 0.25);
+            --red: #ef4444;
+            --red-glow: rgba(239, 68, 68, 0.25);
+            --amber: #f59e0b;
+            --amber-glow: rgba(245, 158, 11, 0.25);
+            --cyan: #06b6d4;
+            --purple: #8b5cf6;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            font-size: 13.5px;
+            line-height: 1.5;
+            min-height: 100vh;
+            padding: 20px 24px;
+        }
+
+        .container {
+            max-width: 1420px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        /* TOP HEADER */
+        .header {
+            background: linear-gradient(135deg, rgba(13,21,39,0.95), rgba(19,30,54,0.85));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .header-title-box {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .header-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .health-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .badge-healthy {
+            background: rgba(16, 185, 129, 0.18);
+            border: 1px solid rgba(16, 185, 129, 0.45);
+            color: #6ee7b7;
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
+        }
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.18);
+            border: 1px solid rgba(245, 158, 11, 0.45);
+            color: #fcd34d;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.2);
+        }
+        .badge-critical {
+            background: rgba(239, 68, 68, 0.22);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #fca5a5;
+            box-shadow: 0 0 16px rgba(239, 68, 68, 0.3);
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            box-shadow: 0 0 8px currentColor;
+            animation: pulse 1.8s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        .meta-line {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+        .meta-line strong { color: var(--text-main); }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn {
+            background: var(--bg-panel-alt);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 7px 14px;
+            border-radius: 7px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+        }
+        .btn:hover {
+            background: #1e2c4a;
+            border-color: #3b82f6;
+            color: #ffffff;
+        }
+        .btn-primary {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            color: #93c5fd;
+        }
+        .btn-primary:hover {
+            background: rgba(59, 130, 246, 0.35);
+            color: #ffffff;
+        }
+
+        /* ALERTS BANNER */
+        .alerts-box {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            border-radius: 10px;
+            padding: 12px 18px;
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.15);
+        }
+        .alerts-title {
+            font-weight: 700;
+            color: #fca5a5;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .alert-item {
+            font-size: 0.82rem;
+            color: #fee2e2;
+            padding-left: 20px;
+            position: relative;
+        }
+        .alert-item::before {
+            content: "•";
+            position: absolute;
+            left: 8px;
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        /* METRIC CARDS GRID */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .metric-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+            position: relative;
+            overflow: hidden;
+        }
+        .metric-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--card-accent, #3b82f6);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .card-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            padding: 2px 7px;
+            border-radius: 4px;
+        }
+
+        .card-main-val {
+            font-family: var(--font-mono);
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+        .card-sub-val {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-family: var(--font-sans);
+        }
+
+        .progress-bar-wrap {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.4s ease, background 0.3s ease;
+            width: 0%;
+        }
+
+        .card-footer-info {
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* TABLES */
+        .section-panel {
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+        }
+        .section-header {
+            background: linear-gradient(90deg, rgba(19,30,54,0.9), rgba(13,21,39,0.7));
+            border-bottom: 1px solid var(--border);
+            padding: 12px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #93c5fd;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+            text-align: left;
+        }
+        th {
+            background: rgba(13, 21, 39, 0.6);
+            color: var(--text-dim);
+            font-weight: 700;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 9px 16px;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+        td {
+            padding: 9px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            white-space: nowrap;
+        }
+        tr:hover td {
+            background: rgba(59, 130, 246, 0.05);
+        }
+        tr:last-child td { border-bottom: none; }
+
+        .mono { font-family: var(--font-mono); }
+        .bold { font-weight: 700; }
+        .badge-pill {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .pill-green {
+            background: rgba(16, 185, 129, 0.16);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.35);
+        }
+        .pill-amber {
+            background: rgba(245, 158, 11, 0.16);
+            color: #fcd34d;
+            border: 1px solid rgba(245, 158, 11, 0.35);
+        }
+        .pill-red {
+            background: rgba(239, 68, 68, 0.18);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+        }
+        .pill-gray {
+            background: rgba(100, 116, 139, 0.2);
+            color: #cbd5e1;
+            border: 1px solid rgba(100, 116, 139, 0.35);
+        }
+
+        /* DUAL COLUMN BOTTOM */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 960px) {
+            .bottom-grid { grid-template-columns: 1fr; }
+        }
+
+        .feed-row {
+            padding: 10px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .feed-row:last-child { border-bottom: none; }
+        .feed-name {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            padding: 10px 0 20px;
+        }
+    </style>
+    <!-- 🔒 SUGGESTINVEST SECURITY GATE INITIALIZER -->
+    <script>
+        (function() {
+            try {
+                var isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
+                if (isAuth) {
+                    document.documentElement.classList.add("si-authenticated");
+                } else {
+                    document.documentElement.classList.add("si-locked");
+                }
+            } catch(e) {}
+        })();
+    </script>
+    <style>
+        /* 🔒 SECURITY GATE STYLES */
+        html.si-locked #appContainer { display: none !important; }
+        html.si-locked #loginOverlay { display: flex !important; }
+        html.si-authenticated #loginOverlay { display: none !important; }
+        html.si-authenticated #appContainer { display: block !important; }
+
+        #loginOverlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: radial-gradient(circle at center, #111827 0%, #030712 100%);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 999999; padding: 1.5rem;
+        }
+        .login-card {
+            background: rgba(17, 24, 39, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            padding: 2.5rem 2rem;
+            max-width: 430px; width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            text-align: center;
+        }
+        .login-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(59, 130, 246, 0.15); color: #60a5fa;
+            padding: 4px 12px; border-radius: 9999px;
+            font-size: 0.75rem; font-weight: 700;
+            letter-spacing: 0.05em; text-transform: uppercase;
+            border: 1px solid rgba(59, 130, 246, 0.3); margin-bottom: 1.25rem;
+        }
+        .login-title {
+            font-size: 1.65rem; font-weight: 800; color: #f9fafb;
+            margin-bottom: 0.35rem; letter-spacing: -0.01em;
+        }
+        .login-subtitle {
+            font-size: 0.88rem; color: #9ca3af;
+            margin-bottom: 1.75rem; line-height: 1.4;
+        }
+        .login-form {
+            display: flex; flex-direction: column; gap: 1.1rem; text-align: left;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+        .input-label { font-size: 0.8rem; font-weight: 600; color: #cbd5e1; }
+        .login-input {
+            width: 100%; background: #0b0f19;
+            border: 1px solid rgba(255, 255, 255, 0.15); color: #f8fafc;
+            padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.95rem;
+            outline: none; transition: border-color 0.2s, box-shadow 0.2s; box-sizing: border-box;
+        }
+        .login-input:focus {
+            border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        .remember-row {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.82rem; color: #9ca3af; cursor: pointer; user-select: none;
+        }
+        .login-submit-btn {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #ffffff; border: none; padding: 0.8rem;
+            border-radius: 8px; font-size: 0.95rem; font-weight: 700;
+            cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; margin-top: 0.4rem;
+        }
+        .login-submit-btn:hover {
+            transform: translateY(-1px); box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.5);
+        }
+        .login-error {
+            display: none; background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.35); color: #f87171;
+            padding: 0.65rem; border-radius: 6px; font-size: 0.82rem; text-align: center;
+        }
+        #appContainer { display: none; }
+    </style>
+
+</head>
+<body>
+    <!-- 🔒 UNIFIED SECURITY GATE OVERLAY -->
+    <div id="loginOverlay">
+        <div class="login-card">
+            <div class="login-badge">
+                <span>🔒 SuggestInvest • Security Gate</span>
+            </div>
+            <h2 class="login-title">Přihlášení</h2>
+            <p class="login-subtitle">Zadejte přihlašovací údaje pro přístup do ekosystému SuggestInvest.</p>
+            
+            <form class="login-form" onsubmit="handleLoginSubmit(event)">
+                <div class="form-group">
+                    <label class="input-label" for="loginUser">Uživatelské jméno</label>
+                    <input type="text" id="loginUser" class="login-input" placeholder="Zadejte uživatelské jméno" required autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label class="input-label" for="loginPass">Heslo</label>
+                    <input type="password" id="loginPass" class="login-input" placeholder="Zadejte heslo" required autocomplete="current-password">
+                </div>
+
+                <label class="remember-row">
+                    <input type="checkbox" id="rememberMe" checked>
+                    <span>Zapamatovat přihlášení na tomto zařízení</span>
+                </label>
+
+                <div id="loginError" class="login-error">
+                    Neplatné uživatelské jméno nebo heslo. Zkuste to znovu.
+                </div>
+
+                <button type="submit" class="login-submit-btn">Vstoupit do aplikace</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="appContainer">
+
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="header-title-box">
+            <div>
+                <div class="header-title">
+                    <span>📊 SuggestInvest System Reporting</span>
+                    <span id="overallBadge" class="health-badge badge-healthy">
+                        <span class="pulse-dot"></span> <span id="overallHealthText">OVĚŘUJI STAV</span>
+                    </span>
+                </div>
+                <div class="meta-line">
+                    Host: <strong id="hostName">–</strong> | 
+                    OS: <strong id="osName">–</strong> | 
+                    Python: <strong id="pyVer">–</strong> | 
+                    Čas snapshotu: <strong id="reportTime">–</strong>
+                    (<span id="ageTimer">před 0 s</span>)
+                </div>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <button id="btnHeaderLaunchGateway" class="btn" onclick="triggerGatewayAction('START')" style="display:none; border-color:rgba(16,185,129,0.5); background:rgba(16,185,129,0.15); color:#6ee7b7; font-weight:700;">
+                <span>⚡ Nahodit Port 7497</span>
+            </button>
+            <button class="btn btn-primary" onclick="loadReportData(true)">
+                <span>🔄 Obnovit data</span>
+            </button>
+            <a href="data/system_report.json" target="_blank" class="btn" title="Otevřít surový JSON">
+                <span>{ } JSON Snapshot</span>
+            </a>
+            <a href="FutureInvestDemo.html" class="btn">
+                <span>🎯 FutureInvestDemo</span>
+            </a>
+            <a href="index.html" class="btn">
+                <span>← Zpět na přehled</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- ALERTS BOX -->
+    <div id="alertsBox" class="alerts-box">
+        <div class="alerts-title">
+            <span>🚨 Zjištěné výstrahy systému</span>
+            <span id="alertsCountBadge" class="badge-pill pill-red">0 alertů</span>
+        </div>
+        <div id="alertsList"></div>
+    </div>
+
+    <!-- 4 MAIN METRIC CARDS -->
+    <div class="cards-grid">
+        <!-- CPU CARD -->
+        <div class="metric-card" style="--card-accent: #3b82f6;">
+            <div class="card-header">
+                <span class="card-label">⚡ Využití CPU</span>
+                <span id="cpuStatusBadge" class="card-badge pill-green">OK</span>
+            </div>
+            <div class="card-main-val">
+                <span id="cpuPercentVal">0.0%</span>
+                <span id="cpuCoresSub" class="card-sub-val">(– jader)</span>
+            </div>
+            <div class="progress-bar-wrap">
+                <div id="cpuBar" class="progress-bar-fill" style="background:#3b82f6; width:0%;"></div>
+            </div>
+            <div class="card-footer-info">
+                <span>Load Avg: <strong id="cpuLoadAvg">–</strong></span>
+                <span>Procesy: <strong id="projCpuVal">0%</strong></span>
+            </div>
+        </div>
+
+        <!-- RAM CARD -->
+        <div class="metric-card" style="--card-accent: #10b981;">
+            <div class="card-header">
+                <span class="card-label">💾 Využití RAM</span>
+                <span id="ramStatusBadge" class="card-badge pill-green">OK</span>
+            </div>
+            <div class="card-main-val">
+                <span id="ramPercentVal">0.0%</span>
+                <span id="ramGbSub" class="card-sub-val">(– / – GB)</span>
+            </div>
+            <div class="progress-bar-wrap">
+                <div id="ramBar" class="progress-bar-fill" style="background:#10b981; width:0%;"></div>
+            </div>
+            <div class="card-footer-info">
+                <span>Volno: <strong id="ramFreeVal">– GB</strong></span>
+                <span>Projekt: <strong id="projRamVal">0 MB</strong></span>
+            </div>
+        </div>
+
+        <!-- NETWORK TRAFFIC CARD -->
+        <div class="metric-card" style="--card-accent: #06b6d4;">
+            <div class="card-header">
+                <span class="card-label">🌐 Síťový provoz (I/O)</span>
+                <span id="netStatusBadge" class="card-badge pill-green">AKTIVNÍ</span>
+            </div>
+            <div class="card-main-val">
+                <span id="netDownloadVal">0.0</span>
+                <span class="card-sub-val">KB/s download</span>
+            </div>
+            <div class="progress-bar-wrap">
+                <div id="netBar" class="progress-bar-fill" style="background:#06b6d4; width:35%;"></div>
+            </div>
+            <div class="card-footer-info">
+                <span>Upload: <strong id="netUploadVal">0.0 KB/s</strong></span>
+                <span>Session: <strong id="netTotalMbVal">0 MB</strong></span>
+            </div>
+        </div>
+
+        <!-- DISK CARD -->
+        <div class="metric-card" style="--card-accent: #8b5cf6;">
+            <div class="card-header">
+                <span class="card-label">💿 Diskový prostor</span>
+                <span id="diskStatusBadge" class="card-badge pill-green">OK</span>
+            </div>
+            <div class="card-main-val">
+                <span id="diskFreeVal">0.0 GB</span>
+                <span class="card-sub-val">volného místa</span>
+            </div>
+            <div class="progress-bar-wrap">
+                <div id="diskBar" class="progress-bar-fill" style="background:#8b5cf6; width:0%;"></div>
+            </div>
+            <div class="card-footer-info">
+                <span>Zaplnění: <strong id="diskPercentVal">0%</strong></span>
+                <span>Celkem: <strong id="diskTotalVal">– GB</strong></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROCESS SUPERVISOR TABLE -->
+    <div class="section-panel">
+        <div class="section-header">
+            <div class="section-title">
+                <span>⚙️ Dohled nad procesy projektu SuggestInvest</span>
+            </div>
+            <div id="procsSummary" class="section-sub">
+                Načítám procesy…
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Role v projektu</th>
+                        <th>PID</th>
+                        <th>Stav</th>
+                        <th style="text-align:right;">RAM (RSS)</th>
+                        <th style="text-align:right;">CPU %</th>
+                        <th style="text-align:right;">Vlákna</th>
+                        <th>Spuštěno</th>
+                        <th>Doba běhu (Uptime)</th>
+                    </tr>
+                </thead>
+                <tbody id="procsTableBody">
+                    <tr><td colspan="8" style="text-align:center; padding:20px; color:var(--text-muted);">⏳ Načítám seznam procesů…</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- MONITORED DATA JSONS -->
+    <div class="section-panel">
+        <div class="section-header">
+            <div class="section-title">
+                <span>📁 Integrita a stáří datových JSON souborů (Data Freshness Matrix)</span>
+            </div>
+            <div id="jsonsSummary" class="section-sub">
+                Načítám stav souborů…
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:28px; text-align:center;">Stav</th>
+                        <th>Název souboru</th>
+                        <th>Význam a role</th>
+                        <th style="text-align:right;">Velikost</th>
+                        <th>Stáří dat</th>
+                        <th>Poslední zápis</th>
+                        <th style="text-align:center;">JSON Integrita</th>
+                    </tr>
+                </thead>
+                <tbody id="jsonsTableBody">
+                    <tr><td colspan="7" style="text-align:center; padding:20px; color:var(--text-muted);">⏳ Načítám kontrolu JSON souborů…</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- BOTTOM ROW: BACKGROUND FEEDS & VPS DEPLOYMENT INFO -->
+    <div class="bottom-grid">
+        <!-- BACKGROUND FEEDS & SOCKETS -->
+        <div class="section-panel">
+            <div class="section-header">
+                <div class="section-title">
+                    <span>🔌 Feedy, Sockety a komunikace</span>
+                </div>
+            </div>
+            <div>
+                <div class="feed-row" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                    <span class="feed-name">
+                        <span id="ibDot">⚪</span> IBKR Gateway (Port 7497 Socket API)
+                    </span>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span id="ibText" class="mono bold">Ověřuji…</span>
+                        <button id="btnFeedLaunchGateway" onclick="triggerGatewayAction('START')" style="display:none; padding:4px 10px; font-size:11.5px; border-radius:5px; background:#10b981; color:#fff; border:none; cursor:pointer; font-weight:700; box-shadow:0 0 8px rgba(16,185,129,0.35);">
+                            ⚡ Nahodit port 7497
+                        </button>
+                        <button id="btnFeedStopGateway" onclick="triggerGatewayAction('STOP')" style="display:none; padding:4px 10px; font-size:11.5px; border-radius:5px; background:rgba(239,68,68,0.2); color:#fca5a5; border:1px solid rgba(239,68,68,0.4); cursor:pointer; font-weight:600;">
+                            Odpojit
+                        </button>
+                    </div>
+                </div>
+                <div class="feed-row">
+                    <span class="feed-name">
+                        <span id="srvDot">⚪</span> SuggestInvest Web & REST Server (Port 8000)
+                    </span>
+                    <span id="srvText" class="mono bold">Ověřuji…</span>
+                </div>
+                <div class="feed-row">
+                    <span class="feed-name">
+                        <span>📊</span> CME L2 DOM Micro Gold Feed (MGCZ6)
+                    </span>
+                    <span id="domText" class="mono">Ověřuji…</span>
+                </div>
+                <div class="feed-row">
+                    <span class="feed-name">
+                        <span>📈</span> Cross-Asset Macro Bridge (FRED & Yields)
+                    </span>
+                    <span id="macroText" class="mono">Aktivní</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CLOUD VPS READINESS & SYSTEMD -->
+        <div class="section-panel">
+            <div class="section-header">
+                <div class="section-title">
+                    <span>☁️ Cloud VPS Readiness & Konfigurace</span>
+                </div>
+            </div>
+            <div style="padding:14px 18px; font-size:0.8rem; display:flex; flex-direction:column; gap:8px;">
+                <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:6px;">
+                    <span style="color:var(--text-muted);">Podporované VPS OS:</span>
+                    <strong style="color:#6ee7b7;">Ubuntu 22.04 / 24.04 LTS, Debian 12, WinServer</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:6px;">
+                    <span style="color:var(--text-muted);">Systemd služba:</span>
+                    <span class="mono" style="color:#93c5fd;">systemd/suggestinvest-reporter.service</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:6px;">
+                    <span style="color:var(--text-muted);">Linux spouštěč:</span>
+                    <span class="mono" style="color:#fcd34d;">./start_system_reporter.sh</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:6px;">
+                    <span style="color:var(--text-muted);">Windows spouštěč:</span>
+                    <span class="mono" style="color:#fcd34d;">start_system_reporter.bat</span>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                    <span style="color:var(--text-muted);">Historie telemetrie:</span>
+                    <span class="mono">data/system_telemetry_history.jsonl</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        SuggestInvest System Reporting & VPS Telemetry · Auto-refresh každých 5 s · Optimalizováno pro bezobslužný Cloud VPS provoz
+    </div>
+
+</div>
+
+<script>
+    let lastReportTimestamp = Date.now();
+    let autoRefreshTimer = null;
+
+    async function loadReportData(isManual = false) {
+        try {
+            const res = await fetch("data/system_report.json?t=" + Date.now());
+            if (!res.ok) throw new Error("HTTP " + res.status);
+            const data = await res.json();
+            renderReport(data);
+            lastReportTimestamp = Date.now();
+        } catch (err) {
+            console.warn("Chyba při stahování reportu:", err);
+            document.getElementById("overallHealthText").innerText = "OFFLINE";
+            document.getElementById("overallBadge").className = "health-badge badge-critical";
+        }
+    }
+
+    function renderReport(r) {
+        if (!r) return;
+
+        // 1. Header
+        document.getElementById("hostName").innerText = r.system_info?.hostname || "–";
+        document.getElementById("osName").innerText = r.system_info?.os || "–";
+        document.getElementById("pyVer").innerText = r.system_info?.python_version || "–";
+        document.getElementById("reportTime").innerText = r.timestamp || "–";
+
+        const h = r.overall_health || "HEALTHY";
+        const badge = document.getElementById("overallBadge");
+        const badgeTxt = document.getElementById("overallHealthText");
+        if (h === "HEALTHY") {
+            badge.className = "health-badge badge-healthy";
+            badgeTxt.innerText = "🟢 SYSTÉM ZDRAVÝ";
+        } else if (h === "WARNING") {
+            badge.className = "health-badge badge-warning";
+            badgeTxt.innerText = "🟠 VAROVÁNÍ";
+        } else {
+            badge.className = "health-badge badge-critical";
+            badgeTxt.innerText = "🔴 KRITICKÝ STAV";
+        }
+
+        // 2. Alerty
+        const alerts = r.alerts || [];
+        const box = document.getElementById("alertsBox");
+        const list = document.getElementById("alertsList");
+        const cnt = document.getElementById("alertsCountBadge");
+
+        if (alerts.length > 0) {
+            box.style.display = "flex";
+            cnt.innerText = `${alerts.length} ${alerts.length === 1 ? 'alert' : 'alertů'}`;
+            list.innerHTML = alerts.map(a => {
+                const isGwAlert = a.category === "PORT_7497" || a.category === "GATEWAY";
+                const isWdAlert = a.category === "PROCESS" && (a.message.includes("ibkr_watchdog") || a.message.includes("Watchdog"));
+                let actionBtn = '';
+                if (isGwAlert) {
+                    actionBtn = `<button onclick="triggerGatewayAction('START')" style="margin-left:auto; padding:4px 10px; font-size:11px; background:#10b981; color:#fff; border:none; border-radius:5px; font-weight:700; cursor:pointer; box-shadow:0 0 6px rgba(16,185,129,0.4);">⚡ Nahodit port 7497 ihned</button>`;
+                } else if (isWdAlert) {
+                    actionBtn = `<button onclick="triggerWatchdogLaunch()" style="margin-left:auto; padding:4px 10px; font-size:11px; background:#3b82f6; color:#fff; border:none; border-radius:5px; font-weight:700; cursor:pointer; box-shadow:0 0 6px rgba(59,130,246,0.4);">⚡ Spustit Watchdog ihned</button>`;
+                }
+                return `
+                <div class="alert-item" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+                    <div><strong>[${a.category}]</strong> ${a.message}</div>
+                    ${actionBtn}
+                </div>
+                `;
+            }).join("");
+        } else {
+            box.style.display = "none";
+        }
+
+        // 3. CPU Card
+        const cpu = r.cpu || {};
+        const cpuPct = cpu.overall_percent || 0;
+        document.getElementById("cpuPercentVal").innerText = cpuPct.toFixed(1) + "%";
+        document.getElementById("cpuCoresSub").innerText = `(${cpu.cores_logical || '?'} jader)`;
+        const cpuBar = document.getElementById("cpuBar");
+        cpuBar.style.width = Math.min(100, Math.max(0, cpuPct)) + "%";
+        cpuBar.style.background = cpuPct >= 90 ? "#ef4444" : (cpuPct >= 75 ? "#f59e0b" : "#3b82f6");
+        document.getElementById("cpuStatusBadge").className = "card-badge " + (cpuPct >= 90 ? "pill-red" : (cpuPct >= 75 ? "pill-amber" : "pill-green"));
+        document.getElementById("cpuStatusBadge").innerText = cpuPct >= 90 ? "KRITICKÉ" : (cpuPct >= 75 ? "VYSOKÉ" : "OK");
+        document.getElementById("cpuLoadAvg").innerText = cpu.load_average ? cpu.load_average.join(", ") : "N/A";
+        document.getElementById("projCpuVal").innerText = (r.project_processes?.total_cpu_percent || 0).toFixed(1) + "%";
+
+        // 4. RAM Card
+        const ram = r.memory || {};
+        const ramPct = ram.percent || 0;
+        document.getElementById("ramPercentVal").innerText = ramPct.toFixed(1) + "%";
+        document.getElementById("ramGbSub").innerText = `(${ram.used_gb || 0} / ${ram.total_gb || 0} GB)`;
+        const ramBar = document.getElementById("ramBar");
+        ramBar.style.width = Math.min(100, Math.max(0, ramPct)) + "%";
+        ramBar.style.background = ramPct >= 92 ? "#ef4444" : (ramPct >= 80 ? "#f59e0b" : "#10b981");
+        document.getElementById("ramStatusBadge").className = "card-badge " + (ramPct >= 92 ? "pill-red" : (ramPct >= 80 ? "pill-amber" : "pill-green"));
+        document.getElementById("ramStatusBadge").innerText = ramPct >= 92 ? "KRITICKÁ" : (ramPct >= 80 ? "VAROVÁNÍ" : "OK");
+        document.getElementById("ramFreeVal").innerText = ((ram.free_mb || 0) / 1024).toFixed(2) + " GB";
+        document.getElementById("projRamVal").innerText = (r.project_processes?.total_ram_mb || 0).toFixed(1) + " MB";
+
+        // 5. Network Traffic Card
+        const net = r.network_traffic || {};
+        const rates = net.rates || {};
+        const sess = net.session_traffic || {};
+        document.getElementById("netDownloadVal").innerText = (rates.download_kb_s || 0).toFixed(1);
+        document.getElementById("netUploadVal").innerText = (rates.upload_kb_s || 0).toFixed(1) + " KB/s";
+        document.getElementById("netTotalMbVal").innerText = (sess.total_mb || 0).toFixed(1) + " MB";
+
+        // 6. Disk Card
+        const disk = r.disk || {};
+        document.getElementById("diskFreeVal").innerText = (disk.free_gb || 0).toFixed(1) + " GB";
+        document.getElementById("diskPercentVal").innerText = (disk.percent || 0).toFixed(1) + "%";
+        document.getElementById("diskTotalVal").innerText = (disk.total_gb || 0).toFixed(1) + " GB";
+        const diskBar = document.getElementById("diskBar");
+        diskBar.style.width = Math.min(100, Math.max(0, disk.percent || 0)) + "%";
+        diskBar.style.background = disk.free_gb < 4 ? "#ef4444" : "#8b5cf6";
+
+        // 7. Project Processes Table
+        const procs = r.project_processes || {};
+        const procsList = procs.processes || [];
+        document.getElementById("procsSummary").innerText = 
+            `${procsList.length} aktivních procesů · Celkem RAM: ${(procs.total_ram_mb || 0).toFixed(1)} MB · Celkem CPU: ${(procs.total_cpu_percent || 0).toFixed(1)}%`;
+
+        const procsTbody = document.getElementById("procsTableBody");
+        if (procsList.length === 0) {
+            procsTbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:18px; color:#f87171;">⚠️ Žádné běžící procesy projektu nebyly nalezeny!</td></tr>`;
+        } else {
+            let rowsHtml = procsList.map(p => {
+                const isCrit = p.critical ? `<span style="color:#f59e0b; margin-right:4px;" title="Kritický proces projektu">⭐</span>` : "";
+                const stPill = p.status === "running" ? `<span class="badge-pill pill-green">RUNNING</span>` : `<span class="badge-pill pill-gray">${p.status}</span>`;
+                return `
+                    <tr>
+                        <td class="bold">${isCrit}${p.role}</td>
+                        <td class="mono">${p.pid}</td>
+                        <td>${stPill}</td>
+                        <td class="mono bold" style="text-align:right; color:#93c5fd;">${p.ram_mb.toFixed(1)} MB</td>
+                        <td class="mono" style="text-align:right;">${p.cpu_percent.toFixed(1)}%</td>
+                        <td class="mono" style="text-align:right; color:var(--text-muted);">${p.threads}</td>
+                        <td class="mono" style="font-size:0.75rem; color:var(--text-muted);">${p.started_at}</td>
+                        <td class="mono bold" style="color:#6ee7b7;">${p.uptime_str}</td>
+                    </tr>
+                `;
+            }).join("");
+
+            if (procs.missing_critical && procs.missing_critical.length > 0) {
+                rowsHtml += procs.missing_critical.map(m => {
+                    const btn = m.keyword.includes("watchdog") 
+                        ? `<button onclick="triggerWatchdogLaunch()" style="padding:3px 10px; font-size:11px; background:#3b82f6; color:#fff; border:none; border-radius:4px; font-weight:700; cursor:pointer; box-shadow:0 0 6px rgba(59,130,246,0.4);">⚡ Spustit ihned</button>`
+                        : '';
+                    return `
+                    <tr style="background: rgba(239, 68, 68, 0.08);">
+                        <td class="bold" style="color:#fca5a5;"><span style="color:#ef4444; margin-right:6px;">🚨</span>${m.role}</td>
+                        <td class="mono" style="color:var(--text-muted);">-</td>
+                        <td><span class="badge-pill pill-red">NEBĚŽÍ</span></td>
+                        <td colspan="4" style="color:#fca5a5; font-size:0.75rem;">Kritický proces projektu není spuštěn v OS</td>
+                        <td>${btn}</td>
+                    </tr>
+                    `;
+                }).join("");
+            }
+
+            procsTbody.innerHTML = rowsHtml;
+        }
+
+        // 8. Monitored JSONs Table
+        const jsons = r.monitored_jsons || {};
+        const filesList = jsons.files || [];
+        document.getElementById("jsonsSummary").innerText = 
+            `${jsons.healthy_count || 0} z ${jsons.count_monitored || 0} souborů v pořádku · ${jsons.stale_count || 0} zastavených`;
+
+        const jsonsTbody = document.getElementById("jsonsTableBody");
+        if (filesList.length === 0) {
+            jsonsTbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:18px; color:var(--text-muted);">Žádné soubory</td></tr>`;
+        } else {
+            jsonsTbody.innerHTML = filesList.map(f => {
+                let stIcon = "🟢";
+                let stPill = `<span class="badge-pill pill-green">HEALTHY</span>`;
+                if (!f.exists) {
+                    stIcon = "⚪";
+                    stPill = `<span class="badge-pill pill-gray">MISSING</span>`;
+                } else if (f.status === "CORRUPTED") {
+                    stIcon = "🔴";
+                    stPill = `<span class="badge-pill pill-red">CORRUPTED</span>`;
+                } else if (f.status === "CRITICAL_STALE") {
+                    stIcon = "🔴";
+                    stPill = `<span class="badge-pill pill-red">CRITICAL STALE</span>`;
+                } else if (f.status === "STALE") {
+                    stIcon = "🟠";
+                    stPill = `<span class="badge-pill pill-amber">STALE</span>`;
+                }
+
+                const sizeStr = f.exists ? `${f.size_kb.toFixed(2)} KB` : "–";
+                const integrStr = f.valid ? `<span style="color:#6ee7b7; font-weight:700;">VALID (${f.items_count} prvků)</span>` : `<span style="color:#f87171; font-weight:700;">CHYBA</span>`;
+
+                return `
+                    <tr>
+                        <td style="text-align:center; font-size:1rem;">${stIcon}</td>
+                        <td class="mono bold" style="color:#e2e8f0;">${f.filename}</td>
+                        <td style="color:var(--text-muted); font-size:0.78rem;">${f.title}</td>
+                        <td class="mono" style="text-align:right;">${sizeStr}</td>
+                        <td class="mono bold" style="color:${f.status === 'HEALTHY' ? '#6ee7b7' : (f.status === 'STALE' ? '#fcd34d' : '#f87171')};">${f.age_str}</td>
+                        <td class="mono" style="font-size:0.75rem; color:var(--text-dim);">${f.last_modified}</td>
+                        <td style="text-align:center;">${integrStr}</td>
+                    </tr>
+                `;
+            }).join("");
+        }
+
+        // 9. Feeds & Sockets
+        const feeds = r.background_feeds || {};
+        const ib = feeds.ib_gateway_socket_7497 || {};
+        const srv = feeds.suggestinvest_server_8000 || {};
+        const dom = feeds.l2_dom_data_feed || {};
+        const macro = feeds.macro_calendar_bridge || {};
+
+        document.getElementById("ibDot").innerText = ib.online ? "🟢" : "🔴";
+        document.getElementById("ibText").innerText = ib.status_text || "–";
+        document.getElementById("ibText").style.color = ib.online ? "#6ee7b7" : "#f87171";
+
+        const btnFeedLaunch = document.getElementById("btnFeedLaunchGateway");
+        const btnFeedStop = document.getElementById("btnFeedStopGateway");
+        const btnHeaderLaunch = document.getElementById("btnHeaderLaunchGateway");
+        if (btnFeedLaunch) btnFeedLaunch.style.display = ib.online ? "none" : "inline-flex";
+        if (btnFeedStop) btnFeedStop.style.display = ib.online ? "inline-flex" : "none";
+        if (btnHeaderLaunch) btnHeaderLaunch.style.display = ib.online ? "none" : "inline-flex";
+
+        document.getElementById("srvDot").innerText = srv.online ? "🟢" : "🔴";
+        document.getElementById("srvText").innerText = srv.status_text || "–";
+        document.getElementById("srvText").style.color = srv.online ? "#6ee7b7" : "#f87171";
+
+        document.getElementById("domText").innerText = `${dom.status || '–'} (WOBI: ${dom.wobi_10 ? (dom.wobi_10 > 0 ? '+' : '') + dom.wobi_10.toFixed(4) : '0.0'})`;
+        document.getElementById("macroText").innerText = `L ${macro.long_multiplier || 1.0}x / S ${macro.short_multiplier || 1.0}x`;
+    }
+
+    async function triggerGatewayAction(action = 'START') {
+        const isStart = action === 'START';
+        const confirmMsg = isStart 
+            ? "⚡ Chystáte se SPUSTIT IBKR Demo Gateway (automatický Login a otevření portu 7497).\n\nSpustit na pozadí?" 
+            : "⚠️ Chystáte se ODPOJIT IBKR Demo Gateway (ukončit procesy a zavřít port 7497).\n\nPokračovat?";
+        if (!confirm(confirmMsg)) return;
+
+        const btnH = document.getElementById("btnHeaderLaunchGateway");
+        const btnF = document.getElementById("btnFeedLaunchGateway");
+        const btnS = document.getElementById("btnFeedStopGateway");
+        if (btnH) { btnH.disabled = true; btnH.innerText = "⏳ Nahazuji..."; }
+        if (btnF) { btnF.disabled = true; btnF.innerText = "⏳ Nahazuji..."; }
+        if (btnS) { btnS.disabled = true; }
+
+        try {
+            const res = await fetch("/api/future_invest/gateway_power", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ action: action })
+            });
+            const data = await res.json();
+            alert((data.ok ? "✅ " : "⚠️ ") + data.message);
+            
+            // Periodický refresh pro zachycení naběhnutí portu
+            let checks = 0;
+            const poller = setInterval(async () => {
+                checks++;
+                await loadReportData(false);
+                if (checks >= 6) clearInterval(poller);
+            }, 2000);
+            
+            await loadReportData(true);
+        } catch (e) {
+            alert("Chyba při komunikaci se serverem: " + e.message);
+        } finally {
+            if (btnH) { btnH.disabled = false; btnH.innerHTML = "<span>⚡ Nahodit Port 7497</span>"; }
+            if (btnF) { btnF.disabled = false; btnF.innerText = "⚡ Nahodit port 7497"; }
+            if (btnS) { btnS.disabled = false; }
+        }
+    }
+
+    async function triggerWatchdogLaunch() {
+        try {
+            const res = await fetch("/api/watchdog/launch", { method: "POST" });
+            const data = await res.json();
+            alert((data.ok ? "✅ " : "⚠️ ") + (data.message || data.error));
+            await loadReportData(true);
+        } catch (e) {
+            alert("Chyba při spouštění watchdogu: " + e.message);
+        }
+    }
+
+    // Interval pro aktualizaci časovače "před X s"
+    setInterval(() => {
+        const diffSec = Math.max(0, Math.round((Date.now() - lastReportTimestamp) / 1000));
+        const el = document.getElementById("ageTimer");
+        if (el) el.innerText = `před ${diffSec} s`;
+    }, 1000);
+
+    // Počáteční načtení a auto-refresh smyčka (každých 5 sekund)
+    loadReportData();
+    autoRefreshTimer = setInterval(() => loadReportData(false), 5000);
+</script>
+
+
+    </div>
+    <!-- 🔒 SECURITY AUTH CONTROLLER (SHA-256) -->
+    <script>
+        const VALID_USER_HASHES = [
+            "5bff2c944e58c4b622bceab6c3794bdb49180603a080cb995acad9d136719d44",
+            "493f0daa919d6a985ddcc9185d7a08378104833630911da73bd660d2a4a11621",
+            "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+            "89903dfa383d1be0969942af5d088a81b1592c3b3dde153aa1dc5e2207d8835c"
+        ];
+
+        const VALID_PASS_HASHES = [
+            "cb68425cfebe32bacd9b3cb624a1b99a033037eb12f9dd57c59765db0f4cf262",
+            "f4bf4f16dc2d4536e70c93f6b249c24c1311792b3b2c1b79e642bba343ccbb8d",
+            "4b6dc495eaaaba459d7e748c89b8ac22e1b5ad8874d66897813e8691abc0b169",
+            "ef962684145f39eecf6e8bd0ab37bbfebf5a5e89040c9c576538c96884a0509c"
+        ];
+
+        function pureJsSha256(ascii) {
+            function rightRotate(value, amount) { return (value>>>amount) | (value<<(32 - amount)); }
+            var mathPow = Math.pow;
+            var maxWord = mathPow(2, 32);
+            var lengthProperty = 'length';
+            var i, j;
+            var result = '';
+            var words = [];
+            var asciiBitLength = ascii[lengthProperty]*8;
+            var hash = [];
+            var k = [];
+            var primeCounter = 0;
+            var isComposite = {};
+            for (var candidate = 2; primeCounter < 64; candidate++) {
+                if (!isComposite[candidate]) {
+                    for (i = 0; i < 313; i += candidate) { isComposite[i] = candidate; }
+                    hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
+                    k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+                }
+            }
+            ascii += '\x80';
+            while (ascii[lengthProperty]%64 - 56) ascii += '\x00';
+            for (i = 0; i < ascii[lengthProperty]; i++) {
+                j = ascii.charCodeAt(i);
+                if (j>>8) return '';
+                words[i>>2] |= j << ((3 - i)%4)*8;
+            }
+            words[words[lengthProperty]] = ((asciiBitLength/maxWord)|0);
+            words[words[lengthProperty]] = (asciiBitLength);
+            for (j = 0; j < words[lengthProperty];) {
+                var w = words.slice(j, j += 16);
+                var oldHash = hash.slice(0);
+                for (i = 0; i < 64; i++) {
+                    var w15 = w[i - 15], w2 = w[i - 2];
+                    var a = hash[0], e = hash[4];
+                    var temp1 = hash[7]
+                        + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+                        + ((e & hash[5]) ^ ((~e) & hash[6]))
+                        + k[i]
+                        + (w[i] = (i < 16) ? w[i] : (
+                                w[i - 16]
+                                + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15>>>3))
+                                + w[i - 7]
+                                + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2>>>10))
+                            )|0
+                        );
+                    var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+                        + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+                    hash = [(temp1 + temp2)|0].concat(hash);
+                    hash[4] = (hash[4] + temp1)|0;
+                }
+                for (i = 0; i < 8; i++) { hash[i] = (hash[i] + oldHash[i])|0; }
+            }
+            for (i = 0; i < 8; i++) {
+                for (j = 3; j + 1; j--) {
+                    var b = (hash[i]>>(j*8))&255;
+                    result += ((b < 16) ? 0 : '') + b.toString(16);
+                }
+            }
+            return result;
+        }
+
+        async function computeSHA256(text) {
+            try {
+                if (window.crypto && window.crypto.subtle && window.isSecureContext) {
+                    const encoder = new TextEncoder();
+                    const data = encoder.encode(text);
+                    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+                    const hashArray = Array.from(new Uint8Array(hashBuffer));
+                    return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+                }
+            } catch(e) {}
+            return pureJsSha256(text);
+        }
+
+        function checkAuthStatus() {
+            var isAuth = false;
+            try {
+                isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
+            } catch(e) {}
+
+            var overlay = document.getElementById("loginOverlay");
+            var app = document.getElementById("appContainer");
+
+            if (isAuth) {
+                document.documentElement.classList.add("si-authenticated");
+                document.documentElement.classList.remove("si-locked");
+                if (overlay) overlay.style.display = "none";
+                if (app) app.style.display = "block";
+            } else {
+                document.documentElement.classList.remove("si-authenticated");
+                document.documentElement.classList.add("si-locked");
+                if (overlay) overlay.style.display = "flex";
+                if (app) app.style.display = "none";
+            }
+        }
+
+        async function handleLoginSubmit(e) {
+            if (e && e.preventDefault) e.preventDefault();
+            var userEl = document.getElementById("loginUser");
+            var passEl = document.getElementById("loginPass");
+            var remEl = document.getElementById("rememberMe");
+            var errEl = document.getElementById("loginError");
+
+            var rawUser = (userEl ? userEl.value : "").trim();
+            var rawPass = passEl ? passEl.value : "";
+            var remember = remEl ? remEl.checked : true;
+
+            var userNorm = rawUser.toLowerCase();
+            var passNorm = rawPass.trim().toLowerCase();
+
+            var uHash = await computeSHA256(rawUser);
+            var uHashNorm = await computeSHA256(userNorm);
+            var isUserValid = VALID_USER_HASHES.includes(uHash) || VALID_USER_HASHES.includes(uHashNorm);
+
+            var pHash = await computeSHA256(rawPass);
+            var pHashNorm = await computeSHA256(passNorm);
+            var isPassValid = VALID_PASS_HASHES.includes(pHash) || VALID_PASS_HASHES.includes(pHashNorm);
+
+            if (isUserValid && isPassValid) {
+                if (errEl) errEl.style.display = "none";
+                try {
+                    if (remember) {
+                        localStorage.setItem("si_authenticated", "true");
+                        localStorage.setItem("si_user", rawUser);
+                    }
+                    sessionStorage.setItem("si_authenticated", "true");
+                    sessionStorage.setItem("si_user", rawUser);
+                } catch(e) {}
+                checkAuthStatus();
+            } else {
+                if (errEl) errEl.style.display = "block";
+                if (passEl) {
+                    passEl.value = "";
+                    passEl.focus();
+                }
+            }
+            return false;
+        }
+
+        function logout() {
+            try {
+                sessionStorage.removeItem("si_authenticated");
+                localStorage.removeItem("si_authenticated");
+                sessionStorage.removeItem("si_user");
+                localStorage.removeItem("si_user");
+            } catch(e) {}
+            document.documentElement.classList.remove("si-authenticated");
+            document.documentElement.classList.add("si-locked");
+            window.location.reload();
+        }
+
+        checkAuthStatus();
+        document.addEventListener("DOMContentLoaded", checkAuthStatus);
+    </script>
+
+</body>
+</html>

@@ -5,16 +5,11 @@ on:
     branches:
       - main
     paths:
-      - 'index.html'
-      - 'template.html'
-      - 'trading.html'
-      - 'trading_template.html'
-      - 'scalping.html'
-      - 'lightweight-charts.js'
+      - '*.html'
       - 'data/**'
-      - 'scalping_engine/**'
+      - 'lightweight-charts.js'
       - '*.js'
-      - '*.docx'
+      - 'scalping_engine/**'
   workflow_dispatch:
 
 permissions:

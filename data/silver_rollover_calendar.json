@@ -1,0 +1,196 @@
+{
+  "roll_events": [
+    {
+      "roll_date": "2022-02-18",
+      "expiring_contract": "SILH22",
+      "target_contract": "SILK22",
+      "expiry_month": 3,
+      "year": 2022
+    },
+    {
+      "roll_date": "2022-04-18",
+      "expiring_contract": "SILK22",
+      "target_contract": "SILN22",
+      "expiry_month": 5,
+      "year": 2022
+    },
+    {
+      "roll_date": "2022-06-18",
+      "expiring_contract": "SILN22",
+      "target_contract": "SILU22",
+      "expiry_month": 7,
+      "year": 2022
+    },
+    {
+      "roll_date": "2022-08-18",
+      "expiring_contract": "SILU22",
+      "target_contract": "SILZ22",
+      "expiry_month": 9,
+      "year": 2022
+    },
+    {
+      "roll_date": "2022-11-18",
+      "expiring_contract": "SILZ22",
+      "target_contract": "SILH23",
+      "expiry_month": 12,
+      "year": 2022
+    },
+    {
+      "roll_date": "2023-02-18",
+      "expiring_contract": "SILH23",
+      "target_contract": "SILK23",
+      "expiry_month": 3,
+      "year": 2023
+    },
+    {
+      "roll_date": "2023-04-18",
+      "expiring_contract": "SILK23",
+      "target_contract": "SILN23",
+      "expiry_month": 5,
+      "year": 2023
+    },
+    {
+      "roll_date": "2023-06-18",
+      "expiring_contract": "SILN23",
+      "target_contract": "SILU23",
+      "expiry_month": 7,
+      "year": 2023
+    },
+    {
+      "roll_date": "2023-08-18",
+      "expiring_contract": "SILU23",
+      "target_contract": "SILZ23",
+      "expiry_month": 9,
+      "year": 2023
+    },
+    {
+      "roll_date": "2023-11-18",
+      "expiring_contract": "SILZ23",
+      "target_contract": "SILH24",
+      "expiry_month": 12,
+      "year": 2023
+    },
+    {
+      "roll_date": "2024-02-18",
+      "expiring_contract": "SILH24",
+      "target_contract": "SILK24",
+      "expiry_month": 3,
+      "year": 2024
+    },
+    {
+      "roll_date": "2024-04-18",
+      "expiring_contract": "SILK24",
+      "target_contract": "SILN24",
+      "expiry_month": 5,
+      "year": 2024
+    },
+    {
+      "roll_date": "2024-06-18",
+      "expiring_contract": "SILN24",
+      "target_contract": "SILU24",
+      "expiry_month": 7,
+      "year": 2024
+    },
+    {
+      "roll_date": "2024-08-18",
+      "expiring_contract": "SILU24",
+      "target_contract": "SILZ24",
+      "expiry_month": 9,
+      "year": 2024
+    },
+    {
+      "roll_date": "2024-11-18",
+      "expiring_contract": "SILZ24",
+      "target_contract": "SILH25",
+      "expiry_month": 12,
+      "year": 2024
+    },
+    {
+      "roll_date": "2025-02-18",
+      "expiring_contract": "SILH25",
+      "target_contract": "SILK25",
+      "expiry_month": 3,
+      "year": 2025
+    },
+    {
+      "roll_date": "2025-04-18",
+      "expiring_contract": "SILK25",
+      "target_contract": "SILN25",
+      "expiry_month": 5,
+      "year": 2025
+    },
+    {
+      "roll_date": "2025-06-18",
+      "expiring_contract": "SILN25",
+      "target_contract": "SILU25",
+      "expiry_month": 7,
+      "year": 2025
+    },
+    {
+      "roll_date": "2025-08-18",
+      "expiring_contract": "SILU25",
+      "target_contract": "SILZ25",
+      "expiry_month": 9,
+      "year": 2025
+    },
+    {
+      "roll_date": "2025-11-18",
+      "expiring_contract": "SILZ25",
+      "target_contract": "SILH26",
+      "expiry_month": 12,
+      "year": 2025
+    },
+    {
+      "roll_date": "2026-02-18",
+      "expiring_contract": "SILH26",
+      "target_contract": "SILK26",
+      "expiry_month": 3,
+      "year": 2026
+    },
+    {
+      "roll_date": "2026-04-18",
+      "expiring_contract": "SILK26",
+      "target_contract": "SILN26",
+      "expiry_month": 5,
+      "year": 2026
+    },
+    {
+      "roll_date": "2026-06-18",
+      "expiring_contract": "SILN26",
+      "target_contract": "SILU26",
+      "expiry_month": 7,
+      "year": 2026
+    },
+    {
+      "roll_date": "2026-08-18",
+      "expiring_contract": "SILU26",
+      "target_contract": "SILZ26",
+      "expiry_month": 9,
+      "year": 2026
+    },
+    {
+      "roll_date": "2026-11-18",
+      "expiring_contract": "SILZ26",
+      "target_contract": "SILH27",
+      "expiry_month": 12,
+      "year": 2026
+    }
+  ],
+  "last_audit": {
+    "status": "HEALTHY",
+    "database": "C:\\Users\\uzivatel\\Desktop\\SuggestInvest\\data\\historical\\silver_m1_history.db",
+    "table": "xagusd_m1_bars",
+    "total_bars": 1777739,
+    "min_datetime": "2021-10-13 23:00:00",
+    "max_datetime": "2026-10-16 21:59:00",
+    "price_jump_anomalies_gt_6pct": 11,
+    "expiry_months": [
+      3,
+      5,
+      7,
+      9,
+      12
+    ],
+    "roll_days_before": 10
+  }
+}

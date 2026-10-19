@@ -1,0 +1,38 @@
+{
+  "samples_seen": 100,
+  "weights": [
+    0.15,
+    -0.1,
+    0.4,
+    0.1,
+    0.35,
+    0.15
+  ],
+  "intercept": 0.05,
+  "kelly_stats": {
+    "0": {
+      "wins": 10.4,
+      "losses": 9.6,
+      "avg_win": 1.45,
+      "avg_loss": 1.0
+    },
+    "1": {
+      "wins": 10.4,
+      "losses": 9.6,
+      "avg_win": 1.45,
+      "avg_loss": 1.0
+    },
+    "2": {
+      "wins": 10.4,
+      "losses": 9.6,
+      "avg_win": 1.45,
+      "avg_loss": 1.0
+    },
+    "3": {
+      "wins": 10.4,
+      "losses": 9.6,
+      "avg_win": 1.45,
+      "avg_loss": 1.0
+    }
+  }
+}

@@ -4,7 +4,7 @@ import logging
 from pathlib import Path
 from typing import Dict, Any, Optional, List
 from datetime import datetime
-from ib_insync import IB, util, Contract, Stock, Forex, Order, BracketOrder
+from ib_insync import IB, util, Contract, Stock, Forex, CFD, Order, BracketOrder
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("ExecutionEngine")
@@ -60,18 +60,16 @@ class ExecutionEngine:
             
             portfolio_items = []
             for p in self.ib.portfolio(account_id):
-                # Filtrujeme pouze čistě scalping kontrakty (komodity, krypto, pákové futures)
-                if p.contract.secType in ['CMDTY', 'FUT', 'CRYPTO'] or p.contract.symbol in ['XAUUSD', 'BTC', 'BTCUSD', 'MGC']:
-                    portfolio_items.append({
-                        "symbol": p.contract.symbol,
-                        "secType": p.contract.secType,
-                        "position": p.position,
-                        "marketPrice": round(p.marketPrice, 2),
-                        "marketValue": round(p.marketValue, 2),
-                        "averageCost": round(p.averageCost, 2),
-                        "unrealizedPNL": round(p.unrealizedPNL, 2),
-                        "realizedPNL": round(p.realizedPNL, 2)
-                    })
+                portfolio_items.append({
+                    "symbol": p.contract.symbol,
+                    "secType": p.contract.secType,
+                    "position": p.position,
+                    "marketPrice": round(p.marketPrice, 2),
+                    "marketValue": round(p.marketValue, 2),
+                    "averageCost": round(p.averageCost, 2),
+                    "unrealizedPNL": round(p.unrealizedPNL, 2),
+                    "realizedPNL": round(p.realizedPNL, 2)
+                })
             
             # Celková provize z fills
             fills = self.ib.fills()
@@ -105,7 +103,27 @@ class ExecutionEngine:
             
             trades_data = self.load_trades_data()
             trades_data["ibkr_live_account"] = acc_info
-            trades_data["version"] = "2.2.0"
+            trades_data["version"] = "3.0.0"
+            
+            # POUZE ZDROJ IBKR: active_positions smí obsahovat výhradně reálně otevřené pozice z portfolia brokera
+            real_metals_pos = []
+            for p in self.ib.portfolio(account_id):
+                if abs(p.position) > 0.0001 and (p.contract.secType in ("CFD", "CMDTY") or "XAU" in p.contract.symbol or "XAG" in p.contract.symbol):
+                    sym_display = "🥇 XAUUSD (Zlato Spot CFD)" if "XAU" in p.contract.symbol else "🥈 XAGUSD (Stříbro Spot CFD)"
+                    real_metals_pos.append({
+                        "id": f"IB-POS-{p.contract.symbol}",
+                        "symbol_raw": p.contract.symbol,
+                        "symbol": p.contract.symbol,
+                        "name": sym_display,
+                        "direction": "LONG" if p.position > 0 else "SHORT",
+                        "entry_price": round(p.averageCost, 2),
+                        "current_price": round(p.marketPrice, 2),
+                        "qty": f"{abs(p.position)} oz",
+                        "qty_num": abs(p.position),
+                        "unrealized_pnl_usd": round(p.unrealizedPNL, 2),
+                        "unrealized_pnl_czk": round(p.unrealizedPNL * 23.2, 2)
+                    })
+            trades_data["active_positions"] = real_metals_pos
             self.save_trades_data(trades_data)
             return acc_info
         except Exception as e:
@@ -118,7 +136,7 @@ class ExecutionEngine:
         try:
             TRADES_FILE.parent.mkdir(parents=True, exist_ok=True)
             data["last_updated_cet"] = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
-            data["version"] = "2.2.0"
+            data["version"] = "3.0.0"
             history = data.get("executed_history", [])
             wins = [t for t in history if t.get("result") == "WIN" or t.get("pnl_usd", 0) > 0]
             losses = [t for t in history if t.get("result") == "LOSS" or t.get("pnl_usd", 0) < 0]
@@ -205,9 +223,11 @@ class ExecutionEngine:
                 entry = float(pos.get("entry_price", current_price))
                 qty_mult = float(pos.get("qty_num", 0.25))
                 is_long = "LONG" in pos.get("direction", "").upper() or "BUY" in pos.get("direction", "").upper()
-                pnl = (current_price - entry) * qty_mult if is_long else (entry - current_price) * qty_mult
-                pos["unrealized_pnl_usd"] = round(pnl, 2)
-                pos["unrealized_pnl_czk"] = round(pnl * 23.2, 2)
+                gross_pnl = (current_price - entry) * qty_mult if is_long else (entry - current_price) * qty_mult
+                net_pnl = round(gross_pnl - 2.00, 2)
+                pos["gross_pnl_usd"] = round(gross_pnl, 2)
+                pos["unrealized_pnl_usd"] = net_pnl
+                pos["unrealized_pnl_czk"] = round(net_pnl * 23.2, 2)
                 if be_moved:
                     pos["be_moved"] = True
                 changed = True
@@ -365,11 +385,13 @@ class ExecutionEngine:
         # Výběr typu kontraktu podle symbolu
         sym_clean = symbol.upper().replace('/', '').replace(' ', '')
         if 'XAU' in sym_clean or 'GOLD' in sym_clean:
-            contract = Commodity('XAUUSD', 'SMART', 'USD')
-        elif 'EUR' in sym_clean or 'USD' in sym_clean and 'BTC' not in sym_clean:
+            contract = CFD('XAUUSD', 'SMART')
+        elif 'XAG' in sym_clean or 'SILVER' in sym_clean:
+            contract = CFD('XAGUSD', 'SMART')
+        elif 'EUR' in sym_clean or ('USD' in sym_clean and 'BTC' not in sym_clean):
             contract = Forex('EURUSD', 'IDEALPRO')
         else:
-            contract = Stock('AAPL', 'SMART', 'USD')
+            contract = CFD('XAUUSD', 'SMART')
 
         try:
             bracket = await self.place_bracket_order(

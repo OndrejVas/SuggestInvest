@@ -13,3 +13,30 @@ cache_macro.json
 *.log
 IB Gateway/logs/
 scratch/
+
+# 🔒 CRITICAL: Sensitive IBKR Credentials & Vaults
+IBKR-Demo-online/
+IBKR-Live-online/
+credentials_vault.py
+*.key
+*.pem
+
+# 📦 Archives & Documents
+*.zip
+*.docx
+*.csv
+
+# 🗄️ Local Databases & Large Cache
+*.db
+*.sqlite
+*.sqlite3
+data/macro_calendar.db
+data/silver_macro_calendar.db
+data/silver_cot_history.db
+data/cache/
+data/historical/
+data/system_telemetry_history.jsonl
+export_argon/
+extracted_argon_input.txt
+summary_sections.txt
+*.tmp

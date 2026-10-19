@@ -1,0 +1,47 @@
+{
+  "status": "CALIBRATED_IN_SAMPLE_APPLIED_OOS",
+  "calibration_years": "2024-2025",
+  "tested_oos_months": [
+    "2026-01",
+    "2026-02"
+  ],
+  "macro_series": [
+    "TIP (10Y TIPS ETF)",
+    "UUP (US Dollar Bullish)",
+    "^TNX (10Y Yield)"
+  ],
+  "summary": {
+    "total_orig_pnl": 9715.2,
+    "total_new_pnl": 4037.0,
+    "total_delta_usd": -5678.2,
+    "total_delta_pct": -58.4,
+    "january": {
+      "month": "Leden 2026 (OOS #1)",
+      "orig_pnl": 9294.6,
+      "new_pnl": 3537.4,
+      "delta_pnl": -5757.2,
+      "orig_trades": 42,
+      "new_trades": 28,
+      "orig_wr": 47.6,
+      "new_wr": 42.9,
+      "orig_pf": 3.94,
+      "new_pf": 2.5,
+      "blocked_losses": 6,
+      "blocked_wins": 8
+    },
+    "february": {
+      "month": "\u00danor 2026 (OOS #2)",
+      "orig_pnl": 420.6,
+      "new_pnl": 499.6,
+      "delta_pnl": 79.0,
+      "orig_trades": 52,
+      "new_trades": 42,
+      "orig_wr": 30.8,
+      "new_wr": 28.6,
+      "orig_pf": 1.06,
+      "new_pf": 1.09,
+      "blocked_losses": 6,
+      "blocked_wins": 4
+    }
+  }
+}

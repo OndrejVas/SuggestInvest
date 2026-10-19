@@ -1,0 +1,1046 @@
+{
+  "generated_at": "2026-10-14 21:56:59",
+  "total_events_2026": 104,
+  "events": [
+    {
+      "timestamp": "2026-01-28 20:00:00",
+      "date": "2026-01-28",
+      "time": "20:00",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "FOMC Statement & Federal Funds Rate",
+      "category": "CENTRAL_BANK",
+      "blackout_window": "19:40 - 20:25"
+    },
+    {
+      "timestamp": "2026-01-28 20:30:00",
+      "date": "2026-01-28",
+      "time": "20:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Fed Chair Press Conference (Powell)",
+      "category": "CENTRAL_BANK",
+      "blackout_window": "20:10 - 20:55"
+    },
+    {
+      "timestamp": "2026-03-18 19:00:00",
+      "date": "2026-03-18",
+      "time": "19:00",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "FOMC Statement & Federal Funds Rate",
+      "category": "CENTRAL_BANK",
+      "blackout_window": "18:40 - 19:25"
+    },
+    {
+      "timestamp": "2026-03-18 19:30:00",
+      "date": "2026-03-18",
+      "time": "19:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Fed Chair Press Conference (Powell)",
+      "category": "CENTRAL_BANK",
+      "blackout_window": "19:10 - 19:55"
+    },
+    {
+      "timestamp": "2026-04-29 20:00:00",
+      "date": "2026-04-29",
+      "time": "20:00",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "FOMC Statement & Federal Funds Rate",
+      "category": "CENTRAL_BANK",
+      "blackout_window": "19:40 - 20:25"
+    },
+    {
+      "timestamp": "2026-04-29 20:30:00",
+      "date": "2026-04-29",
+      "time": "20:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Fed Chair Press Conference (Powell)",
+      "category": "CENTRAL_BANK",
+      "blackout_window": "20:10 - 20:55"
+    },
+    {
+      "timestamp": "2026-06-17 20:00:00",
+      "date": "2026-06-17",
+      "time": "20:00",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "FOMC Statement & Federal Funds Rate",
+      "category": "CENTRAL_BANK",
+      "blackout_window": "19:40 - 20:25"
+    },
+    {
+      "timestamp": "2026-06-17 20:30:00",
+      "date": "2026-06-17",
+      "time": "20:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Fed Chair Press Conference (Powell)",
+      "category": "CENTRAL_BANK",
+      "blackout_window": "20:10 - 20:55"
+    },
+    {
+      "timestamp": "2026-07-29 20:00:00",
+      "date": "2026-07-29",
+      "time": "20:00",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "FOMC Statement & Federal Funds Rate",
+      "category": "CENTRAL_BANK",
+      "blackout_window": "19:40 - 20:25"
+    },
+    {
+      "timestamp": "2026-07-29 20:30:00",
+      "date": "2026-07-29",
+      "time": "20:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Fed Chair Press Conference (Powell)",
+      "category": "CENTRAL_BANK",
+      "blackout_window": "20:10 - 20:55"
+    },
+    {
+      "timestamp": "2026-09-16 20:00:00",
+      "date": "2026-09-16",
+      "time": "20:00",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "FOMC Statement & Federal Funds Rate",
+      "category": "CENTRAL_BANK",
+      "blackout_window": "19:40 - 20:25"
+    },
+    {
+      "timestamp": "2026-09-16 20:30:00",
+      "date": "2026-09-16",
+      "time": "20:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Fed Chair Press Conference (Powell)",
+      "category": "CENTRAL_BANK",
+      "blackout_window": "20:10 - 20:55"
+    },
+    {
+      "timestamp": "2026-10-28 19:00:00",
+      "date": "2026-10-28",
+      "time": "19:00",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "FOMC Statement & Federal Funds Rate",
+      "category": "CENTRAL_BANK",
+      "blackout_window": "18:40 - 19:25"
+    },
+    {
+      "timestamp": "2026-10-28 19:30:00",
+      "date": "2026-10-28",
+      "time": "19:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Fed Chair Press Conference (Powell)",
+      "category": "CENTRAL_BANK",
+      "blackout_window": "19:10 - 19:55"
+    },
+    {
+      "timestamp": "2026-12-09 20:00:00",
+      "date": "2026-12-09",
+      "time": "20:00",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "FOMC Statement & Federal Funds Rate",
+      "category": "CENTRAL_BANK",
+      "blackout_window": "19:40 - 20:25"
+    },
+    {
+      "timestamp": "2026-12-09 20:30:00",
+      "date": "2026-12-09",
+      "time": "20:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Fed Chair Press Conference (Powell)",
+      "category": "CENTRAL_BANK",
+      "blackout_window": "20:10 - 20:55"
+    },
+    {
+      "timestamp": "2026-01-09 14:30:00",
+      "date": "2026-01-09",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Non-Farm Employment Change (NFP)",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-01-09 14:30:00",
+      "date": "2026-01-09",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Unemployment Rate",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-02-06 14:30:00",
+      "date": "2026-02-06",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Non-Farm Employment Change (NFP)",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-02-06 14:30:00",
+      "date": "2026-02-06",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Unemployment Rate",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-03-06 14:30:00",
+      "date": "2026-03-06",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Non-Farm Employment Change (NFP)",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-03-06 14:30:00",
+      "date": "2026-03-06",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Unemployment Rate",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-04-03 14:30:00",
+      "date": "2026-04-03",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Non-Farm Employment Change (NFP)",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-04-03 14:30:00",
+      "date": "2026-04-03",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Unemployment Rate",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-05-08 14:30:00",
+      "date": "2026-05-08",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Non-Farm Employment Change (NFP)",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-05-08 14:30:00",
+      "date": "2026-05-08",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Unemployment Rate",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-06-05 14:30:00",
+      "date": "2026-06-05",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Non-Farm Employment Change (NFP)",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-06-05 14:30:00",
+      "date": "2026-06-05",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Unemployment Rate",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-07-02 14:30:00",
+      "date": "2026-07-02",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Non-Farm Employment Change (NFP)",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-07-02 14:30:00",
+      "date": "2026-07-02",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Unemployment Rate",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-08-07 14:30:00",
+      "date": "2026-08-07",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Non-Farm Employment Change (NFP)",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-08-07 14:30:00",
+      "date": "2026-08-07",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Unemployment Rate",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-09-04 14:30:00",
+      "date": "2026-09-04",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Non-Farm Employment Change (NFP)",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-09-04 14:30:00",
+      "date": "2026-09-04",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Unemployment Rate",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-10-02 14:30:00",
+      "date": "2026-10-02",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Non-Farm Employment Change (NFP)",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-10-02 14:30:00",
+      "date": "2026-10-02",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Unemployment Rate",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-11-06 14:30:00",
+      "date": "2026-11-06",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Non-Farm Employment Change (NFP)",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-11-06 14:30:00",
+      "date": "2026-11-06",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Unemployment Rate",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-12-04 14:30:00",
+      "date": "2026-12-04",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Non-Farm Employment Change (NFP)",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-12-04 14:30:00",
+      "date": "2026-12-04",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Unemployment Rate",
+      "category": "EMPLOYMENT",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-01-13 14:30:00",
+      "date": "2026-01-13",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "CPI m/m & y/y (Consumer Price Index)",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-01-13 14:30:00",
+      "date": "2026-01-13",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core CPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-02-11 14:30:00",
+      "date": "2026-02-11",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "CPI m/m & y/y (Consumer Price Index)",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-02-11 14:30:00",
+      "date": "2026-02-11",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core CPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-03-11 14:30:00",
+      "date": "2026-03-11",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "CPI m/m & y/y (Consumer Price Index)",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-03-11 14:30:00",
+      "date": "2026-03-11",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core CPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-04-14 14:30:00",
+      "date": "2026-04-14",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "CPI m/m & y/y (Consumer Price Index)",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-04-14 14:30:00",
+      "date": "2026-04-14",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core CPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-05-12 14:30:00",
+      "date": "2026-05-12",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "CPI m/m & y/y (Consumer Price Index)",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-05-12 14:30:00",
+      "date": "2026-05-12",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core CPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-06-10 14:30:00",
+      "date": "2026-06-10",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "CPI m/m & y/y (Consumer Price Index)",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-06-10 14:30:00",
+      "date": "2026-06-10",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core CPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-07-14 14:30:00",
+      "date": "2026-07-14",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "CPI m/m & y/y (Consumer Price Index)",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-07-14 14:30:00",
+      "date": "2026-07-14",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core CPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-08-12 14:30:00",
+      "date": "2026-08-12",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "CPI m/m & y/y (Consumer Price Index)",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-08-12 14:30:00",
+      "date": "2026-08-12",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core CPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-09-15 14:30:00",
+      "date": "2026-09-15",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "CPI m/m & y/y (Consumer Price Index)",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-09-15 14:30:00",
+      "date": "2026-09-15",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core CPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-10-13 14:30:00",
+      "date": "2026-10-13",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "CPI m/m & y/y (Consumer Price Index)",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-10-13 14:30:00",
+      "date": "2026-10-13",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core CPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-11-10 14:30:00",
+      "date": "2026-11-10",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "CPI m/m & y/y (Consumer Price Index)",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-11-10 14:30:00",
+      "date": "2026-11-10",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core CPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-12-10 14:30:00",
+      "date": "2026-12-10",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "CPI m/m & y/y (Consumer Price Index)",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-12-10 14:30:00",
+      "date": "2026-12-10",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core CPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-01-14 14:30:00",
+      "date": "2026-01-14",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core PPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-02-12 14:30:00",
+      "date": "2026-02-12",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core PPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-03-12 14:30:00",
+      "date": "2026-03-12",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core PPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-04-15 14:30:00",
+      "date": "2026-04-15",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core PPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-05-13 14:30:00",
+      "date": "2026-05-13",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core PPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-06-11 14:30:00",
+      "date": "2026-06-11",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core PPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-07-15 14:30:00",
+      "date": "2026-07-15",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core PPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-08-13 14:30:00",
+      "date": "2026-08-13",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core PPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-09-16 14:30:00",
+      "date": "2026-09-16",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core PPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-10-14 14:30:00",
+      "date": "2026-10-14",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core PPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-11-12 14:30:00",
+      "date": "2026-11-12",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core PPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-12-11 14:30:00",
+      "date": "2026-12-11",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core PPI m/m",
+      "category": "INFLATION",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-01-16 14:30:00",
+      "date": "2026-01-16",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core Retail Sales m/m",
+      "category": "CONSUMER",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-02-13 14:30:00",
+      "date": "2026-02-13",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core Retail Sales m/m",
+      "category": "CONSUMER",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-03-17 14:30:00",
+      "date": "2026-03-17",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core Retail Sales m/m",
+      "category": "CONSUMER",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-04-16 14:30:00",
+      "date": "2026-04-16",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core Retail Sales m/m",
+      "category": "CONSUMER",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-05-15 14:30:00",
+      "date": "2026-05-15",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core Retail Sales m/m",
+      "category": "CONSUMER",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-06-16 14:30:00",
+      "date": "2026-06-16",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core Retail Sales m/m",
+      "category": "CONSUMER",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-07-16 14:30:00",
+      "date": "2026-07-16",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core Retail Sales m/m",
+      "category": "CONSUMER",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-08-14 14:30:00",
+      "date": "2026-08-14",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core Retail Sales m/m",
+      "category": "CONSUMER",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-09-16 14:30:00",
+      "date": "2026-09-16",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core Retail Sales m/m",
+      "category": "CONSUMER",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-10-15 14:30:00",
+      "date": "2026-10-15",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core Retail Sales m/m",
+      "category": "CONSUMER",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-11-17 14:30:00",
+      "date": "2026-11-17",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core Retail Sales m/m",
+      "category": "CONSUMER",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-12-15 14:30:00",
+      "date": "2026-12-15",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Core Retail Sales m/m",
+      "category": "CONSUMER",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-01-29 14:30:00",
+      "date": "2026-01-29",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Advance GDP q/q",
+      "category": "GROWTH_GDP",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-04-30 14:30:00",
+      "date": "2026-04-30",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Advance GDP q/q",
+      "category": "GROWTH_GDP",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-07-30 14:30:00",
+      "date": "2026-07-30",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Advance GDP q/q",
+      "category": "GROWTH_GDP",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-10-29 14:30:00",
+      "date": "2026-10-29",
+      "time": "14:30",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "Advance GDP q/q",
+      "category": "GROWTH_GDP",
+      "blackout_window": "14:10 - 14:55"
+    },
+    {
+      "timestamp": "2026-01-02 16:00:00",
+      "date": "2026-01-02",
+      "time": "16:00",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "ISM Manufacturing PMI",
+      "category": "MANUFACTURING",
+      "blackout_window": "15:40 - 16:25"
+    },
+    {
+      "timestamp": "2026-02-02 16:00:00",
+      "date": "2026-02-02",
+      "time": "16:00",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "ISM Manufacturing PMI",
+      "category": "MANUFACTURING",
+      "blackout_window": "15:40 - 16:25"
+    },
+    {
+      "timestamp": "2026-03-02 16:00:00",
+      "date": "2026-03-02",
+      "time": "16:00",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "ISM Manufacturing PMI",
+      "category": "MANUFACTURING",
+      "blackout_window": "15:40 - 16:25"
+    },
+    {
+      "timestamp": "2026-04-01 16:00:00",
+      "date": "2026-04-01",
+      "time": "16:00",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "ISM Manufacturing PMI",
+      "category": "MANUFACTURING",
+      "blackout_window": "15:40 - 16:25"
+    },
+    {
+      "timestamp": "2026-05-01 16:00:00",
+      "date": "2026-05-01",
+      "time": "16:00",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "ISM Manufacturing PMI",
+      "category": "MANUFACTURING",
+      "blackout_window": "15:40 - 16:25"
+    },
+    {
+      "timestamp": "2026-06-01 16:00:00",
+      "date": "2026-06-01",
+      "time": "16:00",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "ISM Manufacturing PMI",
+      "category": "MANUFACTURING",
+      "blackout_window": "15:40 - 16:25"
+    },
+    {
+      "timestamp": "2026-07-01 16:00:00",
+      "date": "2026-07-01",
+      "time": "16:00",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "ISM Manufacturing PMI",
+      "category": "MANUFACTURING",
+      "blackout_window": "15:40 - 16:25"
+    },
+    {
+      "timestamp": "2026-08-03 16:00:00",
+      "date": "2026-08-03",
+      "time": "16:00",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "ISM Manufacturing PMI",
+      "category": "MANUFACTURING",
+      "blackout_window": "15:40 - 16:25"
+    },
+    {
+      "timestamp": "2026-09-01 16:00:00",
+      "date": "2026-09-01",
+      "time": "16:00",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "ISM Manufacturing PMI",
+      "category": "MANUFACTURING",
+      "blackout_window": "15:40 - 16:25"
+    },
+    {
+      "timestamp": "2026-10-01 16:00:00",
+      "date": "2026-10-01",
+      "time": "16:00",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "ISM Manufacturing PMI",
+      "category": "MANUFACTURING",
+      "blackout_window": "15:40 - 16:25"
+    },
+    {
+      "timestamp": "2026-11-02 16:00:00",
+      "date": "2026-11-02",
+      "time": "16:00",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "ISM Manufacturing PMI",
+      "category": "MANUFACTURING",
+      "blackout_window": "15:40 - 16:25"
+    },
+    {
+      "timestamp": "2026-12-01 16:00:00",
+      "date": "2026-12-01",
+      "time": "16:00",
+      "currency": "USD",
+      "impact": "HIGH",
+      "event": "ISM Manufacturing PMI",
+      "category": "MANUFACTURING",
+      "blackout_window": "15:40 - 16:25"
+    }
+  ]
+}

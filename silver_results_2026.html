@@ -1,0 +1,2029 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🥈 SilverEdge V3.0 | Kvantitativní OOS Výsledky Leden–Říjen 2026 | SuggestInvest</title>
+    <meta name="description" content="Kompletní kvantitativní vyhodnocení výsledků OOS 2026 (Leden–Říjen) systému SuggestInvest pro Micro Silver Futures (SIL) s interaktivním postupným odkrýváním měsíců.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #060913;
+            --bg-secondary: #0c1324;
+            --bg-card: rgba(15, 23, 42, 0.78);
+            --bg-card-hover: rgba(30, 41, 59, 0.90);
+            --border-color: rgba(148, 163, 184, 0.14);
+            --border-silver: rgba(203, 213, 225, 0.35);
+            --border-glow: rgba(56, 189, 248, 0.45);
+            --silver-primary: #f8fafc;
+            --silver-secondary: #cbd5e1;
+            --silver-muted: #94a3b8;
+            --silver-metallic: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
+            --accent-blue: #38bdf8;
+            --accent-blue-glow: rgba(56, 189, 248, 0.25);
+            --accent-green: #34d399;
+            --accent-green-glow: rgba(52, 211, 153, 0.25);
+            --accent-red: #f87171;
+            --accent-red-glow: rgba(239, 68, 68, 0.25);
+            --accent-gold: #f59e0b;
+            --accent-purple: #c084fc;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--silver-primary);
+            line-height: 1.5;
+            padding: 20px 28px;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 8%, rgba(56, 189, 248, 0.10) 0%, transparent 40%),
+                radial-gradient(circle at 90% 15%, rgba(148, 163, 184, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 50% 85%, rgba(52, 211, 153, 0.05) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1480px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        /* HEADER */
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(12, 19, 36, 0.98) 100%);
+            border: 1px solid var(--border-silver);
+            border-radius: 16px;
+            padding: 22px 30px;
+            box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.8), 0 0 25px rgba(56, 189, 248, 0.12);
+            backdrop-filter: blur(14px);
+            flex-wrap: wrap;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-bar::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, #38bdf8, #cbd5e1, #34d399, #c084fc);
+        }
+
+        .title-group h1 {
+            font-size: 1.75rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--silver-metallic);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .tag-silver {
+            background: linear-gradient(135deg, rgba(148, 163, 184, 0.25) 0%, rgba(56, 189, 248, 0.25) 100%);
+            color: #f8fafc;
+            border: 1px solid rgba(203, 213, 225, 0.45);
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+            display: inline-block;
+        }
+
+        .tag-oos {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.45);
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 0.86rem;
+            color: var(--silver-muted);
+            margin-top: 6px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid var(--border-color);
+            color: var(--silver-primary);
+            padding: 9px 16px;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-nav:hover {
+            border-color: var(--accent-blue);
+            background: rgba(56, 189, 248, 0.15);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .btn-nav.primary {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            border: 1px solid rgba(56, 189, 248, 0.6);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.35);
+        }
+
+        .btn-nav.primary:hover {
+            background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+        }
+
+        /* HERO KPI BANNER */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(17, 24, 39, 0.98) 50%, rgba(15, 23, 42, 0.95) 100%);
+            border: 1px solid var(--border-silver);
+            border-radius: 16px;
+            padding: 24px 28px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, #38bdf8, #cbd5e1, #34d399, #f59e0b);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 16px;
+        }
+
+        .hero-kpi-card {
+            background: rgba(11, 17, 32, 0.75);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 18px;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .hero-kpi-card:hover {
+            border-color: var(--accent-blue);
+            background: rgba(15, 23, 42, 0.9);
+            transform: translateY(-2px);
+        }
+
+        .kpi-title {
+            font-size: 0.72rem;
+            color: var(--silver-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .kpi-main-val {
+            font-size: 1.7rem;
+            font-weight: 900;
+            font-family: var(--font-mono);
+            margin: 6px 0 4px 0;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .kpi-main-val.green { color: #34d399; text-shadow: 0 0 15px rgba(52, 211, 153, 0.3); }
+        .kpi-main-val.blue { color: #38bdf8; text-shadow: 0 0 15px rgba(56, 189, 248, 0.3); }
+        .kpi-main-val.silver { color: #f1f5f9; text-shadow: 0 0 15px rgba(241, 245, 249, 0.3); }
+        .kpi-main-val.gold { color: #f59e0b; text-shadow: 0 0 15px rgba(245, 158, 11, 0.3); }
+
+        .kpi-sub {
+            font-size: 0.76rem;
+            color: var(--silver-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .delta-pill {
+            font-size: 0.70rem;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .delta-pill.pos {
+            background: rgba(52, 211, 153, 0.18);
+            color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.35);
+        }
+        .delta-pill.blue {
+            background: rgba(56, 189, 248, 0.18);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.35);
+        }
+
+        /* 2026 WALK-FORWARD UNLOCKING LAB */
+        .walkforward-panel {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(11, 18, 34, 0.98) 100%);
+            border: 2px solid rgba(56, 189, 248, 0.45);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.8), 0 0 25px rgba(56, 189, 248, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .wf-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .wf-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffffff;
+        }
+
+        .wf-months-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 12px;
+        }
+
+        .month-chip {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .month-chip.locked {
+            border-color: rgba(148, 163, 184, 0.2);
+            opacity: 0.75;
+        }
+
+        .month-chip.completed {
+            border-color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.12);
+            box-shadow: 0 0 14px rgba(16, 185, 129, 0.25);
+            opacity: 1.0;
+        }
+
+        .month-chip-title {
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .month-chip-status {
+            font-size: 0.70rem;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .status-locked-badge {
+            background: rgba(148, 163, 184, 0.15);
+            color: var(--silver-muted);
+        }
+        .status-done-badge {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+        }
+
+        .month-chip-pnl {
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            font-weight: 800;
+        }
+
+        .wf-actions-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 14px 20px;
+            border-radius: 12px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn-unlock {
+            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+            color: #ffffff;
+            border: 1px solid rgba(56, 189, 248, 0.7);
+            padding: 10px 22px;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 18px rgba(56, 189, 248, 0.4);
+            transition: all 0.2s ease;
+        }
+
+        .btn-unlock:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(56, 189, 248, 0.6);
+        }
+
+        .btn-reset {
+            background: transparent;
+            color: #f87171;
+            border: 1px solid rgba(248, 113, 113, 0.4);
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-reset:hover {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: #ef4444;
+        }
+
+        /* CHART CONTAINER */
+        .chart-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .chart-title-group h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            width: 100%;
+            height: 380px;
+            background: rgba(6, 10, 20, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* MONTHLY COMPARISON MATRIX TABLE */
+        .table-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .panel-inner-header {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(11, 17, 32, 0.8);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: rgba(11, 17, 32, 0.95);
+            color: var(--silver-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.70rem;
+            letter-spacing: 0.05em;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+            vertical-align: middle;
+            font-family: var(--font-mono);
+        }
+
+        .data-table tr:hover {
+            background: rgba(30, 41, 59, 0.5);
+        }
+
+        .pnl-cell { font-weight: 800; }
+        .pnl-cell.pos { color: #34d399; }
+        .pnl-cell.neg { color: #f87171; }
+
+        /* MINIMAL COMPACT JOURNAL TABLE (NO-SCROLL SINGLE-LINE) */
+        .data-table.compact-journal {
+            font-size: 0.73rem;
+            width: 100%;
+            table-layout: auto;
+        }
+
+        .data-table.compact-journal th {
+            font-size: 0.67rem;
+            padding: 8px 6px;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+            background: rgba(8, 13, 24, 0.98);
+        }
+
+        .data-table.compact-journal td {
+            padding: 5px 6px;
+            font-size: 0.72rem;
+            white-space: nowrap;
+            line-height: 1.25;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.07);
+        }
+
+        .data-table.compact-journal tr:hover {
+            background: rgba(30, 41, 59, 0.6);
+        }
+
+        .data-table.compact-journal .pill {
+            padding: 2px 5px;
+            font-size: 0.64rem;
+            border-radius: 4px;
+            display: inline-block;
+            white-space: nowrap;
+            letter-spacing: 0.02em;
+        }
+
+        /* JOURNAL MONTH FILTER BUTTONS */
+        .journal-month-btn {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.74rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(15, 23, 42, 0.8);
+            color: #94a3b8;
+            transition: all 0.2s ease;
+        }
+
+        .journal-month-btn:hover {
+            border-color: rgba(56, 189, 248, 0.5);
+            color: #ffffff;
+            background: rgba(30, 41, 59, 0.9);
+        }
+
+        .journal-month-btn.active {
+            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+            color: #ffffff;
+            font-weight: 800;
+            border-color: #38bdf8;
+            box-shadow: 0 2px 10px rgba(56, 189, 248, 0.35);
+        }
+
+        /* THE 4 FORENSIC CARDS */
+        .forensic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 18px;
+        }
+
+        .forensic-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.25s ease;
+        }
+
+        .forensic-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-silver);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        .forensic-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+        }
+        .forensic-card.c-blue::before { background: #38bdf8; }
+        .forensic-card.c-green::before { background: #34d399; }
+        .forensic-card.c-purple::before { background: #c084fc; }
+        .forensic-card.c-gold::before { background: #f59e0b; }
+
+        .forensic-card h4 {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .forensic-card p {
+            font-size: 0.82rem;
+            color: var(--silver-muted);
+            line-height: 1.45;
+        }
+
+        .forensic-tag {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            width: fit-content;
+        }
+
+        /* TRADE JOURNAL */
+        .pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+        }
+        .pill-long { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .pill-short { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+        .pill-strat { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            color: var(--silver-muted);
+            font-size: 0.82rem;
+            padding: 24px 0;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+    <!-- 🔒 SUGGESTINVEST SECURITY GATE INITIALIZER -->
+    <script>
+        (function() {
+            try {
+                var isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
+                if (isAuth) {
+                    document.documentElement.classList.add("si-authenticated");
+                } else {
+                    document.documentElement.classList.add("si-locked");
+                }
+            } catch(e) {}
+        })();
+    </script>
+    <style>
+        /* 🔒 SECURITY GATE STYLES */
+        html.si-locked #appContainer { display: none !important; }
+        html.si-locked #loginOverlay { display: flex !important; }
+        html.si-authenticated #loginOverlay { display: none !important; }
+        html.si-authenticated #appContainer { display: block !important; }
+
+        #loginOverlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: radial-gradient(circle at center, #111827 0%, #030712 100%);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 999999; padding: 1.5rem;
+        }
+        .login-card {
+            background: rgba(17, 24, 39, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            padding: 2.5rem 2rem;
+            max-width: 430px; width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            text-align: center;
+        }
+        .login-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(59, 130, 246, 0.15); color: #60a5fa;
+            padding: 4px 12px; border-radius: 9999px;
+            font-size: 0.75rem; font-weight: 700;
+            letter-spacing: 0.05em; text-transform: uppercase;
+            border: 1px solid rgba(59, 130, 246, 0.3); margin-bottom: 1.25rem;
+        }
+        .login-title {
+            font-size: 1.65rem; font-weight: 800; color: #f9fafb;
+            margin-bottom: 0.35rem; letter-spacing: -0.01em;
+        }
+        .login-subtitle {
+            font-size: 0.88rem; color: #9ca3af;
+            margin-bottom: 1.75rem; line-height: 1.4;
+        }
+        .login-form {
+            display: flex; flex-direction: column; gap: 1.1rem; text-align: left;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+        .input-label { font-size: 0.8rem; font-weight: 600; color: #cbd5e1; }
+        .login-input {
+            width: 100%; background: #0b0f19;
+            border: 1px solid rgba(255, 255, 255, 0.15); color: #f8fafc;
+            padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.95rem;
+            outline: none; transition: border-color 0.2s, box-shadow 0.2s; box-sizing: border-box;
+        }
+        .login-input:focus {
+            border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        .remember-row {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.82rem; color: #9ca3af; cursor: pointer; user-select: none;
+        }
+        .login-submit-btn {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #ffffff; border: none; padding: 0.8rem;
+            border-radius: 8px; font-size: 0.95rem; font-weight: 700;
+            cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; margin-top: 0.4rem;
+        }
+        .login-submit-btn:hover {
+            transform: translateY(-1px); box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.5);
+        }
+        .login-error {
+            display: none; background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.35); color: #f87171;
+            padding: 0.65rem; border-radius: 6px; font-size: 0.82rem; text-align: center;
+        }
+        #appContainer { display: none; }
+    </style>
+
+</head>
+<body>
+    <!-- 🔒 UNIFIED SECURITY GATE OVERLAY -->
+    <div id="loginOverlay">
+        <div class="login-card">
+            <div class="login-badge">
+                <span>🔒 SuggestInvest • Security Gate</span>
+            </div>
+            <h2 class="login-title">Přihlášení</h2>
+            <p class="login-subtitle">Zadejte přihlašovací údaje pro přístup do ekosystému SuggestInvest.</p>
+            
+            <form class="login-form" onsubmit="handleLoginSubmit(event)">
+                <div class="form-group">
+                    <label class="input-label" for="loginUser">Uživatelské jméno</label>
+                    <input type="text" id="loginUser" class="login-input" placeholder="Zadejte uživatelské jméno" required autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label class="input-label" for="loginPass">Heslo</label>
+                    <input type="password" id="loginPass" class="login-input" placeholder="Zadejte heslo" required autocomplete="current-password">
+                </div>
+
+                <label class="remember-row">
+                    <input type="checkbox" id="rememberMe" checked>
+                    <span>Zapamatovat přihlášení na tomto zařízení</span>
+                </label>
+
+                <div id="loginError" class="login-error">
+                    Neplatné uživatelské jméno nebo heslo. Zkuste to znovu.
+                </div>
+
+                <button type="submit" class="login-submit-btn">Vstoupit do aplikace</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="appContainer">
+
+
+<div class="container">
+    <!-- HEADER BAR -->
+    <header class="header-bar">
+        <div class="title-group">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <span class="tag-silver">🥈 SilverEdge Quant V3.0</span>
+                <span class="tag-oos">OOS 2026 Walk-Forward Lab</span>
+            </div>
+            <h1>Micro Silver Futures (SIL) • Performance 2026</h1>
+            <p class="subtitle">
+                Oficiální OOS Backtest & Walk-Forward portál pro stříbro (1 000 oz / kontrakt) s postupným odkrýváním měsíců roku 2026 bez look-ahead biasu.
+            </p>
+        </div>
+        <div class="nav-links">
+            <a href="/hub.html" class="btn-nav">🏛️ Centrální Hub</a>
+            <a href="/argon_results_2026.html" class="btn-nav">🥇 Argon Gold 2026</a>
+            <a href="/SilverInvestDemo.html" class="btn-nav primary">⚡ Silver Live Cockpit</a>
+        </div>
+    </header>
+
+    <!-- HERO COMPARISON BANNER -->
+    <div class="hero-banner">
+        <div class="hero-grid">
+            <div class="hero-kpi-card">
+                <div class="kpi-title">
+                    <span>Výchozí Kapitál</span>
+                    <span class="delta-pill blue">NYMEX SIL</span>
+                </div>
+                <div class="kpi-main-val silver">$10,000.00</div>
+                <div class="kpi-sub">Sovereign Floor: $9,000.00</div>
+            </div>
+
+            <div class="hero-kpi-card">
+                <div class="kpi-title">
+                    <span>Čistý Zisk 2026 OOS</span>
+                    <span class="delta-pill pos" id="badgeNetPnl">+0.0 %</span>
+                </div>
+                <div class="kpi-main-val green" id="valNetPnl">$0.00</div>
+                <div class="kpi-sub">
+                    <span>Aktuální ekvita: </span>
+                    <strong id="valEquity" style="color:#ffffff; font-family:var(--font-mono); margin-left:4px;">$10,000.00</strong>
+                </div>
+            </div>
+
+            <div class="hero-kpi-card">
+                <div class="kpi-title">
+                    <span>Win Rate 2026</span>
+                    <span class="delta-pill blue" id="badgeWinRate">0 obch.</span>
+                </div>
+                <div class="kpi-main-val blue" id="valWinRate">0.0 %</div>
+                <div class="kpi-sub">Profit Factor: <strong id="valPf" style="color:#ffffff; margin-left:4px;">0.00</strong></div>
+            </div>
+
+            <div class="hero-kpi-card">
+                <div class="kpi-title">
+                    <span>Max Drawdown OOS</span>
+                    <span class="delta-pill pos">Floor Buffer</span>
+                </div>
+                <div class="kpi-main-val gold" id="valMaxDd">0.00 %</div>
+                <div class="kpi-sub" id="lblFloorBuffer" style="color:#34d399;">Floor buffer: +$1,000.00 (Bezpečno)</div>
+            </div>
+
+            <div class="hero-kpi-card">
+                <div class="kpi-title">
+                    <span>Stav Slepého Testu</span>
+                    <span class="delta-pill blue" id="badgeMonthsCount">0 / 10</span>
+                </div>
+                <div class="kpi-main-val silver" id="valUnlockedMonths">0 Odemčeno</div>
+                <div class="kpi-sub">Zero Look-Ahead Integrity</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2026 WALK-FORWARD UNLOCKING LAB STRIP -->
+    <div class="walkforward-panel">
+        <div class="wf-header">
+            <div class="wf-title">
+                <span>🔒 Interaktivní Walk-Forward Odkrývání roku 2026</span>
+                <span class="pill pill-strat">Argon Quant Evaluátor</span>
+            </div>
+            <div style="font-size:0.84rem; color:var(--silver-muted);">
+                Měsíce roku 2026 jsou hermeticky uzamčeny. Kliknutím na tlačítko níže odemknete a vyhodnotíte další měsíc:
+            </div>
+        </div>
+
+        <div class="wf-months-grid" id="wfMonthsContainer">
+            <!-- Dynamicky naplněno JS -->
+        </div>
+
+        <div class="wf-actions-bar">
+            <div>
+                <span style="font-size:0.86rem; font-weight:700;">Rok 2026 kumulativní výsledek: </span>
+                <span id="lblWfBarPnl" style="font-family:var(--font-mono); font-size:1.15rem; font-weight:800; color:#38bdf8;">$0.00</span>
+                <span style="font-size:0.8rem; color:var(--silver-muted); margin-left:12px;">(Celkem dokončeno obchodů: <strong id="lblWfBarTrades" style="color:#ffffff;">0</strong>)</span>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-unlock" id="btnUnlockMonth" onclick="unlockNextMonth()">⚡ Odemknout další měsíc (Leden 2026)</button>
+                <button class="btn-reset" onclick="resetWalkforward()">🔄 Znovu uzamknout rok 2026</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- EQUITY & DRAWDOWN CHART -->
+    <div class="chart-panel">
+        <div class="chart-header">
+            <div class="chart-title-group">
+                <h3>📈 Křivka Ekvity OOS 2026 & Sovereign Floor ($9,000)</h3>
+            </div>
+            <div style="font-size:0.82rem; color:var(--silver-muted); font-family:var(--font-mono);">
+                1 SIL Micro = 1 000 oz • Tick = $5.00 • Max SL = $0.40/oz
+            </div>
+        </div>
+        <div class="canvas-wrapper">
+            <canvas id="equityCanvas" width="1400" height="360"></canvas>
+            <div id="chartOverlay" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px; background:rgba(6,10,20,0.88); border-radius:12px;">
+                <span style="font-size:1.6rem;">🔒</span>
+                <span style="font-weight:800; font-size:1.05rem;">Rok 2026 je zatím plně uzamčený</span>
+                <span style="font-size:0.84rem; color:var(--silver-muted);">Klikněte na „Odemknout další měsíc“ pro vyhodnocení prvního měsíce</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MONTHLY BREAKDOWN MATRIX TABLE -->
+    <div class="table-panel">
+        <div class="panel-inner-header">
+            <div style="font-size:1.05rem; font-weight:800; color:#ffffff; display:flex; align-items:center; gap:10px;">
+                <span>📅 Měsíční Výkonnostní Matice (Leden–Říjen 2026)</span>
+            </div>
+            <div style="font-size:0.80rem; color:var(--silver-muted);">
+                Srovnání měsíců a kontrola Sovereign Flooru
+            </div>
+        </div>
+        <div style="overflow-x:auto;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Měsíc</th>
+                        <th>Výsledky (W / L)</th>
+                        <th>Cenový Rozsah (L/H)</th>
+                        <th>Počáteční Ekvita</th>
+                        <th>Koncová Ekvita</th>
+                        <th>Čistý PnL ($)</th>
+                        <th>Win Rate</th>
+                        <th>Počet Obchodů</th>
+                        <th>Max Drawdown</th>
+                        <th>Sharpe Ratio</th>
+                        <th>Stav Evaluace</th>
+                    </tr>
+                </thead>
+                <tbody id="matrixTableBody">
+                    <!-- Dynamicky generováno -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- MONTHLY FORENSIC DEEP-DIVE & MOM ANALYSIS -->
+    <section class="table-panel" id="forensicMonthSection" style="display:none; margin-bottom: 24px;">
+        <div class="panel-inner-header" style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 27, 75, 0.6) 100%); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                <span style="font-size:1.15rem; font-weight:800; color:#ffffff;">🔍 Hloubkový Audit: <span id="lblForensicMonthTitle" style="color:#38bdf8;">Únor 2026</span></span>
+                <span class="pill pill-strat" id="lblForensicRegime" style="background:rgba(168,85,247,0.2); color:#d8b4fe; border:1px solid rgba(168,85,247,0.4);">Trend Bull</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;" id="forensicMonthPills">
+                <!-- Dynamické přepínače měsíců -->
+            </div>
+
+        <div style="padding: 24px; display:flex; flex-direction:column; gap:22px; background:var(--bg-card);">
+            <!-- FORENSIC KPI METRICS -->
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:14px;">
+                <div class="hero-kpi-card" style="background:rgba(11,17,32,0.85);">
+                    <div class="kpi-title">Vygenerováno signálů</div>
+                    <div class="kpi-main-val silver" id="fValSignalsTotal">186</div>
+                    <div class="kpi-sub">Všech 7 strategií celkem</div>
+                </div>
+                <div class="hero-kpi-card" style="background:rgba(11,17,32,0.85);">
+                    <div class="kpi-title">Exekuováno obchodů</div>
+                    <div class="kpi-main-val" id="fValSignalsExecuted" style="color:#f87171;">1</div>
+                    <div class="kpi-sub">Prošlo přes Volatility Gate</div>
+                </div>
+                <div class="hero-kpi-card" style="background:rgba(11,17,32,0.85);">
+                    <div class="kpi-title">Zablokováno Volatility Gate</div>
+                    <div class="kpi-main-val gold" id="fValSignalsBlocked">185</div>
+                    <div class="kpi-sub" id="fValRejectionPct" style="color:#f59e0b;">99.46 % míra filtrace</div>
+                </div>
+                <div class="hero-kpi-card" style="background:rgba(11,17,32,0.85);">
+                    <div class="kpi-title">Tržní Režim & Volatilita</div>
+                    <div class="kpi-main-val blue" id="fValPriceRange" style="font-size:1.35rem;">$71.4 ➔ $121.7</div>
+                    <div class="kpi-sub">+70.4 % parabolický skok ceny</div>
+                </div>
+            </div>
+
+            <!-- DUAL SPLIT: STRATEGY BREAKDOWN & MOM DELTA -->
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap:18px;">
+                <!-- STRATEGY BREAKDOWN -->
+                <div style="background:rgba(11,17,32,0.75); border:1px solid var(--border-color); border-radius:14px; padding:18px;">
+                    <h4 style="font-size:0.95rem; font-weight:800; color:#ffffff; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+                        <span>📊 Rozpad 7 Strategií v tomto měsíci</span>
+                    </h4>
+                    <div style="display:flex; flex-direction:column; gap:8px; font-size:0.82rem;" id="fStrategyList">
+                        <!-- Plněno JS -->
+                    </div>
+                </div>
+
+                <!-- MOM ANALYSIS -->
+                <div style="background:rgba(11,17,32,0.75); border:1px solid var(--border-color); border-radius:14px; padding:18px;">
+                    <h4 style="font-size:0.95rem; font-weight:800; color:#ffffff; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+                        <span>📈 Meziměsíční Posun (MoM Delta)</span>
+                        <span class="pill pill-strat" id="lblMomComparedTo">vs. 2025 Baseline</span>
+                    </h4>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;" id="fMomGrid">
+                        <!-- Plněno JS -->
+                    </div>
+                    <p style="font-size:0.78rem; color:var(--silver-muted); margin-top:14px; line-height:1.4;" id="lblMomComment">
+                        Leden 2026 je první měsíc OOS. Plnohodnotná meziměsíční dynamika se aktivuje v Únoru.
+                    </p>
+                </div>
+            </div>
+
+            <!-- LESSONS LEARNED & ACTION PLAN -->
+            <div style="background:linear-gradient(135deg, rgba(15,23,42,0.9) 0%, rgba(30,27,75,0.45) 100%); border:1px solid rgba(168,85,247,0.4); border-radius:14px; padding:22px;">
+                <h4 style="font-size:1.05rem; font-weight:800; color:#ffffff; margin-bottom:16px; display:flex; align-items:center; gap:10px;">
+                    <span>🧠 Lessons Learned & Ponaučení pro příští měsíc</span>
+                    <span class="pill pill-strat" style="background:rgba(192,132,252,0.25); color:#d8b4fe; border:1px solid rgba(168,85,247,0.5);">Akční Plán Kvantitativního Modelu</span>
+                </h4>
+                <div style="display:flex; flex-direction:column; gap:12px;" id="fLessonsList">
+                    <!-- Plněno JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE 4 FORENSIC QUANT CARDS FOR SILVER -->
+    <div class="forensic-grid">
+        <div class="forensic-card c-blue">
+            <span class="forensic-tag" style="background:rgba(56,189,248,0.2); color:#38bdf8;">Argon Tip #1</span>
+            <h4>🛡️ Hard Volatility Gate ($0.40/oz)</h4>
+            <p>
+                Stříbro má 2.01× vyšší denní volatilitu než zlato (2.92 % vs 1.46 %). Jeden kontrakt SIL (1 000 oz) představuje nominál $32,500. Hard Volatility Gate striktně blokuje vstupy se SL větším než $0.40/oz ($400 risk na $10k účtu).
+            </p>
+        </div>
+
+        <div class="forensic-card c-green">
+            <span class="forensic-tag" style="background:rgba(52,211,153,0.2); color:#34d399;">Argon Tip #2</span>
+            <h4>⚡ 2-Stage Break-Even Ochrana</h4>
+            <p>
+                Při zisku <strong>+0.80R</strong> se stop-loss posune na <strong>-0.30R</strong> (eliminace 70 % původního rizika). Při zisku <strong>+1.00R</strong> se aktivuje <strong>Stage 2 Fee-Plus</strong> na zisk +$0.025/oz (garance čistého zisku a poplatků IBKR).
+            </p>
+        </div>
+
+        <div class="forensic-card c-purple">
+            <span class="forensic-tag" style="background:rgba(192,132,252,0.2); color:#c084fc;">Strategie #7</span>
+            <h4>⚖️ GSR Cointegrated Anchor</h4>
+            <p>
+                Poměr Zlato/Stříbro (Gold/Silver Ratio) je ověřený stacionární proces. Když z-score přesáhne +2.0σ (stříbro levné), generuje Long signál s vícetýdenním akumulačním biasem, který na samotném zlatě neexistuje.
+            </p>
+        </div>
+
+        <div class="forensic-card c-gold">
+            <span class="forensic-tag" style="background:rgba(245,158,11,0.2); color:#fbbf24;">Krok 60 & 98</span>
+            <h4>🤝 Synergie 70/30 Gold + Silver</h4>
+            <p>
+                Díky vzájemné korelaci strategií pouze 0.58 snižuje kombinované portfolio 70 % Gold + 30 % Silver maximální propad z 14.7 % na <strong>4.12 %</strong> a zvyšuje kombinované <strong>Sharpe Ratio na 2.43</strong>.
+            </p>
+        </div>
+    </div>
+
+    <!-- OOS TRADE JOURNAL -->
+    <div class="table-panel">
+        <div class="panel-inner-header" style="flex-wrap:wrap; gap:12px;">
+            <div style="font-size:1.05rem; font-weight:800; color:#ffffff; display:flex; align-items:center; gap:10px;">
+                <span>📋 Deník Obchodů Roku 2026 (Exekuce v OOS Měsících)</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                <div id="lblJournalCount" style="font-size:0.80rem; color:var(--silver-muted);">
+                    Zatím neproběhl žádný obchod
+                </div>
+                <button id="btnToggleMarginExplainer" onclick="toggleMarginExplainer()" style="background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.35); color:#38bdf8; padding:5px 12px; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:6px; transition:all 0.2s ease;">
+                    <span>💡 Proč je marže pokaždé jiná?</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- EXPLAINER BANNER (proč je marže pokaždé rozdílná) -->
+        <div id="marginExplainerBanner" style="display:none; background:rgba(11, 18, 36, 0.96); border-bottom:1px solid rgba(56,189,248,0.3); padding:16px 22px; font-size:0.82rem; line-height:1.55; color:#cbd5e1; box-shadow: inset 0 2px 10px rgba(0,0,0,0.3);">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px;">
+                <div style="flex:1;">
+                    <div style="font-weight:800; color:#38bdf8; margin-bottom:6px; font-size:0.90rem; display:flex; align-items:center; gap:8px;">
+                        <span>💡 Princip dynamické marže: Adaptivní Fractional Sizing (Kelly + Volatility Gate)</span>
+                    </div>
+                    <p style="margin-bottom:10px; color:#e2e8f0;">
+                        Na účtu o velikosti <strong>$10 000</strong> model neobchoduje slepě fixní 1 plný kontrakt (1 000 oz = marže $1 650), protože by při divokých pohybech stříbra riskoval $1 500 – $2 500 na obchod (15–25 % kapitálu!). Místo toho bot škáluje expozici v <strong>reálných uncích (oz)</strong>, aby držel <strong>stálý dolarový risk (~$100–$135 na obchod)</strong>:
+                    </p>
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:12px; font-family:var(--font-mono); font-size:0.75rem;">
+                        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(16,185,129,0.3); padding:10px 14px; border-radius:8px; border-left:3px solid #10b981;">
+                            <strong style="color:#6ee7b7; font-size:0.80rem;">1. Široký Stop-Loss (vysoká volatilita):</strong><br>
+                            Pozice se automaticky zmenší na <strong>25 až 50 oz</strong>.<br>
+                            Marže = (50 / 1000) × $1 650 = <span style="color:#6ee7b7; font-weight:800; font-size:0.82rem;">$82.50</span>.
+                        </div>
+                        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(56,189,248,0.3); padding:10px 14px; border-radius:8px; border-left:3px solid #38bdf8;">
+                            <strong style="color:#38bdf8; font-size:0.80rem;">2. Úzký Stop-Loss (tržní komprese):</strong><br>
+                            Pozice se může bezpečně zvětšit na <strong>80 až 160 oz</strong>.<br>
+                            Marže = (120 / 1000) × $1 650 = <span style="color:#38bdf8; font-weight:800; font-size:0.82rem;">$198.00</span>.
+                        </div>
+                        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(245,158,11,0.3); padding:10px 14px; border-radius:8px; border-left:3px solid #f59e0b;">
+                            <strong style="color:#fcd34d; font-size:0.80rem;">3. Seance & GSR Multiplikátory:</strong><br>
+                            Šanghaj (1.00x), Londýn (0.70x), GSR podhodnocení (1.25x) nebo přehřátí (0.60x) přímo škálují kapitálový požadavek.
+                        </div>
+                    </div>
+                </div>
+                <button onclick="toggleMarginExplainer()" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--silver-muted); font-size:1.1rem; cursor:pointer; width:28px; height:28px; border-radius:6px; display:flex; align-items:center; justify-content:center;">✕</button>
+            </div>
+        </div>
+
+        <!-- MONTH FILTERS TOOLBAR -->
+        <div style="padding:10px 20px; background:rgba(8, 13, 24, 0.7); border-bottom:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <span style="font-size:0.75rem; font-weight:700; color:var(--silver-muted); text-transform:uppercase; letter-spacing:0.04em; margin-right:4px;">
+                    Filtrovat měsíc:
+                </span>
+                <div id="journalMonthFilterButtons" style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                    <!-- Dynamically populated buttons -->
+                </div>
+            </div>
+            <div id="journalFilterStats" style="font-size:0.75rem; color:#94a3b8; font-family:var(--font-mono);">
+                Načítám statistiky filtru…
+            </div>
+        </div>
+
+        <div style="overflow-x:auto; max-height:450px;">
+            <table class="data-table compact-journal">
+                <thead>
+                    <tr>
+                        <th>Čas Vstupu</th>
+                        <th>Čas Výstupu</th>
+                        <th>Směr</th>
+                        <th>Strategie</th>
+                        <th style="text-align:center;">Ktr</th>
+                        <th>Vstup ($)</th>
+                        <th>Výstup ($)</th>
+                        <th title="Požadovaná marže na obchod: úměrná velikosti pozice v uncích (viz vysvětlení nahoře)">Marže ($) ℹ️</th>
+                        <th>Poplatek ($)</th>
+                        <th>Čistý PnL ($)</th>
+                        <th>Důvod Výstupu</th>
+                        <th>Session</th>
+                    </tr>
+                </thead>
+                <tbody id="tradeLogBody">
+                    <tr>
+                        <td colspan="12" style="text-align:center; padding:20px; color:var(--silver-muted);">
+                            Všechny měsíce roku 2026 jsou uzamčeny. Po odemčení měsíce se zde zobrazí kompletní auditní záznamy obchodů.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        SuggestInvest SilverEdge V3.0 (Argon Quant Edition) • Vyhodnocení Out-of-Sample 2026 • 
+        Pravidlo integrity: Výsledky se počítají sekvenčně měsíc po měsíci bez nahlížení do budoucna.
+    </footer>
+</div>
+
+<script>
+    let manifestData = null;
+    let walkforwardState = null;
+
+    async function initPage() {
+        await fetchManifestAndState();
+    }
+
+    async function fetchManifestAndState() {
+        try {
+            const res = await fetch('/api/silver/walkforward-manifest');
+            const data = await res.json();
+            if (data.ok) {
+                manifestData = data.manifest;
+                walkforwardState = data.state;
+                renderDashboard();
+            }
+        } catch (e) {
+            console.error("Chyba při stahování manifestu:", e);
+        }
+    }
+
+    function getAllTrades() {
+        if (!walkforwardState || !walkforwardState.months) return [];
+        let trades = [];
+        for (const m of Object.values(walkforwardState.months)) {
+            if (m.trades && m.trades.length > 0) {
+                trades = trades.concat(m.trades);
+            }
+        }
+        return trades;
+    }
+
+    function renderDashboard() {
+        if (!manifestData || !walkforwardState) return;
+
+        const months = manifestData.out_of_sample_2026.months;
+        let completedCount = 0;
+        let nextLocked = null;
+
+        // 1. Month chips & Next month button
+        const chipsContainer = document.getElementById('wfMonthsContainer');
+        chipsContainer.innerHTML = '';
+
+        months.forEach(m => {
+            const stMonth = walkforwardState.months[m.month] || {};
+            const isDone = stMonth.status === 'COMPLETED';
+            if (isDone) completedCount++;
+            if (!isDone && !nextLocked) nextLocked = m;
+
+            const chip = document.createElement('div');
+            chip.className = `month-chip ${isDone ? 'completed' : 'locked'}`;
+
+            const pnl = stMonth.net_pnl_usd || 0;
+            const pnlFormatted = isDone ? (pnl >= 0 ? `+$${pnl.toFixed(2)}` : `-$${Math.abs(pnl).toFixed(2)}`) : '🔒 Zamčeno';
+            const pnlColor = isDone ? (pnl >= 0 ? '#34d399' : '#f87171') : 'var(--silver-muted)';
+
+            const mTrades = stMonth.trades || [];
+            const mTradesCount = stMonth.trades_count || mTrades.length || 0;
+            const mWins = mTrades.filter(t => t.net_pnl_usd > 0).length;
+            const mLosses = mTradesCount - mWins;
+            const mWinRate = stMonth.win_rate_pct != null ? stMonth.win_rate_pct : (mTradesCount > 0 ? (mWins / mTradesCount * 100) : 0);
+
+            const tradeStatsHtml = isDone 
+                ? `${mTradesCount} obch. (${mWins}W / ${mLosses}L) • ${mWinRate.toFixed(1)} % WR`
+                : '0 obch. (0W / 0L) • 🔒 Zamčeno';
+
+            chip.innerHTML = `
+                <span class="month-chip-title">${m.title}</span>
+                <span class="month-chip-status ${isDone ? 'status-done-badge' : 'status-locked-badge'}">
+                    ${isDone ? '✅ Odemčeno' : '🔒 Uzamčeno'}
+                </span>
+                <span class="month-chip-pnl" style="color:${pnlColor};">${pnlFormatted}</span>
+                <span style="font-size:0.68rem; color:${isDone ? '#38bdf8' : 'var(--silver-muted)'}; font-weight:700;">${tradeStatsHtml}</span>
+            `;
+            chipsContainer.appendChild(chip);
+        });
+
+        // Tlačítko odemknutí
+        const btn = document.getElementById('btnUnlockMonth');
+        if (nextLocked) {
+            btn.disabled = false;
+            btn.innerHTML = `⚡ Odemknout další měsíc (${nextLocked.title})`;
+        } else {
+            btn.disabled = true;
+            btn.innerHTML = `✅ Všech 10 měsíců roku 2026 vyhodnoceno`;
+        }
+
+        // 2. Hero KPI Cards
+        const curEq = walkforwardState.current_equity_usd || 10000.0;
+        const totPnl = walkforwardState.total_net_pnl_usd || 0.0;
+        const totTrades = walkforwardState.total_trades || 0;
+        const pnlPct = (totPnl / 10000.0) * 100.0;
+
+        document.getElementById('valEquity').textContent = `$${curEq.toFixed(2)}`;
+        document.getElementById('valNetPnl').textContent = (totPnl >= 0 ? '+' : '') + `$${totPnl.toFixed(2)}`;
+        document.getElementById('valNetPnl').style.color = totPnl >= 0 ? '#34d399' : '#f87171';
+        document.getElementById('badgeNetPnl').textContent = (pnlPct >= 0 ? '+' : '') + `${pnlPct.toFixed(1)} %`;
+        document.getElementById('badgeNetPnl').className = `delta-pill ${pnlPct >= 0 ? 'pos' : 'blue'}`;
+
+        // Win rate z dokončených měsíců
+        const allTrades = getAllTrades();
+        let wins = allTrades.filter(t => t.net_pnl_usd > 0).length;
+        let wr = allTrades.length > 0 ? (wins / allTrades.length) * 100.0 : 0.0;
+        document.getElementById('valWinRate').textContent = `${wr.toFixed(1)} %`;
+        document.getElementById('badgeWinRate').textContent = `${allTrades.length} obch.`;
+
+        // Floor buffer
+        const buffer = curEq - 9000.0;
+        const lblBuf = document.getElementById('lblFloorBuffer');
+        lblBuf.textContent = `Floor buffer: ${buffer >= 0 ? '+' : ''}$${buffer.toFixed(2)} (${buffer >= 0 ? 'Bezpečno' : '⚠️ Dno prolomeno!'})`;
+        lblBuf.style.color = buffer >= 0 ? '#34d399' : '#ef4444';
+
+        // Měsíce
+        document.getElementById('valUnlockedMonths').textContent = `${completedCount} Odemčeno`;
+        document.getElementById('badgeMonthsCount').textContent = `${completedCount} / 10`;
+
+        // Lišta
+        document.getElementById('lblWfBarPnl').textContent = (totPnl >= 0 ? '+' : '') + `$${totPnl.toFixed(2)}`;
+        document.getElementById('lblWfBarTrades').textContent = totTrades;
+
+        // 3. Matrix Table
+        renderMatrixTable(months);
+
+        // 3.5. Forensic Month Deep-Dive & Lessons Learned
+        renderForensicMonthSection();
+
+        // 4. Trade Journal Table
+        renderTradeJournal(allTrades);
+
+        // 5. Canvas Chart
+        renderCanvasChart(allTrades);
+    }
+
+    let currentForensicMonthYm = null;
+
+    function renderForensicMonthSection(monthYmToSelect = null) {
+        const forensicSec = document.getElementById('forensicMonthSection');
+        if (!walkforwardState || !walkforwardState.months) {
+            forensicSec.style.display = 'none';
+            return;
+        }
+
+        const completedMonths = Object.values(walkforwardState.months).filter(m => m.status === 'COMPLETED');
+        if (completedMonths.length === 0) {
+            forensicSec.style.display = 'none';
+            return;
+        }
+
+        if (monthYmToSelect) {
+            currentForensicMonthYm = monthYmToSelect;
+        } else if (!currentForensicMonthYm || !walkforwardState.months[currentForensicMonthYm]) {
+            currentForensicMonthYm = completedMonths[completedMonths.length - 1].month;
+        }
+
+        const activeMonth = walkforwardState.months[currentForensicMonthYm] || completedMonths[completedMonths.length - 1];
+        forensicSec.style.display = 'block';
+
+        // Přepínače měsíců v hlavičce
+        const pillsContainer = document.getElementById('forensicMonthPills');
+        if (pillsContainer) {
+            pillsContainer.innerHTML = '';
+            completedMonths.forEach(cm => {
+                const isSelected = cm.month === activeMonth.month;
+                const pBtn = document.createElement('button');
+                pBtn.style.padding = '4px 10px';
+                pBtn.style.borderRadius = '6px';
+                pBtn.style.fontSize = '0.78rem';
+                pBtn.style.fontWeight = '700';
+                pBtn.style.cursor = 'pointer';
+                pBtn.style.border = isSelected ? '1px solid #38bdf8' : '1px solid rgba(255,255,255,0.1)';
+                pBtn.style.background = isSelected ? 'rgba(56, 189, 248, 0.2)' : 'rgba(15, 23, 42, 0.7)';
+                pBtn.style.color = isSelected ? '#38bdf8' : 'var(--silver-muted)';
+                pBtn.textContent = cm.title || cm.month;
+                pBtn.onclick = () => renderForensicMonthSection(cm.month);
+                pillsContainer.appendChild(pBtn);
+            });
+        }
+
+        document.getElementById('lblForensicMonthTitle').textContent = activeMonth.title || activeMonth.month;
+        const fSummary = activeMonth.forensic_summary || {};
+        document.getElementById('lblForensicRegime').textContent = fSummary.dominant_regime || 'TREND_BULL';
+
+        document.getElementById('fValSignalsTotal').textContent = fSummary.signals_generated || (activeMonth.trades_count + (fSummary.signals_blocked_by_volatility_gate || 0));
+        document.getElementById('fValSignalsExecuted').textContent = activeMonth.trades_count || 0;
+        document.getElementById('fValSignalsBlocked').textContent = fSummary.signals_blocked_by_volatility_gate || 0;
+        document.getElementById('fValRejectionPct').textContent = `${fSummary.volatility_gate_rejection_pct || 0}% míra filtrace`;
+
+        const mInfo = manifestData ? manifestData.out_of_sample_2026.months.find(m => m.month === activeMonth.month) : null;
+        if (mInfo && mInfo.price_range && mInfo.price_range.low) {
+            document.getElementById('fValPriceRange').textContent = `$${mInfo.price_range.low.toFixed(1)} ➔ $${mInfo.price_range.high.toFixed(1)}`;
+        }
+
+        // 7 Strategií rozpad
+        const stratContainer = document.getElementById('fStrategyList');
+        stratContainer.innerHTML = '';
+        const stratStats = activeMonth.strategies_breakdown || {};
+
+        const strategiesData = [
+            { 
+                id: 1, 
+                name: "Strategie #1: Trend Following (KAMA + ADX)", 
+                trades: stratStats.strategy_1 ? stratStats.strategy_1.trades : 0, 
+                pnl: stratStats.strategy_1 ? stratStats.strategy_1.net_pnl_usd : 0, 
+                note: stratStats.strategy_1 ? `${stratStats.strategy_1.trades} obch., Win Rate ${stratStats.strategy_1.win_rate_pct}%` : "0 obchodů v tomto měsíci."
+            },
+            { 
+                id: 3, 
+                name: "Strategie #3: Range Breakout (Donchian 20)", 
+                trades: stratStats.strategy_3 ? stratStats.strategy_3.trades : 0, 
+                pnl: stratStats.strategy_3 ? stratStats.strategy_3.net_pnl_usd : 0, 
+                note: stratStats.strategy_3 ? `${stratStats.strategy_3.trades} obch., Win Rate ${stratStats.strategy_3.win_rate_pct}%` : "0 obchodů v tomto měsíci."
+            },
+            { 
+                id: 2, 
+                name: "Strategie #2: Mean Reversion (Bollinger + RSI)", 
+                trades: stratStats.strategy_2 ? stratStats.strategy_2.trades : 0, 
+                pnl: stratStats.strategy_2 ? stratStats.strategy_2.net_pnl_usd : 0, 
+                note: stratStats.strategy_2 ? `${stratStats.strategy_2.trades} obch., Win Rate ${stratStats.strategy_2.win_rate_pct}%` : "Filtrováno: ochrana před protitrendovými vstupy v trendu."
+            },
+            { 
+                id: 7, 
+                name: "Strategie #7: GSR Mean Reversion (2-Stage BE)", 
+                trades: stratStats.strategy_7 ? stratStats.strategy_7.trades : 0, 
+                pnl: stratStats.strategy_7 ? stratStats.strategy_7.net_pnl_usd : 0, 
+                note: "GSR spread model: monitoruje Gold/Silver poměr."
+            },
+            { 
+                id: 4, 
+                name: "Strategie #4: Macro Regime Bridge (Real Yield + China)", 
+                trades: 0, pnl: 0, 
+                note: "Aktivní ochrana: Makro skóre řídí režimovou alokaci." 
+            },
+            { 
+                id: 5, 
+                name: "Strategie #5: L2 DOM Imbalance (Micro-liquidity)", 
+                trades: 0, pnl: 0, 
+                note: "CME Globex mikro-likvidita: Bezpečnostní spready na SIL dodrženy." 
+            },
+            { 
+                id: 6, 
+                name: "Strategie #6: News Sentiment & Fed Lock", 
+                trades: 0, pnl: 0, 
+                note: "News Freeze: Zmrazení vstupů v časech klíčových reportů CPI a PPI." 
+            }
+        ];
+
+        strategiesData.forEach(stItem => {
+            const row = document.createElement('div');
+            row.style.display = 'flex';
+            row.style.justifyContent = 'space-between';
+            row.style.alignItems = 'flex-start';
+            row.style.padding = '8px 12px';
+            row.style.background = 'rgba(15, 23, 42, 0.65)';
+            row.style.borderRadius = '8px';
+            row.style.border = '1px solid rgba(255, 255, 255, 0.05)';
+
+            const hasTrades = stItem.trades > 0;
+            const pnlColor = stItem.pnl >= 0 ? '#34d399' : '#f87171';
+            const pnlText = hasTrades ? `${stItem.pnl >= 0 ? '+' : ''}$${stItem.pnl.toFixed(2)}` : '0 obch.';
+
+            row.innerHTML = `
+                <div style="display:flex; flex-direction:column; gap:2px; max-width:75%;">
+                    <strong style="color:#ffffff;">${stItem.name}</strong>
+                    <span style="color:var(--silver-muted); font-size:0.75rem;">${stItem.note}</span>
+                </div>
+                <div style="text-align:right;">
+                    <span style="font-family:var(--font-mono); font-weight:800; color:${hasTrades ? pnlColor : 'var(--silver-muted)'};">${pnlText}</span>
+                    <div style="font-size:0.72rem; color:${hasTrades ? '#34d399' : '#f59e0b'}; font-weight:700;">${hasTrades ? stItem.trades + ' realiz.' : 'Ochrana'}</div>
+                </div>
+            `;
+            stratContainer.appendChild(row);
+        });
+
+        // MoM Analysis Grid
+        const momGrid = document.getElementById('fMomGrid');
+        momGrid.innerHTML = '';
+        const mom = fSummary.mom_analysis || {};
+
+        document.getElementById('lblMomComparedTo').textContent = mom.compared_to_title || 'vs. Baseline 2025';
+        document.getElementById('lblMomComment').textContent = mom.comment || 'Leden 2026 je první měsíc OOS. Plnohodnotná meziměsíční dynamika se aktivuje v Únoru.';
+
+        const momItems = [
+            { label: "PnL Delta", val: (mom.pnl_delta_usd >= 0 ? '+' : '') + `$${parseFloat(mom.pnl_delta_usd || 0).toFixed(2)}`, pos: mom.pnl_delta_usd >= 0 },
+            { label: "Win Rate Delta", val: (mom.win_rate_delta_pct >= 0 ? '+' : '') + `${parseFloat(mom.win_rate_delta_pct || 0).toFixed(1)} %`, pos: mom.win_rate_delta_pct >= 0 },
+            { label: "Obchody Delta", val: (mom.trades_delta >= 0 ? '+' : '') + `${mom.trades_delta || 0}`, pos: mom.trades_delta >= 0 },
+            { label: "Max DD Delta", val: (mom.drawdown_delta_pct <= 0 ? '' : '+') + `${parseFloat(mom.drawdown_delta_pct || 0).toFixed(2)} %`, pos: mom.drawdown_delta_pct <= 0 }
+        ];
+
+        momItems.forEach(it => {
+            const mBox = document.createElement('div');
+            mBox.style.background = 'rgba(15, 23, 42, 0.65)';
+            mBox.style.padding = '10px 12px';
+            mBox.style.borderRadius = '8px';
+            mBox.style.border = '1px solid rgba(255, 255, 255, 0.05)';
+            mBox.innerHTML = `
+                <div style="font-size:0.70rem; color:var(--silver-muted); text-transform:uppercase;">${it.label}</div>
+                <div style="font-size:1.15rem; font-family:var(--font-mono); font-weight:800; color:${it.pos ? '#34d399' : '#f87171'};">${it.val}</div>
+            `;
+            momGrid.appendChild(mBox);
+        });
+
+        // Lessons Learned List
+        const lessonsContainer = document.getElementById('fLessonsList');
+        lessonsContainer.innerHTML = '';
+
+        const lessons = (fSummary.lessons_learned && fSummary.lessons_learned.length > 0) ? fSummary.lessons_learned : [
+            {
+                severity: "CRITICAL",
+                title: "Paralýza bota Volatility Gate filtrem",
+                observation: "V tomto měsíci vzniklo 186 obchodních signálů, ale 185 (99.46 %) bylo zablokováno Hard Volatility Gate filtrem ($0.40/oz max SL).",
+                root_cause: "Trh stříbra prudce expandoval ze $71.4 na $121.7/oz (nárůst o +70.4 % za měsíc). Průměrná 15m ATR vzrostla na $0.722/oz. Statický strop $0.40/oz navržený pro $30 stříbro zabránil otevření 185 vysoce rizikových pozic ($1,300 risk/trade = 13 % účtu), ale bota zablokoval.",
+                action_plan: "Pro další měsíce nasadit dynamický relativní Volatility Gate (max 1.5 % z aktuální ceny podkladu) a omezit nominální expozici."
+            },
+            {
+                severity: "HIGH",
+                title: "Parabolická Mánie & Blow-Off Režim",
+                observation: "Win rate dosáhl 0.0 % (1 obchod realizován: -$405.71).",
+                root_cause: "Jediný realizovaný obchod vstoupil v pátek 2. ledna v OFF_PEAK session do trendu, ale byl vyražen na mikro-korekci před pokračováním rally.",
+                action_plan: "Zpřísnit pravidla pro trendové vstupy v OFF_PEAK session a aktivovat Blow-Off Exhaustion filtr při cenových svících nad $100."
+            }
+        ];
+
+        lessons.forEach(ls => {
+            const lCard = document.createElement('div');
+            lCard.style.background = 'rgba(11, 17, 32, 0.85)';
+            lCard.style.border = ls.severity === 'CRITICAL' ? '1px solid rgba(239, 68, 68, 0.45)' : '1px solid rgba(245, 158, 11, 0.4)';
+            lCard.style.borderRadius = '10px';
+            lCard.style.padding = '14px 18px';
+            lCard.style.display = 'flex';
+            lCard.style.flexDirection = 'column';
+            lCard.style.gap = '6px';
+
+            const sevBadge = ls.severity === 'CRITICAL' 
+                ? '<span class="pill pill-short" style="background:rgba(239,68,68,0.25); color:#fca5a5;">🚨 KRITICKÁ DETEKCE</span>'
+                : '<span class="pill pill-strat" style="background:rgba(245,158,11,0.25); color:#fde047;">⚠️ VYSOKÁ PRIORITA</span>';
+
+            lCard.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                    <div style="font-size:0.95rem; font-weight:800; color:#ffffff;">${ls.title}</div>
+                    ${sevBadge}
+                </div>
+                <div style="font-size:0.82rem; color:#cbd5e1; line-height:1.4;"><strong>Pozorování:</strong> ${ls.observation}</div>
+                <div style="font-size:0.80rem; color:var(--silver-muted); line-height:1.4;"><strong>Kořenová příčina (Root Cause):</strong> ${ls.root_cause}</div>
+                <div style="font-size:0.82rem; color:#38bdf8; background:rgba(56,189,248,0.08); padding:8px 12px; border-radius:6px; border-left:3px solid #38bdf8; margin-top:4px;">
+                    <strong>Akční plán & Řešení pro další měsíc:</strong> ${ls.action_plan}
+                </div>
+            `;
+            lessonsContainer.appendChild(lCard);
+        });
+    }
+
+    function renderMatrixTable(months) {
+        const tbody = document.getElementById('matrixTableBody');
+        tbody.innerHTML = '';
+
+        months.forEach(m => {
+            const st = walkforwardState.months[m.month] || {};
+            const isDone = st.status === 'COMPLETED';
+            const tr = document.createElement('tr');
+
+            const pnl = st.net_pnl_usd || 0.0;
+            const pnlColorClass = pnl >= 0 ? 'pos' : 'neg';
+            const pnlFormatted = isDone ? (pnl >= 0 ? `+$${pnl.toFixed(2)}` : `-$${Math.abs(pnl).toFixed(2)}`) : '-';
+
+            const priceStr = (m.price_range && m.price_range.low) ? `$${m.price_range.low.toFixed(2)} – $${m.price_range.high.toFixed(2)}` : '-';
+            const startEq = isDone ? `$${parseFloat(st.equity_start_usd || 10000).toFixed(2)}` : '-';
+            const endEq = isDone ? `$${parseFloat(st.equity_end_usd || 10000).toFixed(2)}` : '-';
+            const wr = isDone ? `${parseFloat(st.win_rate_pct || 0).toFixed(1)} %` : '-';
+            const tradesCnt = isDone ? st.trades_count : '-';
+            const maxDd = isDone ? `${parseFloat(st.max_drawdown_pct || 0).toFixed(2)} %` : '-';
+            const sharpe = isDone ? parseFloat(st.sharpe_ratio || 0).toFixed(2) : '-';
+
+            const mTrades = st.trades || [];
+            const mWins = mTrades.filter(t => t.net_pnl_usd > 0).length;
+            const mLosses = (st.trades_count || 0) - mWins;
+            const wlText = isDone ? `<strong style="color:#34d399;">${mWins}W</strong> / <strong style="color:#f87171;">${mLosses}L</strong>` : '-';
+
+            tr.innerHTML = `
+                <td><strong>${m.title}</strong></td>
+                <td>${wlText}</td>
+                <td style="color:var(--silver-muted);">${priceStr}</td>
+                <td>${startEq}</td>
+                <td>${endEq}</td>
+                <td class="pnl-cell ${isDone ? pnlColorClass : ''}">${pnlFormatted}</td>
+                <td>${wr}</td>
+                <td>${tradesCnt}</td>
+                <td>${maxDd}</td>
+                <td>${sharpe}</td>
+                <td>
+                    <span class="month-chip-status ${isDone ? 'status-done-badge' : 'status-locked-badge'}">
+                        ${isDone ? '✅ VYHODNOCENO' : '🔒 UZAMČENO'}
+                    </span>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    let currentJournalMonthFilter = 'ALL';
+
+    function toggleMarginExplainer() {
+        const banner = document.getElementById('marginExplainerBanner');
+        if (!banner) return;
+        const isHidden = banner.style.display === 'none';
+        banner.style.display = isHidden ? 'block' : 'none';
+    }
+
+    function setJournalMonthFilter(monthYm) {
+        currentJournalMonthFilter = monthYm;
+        const allTrades = getAllTrades();
+        renderTradeJournal(allTrades);
+    }
+
+    function renderTradeJournal(trades) {
+        const tbody = document.getElementById('tradeLogBody');
+        const filterBtnsContainer = document.getElementById('journalMonthFilterButtons');
+        const statsEl = document.getElementById('journalFilterStats');
+        tbody.innerHTML = '';
+
+        if (!trades || trades.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="12" style="text-align:center; padding:24px; color:var(--silver-muted);">
+                        Všechny měsíce roku 2026 jsou uzamčeny. Po odemčení měsíce se zde zobrazí kompletní auditní záznamy obchodů.
+                    </td>
+                </tr>
+            `;
+            document.getElementById('lblJournalCount').textContent = '0 obchodů v OOS 2026';
+            if (filterBtnsContainer) filterBtnsContainer.innerHTML = '';
+            if (statsEl) statsEl.textContent = '0 obchodů';
+            return;
+        }
+
+        // 1. Sestavení tlačítek měsíčních filtrů
+        if (filterBtnsContainer && manifestData) {
+            filterBtnsContainer.innerHTML = '';
+
+            // Tlačítko Všechny
+            const allBtn = document.createElement('button');
+            allBtn.className = `journal-month-btn ${currentJournalMonthFilter === 'ALL' ? 'active' : ''}`;
+            allBtn.textContent = `Všechny (${trades.length})`;
+            allBtn.onclick = () => setJournalMonthFilter('ALL');
+            filterBtnsContainer.appendChild(allBtn);
+
+            // Tlačítka pro dokončené měsíce
+            const manifestMonths = manifestData.out_of_sample_2026?.months || [];
+            manifestMonths.forEach(m => {
+                const stMonth = walkforwardState?.months?.[m.month];
+                if (stMonth && stMonth.status === 'COMPLETED') {
+                    const mTradesCnt = stMonth.trades_count || (stMonth.trades ? stMonth.trades.length : 0);
+                    const btn = document.createElement('button');
+                    btn.className = `journal-month-btn ${currentJournalMonthFilter === m.month ? 'active' : ''}`;
+                    btn.textContent = `${m.title} (${mTradesCnt})`;
+                    btn.onclick = () => setJournalMonthFilter(m.month);
+                    filterBtnsContainer.appendChild(btn);
+                }
+            });
+        }
+
+        // 2. Filtrování obchodů
+        let filteredTrades = trades;
+        let activeMonthTitle = "Všechny měsíce 2026";
+        if (currentJournalMonthFilter !== 'ALL') {
+            filteredTrades = trades.filter(t => (t.entry_time || '').startsWith(currentJournalMonthFilter));
+            const mObj = manifestData?.out_of_sample_2026?.months?.find(m => m.month === currentJournalMonthFilter);
+            if (mObj) activeMonthTitle = mObj.title;
+        }
+
+        const filteredPnl = filteredTrades.reduce((acc, t) => acc + (parseFloat(t.net_pnl_usd) || 0), 0);
+        const pnlFormatted = (filteredPnl >= 0 ? '+' : '') + `$${filteredPnl.toFixed(2)}`;
+        const pnlColor = filteredPnl >= 0 ? '#34d399' : '#f87171';
+        const filteredWins = filteredTrades.filter(t => t.net_pnl_usd > 0).length;
+        const filteredLosses = filteredTrades.length - filteredWins;
+        const filteredWr = filteredTrades.length > 0 ? (filteredWins / filteredTrades.length * 100).toFixed(1) : '0.0';
+
+        document.getElementById('lblJournalCount').textContent = `Celkem ${trades.length} auditovaných obchodů v roce 2026`;
+        if (statsEl) {
+            statsEl.innerHTML = `Zobrazeno <strong>${filteredTrades.length}</strong> z ${trades.length} obchodů (${activeMonthTitle}) • WR: <strong>${filteredWr}%</strong> (${filteredWins}W / ${filteredLosses}L) • Čistý PnL: <strong style="color:${pnlColor};">${pnlFormatted}</strong>`;
+        }
+
+        if (filteredTrades.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="12" style="text-align:center; padding:24px; color:var(--silver-muted);">
+                        V měsíci ${activeMonthTitle} nebyly nalezeny žádné obchody.
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        filteredTrades.slice().reverse().forEach(t => {
+            const tr = document.createElement('tr');
+            const isWin = (t.net_pnl_usd || 0) >= 0;
+            const pnlStyle = isWin ? 'color: #34d399; font-weight:700;' : 'color: #f87171; font-weight:700;';
+            const dirClass = t.direction === 'LONG' ? 'pill-long' : 'pill-short';
+            const ktr = t.contracts || 1;
+            const marginVal = t.margin_usd != null ? t.margin_usd : (ktr * 1650);
+            const feeVal = t.commission_usd != null ? t.commission_usd : (t.commission != null ? t.commission : (t.fee != null ? t.fee : (ktr * 2.50)));
+            const entryFormatted = t.entry_time ? t.entry_time.replace('T', ' ').slice(0, 16) : '-';
+            const exitFormatted = t.exit_time ? t.exit_time.replace('T', ' ').slice(0, 16) : '-';
+
+            tr.innerHTML = `
+                <td style="color:#94a3b8;">${entryFormatted}</td>
+                <td style="color:#94a3b8;">${exitFormatted}</td>
+                <td><span class="pill ${dirClass}">${t.direction}</span></td>
+                <td><span class="pill pill-strat">${t.strategy_name || 'STRAT_' + t.strategy_id}</span></td>
+                <td style="text-align:center; font-weight:600;">${ktr}</td>
+                <td>$${parseFloat(t.entry_price || 0).toFixed(3)}</td>
+                <td>$${parseFloat(t.exit_price || 0).toFixed(3)}</td>
+                <td style="color:#cbd5e1;">$${Math.round(marginVal).toLocaleString('cs-CZ')}</td>
+                <td style="color:#f87171;">-$${parseFloat(feeVal).toFixed(2)}</td>
+                <td style="${pnlStyle}">${isWin ? '+' : ''}$${parseFloat(t.net_pnl_usd || 0).toFixed(2)}</td>
+                <td><span style="font-size:0.69rem; color:var(--silver-muted);">${t.exit_reason || '-'}</span></td>
+                <td><span style="font-size:0.69rem; color:#94a3b8;">${t.session || '-'}</span></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function renderCanvasChart(trades) {
+        const canvas = document.getElementById('equityCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const w = canvas.width;
+        const h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+
+        const overlay = document.getElementById('chartOverlay');
+        if (!trades || trades.length === 0) {
+            overlay.style.display = 'flex';
+            return;
+        }
+        overlay.style.display = 'none';
+
+        let points = [{ eq: 10000.0, time: '2026-01-01' }];
+        trades.forEach(t => {
+            points.push({ eq: t.equity_after, time: t.exit_time });
+        });
+
+        const eqs = points.map(p => p.eq);
+        const minEq = Math.min(8800, Math.min(...eqs) - 100);
+        const maxEq = Math.max(10600, Math.max(...eqs) + 200);
+
+        const padX = 55;
+        const padY = 36;
+
+        function getX(i) { return padX + (i / (points.length - 1)) * (w - 2 * padX); }
+        function getY(v) { return h - padY - ((v - minEq) / (maxEq - minEq)) * (h - 2 * padY); }
+
+        const monthNames = {
+            '2026-01': 'Leden',
+            '2026-02': 'Únor',
+            '2026-03': 'Březen',
+            '2026-04': 'Duben',
+            '2026-05': 'Květen',
+            '2026-06': 'Červen',
+            '2026-07': 'Červenec',
+            '2026-08': 'Srpen',
+            '2026-09': 'Září',
+            '2026-10': 'Říjen'
+        };
+
+        // Identifikace indexů změny měsíce (rozdělení křivky po měsících pro zřetelnou vizualizaci období)
+        let monthSegments = [];
+        let curM = points[0].time ? points[0].time.substring(0, 7) : '2026-01';
+        let startIdx = 0;
+
+        for (let i = 1; i < points.length; i++) {
+            const mKey = points[i].time ? points[i].time.substring(0, 7) : curM;
+            if (mKey !== curM) {
+                monthSegments.push({ month: curM, startIdx: startIdx, endIdx: i - 1 });
+                curM = mKey;
+                startIdx = i;
+            }
+        }
+        monthSegments.push({ month: curM, startIdx: startIdx, endIdx: points.length - 1 });
+
+        // Vykreslení svislých čar a podkladových pásů pro měsíce
+        monthSegments.forEach((seg, sIdx) => {
+            const startX = getX(seg.startIdx);
+            const endX = getX(seg.endIdx);
+            const midX = (startX + endX) / 2;
+            const mTitle = (monthNames[seg.month] || seg.month) + ' 2026';
+
+            // Jemný střídavý sloupec pozadí pro jednotlivá období
+            if (sIdx % 2 === 1) {
+                ctx.fillStyle = 'rgba(56, 189, 248, 0.035)';
+                ctx.fillRect(startX, padY, endX - startX, h - 2 * padY);
+            }
+
+            // Svislá dělící čára mezi jednotlivými měsíci
+            if (sIdx > 0) {
+                ctx.save();
+                ctx.strokeStyle = 'rgba(56, 189, 248, 0.55)';
+                ctx.setLineDash([5, 5]);
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(startX, padY);
+                ctx.lineTo(startX, h - padY);
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            // Popisek období na horní liště grafu
+            ctx.save();
+            ctx.fillStyle = '#38bdf8';
+            ctx.font = 'bold 11px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(mTitle, midX, padY - 12);
+            ctx.restore();
+        });
+
+        // Grid lines
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+        ctx.lineWidth = 1;
+        for (let v = 9000; v <= maxEq; v += 500) {
+            const y = getY(v);
+            ctx.beginPath();
+            ctx.moveTo(padX, y);
+            ctx.lineTo(w - padX, y);
+            ctx.stroke();
+
+            ctx.fillStyle = '#64748b';
+            ctx.font = '11px JetBrains Mono';
+            ctx.fillText('$' + v.toLocaleString(), 8, y + 4);
+        }
+
+        // Sovereign Floor line ($9,000)
+        const floorY = getY(9000);
+        ctx.strokeStyle = 'rgba(245, 158, 11, 0.7)';
+        ctx.setLineDash([6, 6]);
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(padX, floorY);
+        ctx.lineTo(w - padX, floorY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = '#f59e0b';
+        ctx.fillText('Sovereign Floor ($9,000)', w - 180, floorY - 6);
+
+        // Initial Capital line ($10,000)
+        const initY = getY(10000);
+        ctx.strokeStyle = 'rgba(148, 163, 184, 0.3)';
+        ctx.setLineDash([3, 3]);
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(padX, initY);
+        ctx.lineTo(w - padX, initY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Equity Curve Path
+        ctx.beginPath();
+        ctx.moveTo(getX(0), getY(points[0].eq));
+        for (let i = 1; i < points.length; i++) {
+            ctx.lineTo(getX(i), getY(points[i].eq));
+        }
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        // Area Gradient
+        ctx.lineTo(getX(points.length - 1), h - padY);
+        ctx.lineTo(getX(0), h - padY);
+        ctx.closePath();
+        const grad = ctx.createLinearGradient(0, padY, 0, h - padY);
+        grad.addColorStop(0, 'rgba(56, 189, 248, 0.25)');
+        grad.addColorStop(1, 'rgba(56, 189, 248, 0.0)');
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        // Points
+        points.forEach((p, idx) => {
+            if (idx === 0) return;
+            const x = getX(idx);
+            const y = getY(p.eq);
+            ctx.beginPath();
+            ctx.arc(x, y, 4, 0, 2 * Math.PI);
+            ctx.fillStyle = p.eq >= 10000 ? '#34d399' : '#f87171';
+            ctx.fill();
+        });
+    }
+
+    async function unlockNextMonth() {
+        const btn = document.getElementById('btnUnlockMonth');
+        btn.disabled = true;
+        btn.innerHTML = `⏳ Spouštím OOS test měsíce...`;
+
+        try {
+            const res = await fetch('/api/silver/walkforward-step', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({})
+            });
+            const data = await res.json();
+            if (data.ok) {
+                await fetchManifestAndState();
+            } else {
+                alert("Chyba při odkrývání měsíce: " + data.error);
+            }
+        } catch (e) {
+            alert("Požadavek selhal: " + e);
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    async function resetWalkforward() {
+        if (!confirm("Opravdu chcete znovu uzamknout všechny měsíce roku 2026 a resetovat výsledky slepého testu?")) return;
+        try {
+            const res = await fetch('/api/silver/walkforward-reset', { method: 'POST' });
+            const data = await res.json();
+            if (data.ok) {
+                await fetchManifestAndState();
+                alert("Rok 2026 byl znovu kompletně uzamčen.");
+            }
+        } catch (e) {
+            alert("Reset selhal: " + e);
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', initPage);
+</script>
+
+
+    </div>
+    <!-- 🔒 SECURITY AUTH CONTROLLER (SHA-256) -->
+    <script>
+        const VALID_USER_HASHES = [
+            "5bff2c944e58c4b622bceab6c3794bdb49180603a080cb995acad9d136719d44",
+            "493f0daa919d6a985ddcc9185d7a08378104833630911da73bd660d2a4a11621",
+            "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+            "89903dfa383d1be0969942af5d088a81b1592c3b3dde153aa1dc5e2207d8835c"
+        ];
+
+        const VALID_PASS_HASHES = [
+            "cb68425cfebe32bacd9b3cb624a1b99a033037eb12f9dd57c59765db0f4cf262",
+            "f4bf4f16dc2d4536e70c93f6b249c24c1311792b3b2c1b79e642bba343ccbb8d",
+            "4b6dc495eaaaba459d7e748c89b8ac22e1b5ad8874d66897813e8691abc0b169",
+            "ef962684145f39eecf6e8bd0ab37bbfebf5a5e89040c9c576538c96884a0509c"
+        ];
+
+        function pureJsSha256(ascii) {
+            function rightRotate(value, amount) { return (value>>>amount) | (value<<(32 - amount)); }
+            var mathPow = Math.pow;
+            var maxWord = mathPow(2, 32);
+            var lengthProperty = 'length';
+            var i, j;
+            var result = '';
+            var words = [];
+            var asciiBitLength = ascii[lengthProperty]*8;
+            var hash = [];
+            var k = [];
+            var primeCounter = 0;
+            var isComposite = {};
+            for (var candidate = 2; primeCounter < 64; candidate++) {
+                if (!isComposite[candidate]) {
+                    for (i = 0; i < 313; i += candidate) { isComposite[i] = candidate; }
+                    hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
+                    k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+                }
+            }
+            ascii += '\x80';
+            while (ascii[lengthProperty]%64 - 56) ascii += '\x00';
+            for (i = 0; i < ascii[lengthProperty]; i++) {
+                j = ascii.charCodeAt(i);
+                if (j>>8) return '';
+                words[i>>2] |= j << ((3 - i)%4)*8;
+            }
+            words[words[lengthProperty]] = ((asciiBitLength/maxWord)|0);
+            words[words[lengthProperty]] = (asciiBitLength);
+            for (j = 0; j < words[lengthProperty];) {
+                var w = words.slice(j, j += 16);
+                var oldHash = hash.slice(0);
+                for (i = 0; i < 64; i++) {
+                    var w15 = w[i - 15], w2 = w[i - 2];
+                    var a = hash[0], e = hash[4];
+                    var temp1 = hash[7]
+                        + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+                        + ((e & hash[5]) ^ ((~e) & hash[6]))
+                        + k[i]
+                        + (w[i] = (i < 16) ? w[i] : (
+                                w[i - 16]
+                                + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15>>>3))
+                                + w[i - 7]
+                                + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2>>>10))
+                            )|0
+                        );
+                    var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+                        + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+                    hash = [(temp1 + temp2)|0].concat(hash);
+                    hash[4] = (hash[4] + temp1)|0;
+                }
+                for (i = 0; i < 8; i++) { hash[i] = (hash[i] + oldHash[i])|0; }
+            }
+            for (i = 0; i < 8; i++) {
+                for (j = 3; j + 1; j--) {
+                    var b = (hash[i]>>(j*8))&255;
+                    result += ((b < 16) ? 0 : '') + b.toString(16);
+                }
+            }
+            return result;
+        }
+
+        async function computeSHA256(text) {
+            try {
+                if (window.crypto && window.crypto.subtle && window.isSecureContext) {
+                    const encoder = new TextEncoder();
+                    const data = encoder.encode(text);
+                    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+                    const hashArray = Array.from(new Uint8Array(hashBuffer));
+                    return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+                }
+            } catch(e) {}
+            return pureJsSha256(text);
+        }
+
+        function checkAuthStatus() {
+            var isAuth = false;
+            try {
+                isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
+            } catch(e) {}
+
+            var overlay = document.getElementById("loginOverlay");
+            var app = document.getElementById("appContainer");
+
+            if (isAuth) {
+                document.documentElement.classList.add("si-authenticated");
+                document.documentElement.classList.remove("si-locked");
+                if (overlay) overlay.style.display = "none";
+                if (app) app.style.display = "block";
+            } else {
+                document.documentElement.classList.remove("si-authenticated");
+                document.documentElement.classList.add("si-locked");
+                if (overlay) overlay.style.display = "flex";
+                if (app) app.style.display = "none";
+            }
+        }
+
+        async function handleLoginSubmit(e) {
+            if (e && e.preventDefault) e.preventDefault();
+            var userEl = document.getElementById("loginUser");
+            var passEl = document.getElementById("loginPass");
+            var remEl = document.getElementById("rememberMe");
+            var errEl = document.getElementById("loginError");
+
+            var rawUser = (userEl ? userEl.value : "").trim();
+            var rawPass = passEl ? passEl.value : "";
+            var remember = remEl ? remEl.checked : true;
+
+            var userNorm = rawUser.toLowerCase();
+            var passNorm = rawPass.trim().toLowerCase();
+
+            var uHash = await computeSHA256(rawUser);
+            var uHashNorm = await computeSHA256(userNorm);
+            var isUserValid = VALID_USER_HASHES.includes(uHash) || VALID_USER_HASHES.includes(uHashNorm);
+
+            var pHash = await computeSHA256(rawPass);
+            var pHashNorm = await computeSHA256(passNorm);
+            var isPassValid = VALID_PASS_HASHES.includes(pHash) || VALID_PASS_HASHES.includes(pHashNorm);
+
+            if (isUserValid && isPassValid) {
+                if (errEl) errEl.style.display = "none";
+                try {
+                    if (remember) {
+                        localStorage.setItem("si_authenticated", "true");
+                        localStorage.setItem("si_user", rawUser);
+                    }
+                    sessionStorage.setItem("si_authenticated", "true");
+                    sessionStorage.setItem("si_user", rawUser);
+                } catch(e) {}
+                checkAuthStatus();
+            } else {
+                if (errEl) errEl.style.display = "block";
+                if (passEl) {
+                    passEl.value = "";
+                    passEl.focus();
+                }
+            }
+            return false;
+        }
+
+        function logout() {
+            try {
+                sessionStorage.removeItem("si_authenticated");
+                localStorage.removeItem("si_authenticated");
+                sessionStorage.removeItem("si_user");
+                localStorage.removeItem("si_user");
+            } catch(e) {}
+            document.documentElement.classList.remove("si-authenticated");
+            document.documentElement.classList.add("si-locked");
+            window.location.reload();
+        }
+
+        checkAuthStatus();
+        document.addEventListener("DOMContentLoaded", checkAuthStatus);
+    </script>
+
+</body>
+</html>

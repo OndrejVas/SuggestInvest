@@ -1,0 +1,34 @@
+{
+  "analysis_date": "2026-10-18T07:02:00.205851",
+  "silver_days": 1549,
+  "silver_range": "2021-10-13 → 2026-10-16",
+  "silver_atr14_stats": {
+    "mean_usd": 1.2576,
+    "median_usd": 0.649,
+    "mean_pct": 2.92,
+    "median_pct": 2.44,
+    "max_pct": 16.36,
+    "min_pct": 0.49
+  },
+  "silver_atr100_stats": {
+    "mean_usd": 1.096,
+    "mean_pct": 2.64
+  },
+  "atr_ratio_stats": {
+    "mean": 1.153,
+    "compression_days_pct": 15.7,
+    "expansion_days_pct": 28.5
+  },
+  "gold_comparison": {
+    "gold_atr14_pct_mean": 1.46,
+    "silver_atr14_pct_mean": 2.92,
+    "silver_to_gold_ratio": 2.01
+  },
+  "recommendations": {
+    "atr_period": 14,
+    "atr_min_floor": 0.003,
+    "sl_multiplier": 2.0,
+    "tp_multiplier": 3.0,
+    "kelly_max_risk_pct": 4.0
+  }
+}

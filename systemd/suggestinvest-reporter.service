@@ -1,0 +1,21 @@
+[Unit]
+Description=SuggestInvest System Reporting & Resource Monitor Daemon
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/SuggestInvest
+ExecStart=/usr/bin/python3 /opt/SuggestInvest/system_reporter.py --interval 10 --quiet
+Restart=always
+RestartSec=5
+StandardOutput=append:/opt/SuggestInvest/logs/system_reporter.log
+StandardError=append:/opt/SuggestInvest/logs/system_reporter.log
+
+# Ochrana zdrojů
+LimitNOFILE=65536
+MemoryMax=300M
+
+[Install]
+WantedBy=multi-user.target

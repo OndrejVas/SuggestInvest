@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏛️ Argon AI Audit & Konzultační Centrum | SuggestInvest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-hover: #24344d;
+            --border-color: rgba(148, 163, 184, 0.15);
+            --border-active: rgba(168, 85, 247, 0.45);
+            --accent-purple: #c084fc;
+            --accent-purple-glow: rgba(168, 85, 247, 0.25);
+            --accent-blue: #38bdf8;
+            --accent-gold: #f59e0b;
+            --accent-green: #34d399;
+            --accent-red: #f87171;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            padding: 24px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border: 1px solid var(--border-active);
+            border-radius: 14px;
+            padding: 20px 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 20px rgba(168, 85, 247, 0.12);
+        }
+
+        .title-group h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #ffffff 0%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tag-argon {
+            background: rgba(168, 85, 247, 0.2);
+            color: #d8b4fe;
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-nav {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-nav:hover {
+            border-color: var(--accent-purple);
+            background: rgba(168, 85, 247, 0.15);
+            color: #f1f5f9;
+            transform: translateY(-1px);
+        }
+
+        .btn-nav.primary {
+            background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+            border: 1px solid rgba(168, 85, 247, 0.6);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        }
+
+        .btn-nav.primary:hover {
+            background: linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%);
+            box-shadow: 0 6px 16px rgba(124, 58, 237, 0.45);
+        }
+
+        /* KPI BANNER */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-purple);
+        }
+
+        .kpi-lbl {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .kpi-val {
+            font-size: 1.55rem;
+            font-weight: 800;
+            margin: 4px 0;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .kpi-val.pos { color: var(--accent-green); }
+        .kpi-val.blue { color: var(--accent-blue); }
+        .kpi-val.purple { color: var(--accent-purple); }
+
+        .kpi-sub {
+            font-size: 0.70rem;
+            color: var(--text-muted);
+        }
+
+        /* ACTION CALLOUT */
+        .action-callout {
+            background: radial-gradient(circle at top left, rgba(168, 85, 247, 0.15), rgba(15, 23, 42, 0.95));
+            border: 1px solid var(--border-active);
+            border-radius: 14px;
+            padding: 22px 28px;
+            margin-bottom: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .callout-info {
+            max-width: 800px;
+        }
+
+        .callout-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #e9d5ff;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .callout-desc {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .callout-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* TABS SECTION */
+        .tabs-header {
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .tab-btn.active {
+            color: #ffffff;
+            background: rgba(168, 85, 247, 0.2);
+            border-color: rgba(168, 85, 247, 0.45);
+        }
+
+        .tab-content {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .code-container {
+            background: #090d16;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 18px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: #e2e8f0;
+            overflow-x: auto;
+            max-height: 600px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .doc-markdown {
+            font-size: 0.86rem;
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        .doc-markdown h2 {
+            font-size: 1.15rem;
+            color: #ffffff;
+            margin: 18px 0 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 6px;
+        }
+
+        .doc-markdown ul, .doc-markdown ol {
+            margin-left: 20px;
+            margin-bottom: 14px;
+        }
+
+        .doc-markdown li {
+            margin-bottom: 6px;
+        }
+
+        .doc-markdown table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.80rem;
+        }
+
+        .doc-markdown th, .doc-markdown td {
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        .doc-markdown th {
+            background: rgba(15, 23, 42, 0.7);
+            color: #e2e8f0;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #10b981;
+            color: #ffffff;
+            font-weight: 700;
+            padding: 12px 22px;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            gap: 10px;
+            z-index: 9999;
+            font-size: 0.85rem;
+        }
+        .toast.show { display: flex; animation: slideIn 0.3s ease; }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+    <!-- 🔒 SUGGESTINVEST SECURITY GATE INITIALIZER -->
+    <script>
+        (function() {
+            try {
+                var isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
+                if (isAuth) {
+                    document.documentElement.classList.add("si-authenticated");
+                } else {
+                    document.documentElement.classList.add("si-locked");
+                }
+            } catch(e) {}
+        })();
+    </script>
+    <style>
+        /* 🔒 SECURITY GATE STYLES */
+        html.si-locked #appContainer { display: none !important; }
+        html.si-locked #loginOverlay { display: flex !important; }
+        html.si-authenticated #loginOverlay { display: none !important; }
+        html.si-authenticated #appContainer { display: block !important; }
+
+        #loginOverlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: radial-gradient(circle at center, #111827 0%, #030712 100%);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 999999; padding: 1.5rem;
+        }
+        .login-card {
+            background: rgba(17, 24, 39, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            padding: 2.5rem 2rem;
+            max-width: 430px; width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            text-align: center;
+        }
+        .login-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(59, 130, 246, 0.15); color: #60a5fa;
+            padding: 4px 12px; border-radius: 9999px;
+            font-size: 0.75rem; font-weight: 700;
+            letter-spacing: 0.05em; text-transform: uppercase;
+            border: 1px solid rgba(59, 130, 246, 0.3); margin-bottom: 1.25rem;
+        }
+        .login-title {
+            font-size: 1.65rem; font-weight: 800; color: #f9fafb;
+            margin-bottom: 0.35rem; letter-spacing: -0.01em;
+        }
+        .login-subtitle {
+            font-size: 0.88rem; color: #9ca3af;
+            margin-bottom: 1.75rem; line-height: 1.4;
+        }
+        .login-form {
+            display: flex; flex-direction: column; gap: 1.1rem; text-align: left;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+        .input-label { font-size: 0.8rem; font-weight: 600; color: #cbd5e1; }
+        .login-input {
+            width: 100%; background: #0b0f19;
+            border: 1px solid rgba(255, 255, 255, 0.15); color: #f8fafc;
+            padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.95rem;
+            outline: none; transition: border-color 0.2s, box-shadow 0.2s; box-sizing: border-box;
+        }
+        .login-input:focus {
+            border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        .remember-row {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.82rem; color: #9ca3af; cursor: pointer; user-select: none;
+        }
+        .login-submit-btn {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #ffffff; border: none; padding: 0.8rem;
+            border-radius: 8px; font-size: 0.95rem; font-weight: 700;
+            cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; margin-top: 0.4rem;
+        }
+        .login-submit-btn:hover {
+            transform: translateY(-1px); box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.5);
+        }
+        .login-error {
+            display: none; background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.35); color: #f87171;
+            padding: 0.65rem; border-radius: 6px; font-size: 0.82rem; text-align: center;
+        }
+        #appContainer { display: none; }
+    </style>
+
+</head>
+<body>
+    <!-- 🔒 UNIFIED SECURITY GATE OVERLAY -->
+    <div id="loginOverlay">
+        <div class="login-card">
+            <div class="login-badge">
+                <span>🔒 SuggestInvest • Security Gate</span>
+            </div>
+            <h2 class="login-title">Přihlášení</h2>
+            <p class="login-subtitle">Zadejte přihlašovací údaje pro přístup do ekosystému SuggestInvest.</p>
+            
+            <form class="login-form" onsubmit="handleLoginSubmit(event)">
+                <div class="form-group">
+                    <label class="input-label" for="loginUser">Uživatelské jméno</label>
+                    <input type="text" id="loginUser" class="login-input" placeholder="Zadejte uživatelské jméno" required autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label class="input-label" for="loginPass">Heslo</label>
+                    <input type="password" id="loginPass" class="login-input" placeholder="Zadejte heslo" required autocomplete="current-password">
+                </div>
+
+                <label class="remember-row">
+                    <input type="checkbox" id="rememberMe" checked>
+                    <span>Zapamatovat přihlášení na tomto zařízení</span>
+                </label>
+
+                <div id="loginError" class="login-error">
+                    Neplatné uživatelské jméno nebo heslo. Zkuste to znovu.
+                </div>
+
+                <button type="submit" class="login-submit-btn">Vstoupit do aplikace</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="appContainer">
+
+
+<div class="container">
+    <!-- HEADER -->
+    <header class="header-bar">
+        <div class="title-group">
+            <h1>
+                <span>🏛️ Argon AI Audit & Konzultační Centrum</span>
+                <span class="tag-argon">Vyšší kategorie AI</span>
+            </h1>
+            <div class="subtitle">
+                Komprimovaný expertní balíček projektu SuggestInvest (Micro Gold MGC) • Připraveno pro hloubkovou revizi a matematický audit
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="argon_results_2026.html" class="btn-nav" style="background: linear-gradient(135deg, rgba(52,211,153,0.25) 0%, rgba(168,85,247,0.25) 100%); border-color: rgba(52,211,153,0.5); color: #ecfdf5; font-weight: 700;">
+                <span>🚀 Argon V2.5 Výsledky</span>
+            </a>
+            <a href="backtest.html" class="btn-nav">
+                <span>➔ Zpět na Backtesting</span>
+            </a>
+            <a href="SuggestInvest_Argon_V2_Production.zip" download class="btn-nav primary" id="btnDownloadZip">
+                <span>📦 Produkční ZIP V2.5</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- KPI STATS -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-lbl">Čistý zisk za 10 měsíců</div>
+            <div class="kpi-val pos">+$16,329.51</div>
+            <div class="kpi-sub">Zhodnocení portfolia: +163.3 %</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-lbl">Konečný kapitál</div>
+            <div class="kpi-val blue">$26,329.51</div>
+            <div class="kpi-sub">Počáteční vklad: $10,000.00</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-lbl">Profit Factor</div>
+            <div class="kpi-val purple">1.41</div>
+            <div class="kpi-sub">Hrubý zisk: $17,317.31 USD</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-lbl">Exekuovaných obchodů</div>
+            <div class="kpi-val blue">449</div>
+            <div class="kpi-sub">Win Rate: 36.7 % (165W / 284L)</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-lbl">Max Drawdown</div>
+            <div class="kpi-val purple">-6.92 %</div>
+            <div class="kpi-sub">Zřetězený 10měsíční účet</div>
+        </div>
+    </div>
+
+    <!-- ACTION CALLOUT -->
+    <div class="action-callout">
+        <div class="callout-info">
+            <div class="callout-title">
+                <span>🚀</span>
+                <span>Jak provést revizi na vyšší kategorii AI (Argon)</span>
+            </div>
+            <div class="callout-desc">
+                Projekt jsme zkomprimovali do samostatné složky <code>export_argon/</code> a zabalili do lehkého balíčku <strong>SuggestInvest_Argon_Audit_Pack.zip</strong> (5.9 KB). Balíček obsahuje přesný systémový prompt, matematickou specifikaci, auditní checklist s 10 hypotézami a konsolidovaný kód všech 6 strategií.
+            </div>
+        </div>
+        <div class="callout-actions">
+            <button class="btn-nav primary" onclick="copyArgonPrompt()">
+                <span>📋 Kopírovat Prompt pro Argon</span>
+            </button>
+            <a href="export_argon/SuggestInvest_Argon_Audit_Pack.zip" download class="btn-nav">
+                <span>💾 Uložit ZIP archiv</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs-header">
+        <button class="tab-btn active" onclick="switchTab('prompt')">🎯 1. Systémový Prompt pro Argon</button>
+        <button class="tab-btn" onclick="switchTab('spec')">📐 2. Architektura & 10M OOS Výsledky</button>
+        <button class="tab-btn" onclick="switchTab('checklist')">🔬 3. Výzkumný Auditní Checklist</button>
+        <button class="tab-btn" onclick="switchTab('code')">💻 4. Konsolidovaný Python Kód</button>
+    </div>
+
+    <!-- TAB 1: PROMPT -->
+    <div class="tab-content active" id="tab-prompt">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <strong style="color: #c084fc; font-size: 0.95rem;">01_ARGON_SYSTEM_AUDIT_PROMPT.md</strong>
+            <button class="btn-nav" style="padding: 6px 14px; font-size: 0.76rem;" onclick="copyArgonPrompt()">📋 Kopírovat do schránky</button>
+        </div>
+        <div class="code-container" id="argonPromptText"># ARGON QUANT AUDIT & CODEBASE OPTIMIZATION PROMPT
+**Určeno pro:** Pokročilý AI model / Reasoning systém vyšší kategorie (Argon)
+**Role:** Senior Quantitative Researcher, Chief Risk Officer & High-Frequency / Algorithmic Trading Systems Architect (Citadel, Renaissance Technologies, Jump Trading).
+
+---
+
+## 🎯 CÍL KONZULTACE A REVÍZE
+Předkládáme ti kompletní algoritmický systém **SuggestInvest (COMEX Micro Gold Futures - MGC)**, který prošel 10měsíčním přísným Out-of-Sample (OOS) testováním na reálných svíčkových a tickových datech roku 2026 (Leden až Říjen 2026 MTD, celkem 1 772 800 M1 barů).
+
+Systém dosáhl celkového čistého zisku **+$16,329.51 USD (+163.3 % zhodnocení)** z počátečního kapitálu **$10,000 USD** s maximálním drawdownem **-6.92 %** na Master Portfoliu (#6) a Profit Factorem **1.41** napříč 449 exekucemi.
+
+Přestože systém dlouhodobě překonává benchmark, identifikovali jsme v reálném OOS testování dvě riziková období:
+1. **Červenec 2026 (-$1,780.60 USD):** Letní anomální stlačení volatility a falešné signály v kompresním pásmu.
+2. **Září–Říjen 2026 (-$715.60 USD v září, -$1,187.20 USD v říjnu):** Po masivním parabolickém běhu v srpnu ($4,019 ➔ $4,697) došlo k prudké technické korekci (-$400/oz zpět k $4,111), kde protitrendové i dlouhé průrazové modely utrpěly shluk ztrát (clustering of losses).
+
+---
+
+## 📋 TVŮJ ÚKOL PRO REVÍZI (AUDITNÍ ROZSAH)
+Analyzuj přiloženou architekturu, kód a výsledky a vypracuj expertní revizi zaměřenou na:
+
+1. **Režimový HMM Engine & Fázová detekce (Regime Transition Anticipation):**
+   - Jak matematicky a statisticky zpřesnit detekci přechodu z parabolického super-trendu (srpen) do distribuční fáze a korekce (září), aby systém včas utlumil long breakouty a aktivoval defenzivní režim?
+2. **Fractional Kelly Position Sizing vs. Volatility Targeting:**
+   - Současný model používá Quarter Kelly (2.5 až 7.5 oz). Je optimálnější přejít na Continuous Volatility Targeting dle Yang-Zhang nebo GARCH(1,1), případně zavést dynamický "Drawdown Braking Factor"?
+3. **Asymetrické Short filtry vs. Zlatý makro trend:**
+   - Zlato má dlouhodobé strukturální inflační bias. Jak nejlépe parametrizovat shorty, aby nezpůsobovaly falešné ztráty v bull trendu, ale chránily portfolio během hlubokých $400 korekcí?
+4. **Optimalizace slippage a poplatků na CME/COMEX (MGC):**
+   - Transakční náklady IBKR činí all-in -$2.20 na obchod. Posuď Triple-Barrier časový horizont a posun na Break-Even.
+5. **Konkrétní návrhy kódu a vylepšení:**
+   - Navrhni přesné matematické úpravy a kód v Pythonu pro další evoluční krok systému.</div>
+    </div>
+
+    <!-- TAB 2: SPEC -->
+    <div class="tab-content" id="tab-spec">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <strong style="color: #38bdf8; font-size: 0.95rem;">02_SYSTEM_ARCHITECTURE_SPEC.md</strong>
+        </div>
+        <div class="doc-markdown">
+            <h2>1. Specifikace burzovního instrumentu (Micro Gold MGC)</h2>
+            <ul>
+                <li><strong>Aktivum:</strong> Micro Gold Futures (MGC na COMEX / CME Globex)</li>
+                <li><strong>Velikost kontraktu:</strong> 10 trojských uncí (1/10 plného kontraktu GC)</li>
+                <li><strong>Tick:</strong> $0.10 za unci ($1.00 na kontrakt)</li>
+                <li><strong>Intradenní marže:</strong> $850 USD / kontrakt</li>
+                <li><strong>All-in komise:</strong> -$2.20 / round-trip obchod</li>
+                <li><strong>Protokol rizika:</strong> Nucený EOD Flat ve 22:45 SEČ (nulové noční riziko)</li>
+            </ul>
+
+            <h2>2. Kompletní výsledky 10 měsíců Out-of-Sample testování (2026)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Měsíc</th>
+                        <th>Slepý vzorek</th>
+                        <th>Obchodů</th>
+                        <th>Čistý zisk (USD)</th>
+                        <th>Win Rate</th>
+                        <th>Profit Factor</th>
+                        <th>Poznámka k tržnímu režimu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Leden 2026</strong></td><td>OOS #1</td><td>42</td><td style="color:#34d399; font-weight:700;">+$9,294.60</td><td>47.6 %</td><td>3.94</td><td>Silný bull trend po proražení ATH</td></tr>
+                    <tr><td><strong>Únor 2026</strong></td><td>OOS #2</td><td>40</td><td style="color:#34d399; font-weight:700;">+$2,015.31</td><td>55.0 %</td><td>2.25</td><td>Konsolidace, Mean Reversion exceloval</td></tr>
+                    <tr><td><strong>Březen 2026</strong></td><td>OOS #3</td><td>56</td><td style="color:#34d399; font-weight:700;">+$4,935.80</td><td>33.9 %</td><td>1.61</td><td>Volatilita & Breakouty v poklesu</td></tr>
+                    <tr><td><strong>Duben 2026</strong></td><td>OOS #4</td><td>45</td><td style="color:#34d399; font-weight:700;">+$291.00</td><td>35.6 %</td><td>1.07</td><td>Nástup Q2, přechodná fáze</td></tr>
+                    <tr><td><strong>Květen 2026</strong></td><td>OOS #5</td><td>54</td><td style="color:#34d399; font-weight:700;">+$1,047.20</td><td>35.2 %</td><td>1.22</td><td>Stabilní trendové pokračování</td></tr>
+                    <tr><td><strong>Červen 2026</strong></td><td>OOS #6</td><td>54</td><td style="color:#34d399; font-weight:700;">+$704.20</td><td>35.2 %</td><td>1.14</td><td>Závěr Q2, vyšší volatilita</td></tr>
+                    <tr><td><strong>Červenec 2026</strong></td><td>OOS #7</td><td>53</td><td style="color:#f87171; font-weight:700;">-$1,780.60</td><td>28.3 %</td><td>0.63</td><td>Letní komprese likvidity a chop</td></tr>
+                    <tr><td><strong>Srpen 2026</strong></td><td>OOS #8</td><td>46</td><td style="color:#34d399; font-weight:700;">+$1,724.80</td><td>45.7 %</td><td>1.53</td><td>Parabolická makro expanze na $4,697</td></tr>
+                    <tr><td><strong>Září 2026</strong></td><td>OOS #9</td><td>38</td><td style="color:#f87171; font-weight:700;">-$715.60</td><td>26.3 %</td><td>0.79</td><td>Korekce z $4,510 na $4,111 (-$400)</td></tr>
+                    <tr><td><strong>Říjen 2026 MTD</strong></td><td>OOS #10</td><td>21</td><td style="color:#f87171; font-weight:700;">-$1,187.20</td><td>19.0 %</td><td>0.27</td><td>Konsolidace do 12. 10. ($4,066–$4,227)</td></tr>
+                    <tr style="background: rgba(168, 85, 247, 0.15); font-weight: 800;">
+                        <td><strong>CELKEM (10M)</strong></td><td><strong>OOS Syntéza</strong></td><td><strong>449</strong></td><td style="color:#34d399;">+$16,329.51</td><td><strong>36.7 %</strong></td><td><strong>1.41</strong></td><td><strong>Konečný kapitál: $26,329.51 (+163.3 %)</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- TAB 3: CHECKLIST -->
+    <div class="tab-content" id="tab-checklist">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <strong style="color: #34d399; font-size: 0.95rem;">04_ARGON_RESEARCH_CHECKLIST.md</strong>
+        </div>
+        <div class="doc-markdown">
+            <h2>Klíčové výzkumné hypotézy k revizi modelem Argon</h2>
+            <ol>
+                <li><strong>Blow-Off Top Exhaustion & Detekce vyčerpání:</strong> Po srpnovém parabolickém růstu o +$678 USD došlo k vyčerpání kupců. Jaký statistický indikátor (např. Volume Imbalance, Hurstův exponent, divergence na H4) má nejvyšší schopnost včas detekovat obrat trendu?</li>
+                <li><strong>Dynamický Drawdown Braking Factor:</strong> Měl by systém při drawdownu překračujícím 5 % automaticky omezit Kelly sizing na 50 % (např. 5 oz nebo 1 Micro kontrakt), dokud kapitálová křivka nepřekročí svou 20denní EMA?</li>
+                <li><strong>Asymetrie Long vs. Short:</strong> Zda zavést asymetrické RRR a časové bariéry pro Long a Short pozice s ohledem na dlouhodobou makro dynamiku zlata.</li>
+                <li><strong>CME Globex Order Book Imbalance:</strong> Začlenění hloubky trhu (Level 2) do filtrace vstupů v Killzones 12:00–16:59 SEČ.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- TAB 4: CODE -->
+    <div class="tab-content" id="tab-code">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <strong style="color: #f59e0b; font-size: 0.95rem;">03_CONSOLIDATED_STRATEGIES_CODE.py</strong>
+        </div>
+        <div class="code-container">"""
+SUGGESTINVEST - CORE ENGINE & STRATEGY MODULES
+Konsolidovaný kód pro kvantitativní audit AI Argon
+"""
+
+import numpy as np
+import pandas as pd
+
+def compute_atr(df, period=14):
+    tr1 = df['high'] - df['low']
+    tr2 = (df['high'] - df['close'].shift(1)).abs()
+    tr3 = (df['low'] - df['close'].shift(1)).abs()
+    tr = pd.concat([tr1, tr2, tr3], axis=1).max(axis=1)
+    return tr.rolling(window=period, min_periods=1).mean().bfill().clip(lower=0.85)
+
+def compute_adx(df, period=14):
+    plus_dm = df['high'].diff()
+    minus_dm = -df['low'].diff()
+    plus_dm = np.where((plus_dm > minus_dm) & (plus_dm > 0), plus_dm, 0.0)
+    minus_dm = np.where((minus_dm > plus_dm) & (minus_dm > 0), minus_dm, 0.0)
+    tr = compute_atr(df, period)
+    plus_di = 100 * (pd.Series(plus_dm, index=df.index).rolling(period).mean() / tr)
+    minus_di = 100 * (pd.Series(minus_dm, index=df.index).rolling(period).mean() / tr)
+    dx = (abs(plus_di - minus_di) / (plus_di + minus_di + 1e-9)) * 100
+    return dx.rolling(period).mean().fillna(0)
+
+# Fractional Kelly Formula
+def calculate_fractional_kelly(win_rate, win_loss_ratio, fraction=0.25):
+    p = win_rate
+    b = win_loss_ratio
+    kelly_f = max(0.0, (p * (b + 1) - 1) / (b + 1e-9))
+    return kelly_f * fraction
+
+# Triple Barrier Sizing & Execution
+def execute_triple_barrier(entry_price, direction, atr, tp_mult=2.5, sl_mult=1.0):
+    if direction == 'LONG':
+        tp = entry_price + tp_mult * atr
+        sl = entry_price - sl_mult * atr
+    else:
+        tp = entry_price - tp_mult * atr
+        sl = entry_price + sl_mult * atr
+    return round(tp, 2), round(sl, 2)
+</div>
+    </div>
+</div>
+
+<div class="toast" id="toastCopy">
+    <span>✅</span>
+    <span>Systémový prompt pro Argon byl zkopírován do schránky!</span>
+</div>
+
+<script>
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+        const targetBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+        if (targetBtn) targetBtn.classList.add('active');
+
+        const targetContent = document.getElementById(`tab-${tabId}`);
+        if (targetContent) targetContent.classList.add('active');
+    }
+
+    function copyArgonPrompt() {
+        const text = document.getElementById('argonPromptText').textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            const toast = document.getElementById('toastCopy');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3500);
+        });
+    }
+</script>
+
+
+    </div>
+    <!-- 🔒 SECURITY AUTH CONTROLLER (SHA-256) -->
+    <script>
+        const VALID_USER_HASHES = [
+            "5bff2c944e58c4b622bceab6c3794bdb49180603a080cb995acad9d136719d44",
+            "493f0daa919d6a985ddcc9185d7a08378104833630911da73bd660d2a4a11621",
+            "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+            "89903dfa383d1be0969942af5d088a81b1592c3b3dde153aa1dc5e2207d8835c"
+        ];
+
+        const VALID_PASS_HASHES = [
+            "cb68425cfebe32bacd9b3cb624a1b99a033037eb12f9dd57c59765db0f4cf262",
+            "f4bf4f16dc2d4536e70c93f6b249c24c1311792b3b2c1b79e642bba343ccbb8d",
+            "4b6dc495eaaaba459d7e748c89b8ac22e1b5ad8874d66897813e8691abc0b169",
+            "ef962684145f39eecf6e8bd0ab37bbfebf5a5e89040c9c576538c96884a0509c"
+        ];
+
+        function pureJsSha256(ascii) {
+            function rightRotate(value, amount) { return (value>>>amount) | (value<<(32 - amount)); }
+            var mathPow = Math.pow;
+            var maxWord = mathPow(2, 32);
+            var lengthProperty = 'length';
+            var i, j;
+            var result = '';
+            var words = [];
+            var asciiBitLength = ascii[lengthProperty]*8;
+            var hash = [];
+            var k = [];
+            var primeCounter = 0;
+            var isComposite = {};
+            for (var candidate = 2; primeCounter < 64; candidate++) {
+                if (!isComposite[candidate]) {
+                    for (i = 0; i < 313; i += candidate) { isComposite[i] = candidate; }
+                    hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
+                    k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+                }
+            }
+            ascii += '\x80';
+            while (ascii[lengthProperty]%64 - 56) ascii += '\x00';
+            for (i = 0; i < ascii[lengthProperty]; i++) {
+                j = ascii.charCodeAt(i);
+                if (j>>8) return '';
+                words[i>>2] |= j << ((3 - i)%4)*8;
+            }
+            words[words[lengthProperty]] = ((asciiBitLength/maxWord)|0);
+            words[words[lengthProperty]] = (asciiBitLength);
+            for (j = 0; j < words[lengthProperty];) {
+                var w = words.slice(j, j += 16);
+                var oldHash = hash.slice(0);
+                for (i = 0; i < 64; i++) {
+                    var w15 = w[i - 15], w2 = w[i - 2];
+                    var a = hash[0], e = hash[4];
+                    var temp1 = hash[7]
+                        + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+                        + ((e & hash[5]) ^ ((~e) & hash[6]))
+                        + k[i]
+                        + (w[i] = (i < 16) ? w[i] : (
+                                w[i - 16]
+                                + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15>>>3))
+                                + w[i - 7]
+                                + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2>>>10))
+                            )|0
+                        );
+                    var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+                        + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+                    hash = [(temp1 + temp2)|0].concat(hash);
+                    hash[4] = (hash[4] + temp1)|0;
+                }
+                for (i = 0; i < 8; i++) { hash[i] = (hash[i] + oldHash[i])|0; }
+            }
+            for (i = 0; i < 8; i++) {
+                for (j = 3; j + 1; j--) {
+                    var b = (hash[i]>>(j*8))&255;
+                    result += ((b < 16) ? 0 : '') + b.toString(16);
+                }
+            }
+            return result;
+        }
+
+        async function computeSHA256(text) {
+            try {
+                if (window.crypto && window.crypto.subtle && window.isSecureContext) {
+                    const encoder = new TextEncoder();
+                    const data = encoder.encode(text);
+                    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+                    const hashArray = Array.from(new Uint8Array(hashBuffer));
+                    return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+                }
+            } catch(e) {}
+            return pureJsSha256(text);
+        }
+
+        function checkAuthStatus() {
+            var isAuth = false;
+            try {
+                isAuth = sessionStorage.getItem("si_authenticated") === "true" || localStorage.getItem("si_authenticated") === "true";
+            } catch(e) {}
+
+            var overlay = document.getElementById("loginOverlay");
+            var app = document.getElementById("appContainer");
+
+            if (isAuth) {
+                document.documentElement.classList.add("si-authenticated");
+                document.documentElement.classList.remove("si-locked");
+                if (overlay) overlay.style.display = "none";
+                if (app) app.style.display = "block";
+            } else {
+                document.documentElement.classList.remove("si-authenticated");
+                document.documentElement.classList.add("si-locked");
+                if (overlay) overlay.style.display = "flex";
+                if (app) app.style.display = "none";
+            }
+        }
+
+        async function handleLoginSubmit(e) {
+            if (e && e.preventDefault) e.preventDefault();
+            var userEl = document.getElementById("loginUser");
+            var passEl = document.getElementById("loginPass");
+            var remEl = document.getElementById("rememberMe");
+            var errEl = document.getElementById("loginError");
+
+            var rawUser = (userEl ? userEl.value : "").trim();
+            var rawPass = passEl ? passEl.value : "";
+            var remember = remEl ? remEl.checked : true;
+
+            var userNorm = rawUser.toLowerCase();
+            var passNorm = rawPass.trim().toLowerCase();
+
+            var uHash = await computeSHA256(rawUser);
+            var uHashNorm = await computeSHA256(userNorm);
+            var isUserValid = VALID_USER_HASHES.includes(uHash) || VALID_USER_HASHES.includes(uHashNorm);
+
+            var pHash = await computeSHA256(rawPass);
+            var pHashNorm = await computeSHA256(passNorm);
+            var isPassValid = VALID_PASS_HASHES.includes(pHash) || VALID_PASS_HASHES.includes(pHashNorm);
+
+            if (isUserValid && isPassValid) {
+                if (errEl) errEl.style.display = "none";
+                try {
+                    if (remember) {
+                        localStorage.setItem("si_authenticated", "true");
+                        localStorage.setItem("si_user", rawUser);
+                    }
+                    sessionStorage.setItem("si_authenticated", "true");
+                    sessionStorage.setItem("si_user", rawUser);
+                } catch(e) {}
+                checkAuthStatus();
+            } else {
+                if (errEl) errEl.style.display = "block";
+                if (passEl) {
+                    passEl.value = "";
+                    passEl.focus();
+                }
+            }
+            return false;
+        }
+
+        function logout() {
+            try {
+                sessionStorage.removeItem("si_authenticated");
+                localStorage.removeItem("si_authenticated");
+                sessionStorage.removeItem("si_user");
+                localStorage.removeItem("si_user");
+            } catch(e) {}
+            document.documentElement.classList.remove("si-authenticated");
+            document.documentElement.classList.add("si-locked");
+            window.location.reload();
+        }
+
+        checkAuthStatus();
+        document.addEventListener("DOMContentLoaded", checkAuthStatus);
+    </script>
+
+</body>
+</html>

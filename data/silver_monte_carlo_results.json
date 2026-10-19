@@ -1,0 +1,26 @@
+{
+  "iterations": 10000,
+  "trades_per_path": 36,
+  "block_size": 5,
+  "stress_degradation": {
+    "missed_winning_trade_prob": "10.0%",
+    "max_slippage_penalty_usd": "$5.0"
+  },
+  "final_equity_distribution": {
+    "p01_worst_1pct": 7382.94,
+    "p05_worst_5pct": 7757.17,
+    "median_p50": 8775.2,
+    "p95_best_5pct": 9844.0
+  },
+  "max_drawdown_distribution_pct": {
+    "median_p50": 13.64,
+    "worst_5pct_p95": 22.61,
+    "worst_1pct_p99": 26.19
+  },
+  "sovereign_floor_risk": {
+    "floor_usd": 9000.0,
+    "breach_probability_pct": 70.39,
+    "safe_confidence_pct": 29.61
+  },
+  "status": "WARNING ⚠️"
+}

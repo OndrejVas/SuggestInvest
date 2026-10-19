@@ -1,0 +1,20 @@
+{
+  "updated_at": "2026-10-18T07:12:02.887142+00:00",
+  "shanghai_session_active": false,
+  "session_hours_cet": "02:00 - 08:00 SEČ",
+  "session_size_multiplier": 1.0,
+  "night_instruments": {
+    "copper_hg": 6.5735,
+    "copper_8h_change_pct": -0.6,
+    "usd_cnh": 6.6853,
+    "hang_seng_index": 24186.8
+  },
+  "shanghai_premium": {
+    "comex_silver_usd": 57.30500030517578,
+    "estimated_premium_pct": 5.97,
+    "estimated_shanghai_usd": 60.726,
+    "premium_level": "NORMAL"
+  },
+  "asian_market_sentiment": "NEUTRAL_BALANCED",
+  "status": "HEALTHY"
+}

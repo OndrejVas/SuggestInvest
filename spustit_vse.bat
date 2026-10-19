@@ -8,20 +8,20 @@ echo  🚀 SuggestInvest • Spuštění kompletního autonomního ekosystému
 echo =====================================================================
 echo.
 
-:: 1. Kontrola, zda běží Gateway na portu 5000
-netstat -ano | findstr ":5000 " >nul 2>&1
+:: 1. Kontrola, zda běží IB Gateway na portu 7497
+netstat -ano | findstr ":7497 " >nul 2>&1
 if errorlevel 1 (
-    echo [1/2] Gateway neběží. Spouštím IB Gateway v novém okně...
+    echo [1/2] IB Gateway na portu 7497 neběží. Spouštím IB Gateway...
     start "IBKR Gateway" cmd /c "call start_ib_gateway.bat"
     echo Čekám 8 sekund na inicializaci brány...
     timeout /t 8 /nobreak >nul
 ) else (
-    echo [1/2] ✅ IBKR Gateway již běží na portu 5000.
+    echo [1/2] ✅ IB Gateway již běží na portu 7497.
 )
 
-:: 2. Spuštění AutoInvest Engine v samostatném okně
-echo [2/2] Spouštím AutoInvest Engine v samostatném okně...
-start "AutoInvest Engine" cmd /c "call start_autoinvest.bat"
+:: 2. Spuštění IBKR Live Sync v samostatném okně
+echo [2/2] Spouštím IBKR Live Sync Service v samostatném okně...
+start "IBKR Sync Service" cmd /c "call start_ibkr_sync.bat"
 
 echo.
 echo =====================================================================

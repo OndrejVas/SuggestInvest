@@ -1,0 +1,46 @@
+{
+  "strategy_id": "strat_5_h1_yang_zhang",
+  "strategy_num": 5,
+  "strategy_name": "STRATEGIE #5: H1 Yang-Zhang Volatility",
+  "strategy_badge": "PF 0.00 • Volatilita",
+  "commodity": "Micro Gold Futures (MGC na COMEXu)",
+  "contract_symbol": "MGCZ6",
+  "contract_size_oz": 10.0,
+  "leverage": "Burzovní marže ($850)",
+  "margin_req_pct": 8.5,
+  "metadata": {
+    "id": "strat_5_h1_yang_zhang_october_2026",
+    "name": "🎯 Slepý vzorek (OOS #10 MTD): Říjen 2026 [STRATEGIE #5]",
+    "type": "OUT_OF_SAMPLE",
+    "status": "UNLOCKED_ACTIVE",
+    "start": "2026-10-01",
+    "end": "2026-10-12",
+    "period": "2026-10-01 – 2026-10-12 (MTD • 21:32 SEČ)",
+    "environment": "Zahájení Q4 (Konsolidace a dno korekce • $4,066 ➔ $4,227)",
+    "benchmark": "MGC Futures (COMEX)"
+  },
+  "summary": {
+    "initial_capital": 10000.0,
+    "final_equity": 10000.0,
+    "total_net_pnl": 0.0,
+    "total_gross_pnl": 0.0,
+    "total_fees_paid": 0.0,
+    "return_pct": 0.0,
+    "total_trades": 0,
+    "winning_trades": 0,
+    "losing_trades": 0,
+    "win_rate_pct": 0.0,
+    "profit_factor": 0.0,
+    "avg_trade_usd": 0.0,
+    "max_drawdown_pct": 0.0,
+    "candles_analyzed": 10953
+  },
+  "equity_curve": [
+    {
+      "time": "2026-10-01 00:00",
+      "equity": 10000.0,
+      "drawdown_pct": 0.0
+    }
+  ],
+  "trades": []
+}

@@ -1,0 +1,47 @@
+{
+  "hmm_status": "ACTIVE_CALIBRATED",
+  "in_sample_period": "2024-2025",
+  "states": [
+    {
+      "id": 0,
+      "name": "CHOP / RANGE",
+      "prob_jan": 52.1,
+      "prob_feb": 56.9,
+      "pref_strategy": "#2 Mean Reversion"
+    },
+    {
+      "id": 1,
+      "name": "SM\u011aROV\u00dd TREND",
+      "prob_jan": 37.3,
+      "prob_feb": 36.4,
+      "pref_strategy": "#3 VWAP & #4 FVG & #5 Yang-Zhang"
+    },
+    {
+      "id": 2,
+      "name": "VOLATILITN\u00cd \u0160OK",
+      "prob_jan": 10.6,
+      "prob_feb": 6.7,
+      "pref_strategy": "FLAT (Hotovost)"
+    }
+  ],
+  "performance_comparison": {
+    "january_2026": {
+      "before_hmm_pnl": 4525.86,
+      "after_hmm_pnl": 4710.2,
+      "delta_usd": 184.34,
+      "delta_pct": "+4.1%"
+    },
+    "february_2026": {
+      "before_hmm_pnl": 420.6,
+      "after_hmm_pnl": 1042.8,
+      "delta_usd": 622.2,
+      "delta_pct": "+147.9%"
+    },
+    "total_oos": {
+      "before_hmm_pnl": 4946.46,
+      "after_hmm_pnl": 5753.0,
+      "delta_usd": 806.54,
+      "delta_pct": "+16.3%"
+    }
+  }
+}

@@ -1,0 +1,3154 @@
+{
+  "sync_time_cet": "19.10.2026 22:59:35",
+  "sync_timestamp_iso": "2026-10-19T22:59:35.823735",
+  "account_id": "DUR222134",
+  "gateway_connected": true,
+  "gateway_disconnect_minutes": 0,
+  "watchdog_active": true,
+  "orders_enabled": true,
+  "lock_status": "POVOLENY",
+  "lock_reason": "Objednávky a autonomní bot povoleny uživatelem z FutureInvestDemo.",
+  "news_stats": {
+    "scan_date": "19. 10. 2026",
+    "scan_time": "22:25:26 SELČ",
+    "last_scan_display": "19. 10. 2026, 22:25 SELČ",
+    "session_news_count": 5,
+    "session_news_label": "+5 nových zpráv v hodině (SPY)",
+    "affected_symbols_display": "SPY",
+    "session_gold_news_count": 5,
+    "total_news_count": 30105,
+    "total_scans_count": 55,
+    "gold_news_count": 248,
+    "silver_news_count": 144,
+    "gold_proxies": "GLD, GDX, NEM, GOLD, FCX, AGI, MGC",
+    "silver_proxies": "SLV, SIL, SILJ, PAAS, HL, AG, PSLV",
+    "system_date": "19. 10. 2026",
+    "system_time": "22:59:35 CET",
+    "recent_news": [
+      {
+        "id": 30106,
+        "time": "2026-10-19, 20:37 SELČ",
+        "sym": "SPY",
+        "name": "S&P 500 Market",
+        "commodity": "MAKRO",
+        "is_silver": false,
+        "is_gold": false,
+        "headline": "Anthropic IPO, MANGOS ETFs and the Future of the AI Trade",
+        "impact": "▲ Růst",
+        "impact_type": "neutral",
+        "source": "CME Globex"
+      },
+      {
+        "id": 30105,
+        "time": "2026-10-19, 20:37 SELČ",
+        "sym": "SPY",
+        "name": "S&P 500 Market",
+        "commodity": "MAKRO",
+        "is_silver": false,
+        "is_gold": false,
+        "headline": "Update: Technology, Consumer Discretionary Lift US Equity Indexes While Treasury Yields Climb",
+        "impact": "▲ Růst",
+        "impact_type": "neutral",
+        "source": "CME Globex"
+      },
+      {
+        "id": 30104,
+        "time": "2026-10-19, 20:37 SELČ",
+        "sym": "SPY",
+        "name": "S&P 500 Market",
+        "commodity": "MAKRO",
+        "is_silver": false,
+        "is_gold": false,
+        "headline": "Four Reasons Wall Street Has Eyes On This S&P 500 Stock",
+        "impact": "▲ Růst",
+        "impact_type": "neutral",
+        "source": "CME Globex"
+      },
+      {
+        "id": 30103,
+        "time": "2026-10-19, 20:37 SELČ",
+        "sym": "SPY",
+        "name": "S&P 500 Market",
+        "commodity": "MAKRO",
+        "is_silver": false,
+        "is_gold": false,
+        "headline": "Sandisk, Datadog, Amazon Lead S&P 500 As AI Stocks Rebound",
+        "impact": "▲ Růst",
+        "impact_type": "neutral",
+        "source": "CME Globex"
+      },
+      {
+        "id": 30102,
+        "time": "2026-10-19, 20:37 SELČ",
+        "sym": "SPY",
+        "name": "S&P 500 Market",
+        "commodity": "MAKRO",
+        "is_silver": false,
+        "is_gold": false,
+        "headline": "How major US stock indexes fared Monday 10/19/2026",
+        "impact": "▲ Růst",
+        "impact_type": "neutral",
+        "source": "CME Globex"
+      },
+      {
+        "id": 30101,
+        "time": "2026-10-19, 20:37 SELČ",
+        "sym": "MGC",
+        "name": "COMEX Micro Gold",
+        "commodity": "ZLATO",
+        "is_silver": false,
+        "is_gold": true,
+        "headline": "Gold Rises as Oil Retreats Amid Anticipation of US Rate Decisions - Fana News -",
+        "impact": "▲ Růst",
+        "impact_type": "neutral",
+        "source": "CME Globex"
+      },
+      {
+        "id": 30100,
+        "time": "2026-10-19, 20:37 SELČ",
+        "sym": "MGC",
+        "name": "COMEX Micro Gold",
+        "commodity": "ZLATO",
+        "is_silver": false,
+        "is_gold": true,
+        "headline": "Gold slips, silver gains as oil retreats and Fed-pause expectations hold - Kitco AM Report - Kitco",
+        "impact": "▲ Růst",
+        "impact_type": "neutral",
+        "source": "CME Globex"
+      },
+      {
+        "id": 30099,
+        "time": "2026-10-19, 20:37 SELČ",
+        "sym": "MGC",
+        "name": "COMEX Micro Gold",
+        "commodity": "ZLATO",
+        "is_silver": false,
+        "is_gold": true,
+        "headline": "Gold retreats with Fed rate outlook in focus; lower oil prices limit losses - Investing.com",
+        "impact": "▲ Růst",
+        "impact_type": "neutral",
+        "source": "CME Globex"
+      },
+      {
+        "id": 30098,
+        "time": "2026-10-19, 20:37 SELČ",
+        "sym": "MGC",
+        "name": "COMEX Micro Gold",
+        "commodity": "ZLATO",
+        "is_silver": false,
+        "is_gold": true,
+        "headline": "Gold Edges Higher as Traders Ease Rate-Hike Bets on Warsh Speech - Bloomberg.com",
+        "impact": "▲ Růst",
+        "impact_type": "neutral",
+        "source": "CME Globex"
+      },
+      {
+        "id": 30097,
+        "time": "2026-10-19, 20:37 SELČ",
+        "sym": "MGC",
+        "name": "COMEX Micro Gold",
+        "commodity": "ZLATO",
+        "is_silver": false,
+        "is_gold": true,
+        "headline": "Gold edges up as oil retreat lends support; Fed decision in focus - CNBC",
+        "impact": "▲ Růst",
+        "impact_type": "neutral",
+        "source": "CME Globex"
+      }
+    ],
+    "silver_news_items": [],
+    "session_silver_news_count": 1
+  },
+  "balance": {
+    "equity_czk": 228237.23,
+    "equity_usd": 10534.36,
+    "cash_czk": 280047.67,
+    "cash_usd": 12925.69,
+    "buying_power_czk": 1399410.82,
+    "buying_power_usd": 64590.26,
+    "gross_positions_czk": 51479.44,
+    "gross_positions_usd": 2376.05,
+    "unrealized_pnl_czk": 0.0,
+    "unrealized_pnl_usd": 0.0
+  },
+  "open_positions": [],
+  "commodity_trading_session": {
+    "is_open": true,
+    "status_text": "🟢 TRH OTEVŘEN (CME Globex Kontinuálně)",
+    "badge_class": "badge-live-green",
+    "trading_hours_display": "Ne 18:00 CT – Pá 17:00 CT (CET: Ne 24:00 – Pá 23:00)",
+    "daily_halt_display": "Denní pauza: 23:00 – 00:00 CET (17:00 – 18:00 CT)",
+    "exchange": "CME Globex / COMEX",
+    "instrument": "Micro Gold Futures (MGC)",
+    "active_contract": "MGCZ6 (Prosinec 2026)",
+    "contract_role": "Front-Month (Lead Contract)",
+    "contract_liquidity_share": "95.4 % likvidity trhu",
+    "next_rollover_date": "24. 11. 2026 (Rolování na MGCG7 Únor 2027)",
+    "rollover_status": "Auto-Rollover aktivní (výběr dle Volume & Spreadu)"
+  },
+  "cumulative_realized_pnl_usd": 400.0,
+  "trades_history": [
+    {
+      "time": "19.10.2026 19:37:38",
+      "contract": "COMEX Micro Gold (MGCZ6)",
+      "symbol": "MGC",
+      "asset": "GOLD",
+      "direction": "SHORT",
+      "contracts": 2,
+      "entry_price": 4183.9,
+      "exit_price": 4163.9,
+      "pts": 20.0,
+      "ticks": 200,
+      "pnl_usd": 400.0,
+      "pnl_czk": 8666.4,
+      "style": "ARGON_AUTONOMOUS_SHORT",
+      "real_execution": true,
+      "status": "VYPLNĚNO: Uzavřeno v zisku +20.0 pts (+400.00 USD)"
+    }
+  ],
+  "futures_trades_history": [
+    {
+      "time": "19.10.2026 19:37:38",
+      "contract": "COMEX Micro Gold (MGCZ6)",
+      "symbol": "MGC",
+      "asset": "GOLD",
+      "direction": "SHORT",
+      "contracts": 2,
+      "entry_price": 4183.9,
+      "exit_price": 4163.9,
+      "pts": 20.0,
+      "ticks": 200,
+      "pnl_usd": 400.0,
+      "pnl_czk": 8666.4,
+      "style": "ARGON_AUTONOMOUS_SHORT",
+      "real_execution": true,
+      "status": "VYPLNĚNO: Uzavřeno v zisku +20.0 pts (+400.00 USD)"
+    }
+  ],
+  "equity_history": [
+    {
+      "time": "17.10. 09:00 (Start Demo)",
+      "equity_czk": 216659.72,
+      "equity_usd": 10000.0,
+      "is_start": true
+    },
+    {
+      "time": "18.10. 23:59 (Nyní)",
+      "equity_czk": 216659.72,
+      "equity_usd": 10000.0,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 00:00",
+      "equity_czk": 247182.99,
+      "equity_usd": 11408.81,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 00:04",
+      "equity_czk": 214708.27,
+      "equity_usd": 9909.93,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 00:06",
+      "equity_czk": 214448.93,
+      "equity_usd": 9897.96,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 00:09",
+      "equity_czk": 213353.04,
+      "equity_usd": 9847.38,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 00:12",
+      "equity_czk": 211935.38,
+      "equity_usd": 9781.95,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 00:17",
+      "equity_czk": 211515.97,
+      "equity_usd": 9762.59,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 00:18",
+      "equity_czk": 211719.59,
+      "equity_usd": 9771.99,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 00:21",
+      "equity_czk": 211287.46,
+      "equity_usd": 9752.04,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 00:24",
+      "equity_czk": 210812.59,
+      "equity_usd": 9730.12,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 00:27",
+      "equity_czk": 210420.35,
+      "equity_usd": 9712.02,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 00:33",
+      "equity_czk": 210201.83,
+      "equity_usd": 9701.93,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 00:36",
+      "equity_czk": 210245.25,
+      "equity_usd": 9703.94,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 00:39",
+      "equity_czk": 211239.6,
+      "equity_usd": 9749.83,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 00:42",
+      "equity_czk": 210675.18,
+      "equity_usd": 9723.78,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 00:45",
+      "equity_czk": 210543.92,
+      "equity_usd": 9717.72,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 00:48",
+      "equity_czk": 210673.93,
+      "equity_usd": 9723.72,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 00:51",
+      "equity_czk": 211192.35,
+      "equity_usd": 9747.65,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 00:54",
+      "equity_czk": 210628.48,
+      "equity_usd": 9721.63,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 00:57",
+      "equity_czk": 210844.55,
+      "equity_usd": 9731.6,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 01:00",
+      "equity_czk": 211234.5,
+      "equity_usd": 9749.6,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 01:03",
+      "equity_czk": 209109.96,
+      "equity_usd": 9651.54,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 01:06",
+      "equity_czk": 209326.64,
+      "equity_usd": 9661.54,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 01:09",
+      "equity_czk": 209977.68,
+      "equity_usd": 9691.59,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 01:12",
+      "equity_czk": 209716.54,
+      "equity_usd": 9679.54,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 01:15",
+      "equity_czk": 211018.81,
+      "equity_usd": 9739.64,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 01:18",
+      "equity_czk": 210845.77,
+      "equity_usd": 9731.66,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 01:21",
+      "equity_czk": 210238.94,
+      "equity_usd": 9703.65,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 01:24",
+      "equity_czk": 208894.22,
+      "equity_usd": 9641.58,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 01:27",
+      "equity_czk": 208634.69,
+      "equity_usd": 9629.6,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 01:30",
+      "equity_czk": 207334.69,
+      "equity_usd": 9569.6,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 01:33",
+      "equity_czk": 207680.74,
+      "equity_usd": 9585.57,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 01:36",
+      "equity_czk": 208809.37,
+      "equity_usd": 9637.66,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 01:42",
+      "equity_czk": 207857.76,
+      "equity_usd": 9593.74,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 01:45",
+      "equity_czk": 208292.8,
+      "equity_usd": 9613.82,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 01:48",
+      "equity_czk": 207034.92,
+      "equity_usd": 9555.76,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 01:51",
+      "equity_czk": 208465.14,
+      "equity_usd": 9621.78,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 01:54",
+      "equity_czk": 208812.37,
+      "equity_usd": 9637.8,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 01:57",
+      "equity_czk": 208379.84,
+      "equity_usd": 9617.84,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 02:00",
+      "equity_czk": 207082.1,
+      "equity_usd": 9557.94,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 02:03",
+      "equity_czk": 206131.28,
+      "equity_usd": 9514.06,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 02:06",
+      "equity_czk": 208082.28,
+      "equity_usd": 9604.11,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 02:09",
+      "equity_czk": 207604.71,
+      "equity_usd": 9582.06,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 02:12",
+      "equity_czk": 208471.39,
+      "equity_usd": 9622.06,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 02:15",
+      "equity_czk": 208732.03,
+      "equity_usd": 9634.09,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 02:18",
+      "equity_czk": 209900.54,
+      "equity_usd": 9688.03,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 02:21",
+      "equity_czk": 209076.62,
+      "equity_usd": 9650.0,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 02:24",
+      "equity_czk": 210419.07,
+      "equity_usd": 9711.96,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 02:27",
+      "equity_czk": 210895.36,
+      "equity_usd": 9733.94,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 02:30",
+      "equity_czk": 211414.33,
+      "equity_usd": 9757.9,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 02:33",
+      "equity_czk": 210417.96,
+      "equity_usd": 9711.91,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 02:36",
+      "equity_czk": 211113.33,
+      "equity_usd": 9744.0,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 02:39",
+      "equity_czk": 210767.01,
+      "equity_usd": 9728.02,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 02:42",
+      "equity_czk": 211416.72,
+      "equity_usd": 9758.01,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 02:45",
+      "equity_czk": 212673.42,
+      "equity_usd": 9816.01,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 02:48",
+      "equity_czk": 212499.88,
+      "equity_usd": 9808.0,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 02:51",
+      "equity_czk": 212412.73,
+      "equity_usd": 9803.98,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 02:55",
+      "equity_czk": 211978.9,
+      "equity_usd": 9783.96,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 02:58",
+      "equity_czk": 212629.63,
+      "equity_usd": 9813.99,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 03:01",
+      "equity_czk": 210418.51,
+      "equity_usd": 9711.93,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 03:04",
+      "equity_czk": 212630.04,
+      "equity_usd": 9814.01,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 03:07",
+      "equity_czk": 213453.6,
+      "equity_usd": 9852.02,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 03:13",
+      "equity_czk": 213107.12,
+      "equity_usd": 9836.03,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 03:16",
+      "equity_czk": 212673.44,
+      "equity_usd": 9816.01,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 03:19",
+      "equity_czk": 212153.09,
+      "equity_usd": 9792.0,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 03:22",
+      "equity_czk": 213843.24,
+      "equity_usd": 9870.0,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 03:25",
+      "equity_czk": 214536.64,
+      "equity_usd": 9902.01,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 03:28",
+      "equity_czk": 215100.24,
+      "equity_usd": 9928.02,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 03:31",
+      "equity_czk": 213886.47,
+      "equity_usd": 9872.0,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 03:34",
+      "equity_czk": 211979.71,
+      "equity_usd": 9783.99,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 03:37",
+      "equity_czk": 212672.86,
+      "equity_usd": 9815.99,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 03:40",
+      "equity_czk": 213193.47,
+      "equity_usd": 9840.01,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 03:43",
+      "equity_czk": 214537.03,
+      "equity_usd": 9902.03,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 03:46",
+      "equity_czk": 212023.18,
+      "equity_usd": 9786.0,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 03:49",
+      "equity_czk": 212846.67,
+      "equity_usd": 9824.01,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 03:52",
+      "equity_czk": 212412.67,
+      "equity_usd": 9803.98,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 03:55",
+      "equity_czk": 211590.12,
+      "equity_usd": 9766.01,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 03:58",
+      "equity_czk": 211286.97,
+      "equity_usd": 9752.02,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 04:01",
+      "equity_czk": 211634.41,
+      "equity_usd": 9768.06,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 04:04",
+      "equity_czk": 210853.87,
+      "equity_usd": 9732.03,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 04:07",
+      "equity_czk": 210160.55,
+      "equity_usd": 9700.03,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 04:10",
+      "equity_czk": 207864.41,
+      "equity_usd": 9594.05,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 04:13",
+      "equity_czk": 207951.23,
+      "equity_usd": 9598.06,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 04:16",
+      "equity_czk": 208861.22,
+      "equity_usd": 9640.06,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 04:19",
+      "equity_czk": 211460.3,
+      "equity_usd": 9760.02,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 04:22",
+      "equity_czk": 210853.9,
+      "equity_usd": 9732.03,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 04:25",
+      "equity_czk": 212283.74,
+      "equity_usd": 9798.03,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 04:28",
+      "equity_czk": 212629.71,
+      "equity_usd": 9813.99,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 04:31",
+      "equity_czk": 213496.47,
+      "equity_usd": 9854.0,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 04:34",
+      "equity_czk": 212542.99,
+      "equity_usd": 9809.99,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 04:37",
+      "equity_czk": 212239.57,
+      "equity_usd": 9795.99,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 04:40",
+      "equity_czk": 211416.2,
+      "equity_usd": 9757.98,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 04:43",
+      "equity_czk": 210765.45,
+      "equity_usd": 9727.95,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 04:46",
+      "equity_czk": 211111.16,
+      "equity_usd": 9743.9,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 04:49",
+      "equity_czk": 212238.19,
+      "equity_usd": 9795.92,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 04:52",
+      "equity_czk": 212064.39,
+      "equity_usd": 9787.9,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 04:55",
+      "equity_czk": 212325.27,
+      "equity_usd": 9799.94,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 04:58",
+      "equity_czk": 210678.0,
+      "equity_usd": 9723.91,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 05:01",
+      "equity_czk": 211068.56,
+      "equity_usd": 9741.94,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 05:04",
+      "equity_czk": 211848.37,
+      "equity_usd": 9777.93,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 05:07",
+      "equity_czk": 210070.49,
+      "equity_usd": 9695.87,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 05:10",
+      "equity_czk": 210113.87,
+      "equity_usd": 9697.87,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 05:13",
+      "equity_czk": 210069.76,
+      "equity_usd": 9695.84,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 05:16",
+      "equity_czk": 209854.16,
+      "equity_usd": 9685.89,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 05:19",
+      "equity_czk": 209768.92,
+      "equity_usd": 9681.95,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 05:22",
+      "equity_czk": 209466.53,
+      "equity_usd": 9668.0,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 05:25",
+      "equity_czk": 209163.05,
+      "equity_usd": 9653.99,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 05:28",
+      "equity_czk": 209639.16,
+      "equity_usd": 9675.96,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 05:31",
+      "equity_czk": 209725.97,
+      "equity_usd": 9679.97,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 05:34",
+      "equity_czk": 209812.95,
+      "equity_usd": 9683.99,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 05:37",
+      "equity_czk": 208513.65,
+      "equity_usd": 9624.02,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 05:40",
+      "equity_czk": 209553.46,
+      "equity_usd": 9672.01,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 05:43",
+      "equity_czk": 209336.65,
+      "equity_usd": 9662.0,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 05:46",
+      "equity_czk": 209857.35,
+      "equity_usd": 9686.03,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 05:49",
+      "equity_czk": 209727.69,
+      "equity_usd": 9680.05,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 05:52",
+      "equity_czk": 209641.07,
+      "equity_usd": 9676.05,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 05:55",
+      "equity_czk": 209337.81,
+      "equity_usd": 9662.05,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 05:58",
+      "equity_czk": 208991.0,
+      "equity_usd": 9646.05,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 06:01",
+      "equity_czk": 209510.84,
+      "equity_usd": 9670.04,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 06:04",
+      "equity_czk": 209597.18,
+      "equity_usd": 9674.03,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 06:07",
+      "equity_czk": 209380.29,
+      "equity_usd": 9664.02,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 06:10",
+      "equity_czk": 209726.86,
+      "equity_usd": 9680.01,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 06:13",
+      "equity_czk": 209943.19,
+      "equity_usd": 9690.0,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 06:16",
+      "equity_czk": 210072.97,
+      "equity_usd": 9695.99,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 06:19",
+      "equity_czk": 210679.68,
+      "equity_usd": 9723.99,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 06:22",
+      "equity_czk": 210333.99,
+      "equity_usd": 9708.03,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 06:25",
+      "equity_czk": 210810.09,
+      "equity_usd": 9730.01,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 06:28",
+      "equity_czk": 211894.06,
+      "equity_usd": 9780.04,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 06:31",
+      "equity_czk": 211287.16,
+      "equity_usd": 9752.03,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 06:33",
+      "equity_czk": 210204.33,
+      "equity_usd": 9702.05,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 06:36",
+      "equity_czk": 208558.23,
+      "equity_usd": 9626.07,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 06:42",
+      "equity_czk": 209296.48,
+      "equity_usd": 9660.15,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 06:45",
+      "equity_czk": 209468.81,
+      "equity_usd": 9668.1,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 06:48",
+      "equity_czk": 209382.85,
+      "equity_usd": 9664.13,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 06:51",
+      "equity_czk": 208862.03,
+      "equity_usd": 9640.1,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 06:54",
+      "equity_czk": 207797.09,
+      "equity_usd": 9590.94,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 06:57",
+      "equity_czk": 207950.66,
+      "equity_usd": 9598.03,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:00",
+      "equity_czk": 207994.42,
+      "equity_usd": 9600.05,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:03",
+      "equity_czk": 209250.7,
+      "equity_usd": 9658.03,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:09",
+      "equity_czk": 208469.6,
+      "equity_usd": 9621.98,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:12",
+      "equity_czk": 208124.34,
+      "equity_usd": 9606.05,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:15",
+      "equity_czk": 209858.26,
+      "equity_usd": 9686.08,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:18",
+      "equity_czk": 210420.36,
+      "equity_usd": 9712.02,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:19",
+      "equity_czk": 210333.96,
+      "equity_usd": 9708.03,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:21",
+      "equity_czk": 211546.91,
+      "equity_usd": 9764.02,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:24",
+      "equity_czk": 211156.79,
+      "equity_usd": 9746.01,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:27",
+      "equity_czk": 211372.81,
+      "equity_usd": 9755.98,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:30",
+      "equity_czk": 211372.81,
+      "equity_usd": 9755.98,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:31",
+      "equity_czk": 210506.65,
+      "equity_usd": 9716.0,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:34",
+      "equity_czk": 210939.89,
+      "equity_usd": 9736.0,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:37",
+      "equity_czk": 210420.52,
+      "equity_usd": 9712.03,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:40",
+      "equity_czk": 208470.84,
+      "equity_usd": 9622.04,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:43",
+      "equity_czk": 208037.88,
+      "equity_usd": 9602.06,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:46",
+      "equity_czk": 207388.52,
+      "equity_usd": 9572.08,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:49",
+      "equity_czk": 207172.68,
+      "equity_usd": 9562.12,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:52",
+      "equity_czk": 207864.88,
+      "equity_usd": 9594.07,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:55",
+      "equity_czk": 208816.38,
+      "equity_usd": 9637.99,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 07:58",
+      "equity_czk": 207039.48,
+      "equity_usd": 9555.97,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 08:01",
+      "equity_czk": 207993.11,
+      "equity_usd": 9599.99,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 08:04",
+      "equity_czk": 207819.7,
+      "equity_usd": 9591.99,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 08:07",
+      "equity_czk": 207945.51,
+      "equity_usd": 9597.79,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 08:13",
+      "equity_czk": 208597.21,
+      "equity_usd": 9627.87,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 08:16",
+      "equity_czk": 211024.21,
+      "equity_usd": 9739.89,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 08:19",
+      "equity_czk": 211155.12,
+      "equity_usd": 9745.93,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 08:22",
+      "equity_czk": 209984.08,
+      "equity_usd": 9691.88,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 08:25",
+      "equity_czk": 211413.73,
+      "equity_usd": 9757.87,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 08:28",
+      "equity_czk": 210980.54,
+      "equity_usd": 9737.88,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 08:31",
+      "equity_czk": 211370.64,
+      "equity_usd": 9755.88,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 08:34",
+      "equity_czk": 212194.14,
+      "equity_usd": 9793.89,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 08:37",
+      "equity_czk": 211719.25,
+      "equity_usd": 9771.97,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 08:40",
+      "equity_czk": 211415.72,
+      "equity_usd": 9757.96,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 08:43",
+      "equity_czk": 210939.44,
+      "equity_usd": 9735.98,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 08:46",
+      "equity_czk": 211285.18,
+      "equity_usd": 9751.94,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 08:49",
+      "equity_czk": 211198.38,
+      "equity_usd": 9747.93,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 08:52",
+      "equity_czk": 210114.87,
+      "equity_usd": 9697.92,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 08:55",
+      "equity_czk": 209248.92,
+      "equity_usd": 9657.95,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 08:58",
+      "equity_czk": 208425.37,
+      "equity_usd": 9619.94,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 09:01",
+      "equity_czk": 206894.9,
+      "equity_usd": 9549.3,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 09:04",
+      "equity_czk": 208960.36,
+      "equity_usd": 9644.63,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 09:07",
+      "equity_czk": 207945.4,
+      "equity_usd": 9597.79,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 09:10",
+      "equity_czk": 206938.67,
+      "equity_usd": 9551.32,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 09:13",
+      "equity_czk": 208183.18,
+      "equity_usd": 9608.76,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 09:16",
+      "equity_czk": 208382.34,
+      "equity_usd": 9617.95,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 09:19",
+      "equity_czk": 206659.39,
+      "equity_usd": 9538.43,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 09:22",
+      "equity_czk": 207342.35,
+      "equity_usd": 9569.95,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 09:25",
+      "equity_czk": 206732.94,
+      "equity_usd": 9541.83,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 09:28",
+      "equity_czk": 207674.2,
+      "equity_usd": 9585.27,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 09:31",
+      "equity_czk": 206813.89,
+      "equity_usd": 9545.56,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 09:34",
+      "equity_czk": 206018.65,
+      "equity_usd": 9508.86,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 09:37",
+      "equity_czk": 207527.28,
+      "equity_usd": 9578.49,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 09:40",
+      "equity_czk": 208570.66,
+      "equity_usd": 9626.65,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 09:43",
+      "equity_czk": 209646.42,
+      "equity_usd": 9676.3,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 09:46",
+      "equity_czk": 208760.29,
+      "equity_usd": 9635.4,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 09:49",
+      "equity_czk": 209598.72,
+      "equity_usd": 9674.1,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 09:52",
+      "equity_czk": 210449.57,
+      "equity_usd": 9713.37,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 09:55",
+      "equity_czk": 210743.3,
+      "equity_usd": 9726.93,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 09:58",
+      "equity_czk": 212593.56,
+      "equity_usd": 9812.33,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 10:01",
+      "equity_czk": 214622.33,
+      "equity_usd": 9905.96,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 10:04",
+      "equity_czk": 212355.29,
+      "equity_usd": 9801.33,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 10:07",
+      "equity_czk": 212130.84,
+      "equity_usd": 9790.97,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 10:10",
+      "equity_czk": 213053.86,
+      "equity_usd": 9833.57,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 10:13",
+      "equity_czk": 212405.65,
+      "equity_usd": 9803.65,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 10:16",
+      "equity_czk": 211899.78,
+      "equity_usd": 9780.3,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 10:19",
+      "equity_czk": 212258.29,
+      "equity_usd": 9796.85,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 10:22",
+      "equity_czk": 212657.68,
+      "equity_usd": 9815.28,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 10:25",
+      "equity_czk": 213560.84,
+      "equity_usd": 9856.97,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 10:28",
+      "equity_czk": 212677.09,
+      "equity_usd": 9816.18,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 10:31",
+      "equity_czk": 212343.3,
+      "equity_usd": 9800.77,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 10:34",
+      "equity_czk": 213895.28,
+      "equity_usd": 9872.41,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 10:37",
+      "equity_czk": 214160.11,
+      "equity_usd": 9884.63,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 10:40",
+      "equity_czk": 213969.93,
+      "equity_usd": 9875.85,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 10:43",
+      "equity_czk": 213059.39,
+      "equity_usd": 9833.83,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 10:46",
+      "equity_czk": 214770.78,
+      "equity_usd": 9912.82,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 10:49",
+      "equity_czk": 214719.31,
+      "equity_usd": 9910.44,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 10:52",
+      "equity_czk": 215621.43,
+      "equity_usd": 9952.08,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 10:55",
+      "equity_czk": 214486.84,
+      "equity_usd": 9899.71,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 10:58",
+      "equity_czk": 215289.72,
+      "equity_usd": 9936.77,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 11:01",
+      "equity_czk": 215503.68,
+      "equity_usd": 9946.64,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 11:04",
+      "equity_czk": 215062.05,
+      "equity_usd": 9926.26,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 11:07",
+      "equity_czk": 214659.39,
+      "equity_usd": 9907.67,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 11:10",
+      "equity_czk": 214162.46,
+      "equity_usd": 9884.74,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 11:13",
+      "equity_czk": 213953.69,
+      "equity_usd": 9875.1,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 11:16",
+      "equity_czk": 214077.91,
+      "equity_usd": 9880.84,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 11:19",
+      "equity_czk": 213968.07,
+      "equity_usd": 9875.77,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 11:22",
+      "equity_czk": 213764.85,
+      "equity_usd": 9866.39,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 11:25",
+      "equity_czk": 214883.34,
+      "equity_usd": 9918.01,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 11:28",
+      "equity_czk": 214795.41,
+      "equity_usd": 9913.95,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 11:31",
+      "equity_czk": 215022.65,
+      "equity_usd": 9924.44,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 11:34",
+      "equity_czk": 215395.76,
+      "equity_usd": 9941.66,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 11:37",
+      "equity_czk": 215178.54,
+      "equity_usd": 9931.64,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 11:40",
+      "equity_czk": 215120.64,
+      "equity_usd": 9928.96,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 11:43",
+      "equity_czk": 215027.94,
+      "equity_usd": 9924.68,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 11:46",
+      "equity_czk": 214831.89,
+      "equity_usd": 9915.64,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 11:49",
+      "equity_czk": 215082.01,
+      "equity_usd": 9927.18,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 11:52",
+      "equity_czk": 214885.63,
+      "equity_usd": 9918.12,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 11:55",
+      "equity_czk": 215208.95,
+      "equity_usd": 9933.04,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 11:58",
+      "equity_czk": 215303.53,
+      "equity_usd": 9937.4,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 12:01",
+      "equity_czk": 215874.04,
+      "equity_usd": 9963.74,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 12:04",
+      "equity_czk": 215681.63,
+      "equity_usd": 9954.86,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 12:07",
+      "equity_czk": 216168.63,
+      "equity_usd": 9977.33,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 12:10",
+      "equity_czk": 215721.01,
+      "equity_usd": 9956.67,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 12:13",
+      "equity_czk": 215783.69,
+      "equity_usd": 9959.57,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 12:16",
+      "equity_czk": 215412.67,
+      "equity_usd": 9942.44,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 12:19",
+      "equity_czk": 215399.09,
+      "equity_usd": 9941.82,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 12:22",
+      "equity_czk": 216724.48,
+      "equity_usd": 10002.99,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 12:28",
+      "equity_czk": 216742.06,
+      "equity_usd": 10003.8,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 12:31",
+      "equity_czk": 216890.84,
+      "equity_usd": 10010.67,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 12:34",
+      "equity_czk": 216583.35,
+      "equity_usd": 9996.48,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 12:37",
+      "equity_czk": 216422.66,
+      "equity_usd": 9989.06,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 12:40",
+      "equity_czk": 214043.76,
+      "equity_usd": 9879.26,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 12:43",
+      "equity_czk": 216466.71,
+      "equity_usd": 9991.09,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 12:46",
+      "equity_czk": 216624.66,
+      "equity_usd": 9998.38,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 12:49",
+      "equity_czk": 217412.94,
+      "equity_usd": 10034.77,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 12:52",
+      "equity_czk": 216693.45,
+      "equity_usd": 10001.56,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 12:55",
+      "equity_czk": 215231.98,
+      "equity_usd": 9934.1,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 12:58",
+      "equity_czk": 215030.09,
+      "equity_usd": 9924.78,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 13:01",
+      "equity_czk": 214351.01,
+      "equity_usd": 9893.44,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 13:04",
+      "equity_czk": 214698.77,
+      "equity_usd": 9909.49,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 13:07",
+      "equity_czk": 214419.07,
+      "equity_usd": 9896.58,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 13:10",
+      "equity_czk": 213660.47,
+      "equity_usd": 9861.57,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 13:13",
+      "equity_czk": 213886.82,
+      "equity_usd": 9872.02,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 13:16",
+      "equity_czk": 212794.59,
+      "equity_usd": 9821.6,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 13:19",
+      "equity_czk": 212641.04,
+      "equity_usd": 9814.52,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 13:22",
+      "equity_czk": 212735.08,
+      "equity_usd": 9818.86,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 13:25",
+      "equity_czk": 212652.54,
+      "equity_usd": 9815.05,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 13:28",
+      "equity_czk": 213684.32,
+      "equity_usd": 9862.67,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 13:31",
+      "equity_czk": 214268.93,
+      "equity_usd": 9889.65,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 13:34",
+      "equity_czk": 215568.59,
+      "equity_usd": 9949.64,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 13:40",
+      "equity_czk": 215641.42,
+      "equity_usd": 9953.0,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 13:43",
+      "equity_czk": 215338.92,
+      "equity_usd": 9939.04,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 13:46",
+      "equity_czk": 215355.47,
+      "equity_usd": 9939.8,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 13:49",
+      "equity_czk": 215451.24,
+      "equity_usd": 9944.22,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 13:52",
+      "equity_czk": 215492.7,
+      "equity_usd": 9946.14,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 13:55",
+      "equity_czk": 215845.59,
+      "equity_usd": 9962.42,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 13:58",
+      "equity_czk": 217444.59,
+      "equity_usd": 10036.23,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 14:01",
+      "equity_czk": 219191.79,
+      "equity_usd": 10116.87,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 14:04",
+      "equity_czk": 219655.58,
+      "equity_usd": 10138.27,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 14:07",
+      "equity_czk": 217044.94,
+      "equity_usd": 10017.78,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 14:10",
+      "equity_czk": 215576.42,
+      "equity_usd": 9950.0,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 14:13",
+      "equity_czk": 216548.36,
+      "equity_usd": 9994.86,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 14:16",
+      "equity_czk": 216575.14,
+      "equity_usd": 9996.1,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 14:19",
+      "equity_czk": 217207.9,
+      "equity_usd": 10025.3,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 14:25",
+      "equity_czk": 217905.39,
+      "equity_usd": 10057.49,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 14:28",
+      "equity_czk": 217169.75,
+      "equity_usd": 10023.54,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 14:31",
+      "equity_czk": 217929.29,
+      "equity_usd": 10058.6,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 14:34",
+      "equity_czk": 218555.92,
+      "equity_usd": 10087.52,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 14:37",
+      "equity_czk": 218877.56,
+      "equity_usd": 10102.37,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 14:40",
+      "equity_czk": 218060.02,
+      "equity_usd": 10064.63,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 14:43",
+      "equity_czk": 218576.69,
+      "equity_usd": 10088.48,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 14:46",
+      "equity_czk": 218042.63,
+      "equity_usd": 10063.83,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 14:49",
+      "equity_czk": 218469.36,
+      "equity_usd": 10083.52,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 14:52",
+      "equity_czk": 217683.92,
+      "equity_usd": 10047.27,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 14:55",
+      "equity_czk": 218592.32,
+      "equity_usd": 10089.2,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 14:58",
+      "equity_czk": 219656.5,
+      "equity_usd": 10138.32,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:01",
+      "equity_czk": 218926.71,
+      "equity_usd": 10104.63,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:04",
+      "equity_czk": 218229.83,
+      "equity_usd": 10072.47,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:07",
+      "equity_czk": 218436.35,
+      "equity_usd": 10082.0,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:10",
+      "equity_czk": 217259.12,
+      "equity_usd": 10027.67,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:13",
+      "equity_czk": 217413.38,
+      "equity_usd": 10034.79,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:16",
+      "equity_czk": 218021.38,
+      "equity_usd": 10062.85,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:19",
+      "equity_czk": 219285.33,
+      "equity_usd": 10121.19,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:22",
+      "equity_czk": 219732.68,
+      "equity_usd": 10141.83,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:25",
+      "equity_czk": 219783.69,
+      "equity_usd": 10144.19,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:28",
+      "equity_czk": 219335.64,
+      "equity_usd": 10123.51,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:30",
+      "equity_czk": 218792.73,
+      "equity_usd": 10098.45,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:31",
+      "equity_czk": 218564.52,
+      "equity_usd": 10087.92,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:34",
+      "equity_czk": 219361.07,
+      "equity_usd": 10124.68,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:37",
+      "equity_czk": 220256.18,
+      "equity_usd": 10166.0,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:40",
+      "equity_czk": 222703.87,
+      "equity_usd": 10278.97,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:43",
+      "equity_czk": 223712.03,
+      "equity_usd": 10325.5,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:46",
+      "equity_czk": 224766.34,
+      "equity_usd": 10374.16,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:49",
+      "equity_czk": 225508.98,
+      "equity_usd": 10408.44,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:52",
+      "equity_czk": 224280.82,
+      "equity_usd": 10351.75,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:55",
+      "equity_czk": 225554.26,
+      "equity_usd": 10410.53,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 15:58",
+      "equity_czk": 224033.37,
+      "equity_usd": 10340.33,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 16:01",
+      "equity_czk": 225025.47,
+      "equity_usd": 10386.12,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 16:04",
+      "equity_czk": 228015.25,
+      "equity_usd": 10524.12,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 16:07",
+      "equity_czk": 227799.43,
+      "equity_usd": 10514.16,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 16:10",
+      "equity_czk": 227256.27,
+      "equity_usd": 10489.09,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 16:13",
+      "equity_czk": 228883.34,
+      "equity_usd": 10564.19,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 16:16",
+      "equity_czk": 228041.69,
+      "equity_usd": 10525.34,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 16:19",
+      "equity_czk": 226160.7,
+      "equity_usd": 10438.52,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 16:22",
+      "equity_czk": 226319.89,
+      "equity_usd": 10445.87,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 16:25",
+      "equity_czk": 227102.25,
+      "equity_usd": 10481.98,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 16:28",
+      "equity_czk": 226201.08,
+      "equity_usd": 10440.38,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 16:31",
+      "equity_czk": 226544.34,
+      "equity_usd": 10456.23,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 16:34",
+      "equity_czk": 227301.24,
+      "equity_usd": 10491.16,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 16:37",
+      "equity_czk": 227705.77,
+      "equity_usd": 10509.83,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 16:40",
+      "equity_czk": 228384.73,
+      "equity_usd": 10541.17,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 16:43",
+      "equity_czk": 227701.27,
+      "equity_usd": 10509.63,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 16:46",
+      "equity_czk": 227813.91,
+      "equity_usd": 10514.83,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 16:49",
+      "equity_czk": 228060.99,
+      "equity_usd": 10526.23,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 16:52",
+      "equity_czk": 226986.84,
+      "equity_usd": 10476.65,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 16:55",
+      "equity_czk": 228273.88,
+      "equity_usd": 10536.06,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 16:58",
+      "equity_czk": 227481.54,
+      "equity_usd": 10499.48,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 17:01",
+      "equity_czk": 227212.52,
+      "equity_usd": 10487.07,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 17:04",
+      "equity_czk": 226949.56,
+      "equity_usd": 10474.93,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 17:06",
+      "equity_czk": 227558.75,
+      "equity_usd": 10503.05,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 17:09",
+      "equity_czk": 227067.5,
+      "equity_usd": 10480.37,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 17:12",
+      "equity_czk": 226837.83,
+      "equity_usd": 10469.77,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 17:15",
+      "equity_czk": 226544.48,
+      "equity_usd": 10456.23,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 17:18",
+      "equity_czk": 228201.07,
+      "equity_usd": 10532.69,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 17:22",
+      "equity_czk": 227973.43,
+      "equity_usd": 10522.19,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 17:25",
+      "equity_czk": 227003.8,
+      "equity_usd": 10477.43,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 17:27",
+      "equity_czk": 225647.35,
+      "equity_usd": 10414.83,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 17:34",
+      "equity_czk": 227117.94,
+      "equity_usd": 10482.7,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 17:36",
+      "equity_czk": 226548.1,
+      "equity_usd": 10456.4,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 17:39",
+      "equity_czk": 226863.86,
+      "equity_usd": 10470.98,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 17:43",
+      "equity_czk": 226921.76,
+      "equity_usd": 10473.65,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 17:45",
+      "equity_czk": 227158.08,
+      "equity_usd": 10484.56,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 17:48",
+      "equity_czk": 227095.09,
+      "equity_usd": 10481.65,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 17:52",
+      "equity_czk": 227466.89,
+      "equity_usd": 10498.81,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 17:55",
+      "equity_czk": 227842.45,
+      "equity_usd": 10516.14,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 17:57",
+      "equity_czk": 228149.38,
+      "equity_usd": 10530.31,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:01",
+      "equity_czk": 228343.29,
+      "equity_usd": 10539.26,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:04",
+      "equity_czk": 229231.19,
+      "equity_usd": 10580.24,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:06",
+      "equity_czk": 227918.25,
+      "equity_usd": 10519.64,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:09",
+      "equity_czk": 228508.99,
+      "equity_usd": 10546.91,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:13",
+      "equity_czk": 227771.04,
+      "equity_usd": 10512.85,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:16",
+      "equity_czk": 227427.34,
+      "equity_usd": 10496.98,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:18",
+      "equity_czk": 227454.86,
+      "equity_usd": 10498.25,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:22",
+      "equity_czk": 228552.89,
+      "equity_usd": 10548.93,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:25",
+      "equity_czk": 228513.67,
+      "equity_usd": 10547.12,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:27",
+      "equity_czk": 228402.22,
+      "equity_usd": 10541.98,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:30",
+      "equity_czk": 228402.22,
+      "equity_usd": 10541.98,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:31",
+      "equity_czk": 228755.32,
+      "equity_usd": 10558.28,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:32",
+      "equity_czk": 229110.32,
+      "equity_usd": 10574.66,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:33",
+      "equity_czk": 229095.29,
+      "equity_usd": 10573.97,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:36",
+      "equity_czk": 229054.35,
+      "equity_usd": 10572.08,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:39",
+      "equity_czk": 228726.15,
+      "equity_usd": 10556.93,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:43",
+      "equity_czk": 228376.82,
+      "equity_usd": 10540.81,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:46",
+      "equity_czk": 228632.75,
+      "equity_usd": 10552.62,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:49",
+      "equity_czk": 230326.03,
+      "equity_usd": 10630.77,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:55",
+      "equity_czk": 229604.63,
+      "equity_usd": 10597.48,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 18:58",
+      "equity_czk": 229264.59,
+      "equity_usd": 10581.78,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:01",
+      "equity_czk": 229876.5,
+      "equity_usd": 10610.02,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:04",
+      "equity_czk": 230608.41,
+      "equity_usd": 10643.81,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:07",
+      "equity_czk": 230250.24,
+      "equity_usd": 10627.27,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:10",
+      "equity_czk": 230949.28,
+      "equity_usd": 10659.54,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:12",
+      "equity_czk": 230653.27,
+      "equity_usd": 10645.88,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:16",
+      "equity_czk": 230094.17,
+      "equity_usd": 10620.07,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:19",
+      "equity_czk": 230697.19,
+      "equity_usd": 10647.9,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:22",
+      "equity_czk": 231002.89,
+      "equity_usd": 10662.01,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:25",
+      "equity_czk": 230677.82,
+      "equity_usd": 10647.01,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:28",
+      "equity_czk": 229914.2,
+      "equity_usd": 10611.76,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:31",
+      "equity_czk": 229137.34,
+      "equity_usd": 10575.91,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:34",
+      "equity_czk": 228734.8,
+      "equity_usd": 10557.33,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:37",
+      "equity_czk": 228637.03,
+      "equity_usd": 10552.82,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:38",
+      "equity_czk": 227967.1,
+      "equity_usd": 10521.9,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:41",
+      "equity_czk": 227981.82,
+      "equity_usd": 10522.58,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:44",
+      "equity_czk": 228024.62,
+      "equity_usd": 10524.55,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:47",
+      "equity_czk": 228146.06,
+      "equity_usd": 10530.16,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:50",
+      "equity_czk": 228322.96,
+      "equity_usd": 10538.32,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:53",
+      "equity_czk": 228452.09,
+      "equity_usd": 10544.28,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:56",
+      "equity_czk": 228439.81,
+      "equity_usd": 10543.71,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 19:59",
+      "equity_czk": 228253.43,
+      "equity_usd": 10535.11,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 20:02",
+      "equity_czk": 228065.85,
+      "equity_usd": 10526.45,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 20:05",
+      "equity_czk": 228352.0,
+      "equity_usd": 10539.66,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 20:07",
+      "equity_czk": 228338.24,
+      "equity_usd": 10539.03,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 20:11",
+      "equity_czk": 228214.82,
+      "equity_usd": 10533.33,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 20:13",
+      "equity_czk": 228085.79,
+      "equity_usd": 10527.37,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 20:16",
+      "equity_czk": 228054.55,
+      "equity_usd": 10525.93,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 20:23",
+      "equity_czk": 228143.93,
+      "equity_usd": 10530.06,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 20:26",
+      "equity_czk": 228269.21,
+      "equity_usd": 10535.84,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 20:27",
+      "equity_czk": 228243.83,
+      "equity_usd": 10534.67,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 20:57",
+      "equity_czk": 228195.9,
+      "equity_usd": 10532.46,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 21:06",
+      "equity_czk": 228167.47,
+      "equity_usd": 10531.14,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 21:15",
+      "equity_czk": 228197.96,
+      "equity_usd": 10532.55,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 21:30",
+      "equity_czk": 228197.21,
+      "equity_usd": 10532.52,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 21:43",
+      "equity_czk": 228218.78,
+      "equity_usd": 10533.51,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 21:56",
+      "equity_czk": 228207.53,
+      "equity_usd": 10532.99,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 21:59",
+      "equity_czk": 228237.28,
+      "equity_usd": 10534.37,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 22:00",
+      "equity_czk": 228237.28,
+      "equity_usd": 10534.37,
+      "is_start": false
+    },
+    {
+      "time": "19.10. 22:30",
+      "equity_czk": 228235.69,
+      "equity_usd": 10534.29,
+      "is_start": false
+    }
+  ],
+  "cross_asset_macro": {
+    "scan_date": "2026-10-16",
+    "long_multiplier": 0.34,
+    "short_multiplier": 1.35,
+    "sovereign_floor_active": false,
+    "regime": "EQUITY_RISK_ON_HIGH_YIELD_DRAIN",
+    "reasons": [
+      "ODLIV_DO_AI_AKCII: 10Y=5.24% nese vysoký bezrizikový výnos, VIX=14.8 je klidný, XLK překonává trh o +3.9%. Zlato čelí odlivu institucionálního kapitálu -> Longy tlumit na 45%, Shorty povoleny.",
+      "VAROVANI_BANKY: XLF zaostává o -6.2%, kreditní spready HYG/LQD zatím klidné (+0.47%). Sledovat možnou eskalaci.",
+      "GOLD_VOLATILITY_STRESS: Gold VIX ^GVZ=22.8 překračuje akciový VIX=18.4 (ratio 1.24 >= 1.25). Zlato je pod specifickým prodejním tlakem nezávisle na akciích.",
+      "WEAK_TREASURY_AUCTION_DEMAND: Bid-to-Cover v US Treasury aukci klesl pod 2.30 -> slabá absorpce dluhu tlačí výnosy vzhůru (protivítr pro zlato)."
+    ],
+    "news_catalysts": [
+      "Průmyslová spotřeba: Solární fotovoltaika (TOPCon/HJT) navyšuje kvartální poptávku po stříbře o +12 %"
+    ],
+    "high_alpha_telemetry": {
+      "tip_ief_ratio": 1.16856,
+      "tip_ief_chg_pct": -0.008,
+      "gvz_gold_vix": 22.79,
+      "equity_vix": 18.39,
+      "gvz_vix_ratio": 1.239,
+      "gold_vol_stress": true,
+      "real_yield_spike": false,
+      "weak_treasury_demand": true
+    },
+    "macro_summary": {
+      "barometer_score": 33.6,
+      "us10y_yield": 5.24,
+      "vix": 14.84,
+      "xlk_vs_spy": 3.92,
+      "xlf_vs_spy": -6.18,
+      "hyg_lqd_dev": 0.47,
+      "miners_sentiment": 0.0
+    }
+  },
+  "dom_l2": {
+    "instrument": "COMEX Micro Gold Futures (MGC)",
+    "contract": "MGCZ6 (Dec 2026)",
+    "connected": true,
+    "status": "LIVE",
+    "status_text": "7497 Demo spojení aktivní",
+    "metrics": {
+      "valid": true,
+      "best_bid": 4192.9,
+      "best_ask": 4193.1,
+      "spread_ticks": 2.0,
+      "wobi_10": -0.0518,
+      "micro_skew_ticks": -0.55,
+      "bid_wall_detected": false,
+      "ask_wall_detected": false,
+      "bid_levels": [
+        {
+          "price": 4192.9,
+          "size": 3.3
+        },
+        {
+          "price": 4192.8,
+          "size": 15.4
+        },
+        {
+          "price": 4192.7,
+          "size": 4.8
+        },
+        {
+          "price": 4192.6,
+          "size": 12.7
+        },
+        {
+          "price": 4192.5,
+          "size": 10.4
+        },
+        {
+          "price": 4192.4,
+          "size": 3.9
+        },
+        {
+          "price": 4192.3,
+          "size": 10.7
+        },
+        {
+          "price": 4192.2,
+          "size": 7.5
+        },
+        {
+          "price": 4192.1,
+          "size": 8.7
+        },
+        {
+          "price": 4192.0,
+          "size": 8.1
+        }
+      ],
+      "ask_levels": [
+        {
+          "price": 4193.1,
+          "size": 11.4
+        },
+        {
+          "price": 4193.2,
+          "size": 6.8
+        },
+        {
+          "price": 4193.3,
+          "size": 15.1
+        },
+        {
+          "price": 4193.4,
+          "size": 2.6
+        },
+        {
+          "price": 4193.5,
+          "size": 4.1
+        },
+        {
+          "price": 4193.6,
+          "size": 11.8
+        },
+        {
+          "price": 4193.7,
+          "size": 5.2
+        },
+        {
+          "price": 4193.8,
+          "size": 7.5
+        },
+        {
+          "price": 4193.9,
+          "size": 6.9
+        },
+        {
+          "price": 4194.0,
+          "size": 15.1
+        }
+      ],
+      "total_bid_depth": 85.5,
+      "total_ask_depth": 86.5
+    },
+    "execution_long": {
+      "allow": true,
+      "style": "DEFENSIVE_PASSIVE_JOIN (34% expozice)",
+      "limit_price": 4192.9,
+      "reason": "[MAKRO TLUMENÍ 0.34x - ODLIV DO AI/10Y SAZEB] PASSIVE_BID_SAVES_SPREAD (WOBI=-0.05)"
+    },
+    "execution_short": {
+      "allow": true,
+      "style": "EMPOWERED_PASSIVE_JOIN_BEST_ASK (135% síla)",
+      "limit_price": 4193.1,
+      "reason": "[MAKRO ZVÝHODNĚNÍ 1.35x] PASSIVE_ASK_SAVES_SPREAD (WOBI=-0.05)"
+    }
+  },
+  "dom_silver_l2": {
+    "instrument": "COMEX Micro Silver Futures (SIL)",
+    "contract": "SILZ6 (Dec 2026)",
+    "connected": true,
+    "status": "LIVE",
+    "status_text": "7497 Demo spojení aktivní (SIL)",
+    "metrics": {
+      "valid": true,
+      "best_bid": 32.45,
+      "best_ask": 32.45,
+      "spread_ticks": 2.0,
+      "wobi_10": -0.2049,
+      "micro_skew_ticks": -0.39,
+      "bid_wall_detected": false,
+      "ask_wall_detected": false,
+      "bid_levels": [
+        {
+          "price": 32.45,
+          "size": 9.2
+        },
+        {
+          "price": 32.44,
+          "size": 18.2
+        },
+        {
+          "price": 32.44,
+          "size": 16.3
+        },
+        {
+          "price": 32.43,
+          "size": 13.9
+        },
+        {
+          "price": 32.42,
+          "size": 10.1
+        },
+        {
+          "price": 32.42,
+          "size": 16.8
+        },
+        {
+          "price": 32.41,
+          "size": 10.2
+        },
+        {
+          "price": 32.41,
+          "size": 10.2
+        },
+        {
+          "price": 32.41,
+          "size": 17.6
+        },
+        {
+          "price": 32.4,
+          "size": 10.6
+        }
+      ],
+      "ask_levels": [
+        {
+          "price": 32.45,
+          "size": 21.0
+        },
+        {
+          "price": 32.46,
+          "size": 17.3
+        },
+        {
+          "price": 32.47,
+          "size": 25.0
+        },
+        {
+          "price": 32.47,
+          "size": 21.1
+        },
+        {
+          "price": 32.48,
+          "size": 18.5
+        },
+        {
+          "price": 32.48,
+          "size": 25.1
+        },
+        {
+          "price": 32.48,
+          "size": 7.0
+        },
+        {
+          "price": 32.49,
+          "size": 18.3
+        },
+        {
+          "price": 32.49,
+          "size": 32.3
+        },
+        {
+          "price": 32.5,
+          "size": 10.3
+        }
+      ],
+      "total_bid_depth": 133.1,
+      "total_ask_depth": 195.9
+    },
+    "execution_long": {
+      "allow": true,
+      "style": "PASSIVE_JOIN_BEST_BID",
+      "limit_price": 32.445,
+      "reason": "SilverEdge v2.5.1 L2 Gate (Auditováno 2026 - Připraveno k exekuci)"
+    },
+    "execution_short": {
+      "allow": true,
+      "style": "PASSIVE_JOIN_BEST_ASK",
+      "limit_price": 32.455,
+      "reason": "SilverEdge v2.5.1 L2 Gate (Auditováno 2026 - Připraveno k exekuci)"
+    }
+  },
+  "silver_specs": {
+    "symbol": "SIL",
+    "active_contract": "SILZ6 (Prosinec 2026)",
+    "contract_name": "COMEX Micro Silver",
+    "unit_oz": 1000,
+    "point_value_usd": 1000.0,
+    "tick_size": 0.005,
+    "tick_value_usd": 5.0,
+    "margin_req_usd": 1650.0,
+    "model_status": "READY_ACTIVE",
+    "model_status_label": "🟢 Model auditován a připraven k živé/paper exekuci (SilverEdge v2.5.1)",
+    "shanghai_premium_pct": 1.85,
+    "gsr_ratio": 84.2,
+    "gsr_zscore": 1.62,
+    "cot_crowding_pct": 41.2,
+    "sovereign_floor_usd": 9000.0
+  },
+  "gateway_outage_history": [
+    {
+      "from": "19.10.2026 21:25:17",
+      "to": "19.10.2026 21:25:49",
+      "duration_sec": 31,
+      "duration_str": "31 s",
+      "duration_min": 1,
+      "status": "Obnoveno",
+      "reason": "Watchdog Auto-Recovery (Port 7497)"
+    },
+    {
+      "from": "19.10.2026 00:15:27",
+      "to": "19.10.2026 00:17:19",
+      "duration_sec": 112,
+      "duration_str": "1 min 52 s",
+      "duration_min": 2,
+      "status": "Obnoveno",
+      "reason": "Watchdog Auto-Recovery (Port 7497)"
+    },
+    {
+      "from": "19.10.2026 00:14:05",
+      "to": "19.10.2026 00:15:14",
+      "duration_sec": 68,
+      "duration_str": "1 min 8 s",
+      "duration_min": 1,
+      "status": "Obnoveno",
+      "reason": "Watchdog Auto-Recovery (Port 7497)"
+    },
+    {
+      "from": "18.10.2026 23:59:42",
+      "to": "19.10.2026 00:04:35",
+      "duration_sec": 293,
+      "duration_str": "4 min 53 s",
+      "duration_min": 5,
+      "status": "Obnoveno",
+      "reason": "Watchdog Auto-Recovery (Port 7497)"
+    },
+    {
+      "from": "18.10.2026 21:46:33",
+      "to": "18.10.2026 21:47:19",
+      "duration_sec": 45,
+      "duration_str": "45 s",
+      "duration_min": 1,
+      "status": "Obnoveno",
+      "reason": "Watchdog Auto-Recovery (Port 7497)"
+    },
+    {
+      "from": "18.10.2026 21:36:17",
+      "to": "18.10.2026 21:40:05",
+      "duration_sec": 228,
+      "duration_str": "3 min 48 s",
+      "duration_min": 4,
+      "status": "Obnoveno",
+      "reason": "Watchdog Auto-Recovery (Port 7497)"
+    },
+    {
+      "from": "18.10.2026 20:37:12",
+      "to": "18.10.2026 20:37:47",
+      "duration_sec": 35,
+      "duration_str": "35 s",
+      "duration_min": 1,
+      "status": "Obnoveno",
+      "reason": "Watchdog Auto-Recovery (Port 7497)"
+    },
+    {
+      "from": "18.10.2026 20:01:31",
+      "to": "18.10.2026 20:02:17",
+      "duration_sec": 45,
+      "duration_str": "45 s",
+      "duration_min": 1,
+      "status": "Obnoveno",
+      "reason": "Watchdog Auto-Recovery (Port 7497)"
+    },
+    {
+      "from": "17.10.2026 23:50:44",
+      "to": "17.10.2026 23:51:09",
+      "duration_sec": 25,
+      "duration_str": "25 s",
+      "duration_min": 1,
+      "status": "Obnoveno",
+      "reason": "Watchdog Auto-Recovery (Port 7497)"
+    },
+    {
+      "from": "17.10.2026 23:45:05",
+      "to": "17.10.2026 23:45:30",
+      "duration_sec": 25,
+      "duration_str": "25 s",
+      "duration_min": 1,
+      "status": "Obnoveno",
+      "reason": "Watchdog Auto-Recovery (Port 7497)"
+    }
+  ],
+  "data_continuity": {
+    "consistent": true,
+    "status_code": "CONSISTENT_LIVE",
+    "status_label": "🟢 100% KONZISTENTNÍ (ŽIVÝ FEED AKTIVNÍ)",
+    "system_time": "19. 10. 2026 22:59:35 CET",
+    "last_candle_time": "2026-10-16 22:00",
+    "last_macro_date": "2026-10-16",
+    "gap_hours": 0,
+    "gap_days": 0,
+    "missing_h1_candles": 0,
+    "missing_m1_candles": 0,
+    "missing_macro_days": 0,
+    "missing_news_estimate": 0,
+    "gateway_connected": true,
+    "live_gap_active": false,
+    "auto_backfill_available": false,
+    "model_continuity_guaranteed": true,
+    "details": "Historická data od 12. 10. i živý feed svíček z IBKR Demo jsou 100% kompletní a kontinuální. Model Argon V2.5 má všechna data pro exekuci."
+  },
+  "trading_bot": {
+    "bot_mode": "AUTONOMOUS_ARGON_V25",
+    "bot_status_label": "🟢 AUTONOMNÍ TRADING AKTIVNÍ (Model Argon V2.5)",
+    "bot_active": true,
+    "last_evaluation": "19.10.2026 22:59:35",
+    "active_regime": "HEALTHY_BULL_TREND",
+    "killzone_status": "🟡 MIMO KILLZONE (09:00–11:30, 14:00–20:30)",
+    "active_strategies": [
+      "Strat 2: Argon L2 DOM Gate Scalper",
+      "Strat 4: Cross-Asset Macro Yield Bridge",
+      "Strat 6: News Catalyst Momentum"
+    ],
+    "continuity_status": "🟢 100% KONZISTENTNÍ (ŽIVÝ FEED AKTIVNÍ)",
+    "current_action": "Mimo aktivní Killzone (London Open 09:00–11:30 & NY Overlap 14:00–20:30 SEČ, blackout 19:15–19:35 COMEX Settlement). Exekuce pozastavena pro ochranu před polední stagnací a nočním šumem.",
+    "last_signal": "OUTSIDE_KILLZONE_STANDBY",
+    "target_contract": "COMEX Micro Gold (MGCZ6 Dec 2026)",
+    "wobi_signal": "-5.18%",
+    "macro_bias": "Long 0.34x / Short 1.35x"
+  },
+  "silver_trading_bot": {
+    "bot_mode": "AUTONOMOUS_SILVEREDGE_V25",
+    "bot_status_label": "🟢 AUTONOMNÍ TRADING AKTIVNÍ (Model SilverEdge v2.5.1)",
+    "bot_active": true,
+    "last_evaluation": "19.10.2026 22:59:35",
+    "commodity": "SILVER",
+    "killzone_status": "🟡 MIMO KILLZONE (09:00–11:30, 14:00–20:30)",
+    "active_strategies": [
+      "Strat 1: Trend KAMA Pullback",
+      "Strat 2: Volatility Breakout",
+      "Strat 3: Mean Reversion BB",
+      "Strat 4: London Momentum",
+      "Strat 5: Shanghai-London Arbitrage",
+      "Strat 6: Macro COT Flow",
+      "Strat 7: GSR Pairs Switch"
+    ],
+    "current_action": "Mimo aktivní Killzone Stříbra (London Open 09:00–11:30 & NY Overlap 14:00–20:30 SEČ). Exekuce pozastavena pro ochranu před spreadem.",
+    "last_signal": "OUTSIDE_KILLZONE_STANDBY",
+    "target_contract": "COMEX Micro Silver (SILZ6 Dec 2026)",
+    "wobi_signal": "-20.49%",
+    "shanghai_premium": "+1.85%"
+  }
+}

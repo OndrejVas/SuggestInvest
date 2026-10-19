@@ -1,0 +1,105 @@
+{
+  "strategy_id": "strat_5_h1_yang_zhang",
+  "strategy_num": 5,
+  "strategy_name": "STRATEGIE #5: H1 Yang-Zhang Volatility",
+  "strategy_badge": "PF 1.82 \u2022 Net +$241.80",
+  "commodity": "Micro Gold Futures (MGC na COMEXu)",
+  "contract_symbol": "MGCZ6",
+  "contract_size_oz": 10.0,
+  "leverage": "Burzovn\u00ed mar\u017ee ($850)",
+  "margin_req_pct": 8.5,
+  "metadata": {
+    "id": "strat_5_h1_yang_zhang_february_2026",
+    "name": "\ud83c\udfaf Slep\u00fd vzorek (OOS): \u00danor 2026 [STRATEGIE #5]",
+    "type": "OUT_OF_SAMPLE",
+    "status": "UNLOCKED_ACTIVE",
+    "start": "2026-02-01",
+    "end": "2026-03-01",
+    "description": "Druh\u00fd odem\u010den\u00fd slep\u00fd m\u011bs\u00edc z roku 2026 pro STRATEGIE #5: H1 Yang-Zhang Volatility pod pravidly MGC."
+  },
+  "summary": {
+    "initial_capital": 10000.0,
+    "final_equity": 10482.6,
+    "total_net_pnl": 482.6,
+    "total_gross_pnl": 487.0,
+    "total_fees_paid": 4.4,
+    "return_pct": 4.83,
+    "total_trades": 2,
+    "winning_trades": 2,
+    "losing_trades": 0,
+    "win_rate_pct": 100.0,
+    "profit_factor": 99.0,
+    "avg_trade_usd": 241.3,
+    "max_drawdown_pct": 0.0,
+    "candles_analyzed": 26948
+  },
+  "equity_curve": [
+    {
+      "time": "2026-02-01 00:00",
+      "equity": 10000.0,
+      "drawdown_pct": 0.0
+    },
+    {
+      "time": "2026-02-08 23:00",
+      "equity": 10148.8,
+      "drawdown_pct": 0.0
+    },
+    {
+      "time": "2026-02-17 05:00",
+      "equity": 10482.6,
+      "drawdown_pct": 0.0
+    }
+  ],
+  "trades": [
+    {
+      "id": 1,
+      "strategy_num": 5,
+      "strategy_name": "STRATEGIE #5: H1 Yang-Zhang Volatility",
+      "entry_time": "2026-02-06 13:00",
+      "exit_time": "2026-02-08 23:00",
+      "direction": "LONG",
+      "entry_price": 4929.0,
+      "exit_price": 4944.1,
+      "gross_pnl": 151.0,
+      "fees": 2.2,
+      "net_pnl": 148.8,
+      "equity": 10148.8,
+      "drawdown_pct": 0.0,
+      "exit_reason": "Chandelier Trailing SL (2.8x ATR)",
+      "commodity": "Micro Gold Futures (MGC)",
+      "contract_symbol": "MGCZ6",
+      "contracts": 1,
+      "position_size_oz": 10.0,
+      "notional_usd": 49290.0,
+      "margin_usd": 850.0,
+      "leverage": "Burzovn\u00ed mar\u017ee ($850)",
+      "tp_price": 4932.0,
+      "sl_price": 4927.8
+    },
+    {
+      "id": 2,
+      "strategy_num": 5,
+      "strategy_name": "STRATEGIE #5: H1 Yang-Zhang Volatility",
+      "entry_time": "2026-02-12 16:00",
+      "exit_time": "2026-02-17 05:00",
+      "direction": "SHORT",
+      "entry_price": 4955.0,
+      "exit_price": 4921.4,
+      "gross_pnl": 336.0,
+      "fees": 2.2,
+      "net_pnl": 333.8,
+      "equity": 10482.6,
+      "drawdown_pct": 0.0,
+      "exit_reason": "Chandelier Trailing SL (2.8x ATR)",
+      "commodity": "Micro Gold Futures (MGC)",
+      "contract_symbol": "MGCZ6",
+      "contracts": 1,
+      "position_size_oz": 10.0,
+      "notional_usd": 49550.0,
+      "margin_usd": 850.0,
+      "leverage": "Burzovn\u00ed mar\u017ee ($850)",
+      "tp_price": 4958.0,
+      "sl_price": 4953.8
+    }
+  ]
+}

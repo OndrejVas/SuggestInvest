@@ -49,7 +49,7 @@ logging.basicConfig(
 logger = logging.getLogger("MarketScanner")
 
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
-RSS_FEED_URL = "https://finance.yahoo.com/news/rssindex"
+RSS_FEED_URL = "https://feeds.finance.yahoo.com/rss/2.0/headline?s=^GSPC,GC=F,GLD"
 
 
 # Pydantic schémata pro zaručení striktního JSON kontraktu Senior Quant & Risk modelu
@@ -71,8 +71,11 @@ def fetch_rss_market_headlines(max_items: int = 6) -> List[str]:
     """Stáhne a vyčistí aktuální globální zprávy z RSS feedu."""
     headlines = []
     try:
+        import urllib.request
         logger.info(f"Stahuji zprávy z RSS feedu: {RSS_FEED_URL}")
-        feed = feedparser.parse(RSS_FEED_URL)
+        req = urllib.request.Request(RSS_FEED_URL, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
+        raw_xml = urllib.request.urlopen(req, timeout=8).read()
+        feed = feedparser.parse(raw_xml)
         for entry in feed.entries[:max_items]:
             title = entry.get("title", "").strip()
             summary_raw = entry.get("summary", "")
@@ -600,7 +603,8 @@ def build_trading_page(
     macro_barometer: Optional[Dict[str, Any]] = None,
     top_5_basket: Optional[List[Dict[str, Any]]] = None,
     timestamp_cet_str: str = "",
-    timestamp_utc_str: str = ""
+    timestamp_utc_str: str = "",
+    live_portfolio: Optional[Dict[str, Any]] = None
 ) -> str:
     """Zkompiluje specializovanou stránku trading.html pro Interactive Brokers."""
     if not timestamp_cet_str:
@@ -610,10 +614,24 @@ def build_trading_page(
         timestamp_cet_str = now_cet.strftime("%d.%m.%Y %H:%M SELČ")
         timestamp_utc_str = now_utc.strftime("%Y-%m-%d %H:%M:%S")
 
+    template_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Načtení živého portfolia z data/live_portfolio.json pokud nebylo předáno
+    if live_portfolio is None:
+        lp_path = os.path.join(template_dir, "data", "live_portfolio.json")
+        if os.path.exists(lp_path):
+            try:
+                with open(lp_path, "r", encoding="utf-8") as f:
+                    live_portfolio = json.load(f)
+            except Exception as e:
+                logger.warning(f"Chyba při čtení live_portfolio.json: {e}")
+                live_portfolio = {}
+        else:
+            live_portfolio = {}
+
     # Zajištění zobrazení přesně aktivních TOP 5 příkazů (odpovídá 100% alokaci 250 000 CZK)
     active_orders = (trading_orders or [])[:5]
 
-    template_dir = os.path.dirname(os.path.abspath(__file__))
     env = Environment(loader=FileSystemLoader(template_dir))
     template = env.get_template("trading_template.html")
 
@@ -623,6 +641,7 @@ def build_trading_page(
         top_5_basket=top_5_basket,
         timestamp_cet_str=timestamp_cet_str,
         timestamp_utc_str=timestamp_utc_str,
+        live_portfolio=live_portfolio
     )
     return html_content
 

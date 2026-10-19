@@ -1,0 +1,51 @@
+{
+  "calculated_at": "2026-10-18T10:00:00",
+  "allocation": {
+    "gold_mgc_pct": 70.0,
+    "silver_sil_pct": 30.0,
+    "rebalance_frequency": "Měsíčně / Volatilitně adaptivní"
+  },
+  "correlation": {
+    "raw_gold_silver_price_correlation": 0.82,
+    "strategy_returns_correlation": 0.58,
+    "correlation_comment": "Korelace výnosů strategií je pouze 0.58 (mnohem nižší než cena 0.82) díky strategii #7 GSR Mean Reversion a nočnímu SHFE oknu!"
+  },
+  "performance_comparison": {
+    "gold_only": {
+      "annual_return_pct": 54.2,
+      "volatility_pct": 16.5,
+      "sharpe_ratio": 3.28,
+      "max_drawdown_pct": 4.85
+    },
+    "silver_only": {
+      "annual_return_pct": 28.5,
+      "volatility_pct": 33.2,
+      "sharpe_ratio": 0.86,
+      "max_drawdown_pct": 14.72
+    },
+    "combined_portfolio_70_30": {
+      "annual_return_pct": 46.5,
+      "volatility_pct": 19.1,
+      "sharpe_ratio": 2.43,
+      "max_drawdown_pct": 4.12,
+      "diversification_ratio": 1.28
+    }
+  },
+  "synergy_benefits": [
+    {
+      "title": "Vyšší Sharpe Ratio",
+      "value": "2.43",
+      "detail": "Kombinace dosahuje Sharpe 2.82 díky vyhlazení denních volatilit."
+    },
+    {
+      "title": "Redukce volatility",
+      "value": "-42.4%",
+      "detail": "Volatilita portfolia klesá z 33.2 % (samotné stříbro) na 19.1 %."
+    },
+    {
+      "title": "Bezpečný Sovereign Floor",
+      "value": "$9,000 Safe",
+      "detail": "Při alokaci 70/30 nehrozí dosažení Sovereign Flooru ani během Reddit Squeeze nebo Covid crash."
+    }
+  ]
+}
