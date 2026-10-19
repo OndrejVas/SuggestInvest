@@ -1,7 +1,7 @@
 {
-  "timestamp": "19.10.2026 22:58:19",
-  "timestamp_iso": "2026-10-19T22:58:19.012889",
-  "overall_health": "CRITICAL",
+  "timestamp": "19.10.2026 23:06:40",
+  "timestamp_iso": "2026-10-19T23:06:40.080787",
+  "overall_health": "HEALTHY",
   "system_info": {
     "os": "Windows 11",
     "hostname": "CZUN65XW5Y2",
@@ -12,22 +12,22 @@
   "network_traffic": {
     "available": true,
     "session_traffic": {
-      "sent_mb": 135.39,
-      "recv_mb": 70.48,
-      "total_mb": 205.87,
+      "sent_mb": 7.82,
+      "recv_mb": 1.36,
+      "total_mb": 9.18,
       "duration_sec": 0.0
     },
     "rates": {
-      "upload_kb_s": 90.59,
-      "download_kb_s": 4.47,
-      "upload_mb_s": 0.088,
-      "download_mb_s": 0.004
+      "upload_kb_s": 82.78,
+      "download_kb_s": 89.25,
+      "upload_mb_s": 0.081,
+      "download_mb_s": 0.087
     },
     "system_totals": {
-      "total_sent_mb": 6645.7,
-      "total_recv_mb": 3212.4,
-      "packets_sent": 3028006,
-      "packets_recv": 5430091,
+      "total_sent_mb": 6691.2,
+      "total_recv_mb": 3216.1,
+      "packets_sent": 3034832,
+      "packets_recv": 5450666,
       "errors_in": 0,
       "errors_out": 0,
       "drop_in": 0,
@@ -50,7 +50,7 @@
         "name": "Wi-Fi",
         "ip": "192.168.68.52",
         "is_up": true,
-        "speed_mbps": 552
+        "speed_mbps": 541
       },
       {
         "name": "Síťové připojení Bluetooth",
@@ -62,18 +62,18 @@
   },
   "cpu": {
     "available": true,
-    "overall_percent": 16.7,
+    "overall_percent": 0.0,
     "cores_logical": 8,
     "cores_physical": 4,
     "per_core_percent": [
-      31.8,
-      32.2,
-      28.9,
-      28.6,
-      27.1,
-      25.0,
-      30.4,
-      28.6
+      29.2,
+      28.5,
+      29.4,
+      27.9,
+      29.1,
+      22.8,
+      32.1,
+      25.0
     ],
     "load_average": null,
     "status": "HEALTHY"
@@ -81,31 +81,31 @@
   "memory": {
     "available": true,
     "total_mb": 8002.6,
-    "used_mb": 6623.6,
-    "free_mb": 1379.0,
-    "used_gb": 6.47,
+    "used_mb": 6993.7,
+    "free_mb": 1008.9,
+    "used_gb": 6.83,
     "total_gb": 7.82,
-    "percent": 82.8,
+    "percent": 87.4,
     "swap": {
       "total_mb": 11264.0,
-      "used_mb": 1451.2,
-      "percent": 12.9
+      "used_mb": 1329.2,
+      "percent": 11.8
     },
     "status": "WARNING"
   },
   "disk": {
     "available": true,
     "total_gb": 235.5,
-    "used_gb": 157.4,
-    "free_gb": 78.1,
-    "percent": 66.8,
+    "used_gb": 157.6,
+    "free_gb": 77.9,
+    "percent": 66.9,
     "status": "HEALTHY"
   },
   "project_processes": {
     "available": true,
-    "count": 5,
-    "total_cpu_percent": 3.3,
-    "total_ram_mb": 401.4,
+    "count": 7,
+    "total_cpu_percent": 7.5,
+    "total_ram_mb": 593.9,
     "processes": [
       {
         "pid": 868,
@@ -113,15 +113,32 @@
         "role": "IB Gateway Native Process",
         "critical": false,
         "status": "running",
-        "cpu_percent": 0.3,
-        "ram_mb": 310.7,
+        "cpu_percent": 3.4,
+        "ram_mb": 321.9,
         "threads": 108,
         "started_at": "19.10.2026 21:25:29",
-        "uptime_sec": 5569,
-        "uptime_str": "1h 32m 49s",
+        "uptime_sec": 6070,
+        "uptime_str": "1h 41m 10s",
         "cmd": [
           "C:\\Jts\\ibgateway\\1051\\.install4j\\..\\jre\\bin\\java.exe",
           "--enable-native-access=ALL-UNNAMED,javafx.graphics,javafx.media,javafx.web"
+        ]
+      },
+      {
+        "pid": 1484,
+        "name": "python.exe",
+        "role": "SuggestInvest Web & API Server",
+        "critical": true,
+        "status": "running",
+        "cpu_percent": 0.4,
+        "ram_mb": 105.3,
+        "threads": 13,
+        "started_at": "19.10.2026 23:05:12",
+        "uptime_sec": 88,
+        "uptime_str": "0h 1m 28s",
+        "cmd": [
+          "C:\\Users\\uzivatel\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "server.py"
         ]
       },
       {
@@ -132,10 +149,10 @@
         "status": "running",
         "cpu_percent": 0.0,
         "ram_mb": 5.4,
-        "threads": 2,
+        "threads": 1,
         "started_at": "19.10.2026 21:25:26",
-        "uptime_sec": 5573,
-        "uptime_str": "1h 32m 53s",
+        "uptime_sec": 6073,
+        "uptime_str": "1h 41m 13s",
         "cmd": [
           "C:\\WINDOWS\\system32\\cmd.exe",
           "/c"
@@ -147,12 +164,12 @@
         "role": "IBKR Watchdog Daemon (Port 7497 & L2 DOM)",
         "critical": true,
         "status": "running",
-        "cpu_percent": 3.0,
-        "ram_mb": 46.2,
-        "threads": 11,
+        "cpu_percent": 3.7,
+        "ram_mb": 57.7,
+        "threads": 10,
         "started_at": "19.10.2026 21:25:16",
-        "uptime_sec": 5584,
-        "uptime_str": "1h 33m 4s",
+        "uptime_sec": 6084,
+        "uptime_str": "1h 41m 24s",
         "cmd": [
           "C:\\Users\\uzivatel\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
           "ibkr_watchdog.py"
@@ -165,11 +182,28 @@
         "critical": true,
         "status": "running",
         "cpu_percent": 0.0,
-        "ram_mb": 33.0,
-        "threads": 8,
+        "ram_mb": 33.1,
+        "threads": 7,
         "started_at": "19.10.2026 21:25:15",
-        "uptime_sec": 5584,
-        "uptime_str": "1h 33m 4s",
+        "uptime_sec": 6085,
+        "uptime_str": "1h 41m 25s",
+        "cmd": [
+          "powershell",
+          "-Command"
+        ]
+      },
+      {
+        "pid": 15504,
+        "name": "powershell.exe",
+        "role": "SuggestInvest Web & API Server",
+        "critical": true,
+        "status": "running",
+        "cpu_percent": 0.0,
+        "ram_mb": 64.3,
+        "threads": 10,
+        "started_at": "19.10.2026 23:05:11",
+        "uptime_sec": 89,
+        "uptime_str": "0h 1m 29s",
         "cmd": [
           "powershell",
           "-Command"
@@ -183,23 +217,18 @@
         "status": "running",
         "cpu_percent": 0.0,
         "ram_mb": 6.1,
-        "threads": 2,
+        "threads": 1,
         "started_at": "19.10.2026 21:25:26",
-        "uptime_sec": 5573,
-        "uptime_str": "1h 32m 53s",
+        "uptime_sec": 6074,
+        "uptime_str": "1h 41m 14s",
         "cmd": [
           "cmd.exe",
           "/c"
         ]
       }
     ],
-    "missing_critical": [
-      {
-        "keyword": "server.py",
-        "role": "SuggestInvest Web & API Server"
-      }
-    ],
-    "status": "CRITICAL"
+    "missing_critical": [],
+    "status": "HEALTHY"
   },
   "monitored_jsons": {
     "count_monitored": 8,
@@ -214,11 +243,11 @@
         "title": "FutureInvest Demo State",
         "role": "Centrální živý stav pro UI, boty a telemetrii",
         "exists": true,
-        "size_bytes": 75521,
-        "size_kb": 73.75,
-        "last_modified": "19.10.2026 22:58:17",
-        "age_sec": 2.9,
-        "age_str": "před 2.9 s",
+        "size_bytes": 20367,
+        "size_kb": 19.89,
+        "last_modified": "19.10.2026 23:06:39",
+        "age_sec": 1.3,
+        "age_str": "před 1.3 s",
         "valid": true,
         "parse_error": null,
         "items_count": 25,
@@ -232,9 +261,9 @@
         "exists": true,
         "size_bytes": 6550,
         "size_kb": 6.4,
-        "last_modified": "19.10.2026 22:58:06",
-        "age_sec": 13.4,
-        "age_str": "před 13.4 s",
+        "last_modified": "19.10.2026 23:06:31",
+        "age_sec": 9.5,
+        "age_str": "před 9.5 s",
         "valid": true,
         "parse_error": null,
         "items_count": 20,
@@ -248,9 +277,9 @@
         "exists": true,
         "size_bytes": 248,
         "size_kb": 0.24,
-        "last_modified": "16.10.2026 23:57:19",
-        "age_sec": 255660.3,
-        "age_str": "před 71 h 1 m",
+        "last_modified": "19.10.2026 23:01:13",
+        "age_sec": 327.3,
+        "age_str": "před 5 m 27 s",
         "valid": true,
         "parse_error": null,
         "items_count": 5,
@@ -264,9 +293,9 @@
         "exists": true,
         "size_bytes": 2409,
         "size_kb": 2.35,
-        "last_modified": "19.10.2026 21:26:14",
-        "age_sec": 5526.2,
-        "age_str": "před 1 h 32 m",
+        "last_modified": "19.10.2026 23:01:13",
+        "age_sec": 327.3,
+        "age_str": "před 5 m 27 s",
         "valid": true,
         "parse_error": null,
         "items_count": 10,
@@ -280,9 +309,9 @@
         "exists": true,
         "size_bytes": 2741,
         "size_kb": 2.68,
-        "last_modified": "19.10.2026 22:25:29",
-        "age_sec": 1970.6,
-        "age_str": "před 32 m 50 s",
+        "last_modified": "19.10.2026 23:01:13",
+        "age_sec": 327.3,
+        "age_str": "před 5 m 27 s",
         "valid": true,
         "parse_error": null,
         "items_count": 5,
@@ -294,14 +323,14 @@
         "title": "Demo Equity History",
         "role": "Historický vývoj majetku účtu",
         "exists": true,
-        "size_bytes": 50302,
-        "size_kb": 49.12,
-        "last_modified": "19.10.2026 22:30:01",
-        "age_sec": 1699.0,
-        "age_str": "před 28 m 18 s",
+        "size_bytes": 267,
+        "size_kb": 0.26,
+        "last_modified": "19.10.2026 23:06:39",
+        "age_sec": 1.4,
+        "age_str": "před 1.4 s",
         "valid": true,
         "parse_error": null,
-        "items_count": 415,
+        "items_count": 2,
         "status": "HEALTHY",
         "critical": false
       },
@@ -310,11 +339,11 @@
         "title": "Scalping Trades History",
         "role": "Záznam provedených rychlých scalping obchodů",
         "exists": true,
-        "size_bytes": 2029,
+        "size_bytes": 2028,
         "size_kb": 1.98,
-        "last_modified": "19.10.2026 22:58:07",
-        "age_sec": 13.3,
-        "age_str": "před 13.3 s",
+        "last_modified": "19.10.2026 23:06:31",
+        "age_sec": 9.4,
+        "age_str": "před 9.4 s",
         "valid": true,
         "parse_error": null,
         "items_count": 8,
@@ -329,8 +358,8 @@
         "size_bytes": 9348,
         "size_kb": 9.13,
         "last_modified": "13.10.2026 21:44:31",
-        "age_sec": 522828.7,
-        "age_str": "před 145 h 13 m",
+        "age_sec": 523329.6,
+        "age_str": "před 145 h 22 m",
         "valid": true,
         "parse_error": null,
         "items_count": 3,
@@ -345,29 +374,23 @@
       "status_text": "PŘIPOJENO (Socket 7497 aktivní)"
     },
     "suggestinvest_server_8000": {
-      "online": false,
-      "status_text": "NEDOSTUPNÝ (Server neběží)"
+      "online": true,
+      "status_text": "BĚŽÍ (HTTP server port 8000)"
     },
     "l2_dom_data_feed": {
       "connected": true,
       "status": "7497 Demo spojení aktivní",
-      "wobi_10": -0.0053
+      "wobi_10": -0.0603
     },
     "macro_calendar_bridge": {
       "active": true,
       "long_multiplier": 0.34,
       "short_multiplier": 1.35
     },
-    "last_sync_time": "19.10.2026 22:58:20"
+    "last_sync_time": "19.10.2026 23:06:39"
   },
-  "alerts": [
-    {
-      "level": "CRITICAL",
-      "category": "PROCESS",
-      "message": "Kritický proces NEBĚŽÍ: SuggestInvest Web & API Server (server.py)"
-    }
-  ],
-  "alerts_count": 1,
+  "alerts": [],
+  "alerts_count": 0,
   "vps_readiness": {
     "ready_for_cloud_vps": true,
     "systemd_service_name": "suggestinvest-reporter.service",

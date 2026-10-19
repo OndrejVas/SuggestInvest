@@ -1,7 +1,7 @@
 {
   "version": "3.0.0",
   "account_id": "IBKR: DUR222134 (Paper Trading Sandbox)",
-  "last_updated_cet": "19.10.2026 22:58:06",
+  "last_updated_cet": "19.10.2026 23:06:31",
   "summary": {
     "total_trades": 1,
     "wins": 1,
@@ -43,16 +43,16 @@
   "ibkr_live_account": {
     "account_id": "DUR222134",
     "status": "PŘIPOJENO K IBKR DEMO (PORT 7497)",
-    "last_synced_cet": "19.10.2026 22:58:06",
-    "net_liquidation_czk": 228237.23,
-    "net_liquidation_usd": 9732.93,
-    "available_funds_czk": 209911.62,
-    "available_funds_usd": 8951.46,
-    "total_cash_czk": 280047.67,
-    "total_cash_usd": 11942.33,
-    "buying_power_czk": 1399410.82,
-    "buying_power_usd": 59676.37,
-    "gross_position_czk": 51479.44,
+    "last_synced_cet": "19.10.2026 23:06:31",
+    "net_liquidation_czk": 228235.18,
+    "net_liquidation_usd": 9732.84,
+    "available_funds_czk": 209905.06,
+    "available_funds_usd": 8951.18,
+    "total_cash_czk": 280042.48,
+    "total_cash_usd": 11942.11,
+    "buying_power_czk": 1399367.05,
+    "buying_power_usd": 59674.5,
+    "gross_position_czk": 51476.36,
     "portfolio": [
       {
         "symbol": "RHM",

@@ -31,6 +31,14 @@ LOG_DIR = os.path.join(REPO_DIR, "logs")
 os.makedirs(LOG_DIR, exist_ok=True)
 LOG_FILE = os.path.join(LOG_DIR, "git_sync.log")
 
+try:
+    if sys.stdout and hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+    if sys.stderr and hasattr(sys.stderr, 'reconfigure'):
+        sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+except Exception:
+    pass
+
 logging.basicConfig(
     level=logging.INFO,
     format="[%(asctime)s] [%(levelname)s] %(message)s",
@@ -74,26 +82,14 @@ def verify_security_gates():
 
 def sync_to_github(trigger_reason="Scheduled Sync"):
     """
-    Executes git pull --rebase, stages web pages & data telemetry,
-    commits, and pushes to origin/main.
+    Executes security check, stages changes, commits, merges remote updates,
+    and pushes to origin/main.
     """
     now_cet = datetime.now(CET_TZ).strftime("%Y-%m-%d %H:%M:%S CET")
     logging.info(f"🚀 Starting GitHub synchronization ({trigger_reason}) at {now_cet}...")
 
     # 1. Verify security gates
     verify_security_gates()
-
-    # 2. Fetch and Rebase to incorporate any remote commits cleanly
-    logging.info("📥 Pulling latest changes with rebase from origin/main...")
-    code, out, err = run_cmd(["git", "pull", "--rebase", "origin", "main"])
-    if code != 0:
-        logging.error(f"Failed to git pull --rebase: {err}. Output: {out}")
-        # Try aborting rebase if stuck
-        run_cmd(["git", "rebase", "--abort"])
-        logging.warning("Rebase aborted to maintain repository integrity.")
-        return False
-    else:
-        logging.info("✅ Rebase completed successfully.")
 
     # 3. Stage relevant pages and telemetry JSON files
     stage_targets = [
@@ -167,7 +163,12 @@ def sync_to_github(trigger_reason="Scheduled Sync"):
         logging.error(f"Failed to commit: {err}. Output: {out}")
         return False
 
-    # 6. Push to origin main
+    # 6. Fetch and merge origin/main with -X ours to stay in sync with remote cron
+    logging.info("📥 Fetching origin and integrating any remote market cron commits...")
+    run_cmd(["git", "fetch", "origin"])
+    run_cmd(["git", "merge", "origin/main", "-X", "ours", "-m", f"Merge remote market updates [{now_cet}] [skip ci]"])
+
+    # 7. Push to origin main
     logging.info("📤 Pushing to origin main...")
     code, out, err = run_cmd(["git", "push", "origin", "main"])
     if code != 0:
