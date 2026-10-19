@@ -1,6 +1,6 @@
 {
-  "timestamp": "19.10.2026 23:55:17",
-  "timestamp_iso": "2026-10-19T23:55:17.733567",
+  "timestamp": "19.10.2026 23:55:41",
+  "timestamp_iso": "2026-10-19T23:55:41.932219",
   "overall_health": "CRITICAL",
   "system_info": {
     "os": "Windows 11",
@@ -12,22 +12,22 @@
   "network_traffic": {
     "available": true,
     "session_traffic": {
-      "sent_mb": 278.05,
-      "recv_mb": 22.13,
-      "total_mb": 300.18,
+      "sent_mb": 280.77,
+      "recv_mb": 22.34,
+      "total_mb": 303.12,
       "duration_sec": 0.0
     },
     "rates": {
-      "upload_kb_s": 111.05,
-      "download_kb_s": 5.19,
-      "upload_mb_s": 0.108,
-      "download_mb_s": 0.005
+      "upload_kb_s": 134.18,
+      "download_kb_s": 11.78,
+      "upload_mb_s": 0.131,
+      "download_mb_s": 0.012
     },
     "system_totals": {
-      "total_sent_mb": 6961.5,
-      "total_recv_mb": 3236.9,
-      "packets_sent": 3079552,
-      "packets_recv": 5565636,
+      "total_sent_mb": 6964.2,
+      "total_recv_mb": 3237.1,
+      "packets_sent": 3080014,
+      "packets_recv": 5567541,
       "errors_in": 0,
       "errors_out": 0,
       "drop_in": 0,
@@ -50,7 +50,7 @@
         "name": "Wi-Fi",
         "ip": "192.168.68.52",
         "is_up": true,
-        "speed_mbps": 585
+        "speed_mbps": 555
       },
       {
         "name": "Síťové připojení Bluetooth",
@@ -62,18 +62,18 @@
   },
   "cpu": {
     "available": true,
-    "overall_percent": 0.0,
+    "overall_percent": 16.1,
     "cores_logical": 8,
     "cores_physical": 4,
     "per_core_percent": [
-      39.2,
-      45.0,
-      41.2,
-      39.9,
-      37.0,
-      35.5,
+      38.9,
       39.0,
-      36.7
+      37.0,
+      34.3,
+      34.3,
+      32.0,
+      37.0,
+      35.3
     ],
     "load_average": null,
     "status": "HEALTHY"
@@ -81,15 +81,15 @@
   "memory": {
     "available": true,
     "total_mb": 8002.6,
-    "used_mb": 7529.9,
-    "free_mb": 472.6,
-    "used_gb": 7.35,
+    "used_mb": 7550.7,
+    "free_mb": 451.9,
+    "used_gb": 7.37,
     "total_gb": 7.82,
-    "percent": 94.1,
+    "percent": 94.4,
     "swap": {
       "total_mb": 11264.0,
-      "used_mb": 1442.7,
-      "percent": 12.8
+      "used_mb": 1558.0,
+      "percent": 13.8
     },
     "status": "CRITICAL"
   },
@@ -104,8 +104,8 @@
   "project_processes": {
     "available": true,
     "count": 7,
-    "total_cpu_percent": 9.6,
-    "total_ram_mb": 728.6,
+    "total_cpu_percent": 5.8,
+    "total_ram_mb": 745.4,
     "processes": [
       {
         "pid": 1484,
@@ -113,12 +113,12 @@
         "role": "SuggestInvest Web & API Server",
         "critical": true,
         "status": "running",
-        "cpu_percent": 0.4,
-        "ram_mb": 90.0,
+        "cpu_percent": 0.0,
+        "ram_mb": 91.3,
         "threads": 11,
         "started_at": "19.10.2026 23:05:12",
-        "uptime_sec": 3005,
-        "uptime_str": "0h 50m 5s",
+        "uptime_sec": 3029,
+        "uptime_str": "0h 50m 29s",
         "cmd": [
           "C:\\Users\\uzivatel\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
           "server.py"
@@ -134,8 +134,8 @@
         "ram_mb": 8.2,
         "threads": 3,
         "started_at": "19.10.2026 23:45:11",
-        "uptime_sec": 606,
-        "uptime_str": "0h 10m 6s",
+        "uptime_sec": 630,
+        "uptime_str": "0h 10m 30s",
         "cmd": [
           "cmd.exe",
           "/c"
@@ -147,12 +147,12 @@
         "role": "IBKR Watchdog Daemon (Port 7497 & L2 DOM)",
         "critical": true,
         "status": "running",
-        "cpu_percent": 2.2,
+        "cpu_percent": 3.9,
         "ram_mb": 50.2,
         "threads": 10,
         "started_at": "19.10.2026 21:25:16",
-        "uptime_sec": 9002,
-        "uptime_str": "2h 30m 2s",
+        "uptime_sec": 9026,
+        "uptime_str": "2h 30m 26s",
         "cmd": [
           "C:\\Users\\uzivatel\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
           "ibkr_watchdog.py"
@@ -168,8 +168,8 @@
         "ram_mb": 11.6,
         "threads": 7,
         "started_at": "19.10.2026 21:25:15",
-        "uptime_sec": 9003,
-        "uptime_str": "2h 30m 3s",
+        "uptime_sec": 9027,
+        "uptime_str": "2h 30m 27s",
         "cmd": [
           "powershell",
           "-Command"
@@ -185,8 +185,8 @@
         "ram_mb": 19.6,
         "threads": 7,
         "started_at": "19.10.2026 23:05:11",
-        "uptime_sec": 3007,
-        "uptime_str": "0h 50m 7s",
+        "uptime_sec": 3031,
+        "uptime_str": "0h 50m 31s",
         "cmd": [
           "powershell",
           "-Command"
@@ -202,8 +202,8 @@
         "ram_mb": 6.8,
         "threads": 3,
         "started_at": "19.10.2026 23:45:11",
-        "uptime_sec": 607,
-        "uptime_str": "0h 10m 7s",
+        "uptime_sec": 631,
+        "uptime_str": "0h 10m 31s",
         "cmd": [
           "C:\\WINDOWS\\system32\\cmd.exe",
           "/c"
@@ -215,12 +215,12 @@
         "role": "IB Gateway Native Process",
         "critical": false,
         "status": "running",
-        "cpu_percent": 7.0,
-        "ram_mb": 542.3,
-        "threads": 117,
+        "cpu_percent": 1.9,
+        "ram_mb": 557.6,
+        "threads": 110,
         "started_at": "19.10.2026 23:45:14",
-        "uptime_sec": 604,
-        "uptime_str": "0h 10m 4s",
+        "uptime_sec": 629,
+        "uptime_str": "0h 10m 29s",
         "cmd": [
           "C:\\Jts\\ibgateway\\1051\\.install4j\\..\\jre\\bin\\java.exe",
           "--enable-native-access=ALL-UNNAMED,javafx.graphics,javafx.media,javafx.web"
@@ -243,11 +243,11 @@
         "title": "FutureInvest Demo State",
         "role": "Centrální živý stav pro UI, boty a telemetrii",
         "exists": true,
-        "size_bytes": 20358,
+        "size_bytes": 20354,
         "size_kb": 19.88,
-        "last_modified": "19.10.2026 23:55:16",
-        "age_sec": 2.8,
-        "age_str": "před 2.8 s",
+        "last_modified": "19.10.2026 23:55:41",
+        "age_sec": 2.0,
+        "age_str": "před 2.0 s",
         "valid": true,
         "parse_error": null,
         "items_count": 25,
@@ -261,9 +261,9 @@
         "exists": true,
         "size_bytes": 6550,
         "size_kb": 6.4,
-        "last_modified": "19.10.2026 23:55:14",
-        "age_sec": 4.8,
-        "age_str": "před 4.8 s",
+        "last_modified": "19.10.2026 23:55:29",
+        "age_sec": 13.8,
+        "age_str": "před 13.8 s",
         "valid": true,
         "parse_error": null,
         "items_count": 20,
@@ -278,8 +278,8 @@
         "size_bytes": 248,
         "size_kb": 0.24,
         "last_modified": "19.10.2026 23:01:13",
-        "age_sec": 3245.3,
-        "age_str": "před 54 m 5 s",
+        "age_sec": 3269.4,
+        "age_str": "před 54 m 29 s",
         "valid": true,
         "parse_error": null,
         "items_count": 5,
@@ -294,8 +294,8 @@
         "size_bytes": 2409,
         "size_kb": 2.35,
         "last_modified": "19.10.2026 23:45:30",
-        "age_sec": 588.9,
-        "age_str": "před 9 m 48 s",
+        "age_sec": 613.1,
+        "age_str": "před 10 m 13 s",
         "valid": true,
         "parse_error": null,
         "items_count": 10,
@@ -310,8 +310,8 @@
         "size_bytes": 2741,
         "size_kb": 2.68,
         "last_modified": "19.10.2026 23:25:34",
-        "age_sec": 1784.9,
-        "age_str": "před 29 m 44 s",
+        "age_sec": 1809.0,
+        "age_str": "před 30 m 8 s",
         "valid": true,
         "parse_error": null,
         "items_count": 5,
@@ -325,9 +325,9 @@
         "exists": true,
         "size_bytes": 267,
         "size_kb": 0.26,
-        "last_modified": "19.10.2026 23:55:16",
-        "age_sec": 2.9,
-        "age_str": "před 2.9 s",
+        "last_modified": "19.10.2026 23:55:41",
+        "age_sec": 2.1,
+        "age_str": "před 2.1 s",
         "valid": true,
         "parse_error": null,
         "items_count": 2,
@@ -341,9 +341,9 @@
         "exists": true,
         "size_bytes": 2027,
         "size_kb": 1.98,
-        "last_modified": "19.10.2026 23:55:14",
-        "age_sec": 4.8,
-        "age_str": "před 4.8 s",
+        "last_modified": "19.10.2026 23:55:29",
+        "age_sec": 13.8,
+        "age_str": "před 13.8 s",
         "valid": true,
         "parse_error": null,
         "items_count": 8,
@@ -358,8 +358,8 @@
         "size_bytes": 9348,
         "size_kb": 9.13,
         "last_modified": "13.10.2026 21:44:31",
-        "age_sec": 526247.6,
-        "age_str": "před 146 h 10 m",
+        "age_sec": 526271.7,
+        "age_str": "před 146 h 11 m",
         "valid": true,
         "parse_error": null,
         "items_count": 3,
@@ -380,20 +380,20 @@
     "l2_dom_data_feed": {
       "connected": true,
       "status": "7497 Demo spojení aktivní",
-      "wobi_10": -0.0157
+      "wobi_10": -0.0882
     },
     "macro_calendar_bridge": {
       "active": true,
       "long_multiplier": 0.34,
       "short_multiplier": 1.35
     },
-    "last_sync_time": "19.10.2026 23:55:16"
+    "last_sync_time": "19.10.2026 23:55:41"
   },
   "alerts": [
     {
       "level": "CRITICAL",
       "category": "RAM",
-      "message": "Kritické zaplnění RAM: 94.1% (7529.9 MB z 8002.6 MB)"
+      "message": "Kritické zaplnění RAM: 94.4% (7550.7 MB z 8002.6 MB)"
     }
   ],
   "alerts_count": 1,

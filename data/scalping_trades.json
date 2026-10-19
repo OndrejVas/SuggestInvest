@@ -1,7 +1,7 @@
 {
   "version": "3.0.0",
   "account_id": "IBKR: DUR222134 (Paper Trading Sandbox)",
-  "last_updated_cet": "19.10.2026 23:55:29",
+  "last_updated_cet": "19.10.2026 23:55:44",
   "summary": {
     "total_trades": 1,
     "wins": 1,
@@ -43,7 +43,7 @@
   "ibkr_live_account": {
     "account_id": "DUR222134",
     "status": "PŘIPOJENO K IBKR DEMO (PORT 7497)",
-    "last_synced_cet": "19.10.2026 23:55:29",
+    "last_synced_cet": "19.10.2026 23:55:44",
     "net_liquidation_czk": 228234.96,
     "net_liquidation_usd": 9732.83,
     "available_funds_czk": 209901.2,

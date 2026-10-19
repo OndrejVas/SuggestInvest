@@ -27,6 +27,8 @@ CET_TZ = pytz.timezone("Europe/Prague")
 
 # Base directory
 REPO_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if REPO_DIR not in sys.path:
+    sys.path.insert(0, REPO_DIR)
 LOG_DIR = os.path.join(REPO_DIR, "logs")
 os.makedirs(LOG_DIR, exist_ok=True)
 LOG_FILE = os.path.join(LOG_DIR, "git_sync.log")
