@@ -344,6 +344,43 @@
             box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
         }
 
+        .nav-trading-btn, .nav-scalping-btn, .nav-future-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(99, 102, 241, 0.15);
+            color: #a5b4fc;
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            padding: 5px 14px;
+            border-radius: 9999px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-trading-btn:hover, .nav-scalping-btn:hover {
+            background: rgba(99, 102, 241, 0.28);
+            border-color: rgba(99, 102, 241, 0.7);
+            color: #c7d2fe;
+            transform: translateY(-1px);
+        }
+
+        .nav-future-btn {
+            background: rgba(16, 185, 129, 0.16);
+            color: #34d399;
+            border-color: rgba(52, 211, 153, 0.45);
+        }
+
+        .nav-future-btn:hover {
+            background: rgba(16, 185, 129, 0.3);
+            border-color: rgba(52, 211, 153, 0.75);
+            color: #a7f3d0;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+        }
+
         .trigger-scan-btn {
             display: inline-flex;
             align-items: center;
@@ -3106,6 +3143,14 @@
                         <span>📄 Metodika analýzy (.docx)</span>
                     </a>
 
+                    <a href="hub.html" class="nav-trading-btn" style="background: rgba(56, 189, 248, 0.15); border-color: rgba(56, 189, 248, 0.45); color: #38bdf8;" title="Otevřít Centrální Hub a rozcestník všech modulů ekosystému SuggestInvest">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        <span>🏛️ Centrální Hub</span>
+                    </a>
+
                     <a href="trading.html" class="nav-trading-btn" title="Otevřít terminál pro Autonomní Trading (Interactive Brokers)">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
@@ -3120,6 +3165,15 @@
                             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                         </svg>
                         <span>⚡ Scalping (IBKR)</span>
+                    </a>
+
+                    <a href="FutureInvestDemo.html" class="nav-future-btn" title="Otevřít FutureInvestDemo • IBKR Demo DUR222134, L2 Market Depth & Správa objednávek">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <circle cx="12" cy="12" r="6"></circle>
+                            <circle cx="12" cy="12" r="2"></circle>
+                        </svg>
+                        <span>🎯 FutureInvestDemo</span>
                     </a>
 
                     <button id="triggerScanBtn" class="trigger-scan-btn" onclick="triggerCloudOrLocalScan()" title="Spustit kompletní nový sken 541 aktiv a Gemini AI analýzu přímo v cloudu na GitHub Actions">
@@ -3141,13 +3195,13 @@
                 <p class="subtitle">Stupňovitý screening a AI analýza globálních titulů (Akcie, ETF, BCPP v CZK, Krypto pro Interactive Brokers) poháněná modelem Gemini.</p>
                 
                 <div class="meta-bar">
-                    <div>Poslední sken: <strong>10. 10. 2026 v 13:26 SELČ</strong></div>
-                    <div>⏱️ Doba analýzy: <strong>1 min 21 s</strong></div>
+                    <div>Poslední sken: <strong>13. 10. 2026 v 21:44 SELČ</strong></div>
+                    <div>⏱️ Doba analýzy: <strong>44 s</strong></div>
                     <div>Aktiv celkem: <strong>558</strong></div>
                     <div>🥇 TOP: <strong>51</strong> | 🥈 MID: <strong>486</strong> | 🥉 LOW: <strong>21</strong></div>
                     <div>🟢 Strong Buy: <strong>1</strong> | Buy: <strong>51</strong> | Hold: <strong>505</strong> | Sell: <strong>1</strong> | Strong Sell: <strong>0</strong></div>
                     <div>⚡ Změny od včerejška: <strong>84</strong> (⬆️ 9 | ⬇️ 12)</div>
-                    <div>AI Model: <strong>gemini-3.5-flash-lite (Záložní Quant Režim)</strong></div>
+                    <div>AI Model: <strong>gemini-3.8-flash</strong></div>
                     <div>🌐 Zdroje dat: <strong>XTB Market Catalog • Yahoo Finance Realtime & Consensus • CBOE Yield Curve (10Y/3M) & VIX • HYG/LQD Credit Spreads • S&P Sector Rotation (XLY/XLP) • Yahoo Financial News RSS • Google Gemini 3.5 AI</strong></div>
                 </div>
             </header>
@@ -3167,7 +3221,7 @@
                     <div class="macro-header-badges">
                         <span class="macro-badge">🌐 Makro Wire Data</span>
                         <span class="macro-badge">⏱️ Předstihový horizont 6–12 měsíců</span>
-                        <span class="macro-badge" style="color: #60a5fa; border-color: rgba(96, 165, 250, 0.3);">Aktualizace: 10. 10. 2026 11:26 UTC</span>
+                        <span class="macro-badge" style="color: #60a5fa; border-color: rgba(96, 165, 250, 0.3);">Aktualizace: 13. 10. 2026 19:44 UTC</span>
                     </div>
                 </div>
 
@@ -3207,37 +3261,37 @@
                                     <span class="digital-readout-max">/100</span>
                                     
                                     <div class="barometer-delta-wrapper">
-                                        <button type="button" class="barometer-delta-badge delta-improving" 
-                                                title="Kvantitativní index rizika recese (33.6/100) kleslo o 3.8 b. oproti předchozímu stavu (37.4/100 z 2026-10-10).
+                                        <button type="button" class="barometer-delta-badge delta-steady" 
+                                                title="Kvantitativní index rizika recese (33.6/100) zůstává stabilní oproti předchozímu stavu (33.6/100 z 2026-10-10).
 
 Klíčové faktory stability a vyhodnocení:
-• 🏛️ Výnosová křivka US Treasuries (10Y-3M): Spread 1.19 % (Normální rostoucí křivka (Ekonomická expanze)). Křivka se po dlouhé inverzi pozvolna normalizuje, bez akutního likviditního šoku.
+• 🏛️ Výnosová křivka US Treasuries (10Y-3M): Spread 1.16 % (Normální rostoucí křivka (Ekonomická expanze)). Křivka se po dlouhé inverzi pozvolna normalizuje, bez akutního likviditního šoku.
 • 💳 Úvěrové spready HYG/LQD: Vyvážené úvěrové spready (Neutrální trh) (skóre 38.0/100). Model využívá institucionální 50denní klouzavý průměr (SMA 50), který záměrně filtruje denní tržní šum a zabraňuje falešným poplachům.
-• ⚡ Volatilita VIX: 14.84 b. (Stabilní tržní režim (Běžná volatilita)). VIX pod 18 body udržuje sub-faktor na bezpečných 25/100.
+• ⚡ Volatilita VIX: 15.4 b. (Stabilní tržní režim (Běžná volatilita)). VIX pod 18 body udržuje sub-faktor na bezpečných 25/100.
 • 🛒 Spotřební & Průmyslový cyklus (XLY/XLP): Sub-skóre 60.0/100 (Zpomalování cyklické poptávky). Taktéž vyhlazeno 50denním trendem.
 • 📊 Tržní šíře (558 aktiv): Podíl medvědích signálů 0.2 % (skóre 30.0/100).
 
 ℹ️ Poznámka k periodicitě: O víkendech a svátcích jsou trhy uzavřeny. Díky 50d vyhlazování indikátorů reaguje barometr na reálné strukturální posuny ekonomiky, nikoliv na jednodenní cenový šum."
                                                 onclick="toggleBarometerDeltaTooltip(event, this)">
-                                            <span>📉 -3.8 b. (Zlepšení)</span>
+                                            <span>⚖️ Beze změny (33.6 b.)</span>
                                             <span style="font-size: 0.72rem; opacity: 0.85;">ℹ️</span>
                                         </button>
                                         <div class="barometer-delta-popup" role="tooltip" onclick="event.stopPropagation();">
                                             <div class="barometer-delta-popup-header">
-                                                <span class="tooltip-title">🔍 Proč se index rizika změnil?</span>
+                                                <span class="tooltip-title">🔍 Proč se index rizika nemění?</span>
                                                 <button type="button" class="tooltip-close-btn" onclick="closeBarometerDeltaTooltip(event)" title="Zavřít">✕</button>
                                             </div>
                                             <div class="barometer-delta-popup-body">
                                                 <div style="font-size: 0.78rem; color: #f1f5f9; font-weight: 700; margin-bottom: 6px;">
-                                                    Aktuální hodnocení: 📉 -3.8 b. (Zlepšení)
+                                                    Aktuální hodnocení: ⚖️ Beze změny (33.6 b.)
                                                 </div>
                                                 <div class="barometer-delta-text" style="white-space: pre-line; font-size: 0.74rem; color: #cbd5e1; line-height: 1.45;">
-                                                    Kvantitativní index rizika recese (33.6/100) kleslo o 3.8 b. oproti předchozímu stavu (37.4/100 z 2026-10-10).
+                                                    Kvantitativní index rizika recese (33.6/100) zůstává stabilní oproti předchozímu stavu (33.6/100 z 2026-10-10).
 
 Klíčové faktory stability a vyhodnocení:
-• 🏛️ Výnosová křivka US Treasuries (10Y-3M): Spread 1.19 % (Normální rostoucí křivka (Ekonomická expanze)). Křivka se po dlouhé inverzi pozvolna normalizuje, bez akutního likviditního šoku.
+• 🏛️ Výnosová křivka US Treasuries (10Y-3M): Spread 1.16 % (Normální rostoucí křivka (Ekonomická expanze)). Křivka se po dlouhé inverzi pozvolna normalizuje, bez akutního likviditního šoku.
 • 💳 Úvěrové spready HYG/LQD: Vyvážené úvěrové spready (Neutrální trh) (skóre 38.0/100). Model využívá institucionální 50denní klouzavý průměr (SMA 50), který záměrně filtruje denní tržní šum a zabraňuje falešným poplachům.
-• ⚡ Volatilita VIX: 14.84 b. (Stabilní tržní režim (Běžná volatilita)). VIX pod 18 body udržuje sub-faktor na bezpečných 25/100.
+• ⚡ Volatilita VIX: 15.4 b. (Stabilní tržní režim (Běžná volatilita)). VIX pod 18 body udržuje sub-faktor na bezpečných 25/100.
 • 🛒 Spotřební & Průmyslový cyklus (XLY/XLP): Sub-skóre 60.0/100 (Zpomalování cyklické poptávky). Taktéž vyhlazeno 50denním trendem.
 • 📊 Tržní šíře (558 aktiv): Podíl medvědích signálů 0.2 % (skóre 30.0/100).
 
@@ -3245,7 +3299,7 @@ Klíčové faktory stability a vyhodnocení:
                                                 </div>
                                                 <div style="margin-top: 8px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.70rem; color: #94a3b8; display: flex; justify-content: space-between;">
                                                     <span>Předchozí sken: <strong>2026-10-10</strong></span>
-                                                    <span>Předchozí skóre: <strong>37.4 b.</strong></span>
+                                                    <span>Předchozí skóre: <strong>33.6 b.</strong></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -3282,7 +3336,7 @@ Klíčové faktory stability a vyhodnocení:
                                 <div class="subfactor-bar-fill" style="width: 18.0%; background: #10b981;"></div>
                             </div>
                             <div class="subfactor-status-desc">
-                                <span>Spread: <strong>1.19 %</strong> (10Y: 5.24% | 3M: 4.06%)</span>
+                                <span>Spread: <strong>1.16 %</strong> (10Y: 5.22% | 3M: 4.06%)</span>
                                 <span>Normální rostoucí křivka (Ekonomická expanze)</span>
                             </div>
                         </div>
@@ -3297,7 +3351,7 @@ Klíčové faktory stability a vyhodnocení:
                                 <div class="subfactor-bar-fill" style="width: 38.0%; background: #10b981;"></div>
                             </div>
                             <div class="subfactor-status-desc">
-                                <span>HYG/LQD: <strong>0.7541</strong> (vs 50d MA: 0.47 %)</span>
+                                <span>HYG/LQD: <strong>0.7516</strong> (vs 50d MA: 0.1 %)</span>
                                 <span>Vyvážené úvěrové spready (Neutrální trh)</span>
                             </div>
                         </div>
@@ -3312,7 +3366,7 @@ Klíčové faktory stability a vyhodnocení:
                                 <div class="subfactor-bar-fill" style="width: 25.0%; background: #10b981;"></div>
                             </div>
                             <div class="subfactor-status-desc">
-                                <span>VIX: <strong>14.84</strong> (20d průměr: 15.65)</span>
+                                <span>VIX: <strong>15.4</strong> (20d průměr: 15.47)</span>
                                 <span>Stabilní tržní režim (Běžná volatilita)</span>
                             </div>
                         </div>
@@ -3327,7 +3381,7 @@ Klíčové faktory stability a vyhodnocení:
                                 <div class="subfactor-bar-fill" style="width: 60.0%; background: #f59e0b;"></div>
                             </div>
                             <div class="subfactor-status-desc">
-                                <span>XLY/XLP trend: <strong>-0.95 %</strong></span>
+                                <span>XLY/XLP trend: <strong>-1.99 %</strong></span>
                                 <span>Zpomalování cyklické poptávky</span>
                             </div>
                         </div>
@@ -3359,7 +3413,7 @@ Klíčové faktory stability a vyhodnocení:
 
                         <div class="sector-radar-list">
                             
-                            <div class="sector-radar-item" title="Finanční sektor & Banky: Komerční a investiční banky, pojišťovny. Indikátor úvěrového utahování a NPL. (1M změna: -4.1 %, Relativně vůči SPY: -6.2 %)">
+                            <div class="sector-radar-item" title="Finanční sektor & Banky: Komerční a investiční banky, pojišťovny. Indikátor úvěrového utahování a NPL. (1M změna: -3.1 %, Relativně vůči SPY: -6.1 %)">
                                 <div class="sector-item-top">
                                     <span class="sector-item-name">Finanční sektor & Banky</span>
                                     <span class="sector-item-sym">XLF</span>
@@ -3371,29 +3425,29 @@ Klíčové faktory stability a vyhodnocení:
                                     </span>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; font-size: 0.67rem; color: var(--text-muted); margin-top: 2px;">
-                                    <span>1M vs SPY: <strong style="color: #f87171;">-6.2 %</strong></span>
+                                    <span>1M vs SPY: <strong style="color: #f87171;">-6.1 %</strong></span>
                                     <span>🔴 Vysoké riziko</span>
                                 </div>
                             </div>
                             
-                            <div class="sector-radar-item" title="Nemovitosti & REITs: Komerční nemovitosti, sklady, rezidenční nájmy. Zranitelné při vysokých sazbách. (1M změna: -3.4 %, Relativně vůči SPY: -5.5 %)">
+                            <div class="sector-radar-item" title="Nemovitosti & REITs: Komerční nemovitosti, sklady, rezidenční nájmy. Zranitelné při vysokých sazbách. (1M změna: -2.1 %, Relativně vůči SPY: -5.1 %)">
                                 <div class="sector-item-top">
                                     <span class="sector-item-name">Nemovitosti & REITs</span>
                                     <span class="sector-item-sym">XLRE</span>
                                 </div>
                                 <div class="sector-item-mid">
-                                    <span class="phase-pill phase-contraction">KONTRAKCE / RECESE</span>
-                                    <span style="font-weight: 700; font-size: 0.7rem; color: #f87171;">
-                                        Riziko: 76 %
+                                    <span class="phase-pill phase-slowdown">ZPOMALENÍ</span>
+                                    <span style="font-weight: 700; font-size: 0.7rem; color: #fbbf24;">
+                                        Riziko: 55 %
                                     </span>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; font-size: 0.67rem; color: var(--text-muted); margin-top: 2px;">
-                                    <span>1M vs SPY: <strong style="color: #f87171;">-5.5 %</strong></span>
-                                    <span>🔴 Vysoké riziko</span>
+                                    <span>1M vs SPY: <strong style="color: #f87171;">-5.1 %</strong></span>
+                                    <span>🟡 Zvýšené riziko</span>
                                 </div>
                             </div>
                             
-                            <div class="sector-radar-item" title="Průmysl, Výroba & Logistika: Strojírenství, logistika, obrana. Klíčový předstihový indikátor výrobního PMI. (1M změna: -1.5 %, Relativně vůči SPY: -3.7 %)">
+                            <div class="sector-radar-item" title="Průmysl, Výroba & Logistika: Strojírenství, logistika, obrana. Klíčový předstihový indikátor výrobního PMI. (1M změna: +0.2 %, Relativně vůči SPY: -2.8 %)">
                                 <div class="sector-item-top">
                                     <span class="sector-item-name">Průmysl, Výroba & Logistika</span>
                                     <span class="sector-item-sym">XLI</span>
@@ -3401,16 +3455,16 @@ Klíčové faktory stability a vyhodnocení:
                                 <div class="sector-item-mid">
                                     <span class="phase-pill phase-slowdown">ZPOMALENÍ</span>
                                     <span style="font-weight: 700; font-size: 0.7rem; color: #fbbf24;">
-                                        Riziko: 52 %
+                                        Riziko: 50 %
                                     </span>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; font-size: 0.67rem; color: var(--text-muted); margin-top: 2px;">
-                                    <span>1M vs SPY: <strong style="color: #f87171;">-3.7 %</strong></span>
+                                    <span>1M vs SPY: <strong style="color: #f87171;">-2.8 %</strong></span>
                                     <span>🟡 Zvýšené riziko</span>
                                 </div>
                             </div>
                             
-                            <div class="sector-radar-item" title="Cyklické spotřební zboží: Automobily, retail, volný čas. První sektor zasažený poklesem reálných mezd. (1M změna: +0.1 %, Relativně vůči SPY: -2.0 %)">
+                            <div class="sector-radar-item" title="Cyklické spotřební zboží: Automobily, retail, volný čas. První sektor zasažený poklesem reálných mezd. (1M změna: +1.8 %, Relativně vůči SPY: -1.3 %)">
                                 <div class="sector-item-top">
                                     <span class="sector-item-name">Cyklické spotřební zboží</span>
                                     <span class="sector-item-sym">XLY</span>
@@ -3418,33 +3472,33 @@ Klíčové faktory stability a vyhodnocení:
                                 <div class="sector-item-mid">
                                     <span class="phase-pill phase-slowdown">ZPOMALENÍ</span>
                                     <span style="font-weight: 700; font-size: 0.7rem; color: #fbbf24;">
-                                        Riziko: 48 %
+                                        Riziko: 47 %
                                     </span>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; font-size: 0.67rem; color: var(--text-muted); margin-top: 2px;">
-                                    <span>1M vs SPY: <strong style="color: #f87171;">-2.0 %</strong></span>
+                                    <span>1M vs SPY: <strong style="color: #f87171;">-1.3 %</strong></span>
                                     <span>🟡 Zvýšené riziko</span>
                                 </div>
                             </div>
                             
-                            <div class="sector-radar-item" title="Energie & Komodity: Těžba ropy, plynu, rafinérie. Varovný signál při destrukci poptávky. (1M změna: +0.5 %, Relativně vůči SPY: -1.6 %)">
+                            <div class="sector-radar-item" title="Energie & Komodity: Těžba ropy, plynu, rafinérie. Varovný signál při destrukci poptávky. (1M změna: +2.4 %, Relativně vůči SPY: -0.6 %)">
                                 <div class="sector-item-top">
                                     <span class="sector-item-name">Energie & Komodity</span>
                                     <span class="sector-item-sym">XLE</span>
                                 </div>
                                 <div class="sector-item-mid">
-                                    <span class="phase-pill phase-slowdown">ZPOMALENÍ</span>
-                                    <span style="font-weight: 700; font-size: 0.7rem; color: #fbbf24;">
-                                        Riziko: 48 %
+                                    <span class="phase-pill phase-late">POZDNÍ CYKLUS</span>
+                                    <span style="font-weight: 700; font-size: 0.7rem; color: #34d399;">
+                                        Riziko: 35 %
                                     </span>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; font-size: 0.67rem; color: var(--text-muted); margin-top: 2px;">
-                                    <span>1M vs SPY: <strong style="color: #f87171;">-1.6 %</strong></span>
-                                    <span>🟡 Zvýšené riziko</span>
+                                    <span>1M vs SPY: <strong style="color: #f87171;">-0.6 %</strong></span>
+                                    <span>⚖️ Mírné riziko</span>
                                 </div>
                             </div>
                             
-                            <div class="sector-radar-item" title="Defenzivní spotřební zboží: Potraviny, hygiena, nezbytné výdaje. Roste relativně v recesi. (1M změna: +0.7 %, Relativně vůči SPY: -1.4 %)">
+                            <div class="sector-radar-item" title="Defenzivní spotřební zboží: Potraviny, hygiena, nezbytné výdaje. Roste relativně v recesi. (1M změna: +1.3 %, Relativně vůči SPY: -1.8 %)">
                                 <div class="sector-item-top">
                                     <span class="sector-item-name">Defenzivní spotřební zboží</span>
                                     <span class="sector-item-sym">XLP</span>
@@ -3456,12 +3510,12 @@ Klíčové faktory stability a vyhodnocení:
                                     </span>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; font-size: 0.67rem; color: var(--text-muted); margin-top: 2px;">
-                                    <span>1M vs SPY: <strong style="color: #f87171;">-1.4 %</strong></span>
+                                    <span>1M vs SPY: <strong style="color: #f87171;">-1.8 %</strong></span>
                                     <span>🟢 Neutrální</span>
                                 </div>
                             </div>
                             
-                            <div class="sector-radar-item" title="Zdravotnictví & Pharma: Stabilní peněžní toky nezávislé na hospodářském cyklu. (1M změna: +3.7 %, Relativně vůči SPY: +1.6 %)">
+                            <div class="sector-radar-item" title="Zdravotnictví & Pharma: Stabilní peněžní toky nezávislé na hospodářském cyklu. (1M změna: +1.8 %, Relativně vůči SPY: -1.3 %)">
                                 <div class="sector-item-top">
                                     <span class="sector-item-name">Zdravotnictví & Pharma</span>
                                     <span class="sector-item-sym">XLV</span>
@@ -3473,12 +3527,12 @@ Klíčové faktory stability a vyhodnocení:
                                     </span>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; font-size: 0.67rem; color: var(--text-muted); margin-top: 2px;">
-                                    <span>1M vs SPY: <strong style="color: #34d399;">+1.6 %</strong></span>
+                                    <span>1M vs SPY: <strong style="color: #f87171;">-1.3 %</strong></span>
                                     <span>🟢 Neutrální</span>
                                 </div>
                             </div>
                             
-                            <div class="sector-radar-item" title="Veřejné služby (Utility): Energetické sítě, voda. Masivní příliv institucionálního kapitálu před krizí. (1M změna: -1.6 %, Relativně vůči SPY: -3.7 %)">
+                            <div class="sector-radar-item" title="Veřejné služby (Utility): Energetické sítě, voda. Masivní příliv institucionálního kapitálu před krizí. (1M změna: +2.1 %, Relativně vůči SPY: -0.9 %)">
                                 <div class="sector-item-top">
                                     <span class="sector-item-name">Veřejné služby (Utility)</span>
                                     <span class="sector-item-sym">XLU</span>
@@ -3490,12 +3544,12 @@ Klíčové faktory stability a vyhodnocení:
                                     </span>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; font-size: 0.67rem; color: var(--text-muted); margin-top: 2px;">
-                                    <span>1M vs SPY: <strong style="color: #f87171;">-3.7 %</strong></span>
+                                    <span>1M vs SPY: <strong style="color: #f87171;">-0.9 %</strong></span>
                                     <span>🟢 Neutrální</span>
                                 </div>
                             </div>
                             
-                            <div class="sector-radar-item" title="Technologie & AI: Polovodiče, software, cloud. Citlivý na úrokové sazby a firemní IT investice. (1M změna: +6.0 %, Relativně vůči SPY: +3.9 %)">
+                            <div class="sector-radar-item" title="Technologie & AI: Polovodiče, software, cloud. Citlivý na úrokové sazby a firemní IT investice. (1M změna: +6.8 %, Relativně vůči SPY: +3.8 %)">
                                 <div class="sector-item-top">
                                     <span class="sector-item-name">Technologie & AI</span>
                                     <span class="sector-item-sym">XLK</span>
@@ -3507,7 +3561,7 @@ Klíčové faktory stability a vyhodnocení:
                                     </span>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; font-size: 0.67rem; color: var(--text-muted); margin-top: 2px;">
-                                    <span>1M vs SPY: <strong style="color: #34d399;">+3.9 %</strong></span>
+                                    <span>1M vs SPY: <strong style="color: #34d399;">+3.8 %</strong></span>
                                     <span>🟢 Nízké riziko</span>
                                 </div>
                             </div>
@@ -548592,7 +548646,7 @@ Klíčové faktory stability a vyhodnocení:
                     <strong>Upozornění:</strong> Tyto analýzy a signály jsou generovány experimentálním AI modelem a slouží výhradně k informačním a studijním účelům. V žádném případě se nejedná o investiční doporučení, investiční poradenství či nabídku ke koupi nebo prodeji cenných papírů ve smyslu zákona č. 256/2004 Sb., o podnikání na kapitálovém trhu.
                 </p>
                 <div>
-                    Vygenerováno: 2026-10-10 11:26:12 UTC | SuggestInvest Multithreaded Engine & Gemini 3.5 AI
+                    Vygenerováno: 2026-10-13 19:44:31 UTC | SuggestInvest Multithreaded Engine & Gemini 3.5 AI
                 </div>
             </footer>
         </div>
